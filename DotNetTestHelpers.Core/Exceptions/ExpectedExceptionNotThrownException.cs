@@ -1,6 +1,6 @@
 using System;
 
-namespace DotNetTestHelpers.Core.Assertion
+namespace DotNetTestHelpers.Core.Exceptions
 {
     public class ExpectedExceptionNotThrownException : Exception
     {

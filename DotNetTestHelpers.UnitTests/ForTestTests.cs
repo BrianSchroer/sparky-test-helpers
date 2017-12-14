@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DotNetTestHelpers.Core.Assertion;
+using DotNetTestHelpers.Core.Exceptions;
 using DotNetTestHelpers.Core.Scenarios;
 
 namespace DotNetTestHelpers.UnitTests

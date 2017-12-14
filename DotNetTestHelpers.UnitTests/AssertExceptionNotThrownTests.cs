@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using DotNetTestHelpers.Core.Assertion;
+using DotNetTestHelpers.Core.Exceptions;
 
 namespace DotNetTestHelpers.UnitTests
 {
