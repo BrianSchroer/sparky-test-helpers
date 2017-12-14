@@ -26,7 +26,7 @@ namespace DotNetTestHelpers.Core.Exceptions
     /// <example>
     /// <code><![CDATA[
     ///     AssertExceptionThrown
-    ///         .OfType<ArgumentOutOfRangeException>
+    ///         .OfType<ArgumentOutOfRangeException>()
     ///         .WithMessage("Limit cannot be greater than 10.")
     ///         .WhenExecuting(() => { var foo = new Foo(limit: 11); }); 
     /// ]]></code>  
