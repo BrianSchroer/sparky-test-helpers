@@ -1,5 +1,7 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using DotNetTestHelpers.Core.Exceptions;
 using DotNetTestHelpers.Core.Scenarios;
 
 namespace DotNetTestHelpers.UnitTests

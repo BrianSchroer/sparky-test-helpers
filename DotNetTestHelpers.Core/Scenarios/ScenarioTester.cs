@@ -24,12 +24,32 @@ namespace DotNetTestHelpers.Core.Scenarios
     {
         private readonly TScenario[] _scenarios;
 
+        private Type[] _inconclusiveExceptionTypes = new Type[0];
+
         private readonly Regex _typeNameSuffixRegex
             = new Regex(@", [^\]]*, Version=[^\]]*, Culture=[^\]]*, PublicKeyToken=[^\]]*",
             RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
         private readonly Regex _genericVersionRegex = new Regex(@"`\d+",
             RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Used by subclass to specify "inconclusive test" exception types.
+        /// </summary>
+        /// <param name="types">The exception type(s).</param>
+        protected void SetInconclusiveExceptionTypes(params Type[] types)
+        {
+            _inconclusiveExceptionTypes = types;
+        }
+
+        /// <summary>
+        /// Throw "tests inconclusive" exception.
+        /// </summary>
+        /// <param name="message">The exception message.</param>
+        protected virtual void ThrowInconclusiveException(string message)
+        {
+            throw new ScenarioTestsInconclusiveException(message);
+        }
 
         /// <summary>
         /// Test scenarios.
@@ -117,6 +137,7 @@ namespace DotNetTestHelpers.Core.Scenarios
             {
                 string typeName = (scenario == null) ? "null" : scenario.GetType().FullName;
 
+
                 if (typeName.Contains("_Anonymous"))
                 {
                     typeName = "anonymousType";
@@ -136,9 +157,22 @@ namespace DotNetTestHelpers.Core.Scenarios
             if (caughtExceptions.Any())
             {
                 string message = string.Join("\n", caughtExceptions.Select(x => x.Message).ToArray());
+
+                if (caughtExceptions.All(IsInconclusiveException))
+                {
+                    ThrowInconclusiveException(message);
+                }
+
                 throw new ScenarioTestFailureException(message);
             }
         }
+
+        private bool IsInconclusiveException(ScenarioException scenarioException)
+        {
+            return _inconclusiveExceptionTypes != null
+                && _inconclusiveExceptionTypes.Contains(scenarioException.ExceptionType);
+        }
+
         private class ScenarioException
         {
             public Type ExceptionType { get; private set; }
