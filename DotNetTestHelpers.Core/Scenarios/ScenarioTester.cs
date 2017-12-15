@@ -19,7 +19,13 @@ namespace DotNetTestHelpers.Core.Scenarios
     /// any of the test cases failed.
     /// </para>
     /// </summary>
-    /// <typeparam name="TScenario">The "test scenario" class type.</typeparam> 
+    /// <remarks>
+    /// This class is rarely used directly. It is more often used via the
+    /// <see cref="ScenarioTesterExtension.TestEach{TScenario}(IEnumerable{TScenario}, Action{TScenario})"/>
+    /// extension method.
+    /// </remarks>
+    /// <typeparam name="TScenario">The "test scenario" class type.</typeparam>
+    /// <seealso cref="ScenarioTesterExtension.TestEach{TScenario}(IEnumerable{TScenario}, Action{TScenario})"/>
     public class ScenarioTester<TScenario>
     {
         private readonly TScenario[] _scenarios;

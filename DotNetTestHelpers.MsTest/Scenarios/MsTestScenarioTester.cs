@@ -1,5 +1,4 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using DotNetTestHelpers.Core.Scenarios;
 
@@ -13,10 +12,16 @@ namespace DotNetTestHelpers.MsTest.Scenarios
         /// <summary>
         /// Instantiates a new <cref="MsTestScenarioTester{TScenario}" /> object.
         /// </summary>
+        /// <remarks>
+        /// This class is rarely used directly. It is more often used via the
+        /// <see cref="MsTestScenarioTesterExtension.TestEach{TScenario}(IEnumerable{TScenario}, Action{TScenario})"/>
+        /// extension method.
+        /// </remarks>
         /// <param name="scenarios">The test scenarios.</param>
+        /// <seealso cref="MsTestScenarioTesterExtension.TestEach{TScenario}(IEnumerable{TScenario}, Action{TScenario})"/>
         public MsTestScenarioTester(IEnumerable<TScenario> scenarios) : base(scenarios)
         {
-            this.SetInconclusiveExceptionTypes(typeof(AssertInconclusiveException));
+            SetInconclusiveExceptionTypes(typeof(AssertInconclusiveException));
         }
 
         protected override void ThrowInconclusiveException(string message)

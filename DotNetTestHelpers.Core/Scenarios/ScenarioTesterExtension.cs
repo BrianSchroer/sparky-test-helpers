@@ -15,7 +15,7 @@ namespace DotNetTestHelpers.Core.Scenarios
         /// <param name="test">"Callback" test action.</param>
         /// <returns><see cref="ScenarioTester{TScenario}" /> instance.</returns>
         /// <example>
-        ///     <code><![CDATA
+        ///     <code><![CDATA[
         ///  new []
         /// {
         ///     new { DateString = "1/31/2023", ShouldBeValid = true },  
@@ -33,7 +33,7 @@ namespace DotNetTestHelpers.Core.Scenarios
         ///     ]]></code>
         /// </example>
         public static ScenarioTester<TScenario> TestEach<TScenario>(
-          this IEnumerable<TScenario> enumerable, Action<TScenario> test)
+            this IEnumerable<TScenario> enumerable, Action<TScenario> test)
         {
             return new ScenarioTester<TScenario>(enumerable).TestEach(test);
         }

@@ -25,5 +25,16 @@ namespace DotNetTestHelpers.UnitTests
 
             Assert.AreEqual(scenarios.Length, callbackCount);
         }
+
+        [TestMethod]
+        public void Enumerable_TestEach_extenion_method_should_throw_ScenarioTestFailureException_with_proper_message_for_anonymous_scenario()
+        {
+            var scenario = new[]
+            {
+                new { Expected = "a"},
+                new { Expected = "b"},
+                new { Expected = "c"}
+            };
+        }
     }
 }

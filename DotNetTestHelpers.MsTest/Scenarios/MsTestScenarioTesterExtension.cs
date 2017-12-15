@@ -16,7 +16,7 @@ namespace DotNetTestHelpers.MsTest.Scenarios
         /// <param name="test">"Callback" test action.</param>
         /// <returns><see cref="ScenarioTester{TScenario}" /> instance.</returns>
         /// <example>
-        ///     <code><![CDATA
+        ///     <code><![CDATA[
         ///  new []
         /// {
         ///     new { DateString = "1/31/2023", ShouldBeValid = true },  

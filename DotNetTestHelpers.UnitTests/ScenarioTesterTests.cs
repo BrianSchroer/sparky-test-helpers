@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DotNetTestHelpers.Core.Exceptions;
 using DotNetTestHelpers.Core.Scenarios;
+using System.Linq;
 
 namespace DotNetTestHelpers.UnitTests
 {
@@ -12,6 +11,20 @@ namespace DotNetTestHelpers.UnitTests
     [TestClass]
     public class ScenarioTesterTests
     {
+        [TestMethod]
+        public void Scenarios_property_should_return_scenarios_passed_to_constructor()
+        {
+            var scenarios = new[] { "a", "b", "c" };
+
+            var tester = new ScenarioTester<string>(scenarios);
+
+            Assert.AreEqual(scenarios.Length, tester.Scenarios.Count());
+            for (int i = 0; i < scenarios.Length; i++)
+            {
+                Assert.AreSame(scenarios[i], tester.Scenarios.ElementAt(i));
+            }
+        }
+
         [TestMethod]
         public void TestEach_should_call_test_callback_action_for_each_scenario()
         {
@@ -51,10 +64,44 @@ namespace DotNetTestHelpers.UnitTests
             catch (ScenarioTestFailureException ex)
             {
                 Console.WriteLine(ex.Message);
-                // Expected failure was thrown
+
+                string expected = "Scenario[1] (2 of 3) - Assert.Fail failed. Test b failed!" 
+                    + "\n\nScenario data - System.String: \"b\"\n";
+
+                Assert.AreEqual(expected, ex.Message);
             }
 
             Assert.AreEqual(scenarios.Length, callbackCount);
+        }
+
+        [TestMethod]
+        public void TestEach_should_throw_ScenarioTestFailureException_with_message_describing_each_failure()
+        {
+            var scenarios = new[] { "a", "b", "c" };
+
+            try
+            {
+                new ScenarioTester<string>(scenarios).TestEach(scenario =>
+                {
+ 
+                    if (scenario != "b")
+                    {
+                        Assert.Fail($"Test {scenario} failed!");
+                    }
+                });
+            }
+            catch (ScenarioTestFailureException ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                string expected = 
+                    "Scenario[0] (1 of 3) - Assert.Fail failed. Test a failed!"
+                        + "\n\nScenario data - System.String: \"a\"\n"
+                        + "\nScenario[2] (3 of 3) - Assert.Fail failed. Test c failed!"
+                        + "\n\nScenario data - System.String: \"c\"\n";
+
+                Assert.AreEqual(expected, ex.Message);
+            }
         }
     }
 }
