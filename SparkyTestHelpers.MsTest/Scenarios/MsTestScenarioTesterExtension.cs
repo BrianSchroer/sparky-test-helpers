@@ -29,7 +29,7 @@ namespace SparkyTestHelpers.MsTest.Scenarios
         /// .TestEach(scenario =>
         /// {
         ///     DateTime dt;
-        ///     Assert.AreEqual(scenario.ShouldBeValid, DateTIme.TryParse(scenario.DateString, out dt));  
+        ///     Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));  
         /// });  
         ///     ]]></code>
         /// </example>
