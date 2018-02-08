@@ -8,6 +8,10 @@
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <Authors>Brian Schroer</Authors>
+    <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers.Core/Sparky.png</PackageIconUrl>
+    <Copyright>Copyright © Brian Schroer 2018</Copyright>
+    <PackageTags>test, testing, unittest, rowtest</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
