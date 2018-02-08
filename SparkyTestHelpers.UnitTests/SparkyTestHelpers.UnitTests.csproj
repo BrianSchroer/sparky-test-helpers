@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNetTestHelpers.Core\DotNetTestHelpers.Core.csproj" />
-    <ProjectReference Include="..\DotNetTestHelpers.MsTest\DotNetTestHelpers.MsTest.csproj" />
+    <ProjectReference Include="..\SparkyTestHelpers.Core\SparkyTestHelpers.Core.csproj" />
+    <ProjectReference Include="..\SparkyTestHelpers.MsTest\SparkyTestHelpers.MsTest.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 using System;
 
-namespace DotNetTestHelpers.Core.Exceptions
+namespace SparkyTestHelpers.Core.Exceptions
 {
     public class ExpectedExceptionNotThrownException : Exception
     {

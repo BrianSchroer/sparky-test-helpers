@@ -1,9 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using DotNetTestHelpers.Core.Exceptions;
-using DotNetTestHelpers.MsTest.Scenarios;
+using SparkyTestHelpers.Core.Exceptions;
+using SparkyTestHelpers.MsTest.Scenarios;
 
-namespace DotNetTestHelpers.UnitTests
+namespace SparkyTestHelpers.UnitTests
 {
     /// <summary>
     /// <see cref="ScenarioTester{TScenario}" /> extension method unit tests.
@@ -44,7 +44,7 @@ namespace DotNetTestHelpers.UnitTests
             var scenarios = new[] { "a", "b", "c" };
 
             AssertExceptionThrown
-                .OfType<DotNetTestHelpers.Core.Scenarios.ScenarioTestFailureException>()
+                .OfType<SparkyTestHelpers.Core.Scenarios.ScenarioTestFailureException>()
                 .WhenExecuting(() => scenarios.TestEach(scenario =>
                   {
                       switch (scenario)

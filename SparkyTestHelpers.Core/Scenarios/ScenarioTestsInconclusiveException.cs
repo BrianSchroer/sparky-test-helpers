@@ -1,6 +1,6 @@
 using System;
 
-namespace DotNetTestHelpers.Core.Scenarios
+namespace SparkyTestHelpers.Core.Scenarios
 {
     /// <summary>
     /// 

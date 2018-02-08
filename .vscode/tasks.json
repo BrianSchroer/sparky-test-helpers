@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/DotNetTestHelpers.UnitTests/DotNetTestHelpers.UnitTests.csproj"
+                "${workspaceFolder}/SparkyTestHelpers.UnitTests/SparkyTestHelpers.UnitTests.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

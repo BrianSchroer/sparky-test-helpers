@@ -1,8 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using DotNetTestHelpers.Core.Scenarios;
+using SparkyTestHelpers.Core.Scenarios;
 
-namespace DotNetTestHelpers.UnitTests
+namespace SparkyTestHelpers.UnitTests
 {
     /// <summary>
     /// <see cref="ScenarioTester{TScenario}" /> extension method unit tests.

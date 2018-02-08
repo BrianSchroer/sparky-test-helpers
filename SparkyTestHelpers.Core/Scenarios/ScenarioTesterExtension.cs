@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DotNetTestHelpers.Core.Scenarios
+namespace SparkyTestHelpers.Core.Scenarios
 {
     /// <summary>
     /// <see cref="ScenarioTester{TScenario}" /> extension methods.

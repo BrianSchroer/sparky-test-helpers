@@ -1,9 +1,9 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DotNetTestHelpers.Core.Scenarios;
+using SparkyTestHelpers.Core.Scenarios;
 using System.Linq;
 
-namespace DotNetTestHelpers.UnitTests
+namespace SparkyTestHelpers.UnitTests
 {
     /// <summary>
     /// <see cref="ScenarioTester{TScenario}" /> unit tests.

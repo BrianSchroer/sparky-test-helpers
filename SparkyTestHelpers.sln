@@ -2,11 +2,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetTestHelpers.Core", "DotNetTestHelpers.Core\DotNetTestHelpers.Core.csproj", "{356DDCC0-76F3-46B8-A6A6-7F8B48427991}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkyTestHelpers.Core", "SparkyTestHelpers.Core\SparkyTestHelpers.Core.csproj", "{356DDCC0-76F3-46B8-A6A6-7F8B48427991}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetTestHelpers.UnitTests", "DotNetTestHelpers.UnitTests\DotNetTestHelpers.UnitTests.csproj", "{E62DB55E-40FD-4FAA-A15F-22DA6D832FD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkyTestHelpers.UnitTests", "SparkyTestHelpers.UnitTests\SparkyTestHelpers.UnitTests.csproj", "{E62DB55E-40FD-4FAA-A15F-22DA6D832FD1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetTestHelpers.MsTest", "DotNetTestHelpers.MsTest\DotNetTestHelpers.MsTest.csproj", "{9C22D934-715C-408A-9A8E-CD25C61B6E31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkyTestHelpers.MsTest", "SparkyTestHelpers.MsTest\SparkyTestHelpers.MsTest.csproj", "{9C22D934-715C-408A-9A8E-CD25C61B6E31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,8 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using DotNetTestHelpers.Core.Exceptions;
+using SparkyTestHelpers.Core.Exceptions;
 
-namespace DotNetTestHelpers.UnitTests
+namespace SparkyTestHelpers.UnitTests
 {
     /// <summary>
     /// <see cref="AssertExceptionNotThrown" /> unit tests.

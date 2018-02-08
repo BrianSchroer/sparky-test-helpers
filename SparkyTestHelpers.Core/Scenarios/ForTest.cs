@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DotNetTestHelpers.Core.Scenarios
+namespace SparkyTestHelpers.Core.Scenarios
 {
     /// <summary>
     /// "Syntactic sugar" methods for working with <see cref="ScenarioTester{TScenario}" />,

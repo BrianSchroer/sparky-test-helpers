@@ -1,8 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using DotNetTestHelpers.Core.Scenarios;
+using SparkyTestHelpers.Core.Scenarios;
 
-namespace DotNetTestHelpers.MsTest.Scenarios
+namespace SparkyTestHelpers.MsTest.Scenarios
 {
     /// <summary>
     /// <see cref="ScenarioTester{TScenario}" subclass for the MSTest framework.

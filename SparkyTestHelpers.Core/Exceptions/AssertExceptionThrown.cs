@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace DotNetTestHelpers.Core.Exceptions
+namespace SparkyTestHelpers.Core.Exceptions
 {
     /// <summary>
     /// This class is used to assert than an expected exception is thrown when a

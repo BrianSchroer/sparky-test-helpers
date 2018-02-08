@@ -1,11 +1,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using DotNetTestHelpers.Core.Exceptions;
-using DotNetTestHelpers.Core.Scenarios;
+using SparkyTestHelpers.Core.Exceptions;
+using SparkyTestHelpers.Core.Scenarios;
 
-namespace DotNetTestHelpers.UnitTests
+namespace SparkyTestHelpers.UnitTests
 {
     /// <summary>
     /// <see cref="ForTest" /> unit tests.

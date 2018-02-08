@@ -1,7 +1,6 @@
 using System;
-using System.Text.RegularExpressions;
 
-namespace DotNetTestHelpers.Core.Exceptions
+namespace SparkyTestHelpers.Core.Exceptions
 {
     /// <summary>
     /// Assert that an exception is not thrown when an action is executed. This class/method doesn't do much,

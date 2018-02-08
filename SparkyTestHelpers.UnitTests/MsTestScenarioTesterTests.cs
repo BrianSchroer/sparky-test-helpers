@@ -1,10 +1,10 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DotNetTestHelpers.Core.Exceptions;
-using DotNetTestHelpers.Core.Scenarios;
-using DotNetTestHelpers.MsTest.Scenarios;
+using SparkyTestHelpers.Core.Exceptions;
+using SparkyTestHelpers.Core.Scenarios;
+using SparkyTestHelpers.MsTest.Scenarios;
 
-namespace DotNetTestHelpers.UnitTests
+namespace SparkyTestHelpers.UnitTests
 {
     /// <summary>
     /// <see cref="MsTestScenarioTester{TScenario}" /> unit tests.
