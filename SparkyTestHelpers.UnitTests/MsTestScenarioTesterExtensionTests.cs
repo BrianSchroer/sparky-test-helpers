@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using SparkyTestHelpers.Core.Exceptions;
-using SparkyTestHelpers.MsTest.Scenarios;
+using SparkyTestHelpers.Exceptions;
+using SparkyTestHelpers.Scenarios.MsTest;
 
 namespace SparkyTestHelpers.UnitTests
 {
@@ -44,7 +44,7 @@ namespace SparkyTestHelpers.UnitTests
             var scenarios = new[] { "a", "b", "c" };
 
             AssertExceptionThrown
-                .OfType<SparkyTestHelpers.Core.Scenarios.ScenarioTestFailureException>()
+                .OfType<SparkyTestHelpers.Scenarios.ScenarioTestFailureException>()
                 .WhenExecuting(() => scenarios.TestEach(scenario =>
                   {
                       switch (scenario)

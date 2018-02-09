@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using SparkyTestHelpers.Core.Scenarios;
 
-namespace SparkyTestHelpers.MsTest.Scenarios
+namespace SparkyTestHelpers.Scenarios
 {
     /// <summary>
     /// <see cref="ScenarioTester{TScenario}" /> extension methods.
     /// </summary>
-    public static class MsTestScenarioTesterExtension
+    public static class ScenarioTesterExtension
     {
         /// <summary>
         /// Calls the specified <paramref name="test" /> action for each scenario in enumerable.
@@ -36,8 +35,7 @@ namespace SparkyTestHelpers.MsTest.Scenarios
         public static ScenarioTester<TScenario> TestEach<TScenario>(
             this IEnumerable<TScenario> enumerable, Action<TScenario> test)
         {
-            var tester = (ScenarioTester<TScenario>)new MsTestScenarioTester<TScenario>(enumerable);
-            return tester.TestEach(test);
+            return new ScenarioTester<TScenario>(enumerable).TestEach(test);
         }
     }
 }

@@ -4,11 +4,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Brian Schroer</Authors>
     <Company>Brian Schroer</Company>
-    <Description>MSTest extensions for SparkyTestHelpers.Core</Description>
+    <Description>MSTest extensions for SparkyTestHelpers</Description>
     <Copyright>Copyright © Brian Schroer 2018</Copyright>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers.Core/Sparky.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, rowtest, mstest</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -20,7 +20,10 @@
 
   <ItemGroup>
     <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
-    <PackageReference Include="SparkyTestHelpers.Core" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SparkyTestHelpers\SparkyTestHelpers.csproj" />
   </ItemGroup>
 
 </Project>

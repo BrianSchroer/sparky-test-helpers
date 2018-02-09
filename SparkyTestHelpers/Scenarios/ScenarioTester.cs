@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace SparkyTestHelpers.Core.Scenarios
+namespace SparkyTestHelpers.Scenarios
 {
     /// <summary>
     /// <para>

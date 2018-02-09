@@ -8,14 +8,14 @@
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <Authors>Brian Schroer</Authors>
-    <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers.Core/Sparky.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <Copyright>Copyright © Brian Schroer 2018</Copyright>
     <PackageTags>test, testing, unittest, rowtest</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\SparkyTestHelpers.Core.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netstandard2.0\SparkyTestHelpers.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

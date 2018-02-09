@@ -1,6 +1,6 @@
 using System;
 
-namespace SparkyTestHelpers.Core.Exceptions
+namespace SparkyTestHelpers.Exceptions
 {
     /// <summary>
     /// Assert that an exception is not thrown when an action is executed. This class/method doesn't do much,

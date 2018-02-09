@@ -1,6 +1,6 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SparkyTestHelpers.Core.Scenarios;
+using SparkyTestHelpers.Scenarios;
 using System.Linq;
 
 namespace SparkyTestHelpers.UnitTests
@@ -65,7 +65,7 @@ namespace SparkyTestHelpers.UnitTests
             {
                 Console.WriteLine(ex.Message);
 
-                string expected = "Scenario[1] (2 of 3) - Assert.Fail failed. Test b failed!" 
+                string expected = "Scenario[1] (2 of 3) - Assert.Fail failed. Test b failed!"
                     + "\n\nScenario data - System.String: \"b\"\n";
 
                 Assert.AreEqual(expected, ex.Message);
@@ -83,7 +83,7 @@ namespace SparkyTestHelpers.UnitTests
             {
                 new ScenarioTester<string>(scenarios).TestEach(scenario =>
                 {
- 
+
                     if (scenario != "b")
                     {
                         Assert.Fail($"Test {scenario} failed!");
@@ -94,7 +94,7 @@ namespace SparkyTestHelpers.UnitTests
             {
                 Console.WriteLine(ex.Message);
 
-                string expected = 
+                string expected =
                     "Scenario[0] (1 of 3) - Assert.Fail failed. Test a failed!"
                         + "\n\nScenario data - System.String: \"a\"\n"
                         + "\nScenario[2] (3 of 3) - Assert.Fail failed. Test c failed!"

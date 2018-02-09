@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using SparkyTestHelpers.Core.Exceptions;
-using SparkyTestHelpers.Core.Scenarios;
+using SparkyTestHelpers.Exceptions;
+using SparkyTestHelpers.Scenarios;
 
 namespace SparkyTestHelpers.UnitTests
 {
