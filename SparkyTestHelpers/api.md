@@ -3,6 +3,8 @@ This package contains:
 * **SparkyTestHelpers.Exceptions**: helpers for testing that an expected exception is thrown, with the expected message
 * **SparkyTestHelpers.Scenarios**: helpers for testing a method with a variety of different input scenarios
 
+_see also_: [SparkyTestHelpers.Scenarios.MsTest](https://www.nuget.org/packages/SparkyTestHelpers.Scenarios.MsTest/): MS Test / VisualStudio.TestTools implementation for properly handling `Assert.Inconclusive()` with the Visual Studio test runner
+
 ---
 
 ## AssertExceptionNotThrown
