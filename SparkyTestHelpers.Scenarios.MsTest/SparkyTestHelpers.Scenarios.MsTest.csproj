@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Brian Schroer</Authors>
     <Company>Brian Schroer</Company>
-    <Description>MSTest extensions for SparkyTestHelpers</Description>
+    <Description>MSTest implementation of SparkyTestHelpers.Scenarios</Description>
     <Copyright>Copyright © Brian Schroer 2018</Copyright>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
@@ -20,10 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\SparkyTestHelpers\SparkyTestHelpers.csproj" />
+    <PackageReference Include="SparkyTestHelpers" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

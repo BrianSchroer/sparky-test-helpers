@@ -1,124 +1,41 @@
-This package contains:
+This package contains an implementation of **[SparkyTestHelpers](https://www.nuget.org/packages/SparkyTestHelpers/1.0.0).Scenarios** for "MsTest" / VisualStudio.TestTools.
 
-* **SparkyTestHelpers.Exceptions**: helpers for testing that an expected exception is thrown, with the expected message
-* **SparkyTestHelpers.Scenarios**: helpers for testing a method with a variety of different input scenarios
-
----
-
-## AssertExceptionNotThrown
-
-_class SparkyTestHelpers.Exceptions.AssertExceptionNotThrown_
-
-Assert that an exception is not thrown when an action is executed. This class/method doesn't do much,
-but it clarifies the intent of Unit Tests that wish to show that an action works correctly.
-
-**Static Methods**
-
-* _void_ **WhenExecuting** _(Action action)_  
-  Asserts that an exception was not thrown when executing an Action.
-
-**Example**
-
-```csharp
-using SparkyTestHelpers.Exceptions;
-```
-
-```csharp
-AssertExceptionNotThrown.WhenExecuting(() => foo.Bar(baz));
-```
+The only differences are:
+* If you use MsTest's `Assert.Inconclusive()` in a scenario test, your scenario "suite" will be recognized as inconclusive and not as a failure by the Visual Studio test runner.
+* The "using" statement is `using SparkyTestHelpers.Scenarios.MsTest;` instead of `using SparkyTestHelpers.Scenarios;` 
 
 ---
+## MsTestScenarioTester<TScenario>
 
-## AssertExceptionThrown
-
-_class SparkyTestHelpers.Exceptions.AssertExceptionThrown_
-
-This class is used to assert than an expected exception is thrown when a
-test action is executed.
-
-Why would you want to use this class instead of something like the
-VisualStudio TestTools ExpectedExceptionAttribute?
-
-* This class allows you to check the exception message.
-* This class allows you to assert than exception is thrown for a specific
-  statement, not just anywhere in the test method.
-
-There is no public constructor for this class. It is constructed using the "fluent" static factory method **AssertExceptionThrown.OfType<TException>()**.
-
-**Example**
-
-```csharp
-using SparkyTestHelpers.Exceptions;
-```
-
-```csharp
-AssertExceptionThrown
-    .OfType<ArgumentOutOfRangeException>()
-    .WithMessage("Limit cannot be greater than 10.")
-    .WhenExecuting(() => { var foo = new Foo(limit: 11); });
-```
-
-**Methods**
-
-* _AssertExceptionThrown_ **WithMessage** _(String expected)_  
-  Set up to test that the action under test throws an exception where the message exactly matches the message.
-
-* _AssertExceptionThrown_ **WithMessageStartingWith** _(String expected)_  
-  Set up to test that the action under test throws an exception where the message starts with the message.
-
-* _AssertExceptionThrown_ **WithMessageContaining** _(String expected)_  
-  Set up to test that the action under testthrows an exception where the message contains themessage.
-
-* _AssertExceptionThrown_ **WithMessageMatching** _(String regExPattern)_  
-  Set up to test that the action under test throws an exception where the message matches the specified regular expression pattern.
-
-* _Exception_ **WhenExecuting** _(Action action)_  
-  Call the action that should throw an exception, and assert that the exception was thrown.
-
-**Static Methods**
-
-* _AssertExceptionThrown_.**OfType<TException>\***()\*
-
-  * Set up to test that the action under test throws an exception of this specific type.
-
-* _AssertExceptionThrown_.**OfTypeOrSubclassOfType<TException>\***()\*
-  * Set up to test that the action under test throws an exception of this type of a subclass of this type.
-
----
-
-## ScenarioTester<TScenario>
-
-_class SparkyTestHelpers.Scenarios.ScenarioTester<TScenario>_
+_class SparkyTestHelpers.Scenarios.MsTest.MsTestScenarioTester<TScenario>_
 
 VisualStudio.TestTools doesn't have "RowTest" or "TestCase" attributes like NUnit or other .NET testing frameworks. (It does have a way to do data-driven tests, but it's pretty cumbersome.) This class provides the ability to execute the same test code for multiple test cases and, after all test cases have been executed, failing the unit test if any of the test cases failed.
 
-Even if you not testing with MSTest / VisualStudio.TestTools, these helpers provide an alternative syntax for "row testing".
-
-This class is rarely used directly. It is more often used via the IEnumerable<TScenario>.**TestEach** extension method...
+This class is rarely used directly. It is more often used via the IEnumerable<TScenario>.**TestEach** extension method (see below).
 
 When one or more of the test scenarios fails, the failure exception shows which were unsuccessful, for example, this scenario test:
 
 ```csharp
-            ForTest.Scenarios
-            (
-                new { DateString = "1/31/2023", ShouldBeValid = true },
-                new { DateString = "2/31/2023", ShouldBeValid = true },
-                new { DateString = "3/31/2023", ShouldBeValid = true },
-                new { DateString = "4/31/2023", ShouldBeValid = true },
-                new { DateString = "5/31/2023", ShouldBeValid = true },
-                new { DateString = "6/31/2023", ShouldBeValid = false }
-            )
-            .TestEach(scenario =>
-            {
-                DateTime dt;
-                Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));
-            });
+ForTest.Scenarios
+(
+    new { DateString = "1/31/2023", ShouldBeValid = true },
+    new { DateString = "2/31/2023", ShouldBeValid = true },
+    new { DateString = "3/31/2023", ShouldBeValid = true },
+    new { DateString = "4/31/2023", ShouldBeValid = true },
+    new { DateString = "5/31/2023", ShouldBeValid = true },
+    new { DateString = "6/31/2023", ShouldBeValid = false }
+)
+.TestEach(scenario =>
+{
+    DateTime dt;
+    Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));
+});
 ```
 
 ...throws this exception:
 
 ```
-Test method SparkyTestHelpers.UnitTests.ForTestTests.DateTests threw exception:
+Test method SparkyTestHelpers.UnitTests.DateTests threw exception:
 SparkyTestHelpers.Scenarios.ScenarioTestFailureException: Scenario[1] (2 of 6) - Assert.AreEqual failed. Expected:<True>. Actual:<False>.
 
 Scenario data - anonymousType: {"DateString":"2/31/2023","ShouldBeValid":true}
@@ -130,20 +47,20 @@ Scenario data - anonymousType: {"DateString":"4/31/2023","ShouldBeValid":true}
 
 ---
 
-## ScenarioTesterExtension
+## MsTestScenarioTesterExtension
 
-_class SparkyTestHelpers.Scenarios.ScenarioTesterExtension_
+_class SparkyTestHelpers.Scenarios.MsTest.MsTestScenarioTesterExtension_
 
-**ScenarioTester<TScenario>** extension methods.
+**MsTestScenarioTester<TScenario>** extension methods.
 
 **Static Methods**
 
-* _ScenarioTester<TScenario>_ **TestEach** _(IEnumerable<TScenario> enumerable, Action<TScenario> test)_
+* _MsTestScenarioTester<TScenario>_ **TestEach** _(IEnumerable<TScenario> enumerable, Action<TScenario> test)_
 
 **Example**
 
 ```csharp
-using SparkyTestHelpers.Scenarios;
+using SparkyTestHelpers.Scenarios.MsTest;
 ```
 
 ```csharp
@@ -167,9 +84,9 @@ new []
 
 ## ForTest
 
-_class SparkyTestHelpers.Scenarios.ForTest_
+_class SparkyTestHelpers.Scenarios.MsTest.ForTest_
 
-"Syntactic sugar" methods for working with **ScenarioTester<TScenario>**
+"Syntactic sugar" methods for working with **MsTestScenarioTester<TScenario>**
 
 **Static Methods**
 
@@ -178,7 +95,7 @@ _class SparkyTestHelpers.Scenarios.ForTest_
 **Example**
 
 ```csharp
-using SparkyTestHelpers.Scenarios;
+using SparkyTestHelpers.Scenarios.MsTest;
 ```
 
 ```csharp
@@ -203,7 +120,7 @@ ForTest.Scenarios
 **_Example_**
 
 ```csharp
-using SparkyTestHelpers.Scenarios;
+using SparkyTestHelpers.Scenarios.MsTest;
 ```
 
 ```csharp
@@ -216,7 +133,7 @@ ForTest.EnumValues<OrderStatus>()
 **_Example_**
 
 ```csharp
-using SparkyTestHelpers.Scenarios;
+using SparkyTestHelpers.Scenarios.MsTest;
 ```
 
 ```csharp

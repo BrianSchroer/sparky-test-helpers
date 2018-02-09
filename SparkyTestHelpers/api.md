@@ -33,11 +33,9 @@ AssertExceptionNotThrown.WhenExecuting(() => foo.Bar(baz));
 
 _class SparkyTestHelpers.Exceptions.AssertExceptionThrown_
 
-This class is used to assert than an expected exception is thrown when a
-test action is executed.
+This class is used to assert than an expected exception is thrown when a test action is executed.
 
-Why would you want to use this class instead of something like the
-VisualStudio TestTools ExpectedExceptionAttribute?
+Why would you want to use this class instead of something like the VisualStudio TestTools ExpectedExceptionAttribute?
 
 * This class allows you to check the exception message.
 * This class allows you to assert than exception is thrown for a specific
@@ -92,33 +90,33 @@ _class SparkyTestHelpers.Scenarios.ScenarioTester<TScenario>_
 
 VisualStudio.TestTools doesn't have "RowTest" or "TestCase" attributes like NUnit or other .NET testing frameworks. (It does have a way to do data-driven tests, but it's pretty cumbersome.) This class provides the ability to execute the same test code for multiple test cases and, after all test cases have been executed, failing the unit test if any of the test cases failed.
 
-Even if you not testing with MSTest / VisualStudio.TestTools, these helpers provide an alternative syntax for "row testing".
+Even if you're not testing with MSTest / VisualStudio.TestTools, these helpers provide an alternative syntax for "row testing".
 
-This class is rarely used directly. It is more often used via the IEnumerable<TScenario>.**TestEach** extension method...
+This class is rarely used directly. It is more often used via the IEnumerable<TScenario>.**TestEach** extension method (see below).
 
 When one or more of the test scenarios fails, the failure exception shows which were unsuccessful, for example, this scenario test:
 
 ```csharp
-            ForTest.Scenarios
-            (
-                new { DateString = "1/31/2023", ShouldBeValid = true },
-                new { DateString = "2/31/2023", ShouldBeValid = true },
-                new { DateString = "3/31/2023", ShouldBeValid = true },
-                new { DateString = "4/31/2023", ShouldBeValid = true },
-                new { DateString = "5/31/2023", ShouldBeValid = true },
-                new { DateString = "6/31/2023", ShouldBeValid = false }
-            )
-            .TestEach(scenario =>
-            {
-                DateTime dt;
-                Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));
-            });
+ForTest.Scenarios
+(
+    new { DateString = "1/31/2023", ShouldBeValid = true },
+    new { DateString = "2/31/2023", ShouldBeValid = true },
+    new { DateString = "3/31/2023", ShouldBeValid = true },
+    new { DateString = "4/31/2023", ShouldBeValid = true },
+    new { DateString = "5/31/2023", ShouldBeValid = true },
+    new { DateString = "6/31/2023", ShouldBeValid = false }
+)
+.TestEach(scenario =>
+{
+    DateTime dt;
+    Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));
+});
 ```
 
 ...throws this exception:
 
 ```
-Test method SparkyTestHelpers.UnitTests.ForTestTests.DateTests threw exception:
+Test method SparkyTestHelpers.UnitTests.DateTests threw exception:
 SparkyTestHelpers.Scenarios.ScenarioTestFailureException: Scenario[1] (2 of 6) - Assert.AreEqual failed. Expected:<True>. Actual:<False>.
 
 Scenario data - anonymousType: {"DateString":"2/31/2023","ShouldBeValid":true}
