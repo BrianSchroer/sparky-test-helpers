@@ -1,13 +1,9 @@
-This package contains:
-
 * **SparkyTestHelpers.Exceptions**: helpers for testing that an expected exception is thrown, with the expected message
 * **SparkyTestHelpers.Scenarios**: helpers for testing a method with a variety of different input scenarios
 
 _see also_: 
 * **[SparkyTestHelpers.Scenarios.MsTest](https://www.nuget.org/packages/SparkyTestHelpers.Scenarios.MsTest/)**: provides better scenario test `Assert.Inconclusive()` handling with the Visual Studio test runner
-
 ---
-
 ## AssertExceptionNotThrown
 
 _class SparkyTestHelpers.Exceptions.AssertExceptionNotThrown_
@@ -29,7 +25,6 @@ using SparkyTestHelpers.Exceptions;
 ```csharp
 AssertExceptionNotThrown.WhenExecuting(() => foo.Bar(baz));
 ```
-
 ---
 
 ## AssertExceptionThrown
@@ -38,21 +33,18 @@ _class SparkyTestHelpers.Exceptions.AssertExceptionThrown_
 
 This class is used to assert than an expected exception is thrown when a test action is executed.
 
-Why would you want to use this class instead of something like the VisualStudio TestTools ExpectedExceptionAttribute?
+Why use this class instead of something like the VisualStudio TestTools ExpectedExceptionAttribute?
 
-* This class allows you to check the exception message.
-* This class allows you to assert than exception is thrown for a specific
-  statement, not just anywhere in the test method.
+* It lets you to check the exception message.
+* It lets you assert the exception is thrown for a specific statement, not just anywhere in the code under test.
 
-There is no public constructor for this class. It is constructed using the "fluent" static factory method **AssertExceptionThrown.OfType<TException>()**.
+There is no public constructor for this class. It's constructed using the "fluent" static factory method **AssertExceptionThrown.OfType<TException>()**.
 
 **Example**
 
 ```csharp
 using SparkyTestHelpers.Exceptions;
-```
-
-```csharp
+. . .
 AssertExceptionThrown
     .OfType<ArgumentOutOfRangeException>()
     .WithMessage("Limit cannot be greater than 10.")
@@ -63,16 +55,12 @@ AssertExceptionThrown
 
 * _AssertExceptionThrown_ **WithMessage** _(String expected)_  
   Set up to test that the action under test throws an exception where the message exactly matches the message.
-
 * _AssertExceptionThrown_ **WithMessageStartingWith** _(String expected)_  
   Set up to test that the action under test throws an exception where the message starts with the message.
-
 * _AssertExceptionThrown_ **WithMessageContaining** _(String expected)_  
   Set up to test that the action under testthrows an exception where the message contains themessage.
-
 * _AssertExceptionThrown_ **WithMessageMatching** _(String regExPattern)_  
   Set up to test that the action under test throws an exception where the message matches the specified regular expression pattern.
-
 * _Exception_ **WhenExecuting** _(Action action)_  
   Call the action that should throw an exception, and assert that the exception was thrown.
 
@@ -84,7 +72,6 @@ AssertExceptionThrown
 
 * _AssertExceptionThrown_.**OfTypeOrSubclassOfType<TException>\***()\*
   * Set up to test that the action under test throws an exception of this type of a subclass of this type.
-
 ---
 
 ## ScenarioTester<TScenario>
@@ -93,7 +80,7 @@ _class SparkyTestHelpers.Scenarios.ScenarioTester<TScenario>_
 
 VisualStudio.TestTools doesn't have "RowTest" or "TestCase" attributes like NUnit or other .NET testing frameworks. (It does have a way to do data-driven tests, but it's pretty cumbersome.) This class provides the ability to execute the same test code for multiple test cases and, after all test cases have been executed, failing the unit test if any of the test cases failed.
 
-Even if you're not testing with MSTest / VisualStudio.TestTools, these helpers provide an alternative syntax for "row testing".
+Even if you're not testing with MSTest/VisualStudio.TestTools, these helpers provide an alternative syntax for "row testing".
 
 This class is rarely used directly. It is more often used via the IEnumerable<TScenario>.**TestEach** extension method (see below).
 
@@ -104,9 +91,6 @@ ForTest.Scenarios
 (
     new { DateString = "1/31/2023", ShouldBeValid = true },
     new { DateString = "2/31/2023", ShouldBeValid = true },
-    new { DateString = "3/31/2023", ShouldBeValid = true },
-    new { DateString = "4/31/2023", ShouldBeValid = true },
-    new { DateString = "5/31/2023", ShouldBeValid = true },
     new { DateString = "6/31/2023", ShouldBeValid = false }
 )
 .TestEach(scenario =>
@@ -120,11 +104,11 @@ ForTest.Scenarios
 
 ```
 Test method SparkyTestHelpers.UnitTests.DateTests threw exception:
-SparkyTestHelpers.Scenarios.ScenarioTestFailureException: Scenario[1] (2 of 6) - Assert.AreEqual failed. Expected:<True>. Actual:<False>.
+SparkyTestHelpers.Scenarios.ScenarioTestFailureException: Scenario[1] (2 of 3) - Assert.AreEqual failed. Expected:<True>. Actual:<False>.
 
 Scenario data - anonymousType: {"DateString":"2/31/2023","ShouldBeValid":true}
 
-Scenario[3] (4 of 6) - Assert.AreEqual failed. Expected:<True>. Actual:<False>.
+Scenario[2] (3 of 3) - Assert.AreEqual failed. Expected:<True>. Actual:<False>.
 
 Scenario data - anonymousType: {"DateString":"4/31/2023","ShouldBeValid":true}
 ```
@@ -133,15 +117,11 @@ Scenario data - anonymousType: {"DateString":"4/31/2023","ShouldBeValid":true}
 
 * *ScenarioTester* **BeforeEachTest** (*Action&lt;TScenario&gt;*)
  
-    Defines action to be called before each scenario is tested.
+    Defines action to called before each scenario is tested.
 
 **Example**
 ```csharp
-ForTest.Scenarios
-(
-    new { DateString = "1/31/2023", ShouldBeValid = true },
-    new { DateString = "2/31/2023", ShouldBeValid = true },
-)
+ForTest.Scenarios(*array*)
 .BeforeEachTest(scenario => 
 {
     // do something, e.g. reset mocks, log scenario details
@@ -152,21 +132,16 @@ ForTest.Scenarios
     Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));
 });
 ```
-
 * *ScenarioTester* **AfterEachTest** (*Action&lt;TScenario&gt;*)
  
-    Defines function to be called after each scenario is tested.
+    Defines function called after each scenario is tested.
     The function receives the scenario and the exception (if any) caught by the test. 
     If the function returns true, the scenario test is "passed". 
     If false, exception is thrown to fail the test
 
 **Example**
 ```csharp
-ForTest.Scenarios
-(
-    new { DateString = "1/31/2023", ShouldBeValid = true },
-    new { DateString = "2/31/2023", ShouldBeValid = true },
-)
+ForTest.Scenarios(*array*)
 .AfterEachTest((scenario, ex) => 
 {
     // do something, e.g. log scenario details, decide if scenario with exception should be passed
@@ -178,8 +153,7 @@ ForTest.Scenarios
     Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));
 });
 ```
-  
----
+ ---
 
 ## ScenarioTesterExtension
 
@@ -195,17 +169,11 @@ _class SparkyTestHelpers.Scenarios.ScenarioTesterExtension_
 
 ```csharp
 using SparkyTestHelpers.Scenarios;
-```
-
-```csharp
+. . .
 new []
 {
     new { DateString = "1/31/2023", ShouldBeValid = true },  
-    new { DateString = "2/31/2023", ShouldBeValid = false },  
-    new { DateString = "3/31/2023", ShouldBeValid = true },  
-    new { DateString = "4/31/2023", ShouldBeValid = false },  
-    new { DateString = "5/31/2023", ShouldBeValid = true },  
-    new { DateString = "6/31/2023", ShouldBeValid = false }
+    new { DateString = "2/31/2023", ShouldBeValid = false } 
 }
 .TestEach(scenario =>
 {
@@ -213,7 +181,6 @@ new []
     Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));  
 });  
 ```
-
 ---
 
 ## ForTest
@@ -230,17 +197,11 @@ _class SparkyTestHelpers.Scenarios.ForTest_
 
 ```csharp
 using SparkyTestHelpers.Scenarios;
-```
-
-```csharp
+. . .
 ForTest.Scenarios
 (
     new { DateString = "1/31/2023", ShouldBeValid = true },  
-    new { DateString = "2/31/2023", ShouldBeValid = false },  
-    new { DateString = "3/31/2023", ShouldBeValid = true },  
-    new { DateString = "4/31/2023", ShouldBeValid = false },  
-    new { DateString = "5/31/2023", ShouldBeValid = true },  
-    new { DateString = "6/31/2023", ShouldBeValid = false }
+    new { DateString = "2/31/2023", ShouldBeValid = false }
 )
 .TestEach(scenario =>
 {
@@ -255,9 +216,7 @@ ForTest.Scenarios
 
 ```csharp
 using SparkyTestHelpers.Scenarios;
-```
-
-```csharp
+. . .
 ForTest.EnumValues<OrderStatus>()
     .TestEach(orderStatus => foo.Bar(orderStatus));
 ```
@@ -268,9 +227,7 @@ ForTest.EnumValues<OrderStatus>()
 
 ```csharp
 using SparkyTestHelpers.Scenarios;
-```
-
-```csharp
+. . .
 ForTest.EnumValues<OrderStatus>()
     .ExceptFor(OrderStatus.Cancelled)
     .TestEach(orderStatus => foo.Bar(orderStatus));
