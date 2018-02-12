@@ -29,13 +29,13 @@ _mock.Setup(x => x.DoSomething(
 * Any.Int
 * Any.Object
 * Any.String
-* Any.InstanceOf&lt;T&gt;
-* Any.Array&lt;T&gt;
-* Any.IEnumerable&lt;T&gt;
-* Any.List&lt;T&gt;
-* Any.Dictionary&lt;TKey, TValue&gt;
-* Any.KeyValuePair&lt;TKey, TValue&gt;
-* Any.Tuple&lt;T1, T2&gt;
+* Any.InstanceOf<T>
+* Any.Array<T>
+* Any.IEnumerable<T>
+* Any.List<T>
+* Any.Dictionary<TKey, TValue>
+* Any.KeyValuePair<TKey, TValue>
+* Any.Tuple<T1, T2>
 
 ### Alternate "Verify" syntax
 
@@ -74,7 +74,7 @@ using SparkyTestHelpers.Moq;
 // sad:
 _mock.Setup(x => x.Foo(It.Is<int>(i => i % 2 == 0))).Returns(true);
 // rad!:
-_mock.Setup(x => x.Foo(Any.Int.Where(i => i % 2 == 0))).Returns(true);_
+_mock.Setup(x => x.Foo(Any.Int.Where(i => i % 2 == 0))).Returns(true);
 ```
 ### *mock*.Expression extension method
 ...makes it easy to create a reusable expression so you don't duplicate code in ".Setup" and ".Verify" calls:

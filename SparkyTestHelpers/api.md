@@ -1,20 +1,19 @@
-* **SparkyTestHelpers.Exceptions**: helpers for testing that an expected exception is thrown, with the expected message
-* **SparkyTestHelpers.Scenarios**: helpers for testing a method with a variety of different input scenarios
+* **SparkyTestHelpers.Exceptions**: for testing exception expectations
+* **SparkyTestHelpers.Scenarios**: for testing a method with a variety of different input scenarios
 
 _see also_: 
+* **[SparkyTestHelpers.Moq](https://www.nuget.org/packages/SparkyTestHelpers.Moq)**: syntax helpers for testing with [Moq](https://github.com/moq)
 * **[SparkyTestHelpers.Scenarios.MsTest](https://www.nuget.org/packages/SparkyTestHelpers.Scenarios.MsTest/)**: provides better scenario test `Assert.Inconclusive()` handling with the Visual Studio test runner
 ---
 ## AssertExceptionNotThrown
-
 _class SparkyTestHelpers.Exceptions.AssertExceptionNotThrown_
 
-Assert that an exception is not thrown when an action is executed. This class/method doesn't do much,
-but it clarifies the intent of Unit Tests that wish to show that an action works correctly.
+Assert exception is not thrown when an action is executed. This method doesn't do much,
+but clarifies the intent of tests that wish to show that an action works correctly.
 
 **Static Methods**
 
-* _void_ **WhenExecuting** _(Action action)_  
-  Asserts that an exception was not thrown when executing an Action.
+* _void_ **WhenExecuting** _(Action action)_ 
 
 **Example**
 
@@ -29,9 +28,9 @@ AssertExceptionNotThrown.WhenExecuting(() => foo.Bar(baz));
 
 _class SparkyTestHelpers.Exceptions.AssertExceptionThrown_
 
-This class is used to assert than an expected exception is thrown when a test action is executed.
+Used to assert than an expected exception is thrown when a test action is executed.
 
-Why use this class instead of something like the VisualStudio TestTools ExpectedExceptionAttribute?
+Why use this instead of something like the VisualStudio TestTools ExpectedExceptionAttribute?
 
 * It lets you to check the exception message.
 * It lets you assert the exception is thrown for a specific statement, not just anywhere in the code under test.
@@ -52,15 +51,15 @@ AssertExceptionThrown
 **Methods**
 
 * _AssertExceptionThrown_ **WithMessage** _(String expected)_  
-  Set up to test that the action under test throws an exception where the message exactly matches the message.
+  Set up to test that the action under test throws an exception where the message exactly matche.
 * _AssertExceptionThrown_ **WithMessageStartingWith** _(String expected)_  
-  Set up to test that the action under test throws an exception where the message starts with the message.
+  Set up to test that the action under test throws an exception where the message starts with expected string.
 * _AssertExceptionThrown_ **WithMessageContaining** _(String expected)_  
-  Set up to test that the action under testthrows an exception where the message contains themessage.
+  Set up to test that the action under test throws an exception where the message contains substring.
 * _AssertExceptionThrown_ **WithMessageMatching** _(String regExPattern)_  
-  Set up to test that the action under test throws an exception where the message matches the specified regular expression pattern.
+  Set up to test that the action under test throws an exception where the message matches RegEx pattern.
 * _Exception_ **WhenExecuting** _(Action action)_  
-  Call the action that should throw an exception, and assert that the exception was thrown.
+  Call action that should throw an exception, and assert that the exception was thrown.
 
 **Static Methods**
 
@@ -76,13 +75,13 @@ AssertExceptionThrown
 
 _class SparkyTestHelpers.Scenarios.ScenarioTester<TScenario>_
 
-VisualStudio.TestTools doesn't have "RowTest" or "TestCase" attributes like NUnit or other .NET testing frameworks. (It does have a way to do data-driven tests, but it's pretty cumbersome.) This class provides the ability to execute the same test code for multiple test cases and, after all test cases have been executed, failing the unit test if any of the test cases failed.
+VisualStudio.TestTools doesn't have "RowTest" or "TestCase" attributes like NUnit or other .NET testing frameworks. (It does have "data-driven tests", but it's pretty cumbersome.) This class provides the ability to execute the same test code for multiple test cases and, after all test cases have been executed, failing the unit test if any of the test cases failed.
 
 Even if you're not testing with MSTest/VisualStudio.TestTools, these helpers provide an alternative syntax for "row testing".
 
-This class is rarely used directly. It is more often used via the IEnumerable<TScenario>.**TestEach** extension method (see below).
+This class is rarely used directly. It's easier to use with IEnumerable<TScenario>.**TestEach** or **ForTest.Scenarios** (see below).
 
-When one or more of the test scenarios fails, the failure exception shows which were unsuccessful, for example, this scenario test:
+When one or more of the scenarios fails, the failure exception shows which were unsuccessful, for example, this scenario test:
 
 ```csharp
 ForTest.Scenarios
