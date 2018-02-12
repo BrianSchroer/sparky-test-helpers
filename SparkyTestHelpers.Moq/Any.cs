@@ -46,44 +46,49 @@ namespace SparkyTestHelpers.Moq
         public static int Int => It.IsAny<int>();
 
         /// <summary>
+        /// <see cref="It.IsAny{Object}"/> wrapper.
+        /// </summary>
+        public static object Object => It.IsAny<object>();
+
+        /// <summary>
         /// <see cref="It.IsAny{String}()"/> wrapper.
         /// </summary>
         public static string String => It.IsAny<string>();
 
         /// <summary>
-        /// <see cref="cref="It.IsAny{T}" of <typeparamref name="T"/> wrapper.
+        /// <see cref="It.IsAny{T}" /> of <typeparamref name="T"/> wrapper.
         /// </summary>
         public static T InstanceOf<T>() => It.IsAny<T>();
 
         /// <summary>
-        /// <see cref="cref="It.IsAny{Array}" of <typeparamref name="T"/> wrapper.
+        /// <see cref="It.IsAny{Array}"/> of <typeparamref name="T"/> wrapper.
         /// </summary>
         public static T[] Array<T>() => It.IsAny<T[]>();
 
         /// <summary>
-        /// <see cref="cref="It.IsAny{IEnumerable}" of <typeparamref name="T"/> wrapper.
+        /// <see cref="It.IsAny{IEnumerable}"/> of <typeparamref name="T"/> wrapper.
         /// </summary>
         public static IEnumerable<T> IEnumerable<T>() => It.IsAny<IEnumerable<T>>();
 
         /// <summary>
-        /// <see cref="cref="It.IsAny{List}" of <typeparamref name="T"/> wrapper.
+        /// <see cref="It.IsAny{List}"/> of <typeparamref name="T"/> wrapper.
         /// </summary>
         public static List<T> List<T>() => It.IsAny<List<T>>();
 
         /// <summary>
-        /// <see cref="cref="It.IsAny{Dictionary}" wrapper.
+        /// <see cref="It.IsAny{Dictionary}" wrapper.
         /// </summary>
         public static Dictionary<TKey, TValue> Dictionary<TKey, TValue>() 
             => It.IsAny<Dictionary<TKey, TValue>>();
 
         /// <summary>
-        /// <see cref="cref="It.IsAny{KeyValuePair}" wrapper.
+        /// <see cref="It.IsAny{KeyValuePair}"/> wrapper.
         /// </summary>
         public static KeyValuePair<TKey, TValue> KeyValuePair<TKey, TValue>()
             => It.IsAny<KeyValuePair<TKey, TValue>>();
 
         /// <summary>
-        /// <see cref="cref="It.IsAny{Tuple}" wrapper.
+        /// <see cref="It.IsAny{Tuple}"/> wrapper.
         /// </summary>
         public static Tuple<T1, T2> Tuple<T1, T2>() => It.IsAny<Tuple<T1, T2>>();
     }

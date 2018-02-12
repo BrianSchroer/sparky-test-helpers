@@ -20,9 +20,7 @@ but it clarifies the intent of Unit Tests that wish to show that an action works
 
 ```csharp
 using SparkyTestHelpers.Exceptions;
-```
-
-```csharp
+. . .
 AssertExceptionNotThrown.WhenExecuting(() => foo.Bar(baz));
 ```
 ---
