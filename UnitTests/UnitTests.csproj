@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SparkyTestHelpers.Moq\SparkyTestHelpers.Moq.csproj" />
+    <ProjectReference Include="..\SparkyTestHelpers.Scenarios.MsTest\SparkyTestHelpers.Scenarios.MsTest.csproj" />
     <ProjectReference Include="..\SparkyTestHelpers\SparkyTestHelpers.csproj" />
   </ItemGroup>
 

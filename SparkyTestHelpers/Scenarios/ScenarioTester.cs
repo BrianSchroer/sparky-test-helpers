@@ -30,6 +30,12 @@ namespace SparkyTestHelpers.Scenarios
     {
         private readonly TScenario[] _scenarios;
 
+        private bool _hasAfterTestFunction = false;
+        private bool _hasBeforeTestFunction = false;
+
+        private Func<TScenario, Exception, bool> _afterTest = (scenario, exception) => exception == null;
+        private Action<TScenario> _beforeTest = (scenario) => { };
+
         private Type[] _inconclusiveExceptionTypes = new Type[0];
 
         private readonly Regex _typeNameSuffixRegex
@@ -38,6 +44,42 @@ namespace SparkyTestHelpers.Scenarios
 
         private readonly Regex _genericVersionRegex = new Regex(@"`\d+",
             RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Defines <see cref="Func{TScenario, Exception, Boolean}"/> to be called after testing each scenario.
+        /// The function receives the scenario and the exception (if any) caught by the test. 
+        /// If the function returns true, the scenario test is "passed". If false, exception is thrown to fail the test.
+        /// </summary>
+        /// <param name="func">The "callback" function.</param>
+        /// <returns>"This" <see cref="ScenarioTester{TScenario}"/> instance.</returns>
+        public ScenarioTester<TScenario> AfterEachTest(Func<TScenario, Exception, bool> func)
+        {
+            if (_hasAfterTestFunction)
+            {
+                throw new InvalidOperationException("AfterEachTest cannot be called more than once.");
+            }
+
+            _afterTest = func;
+            _hasAfterTestFunction = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Defines <see cref="Action"/> to be called before testing each scenario.
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <returns>"This" <see cref="ScenarioTester{TScenario}"/> instance.</returns>
+        public ScenarioTester<TScenario> BeforeEachTest(Action<TScenario> action)
+        {
+            if (_hasBeforeTestFunction)
+            {
+                throw new InvalidOperationException("BeforeEachTest cannot be called more than once.");
+            }
+
+            _beforeTest = action;
+            _hasBeforeTestFunction = true;
+            return this;
+        }
 
         /// <summary>
         /// Used by subclass to specify "inconclusive test" exception types.
@@ -66,7 +108,7 @@ namespace SparkyTestHelpers.Scenarios
         }
 
         /// <summary>
-        /// Instantiates a new <cref="ScenarioTester{TScenario}" /> object.
+        /// Instantiates a new <see cref="ScenarioTester{TScenario}" /> object.
         /// </summary>
         /// <param name="scenarios">The test scenarios.</param>
         public ScenarioTester(IEnumerable<TScenario> scenarios)
@@ -85,14 +127,38 @@ namespace SparkyTestHelpers.Scenarios
 
             foreach (TScenario scenario in _scenarios)
             {
+                Exception scenarioException = null;
+
                 scenarioIndex++;
+
                 try
                 {
+                    _beforeTest(scenario);
                     test(scenario);
                 }
                 catch (Exception ex)
                 {
-                    SaveCaughtException(scenarioIndex, ex, caughtExceptions);
+                    scenarioException = ex;
+                }
+
+                bool passed = false;
+                try
+                {
+                    passed = _afterTest(scenario, scenarioException);
+
+                    if (!passed && scenarioException == null)
+                    {
+                        throw new InvalidOperationException("Scenario failed by \"AfterEachTest\" function.");
+                    }
+                }
+                catch (Exception afterTestEx)
+                {
+                    scenarioException = afterTestEx;
+                }
+
+                if (!passed)
+                {
+                    SaveCaughtException(scenarioIndex, scenarioException, caughtExceptions);
                 }
             }
 

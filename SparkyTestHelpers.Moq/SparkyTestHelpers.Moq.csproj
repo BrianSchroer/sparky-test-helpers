@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Brian Schroer</Authors>
+    <Company>Brian Schroer</Company>
+    <Description>Unit test helpers providing alternate syntax for testing with Moq</Description>
+    <Copyright>Copyright © Brian Schroer 2018</Copyright>
+    <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageIconUrl>
+    <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
+    <PackageTags>test, testing, unittest, moq</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\\SparkyTestHelpers.Moq.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.8.1" />
+    <PackageReference Include="SparkyTestHelpers" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>

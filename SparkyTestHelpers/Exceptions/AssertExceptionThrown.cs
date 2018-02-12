@@ -118,7 +118,7 @@ namespace SparkyTestHelpers.Exceptions
         /// Set up to test that the <see cref="WhenExecuting(Action)" /> method
         /// throws an exception where the message matches the <paramref name="regExPattern" />.
         /// </summary>
-        /// <param name="expected">The expected exception message.</param>
+        /// <param name="regExPattern">The expected exception message.</param>
         /// <returns>The <see cref="AssertExceptionNotThrown" /> instance, ready to be "chained"
         /// to the <see cref="WhenExecuting(Action)" /> method.
         /// </returns>

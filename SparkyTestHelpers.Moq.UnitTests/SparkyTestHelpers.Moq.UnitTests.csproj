@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SparkyTestHelpers\SparkyTestHelpers.csproj" />
+    <ProjectReference Include="..\SparkyTestHelpers.Moq\SparkyTestHelpers.Moq.csproj" />
   </ItemGroup>
 
 </Project>

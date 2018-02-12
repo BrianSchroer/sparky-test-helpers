@@ -12,6 +12,8 @@
     <Copyright>Copyright © Brian Schroer 2018</Copyright>
     <PackageTags>test, testing, unittest, rowtest</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

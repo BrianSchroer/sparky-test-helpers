@@ -3,7 +3,8 @@ This package contains:
 * **SparkyTestHelpers.Exceptions**: helpers for testing that an expected exception is thrown, with the expected message
 * **SparkyTestHelpers.Scenarios**: helpers for testing a method with a variety of different input scenarios
 
-_see also_: [SparkyTestHelpers.Scenarios.MsTest](https://www.nuget.org/packages/SparkyTestHelpers.Scenarios.MsTest/): MS Test / VisualStudio.TestTools implementation for properly handling `Assert.Inconclusive()` with the Visual Studio test runner
+_see also_: 
+* **[SparkyTestHelpers.Scenarios.MsTest](https://www.nuget.org/packages/SparkyTestHelpers.Scenarios.MsTest/)**: provides better scenario test `Assert.Inconclusive()` handling with the Visual Studio test runner
 
 ---
 
@@ -128,6 +129,56 @@ Scenario[3] (4 of 6) - Assert.AreEqual failed. Expected:<True>. Actual:<False>.
 Scenario data - anonymousType: {"DateString":"4/31/2023","ShouldBeValid":true}
 ```
 
+**Public Methods**
+
+* *ScenarioTester* **BeforeEachTest** (*Action&lt;TScenario&gt;*)
+ 
+    Defines action to be called before each scenario is tested.
+
+**Example**
+```csharp
+ForTest.Scenarios
+(
+    new { DateString = "1/31/2023", ShouldBeValid = true },
+    new { DateString = "2/31/2023", ShouldBeValid = true },
+)
+.BeforeEachTest(scenario => 
+{
+    // do something, e.g. reset mocks, log scenario details
+});
+.TestEach(scenario =>
+{
+    DateTime dt;
+    Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));
+});
+```
+
+* *ScenarioTester* **AfterEachTest** (*Action&lt;TScenario&gt;*)
+ 
+    Defines function to be called after each scenario is tested.
+    The function receives the scenario and the exception (if any) caught by the test. 
+    If the function returns true, the scenario test is "passed". 
+    If false, exception is thrown to fail the test
+
+**Example**
+```csharp
+ForTest.Scenarios
+(
+    new { DateString = "1/31/2023", ShouldBeValid = true },
+    new { DateString = "2/31/2023", ShouldBeValid = true },
+)
+.AfterEachTest((scenario, ex) => 
+{
+    // do something, e.g. log scenario details, decide if scenario with exception should be passed
+    return ex == null;
+});
+.TestEach(scenario =>
+{
+    DateTime dt;
+    Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));
+});
+```
+  
 ---
 
 ## ScenarioTesterExtension

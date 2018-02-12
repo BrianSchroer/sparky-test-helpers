@@ -4,6 +4,11 @@ This repo contains source code and unit tests for nuget packages:
   * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers/)
   * [Source Code](/SparkyTestHelpers)
   * [API documentation](/SparkyTestHelpers/api.md)
+
+* **SparkyTestHelpers.Scenarios.Moq**
+  * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Moq/)
+  * [Source Code](/SparkyTestHelpers.Scenarios.Moq)
+  * [API documentation](/SparkyTestHelpers.Moq/api.md)
   
 * **SparkyTestHelpers.Scenarios.MsTest**
   * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Scenarios.MsTest/)
