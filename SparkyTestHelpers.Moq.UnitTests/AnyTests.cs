@@ -5,7 +5,7 @@ using SparkyTestHelpers.Scenarios;
 using SparkyTestHelpers.Moq;
 using System.Collections.Generic;
 
-namespace SparkyTestHelpers.UnitTests.Moq
+namespace SparkyTestHelpers.Moq.UnitTests
 {
     /// <summary>
     /// <see cref="MoqExtensions"/> tests.

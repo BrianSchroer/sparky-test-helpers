@@ -2,6 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Brian Schroer</Authors>
+    <Company>Brian Schroer</Company>
+    <Description>Unit test helpers for asserting public properties on class instances "mapped" from one type to another (via AutoMapper, another tool or hand-written code) have the correct values.</Description>
+    <Copyright>Copyright © Brian Schroer 2018</Copyright>
+    <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
+    <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\SparkyTestHelpers.Mapping.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

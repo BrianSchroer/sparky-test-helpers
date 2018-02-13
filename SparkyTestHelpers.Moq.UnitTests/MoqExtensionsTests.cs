@@ -5,7 +5,7 @@ using SparkyTestHelpers.Moq;
 using System;
 using System.Linq.Expressions;
 
-namespace SparkyTestHelpers.UnitTests.Moq
+namespace SparkyTestHelpers.Moq.UnitTests
 {
     /// <summary>
     /// <see cref="MoqExtensions"/> tests.

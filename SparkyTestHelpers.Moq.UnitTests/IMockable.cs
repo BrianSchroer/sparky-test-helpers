@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SparkyTestHelpers.UnitTests.Moq
+namespace SparkyTestHelpers.Moq.UnitTests
 {
     public interface IMockable
     {

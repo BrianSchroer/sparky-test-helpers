@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SparkyTestHelpers.Exceptions;
-using SparkyTestHelpers.Mapping;
+using SparkyTestHelpers.Mapping.UnitTests.TestClasses;
 using SparkyTestHelpers.Scenarios;
 using System;
+using System.Collections.Generic;
 
 namespace SparkyTestHelpers.Mapping.UnitTests
 {
@@ -38,6 +39,29 @@ namespace SparkyTestHelpers.Mapping.UnitTests
                 //.WithLogging()
                 .IgnoringMember(dest => dest.DestOnly)
                 .IgnoringMember(dest => dest.Children);
+        }
+
+        [TestMethod]
+        public void WithLogging_should_work_with_default_logger()
+        {
+            var loggedMessages = new List<string>();
+
+            AssertExceptionNotThrown.WhenExecuting(() =>
+                _mapTester.WithLogging()
+                .AssertMappedValues(_source, _dest));
+        }
+
+        [TestMethod]
+        public void WithLogging_should_work_with_custom_logger()
+        {
+            var loggedMessages = new List<string>();
+
+            AssertExceptionNotThrown.WhenExecuting(() =>
+                _mapTester.WithLogging(message => loggedMessages.Add(message))
+                .AssertMappedValues(_source, _dest));
+
+            Assert.IsTrue(loggedMessages.Count > 0);
+            Console.Write(string.Join('\n', loggedMessages));
         }
 
         [TestMethod]

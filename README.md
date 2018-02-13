@@ -1,16 +1,26 @@
 # sparky-test-helpers
 This repo contains source code and unit tests for nuget packages:
-* **SparkyTestHelpers**
-  * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers/)
-  * [Source Code](/SparkyTestHelpers)
-  * [API documentation](/SparkyTestHelpers/api.md)
 
-* **SparkyTestHelpers.Scenarios.Moq**
-  * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Moq/)
-  * [Source Code](/SparkyTestHelpers.Scenarios.Moq)
-  * [API documentation](/SparkyTestHelpers.Moq/api.md)
+## SparkyTestHelpers
+Unit test helpers for Exception expectations and "scenario" (row) tests:
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers/)
+* [Source Code](/SparkyTestHelpers)
+* [API documentation](/SparkyTestHelpers/api.md)
   
-* **SparkyTestHelpers.Scenarios.MsTest**
-  * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Scenarios.MsTest/)
-  * [Source Code](/SparkyTestHelpers.Scenarios.MsTest)
-  * [API documentation](/SparkyTestHelpers.Scenarios.MsTest/api.md)
+## SparkyTestHelpers.Scenarios.MsTest
+SparkyTestHelper.Scenarios extensions for better scenario testing with MSTest / VisualStudioTestTools:
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Scenarios.MsTest/)
+* [Source Code](/SparkyTestHelpers.Scenarios.MsTest)
+* [API documentation](/SparkyTestHelpers.Scenarios.MsTest/api.md)
+
+## SparkyTestHelpers.Mapping
+Unit test helpers for verifying values of properties "mapped" from one type to another:
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Mapping/)
+* [Source Code](/SparkyTestHelpers.Mapping)
+* [API documentation](/SparkyTestHelpers.Mapping/api.md)
+  
+## SparkyTestHelpers.Moq
+Unit test syntax helpers for the **Moq** mocking framework:
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Moq/)
+* [Source Code](/SparkyTestHelpers.Moq)
+* [API documentation](/SparkyTestHelpers.Moq/api.md)

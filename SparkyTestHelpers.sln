@@ -21,7 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkyTestHelpers.Moq.UnitT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkyTestHelpers.Mapping", "SparkyTestHelpers.Mapping\SparkyTestHelpers.Mapping.csproj", "{F1C62BF6-633F-458F-B81A-F0E76DBC8455}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkyTestHelpers.Mapping.UnitTests", "SparkyTestHelpers.Mapping.UnitTests\SparkyTestHelpers.Mapping.UnitTests.csproj", "{5AAFFC02-7B12-447E-AB66-5266080F40B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkyTestHelpers.Mapping.UnitTests", "SparkyTestHelpers.Mapping.UnitTests\SparkyTestHelpers.Mapping.UnitTests.csproj", "{5AAFFC02-7B12-447E-AB66-5266080F40B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkyTestHelpers.AutoMapper", "SparkyTestHelpers.AutoMapper\SparkyTestHelpers.AutoMapper.csproj", "{9320C947-AC5F-411F-9C2E-A012E23FD8FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkyTestHelpers.AutoMapper.UnitTests", "SparkyTestHelpers.AutoMapper.UnitTests\SparkyTestHelpers.AutoMapper.UnitTests.csproj", "{4BD007DD-A8F0-471A-A25D-10EE51261C85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +133,30 @@ Global
 		{5AAFFC02-7B12-447E-AB66-5266080F40B4}.Release|x64.Build.0 = Release|Any CPU
 		{5AAFFC02-7B12-447E-AB66-5266080F40B4}.Release|x86.ActiveCfg = Release|Any CPU
 		{5AAFFC02-7B12-447E-AB66-5266080F40B4}.Release|x86.Build.0 = Release|Any CPU
+		{9320C947-AC5F-411F-9C2E-A012E23FD8FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9320C947-AC5F-411F-9C2E-A012E23FD8FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9320C947-AC5F-411F-9C2E-A012E23FD8FD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9320C947-AC5F-411F-9C2E-A012E23FD8FD}.Debug|x64.Build.0 = Debug|Any CPU
+		{9320C947-AC5F-411F-9C2E-A012E23FD8FD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9320C947-AC5F-411F-9C2E-A012E23FD8FD}.Debug|x86.Build.0 = Debug|Any CPU
+		{9320C947-AC5F-411F-9C2E-A012E23FD8FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9320C947-AC5F-411F-9C2E-A012E23FD8FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9320C947-AC5F-411F-9C2E-A012E23FD8FD}.Release|x64.ActiveCfg = Release|Any CPU
+		{9320C947-AC5F-411F-9C2E-A012E23FD8FD}.Release|x64.Build.0 = Release|Any CPU
+		{9320C947-AC5F-411F-9C2E-A012E23FD8FD}.Release|x86.ActiveCfg = Release|Any CPU
+		{9320C947-AC5F-411F-9C2E-A012E23FD8FD}.Release|x86.Build.0 = Release|Any CPU
+		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Debug|x64.Build.0 = Debug|Any CPU
+		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Debug|x86.Build.0 = Debug|Any CPU
+		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Release|x64.ActiveCfg = Release|Any CPU
+		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Release|x64.Build.0 = Release|Any CPU
+		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Release|x86.ActiveCfg = Release|Any CPU
+		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
