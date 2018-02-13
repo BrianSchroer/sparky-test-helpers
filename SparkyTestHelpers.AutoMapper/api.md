@@ -4,8 +4,7 @@ _see also_:
 * **[SparkyTestHelpers](https://www.nuget.org/packages/SparkyTestHelpers/)**: exception expectation and "scenario test" (row test) helpers
 * **[SparkyTestHelpers.Moq](https://www.nuget.org/packages/SparkyTestHelpers.Moq)**: syntax helpers for testing with [Moq](https://github.com/moq)
 ---
-This package extends [SparkyTestHelpers.Mapping](https://www.nuget.org/packages/SparkyTestHelpers.Mapping) with
-some additional extension methods specifically for use with **[AutoMapper](http://automapper.org/)**. 
+This package extends **[SparkyTestHelpers.Mapping](https://www.nuget.org/packages/SparkyTestHelpers.Mapping)** with some additional extension methods specifically for use with **[AutoMapper](http://automapper.org/)**. 
 
 ---
 ## MapTester<TSource, TDestination>
@@ -46,6 +45,11 @@ using SparkyTestHelpers.Mapping;
         .WhereMember(dest => dest.Percent).IsTestedBy((src, dest) => 
             Assert.AreEqual(src.Rate / 100, dest.Percent))
         .AssertMappedValues(foo, bar);
+```
+***AutoMapper-specific methods:***
+
+```csharp
+using SparkyTestHelpers.AutoMapper;
 ```
 ```csharp
     Baz baz = CreateAndPopulateTestBax();
