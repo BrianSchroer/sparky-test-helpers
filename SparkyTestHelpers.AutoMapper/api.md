@@ -1,7 +1,11 @@
 
 _see also_:
+* **[SparkyTestHelpers.Mapping](https://www.nuget.org/packages/SparkyTestHelpers.Mapping)**: Helpers for testing properties "mapped" from one type to another
 * **[SparkyTestHelpers](https://www.nuget.org/packages/SparkyTestHelpers/)**: exception expectation and "scenario test" (row test) helpers
 * **[SparkyTestHelpers.Moq](https://www.nuget.org/packages/SparkyTestHelpers.Moq)**: syntax helpers for testing with [Moq](https://github.com/moq)
+---
+This package extends [SparkyTestHelpers.Mapping](https://www.nuget.org/packages/SparkyTestHelpers.Mapping) with
+some additional extension methods specifically for use with **[AutoMapper](http://automapper.org/)**. 
 
 ---
 ## MapTester<TSource, TDestination>
@@ -16,10 +20,16 @@ This class is for testing that properties were successfully "mapped" from one ty
 * *MapMemberTester<TSource, TDestination>* **WhereMember** *(Expression<Func<TDestination, Object>> destExpression)*  
 * *void* **AssertMappedValues** *(TSource source, TDestination dest)*  
 
+**Extension Methods for AutoMapper**
+* *TDestination* **AssertAutoMappedValues** *(TSource source)*
+    - calls Mapper.Map<TSource, TDestination>(source), then AssertMappedValues()
+* *TDestination* **AssertAutoMappedRandomValues** *()*
+    - uses **RandomValuesHelper** to create a new TSource instance, calls Mapper.Map<TSource, TDestination>(source), then AssertMappedValues()
+    
 **Static Methods**
 * *MapTester<TSource, TDestination>* **ForMap** *()* 
 
-**Example**
+**Examples**
 
 ```csharp
 using SparkyTestHelpers.Mapping;
@@ -36,6 +46,14 @@ using SparkyTestHelpers.Mapping;
         .WhereMember(dest => dest.Percent).IsTestedBy((src, dest) => 
             Assert.AreEqual(src.Rate / 100, dest.Percent))
         .AssertMappedValues(foo, bar);
+```
+```csharp
+    Baz baz = CreateAndPopulateTestBax();
+    Qux qux = MapTester.ForMap<Baz, Qux>.AssertAutoMappedValues(baz);
+```
+```csharp
+    // Create & populate Baz, map to Qux, assert success all in one statement!
+    MapTester.ForMap<Baz, Qux>.AssertAutoMappedRandomValues();
 ```
 As with AutoMapper, you don't have to configure anything for properties with the same name/type in the source and destination instances.
 **AssertMappedValues** considers those successful if the source/destination values matter.

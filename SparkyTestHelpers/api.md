@@ -2,12 +2,11 @@
 * **SparkyTestHelpers.Scenarios**: for testing a method with a variety of different input scenarios
 
 _see also_: 
-* **[SparkyTestHelpers.Moq](https://www.nuget.org/packages/SparkyTestHelpers.Moq)**: syntax helpers for testing with [Moq](https://github.com/moq)
-* **[SparkyTestHelpers.Scenarios.MsTest](https://www.nuget.org/packages/SparkyTestHelpers.Scenarios.MsTest/)**: provides better scenario test `Assert.Inconclusive()` handling with the Visual Studio test runner
+* **[SparkyTestHelpers.Mapping](https://www.nuget.org/packages/SparkyTestHelpers.Mapping)**: Helpers for testing properties "mapped" from one type to another
+* **[SparkyTestHelpers.Moq](https://www.nuget.org/packages/SparkyTestHelpers.Moq)**: syntax helpers for testing with **Moq**
+* **[SparkyTestHelpers.Scenarios.MsTest](https://www.nuget.org/packages/SparkyTestHelpers.Scenarios.MsTest/)**: better scenario test `Assert.Inconclusive()` handling with Visual Studio test runner
 ---
 ## AssertExceptionNotThrown
-_class SparkyTestHelpers.Exceptions.AssertExceptionNotThrown_
-
 Assert exception is not thrown when an action is executed. This method doesn't do much,
 but clarifies the intent of tests that wish to show that an action works correctly.
 
@@ -25,9 +24,6 @@ AssertExceptionNotThrown.WhenExecuting(() => foo.Bar(baz));
 ---
 
 ## AssertExceptionThrown
-
-_class SparkyTestHelpers.Exceptions.AssertExceptionThrown_
-
 Used to assert than an expected exception is thrown when a test action is executed.
 
 Why use this instead of something like the VisualStudio TestTools ExpectedExceptionAttribute?
@@ -72,9 +68,6 @@ AssertExceptionThrown
 ---
 
 ## ScenarioTester<TScenario>
-
-_class SparkyTestHelpers.Scenarios.ScenarioTester<TScenario>_
-
 VisualStudio.TestTools doesn't have "RowTest" or "TestCase" attributes like NUnit or other .NET testing frameworks. (It does have "data-driven tests", but it's pretty cumbersome.) This class provides the ability to execute the same test code for multiple test cases and, after all test cases have been executed, failing the unit test if any of the test cases failed.
 
 Even if you're not testing with MSTest/VisualStudio.TestTools, these helpers provide an alternative syntax for "row testing".
@@ -153,9 +146,6 @@ ForTest.Scenarios(*array*)
  ---
 
 ## ScenarioTesterExtension
-
-_class SparkyTestHelpers.Scenarios.ScenarioTesterExtension_
-
 **ScenarioTester<TScenario>** extension methods.
 
 **Static Methods**
@@ -181,9 +171,6 @@ new []
 ---
 
 ## ForTest
-
-_class SparkyTestHelpers.Scenarios.ForTest_
-
 "Syntactic sugar" methods for working with **ScenarioTester<TScenario>**
 
 **Static Methods**
