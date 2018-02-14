@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Moq", "Moq", "{60BC3242-273
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MsTest", "MsTest", "{4A5C0070-D4C5-4A36-9905-F2750CD3C638}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard", "Standard\Standard.csproj", "{A6219737-B092-4503-9815-D4D0DA8E534A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +169,18 @@ Global
 		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Release|x64.Build.0 = Release|Any CPU
 		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Release|x86.ActiveCfg = Release|Any CPU
 		{4BD007DD-A8F0-471A-A25D-10EE51261C85}.Release|x86.Build.0 = Release|Any CPU
+		{A6219737-B092-4503-9815-D4D0DA8E534A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6219737-B092-4503-9815-D4D0DA8E534A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6219737-B092-4503-9815-D4D0DA8E534A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A6219737-B092-4503-9815-D4D0DA8E534A}.Debug|x64.Build.0 = Debug|Any CPU
+		{A6219737-B092-4503-9815-D4D0DA8E534A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A6219737-B092-4503-9815-D4D0DA8E534A}.Debug|x86.Build.0 = Debug|Any CPU
+		{A6219737-B092-4503-9815-D4D0DA8E534A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6219737-B092-4503-9815-D4D0DA8E534A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6219737-B092-4503-9815-D4D0DA8E534A}.Release|x64.ActiveCfg = Release|Any CPU
+		{A6219737-B092-4503-9815-D4D0DA8E534A}.Release|x64.Build.0 = Release|Any CPU
+		{A6219737-B092-4503-9815-D4D0DA8E534A}.Release|x86.ActiveCfg = Release|Any CPU
+		{A6219737-B092-4503-9815-D4D0DA8E534A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

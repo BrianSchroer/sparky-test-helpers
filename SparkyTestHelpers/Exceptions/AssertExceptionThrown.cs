@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace SparkyTestHelpers.Exceptions
@@ -144,7 +145,7 @@ namespace SparkyTestHelpers.Exceptions
             {
                 Type type = ex.GetType();
 
-                if (type == _expectedExceptionType || (_allowDerivedTypes && type.IsSubclassOf(_expectedExceptionType)))
+                if (type == _expectedExceptionType || (_allowDerivedTypes && IsSubclass(ex, _expectedExceptionType)))
                 {
                     if (_shouldMatchMessagePattern && !Regex.IsMatch(ex.Message, _messagePattern))
                     {
@@ -168,6 +169,11 @@ namespace SparkyTestHelpers.Exceptions
             }
 
             return caughtException;
+        }
+
+        private bool IsSubclass(Exception ex, Type baseType)
+        {
+            return ex.GetType().GetTypeInfo().IsSubclassOf(baseType);
         }
 
         private AssertExceptionThrown SetMessagePattern(string pattern)

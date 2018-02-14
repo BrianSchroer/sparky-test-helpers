@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <Company>Brian Schroer</Company>
     <Description>.NET Unit test helpers for asserting that exceptions were / weren't thrown, and for "scenario tests".</Description>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
@@ -12,14 +12,14 @@
     <Copyright>Copyright © Brian Schroer 2018</Copyright>
     <PackageTags>test, testing, unittest, rowtest</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
-    <Version>1.1.0</Version>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
+    <Version>1.2.0</Version>
     <PackageReleaseNotes>V1.1.0: Added ScenarioTester&lt;TScenario&gt; "BeforeEachTest" and "AfterEachTest" methods.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\SparkyTestHelpers.xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
