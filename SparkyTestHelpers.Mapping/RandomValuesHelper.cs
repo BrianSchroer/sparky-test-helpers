@@ -29,8 +29,8 @@ namespace SparkyTestHelpers.Mapping
                 { typeof(long?), RandomLong }
             };
 
-        private static readonly Type _iEnumerableType = typeof(IEnumerable);
-        private static readonly Type _iListType = typeof(IList);
+        private static readonly TypeInfo _iEnumerableTypeInfo = typeof(IEnumerable).GetTypeInfo();
+        private static readonly TypeInfo _iListTypeInfo = typeof(IList).GetTypeInfo();
 
         private Dictionary<Type, int> _createdTypes;
 
@@ -56,14 +56,14 @@ namespace SparkyTestHelpers.Mapping
             int depth = 0;
             _createdTypes = new Dictionary<Type, int>();
 
-            UpdatePropertiesWithRandomValues(instance, random, typeof(T), depth);
+            UpdatePropertiesWithRandomValues(instance, random, typeof(T).GetTypeInfo(), depth);
 
             return instance;
         }
 
-        private void UpdatePropertiesWithRandomValues(object instance, Random random, Type typ, int depth)
+        private void UpdatePropertiesWithRandomValues(object instance, Random random, TypeInfo typeInfo, int depth)
         {
-            PropertyInfo[] properties = PropertyEnumerator.GetPublicInstanceReadWriteProperties(typ);
+            PropertyInfo[] properties = PropertyEnumerator.GetPublicInstanceReadWriteProperties(typeInfo);
 
             foreach (PropertyInfo property in properties)
             {
@@ -79,28 +79,29 @@ namespace SparkyTestHelpers.Mapping
         private object GetRandomValue(Random random, Type typ, string prefix, int depth)
         {
             object value = null;
+            TypeInfo typeInfo = typ.GetTypeInfo();
 
             if (_generatorDictionary.ContainsKey(typ))
             {
                 value = _generatorDictionary[typ](random, prefix);
             }
-            else if (typ.IsArray)
+            else if (typeInfo.IsArray)
             {
                 value = RandomArray(random, typ.GetElementType(), prefix, depth + 1);
             }
-            else if (_iListType.IsAssignableFrom(typ))
+            else if (_iListTypeInfo.IsAssignableFrom(typ))
             {
-                value = RandomList(random, typ, prefix, depth + 1);
+                value = RandomList(random, typeInfo, prefix, depth + 1);
             }
-            else if (_iEnumerableType.IsAssignableFrom(typ))
+            else if (_iEnumerableTypeInfo.IsAssignableFrom(typ))
             {
-                value = RandomIEnumerable(random, typ, prefix, depth + 1);
+                value = RandomIEnumerable(random, typeInfo, prefix, depth + 1);
             }
-            else if (typ.IsClass)
+            else if (typeInfo.IsClass)
             {
                 value = RandomClassInstance(random, typ, depth + 1);
             }
-            else if (typ.IsEnum)
+            else if (typeInfo.IsEnum)
             {
                 value = RandomEnum(random, typ);
             }
@@ -153,7 +154,7 @@ namespace SparkyTestHelpers.Mapping
 
                 if (value != null)
                 {
-                    UpdatePropertiesWithRandomValues(value, random, typ, depth);
+                    UpdatePropertiesWithRandomValues(value, random, typ.GetTypeInfo(), depth);
                 }
             }
 
@@ -169,10 +170,10 @@ namespace SparkyTestHelpers.Mapping
             return values.GetValue(index);
         }
 
-        private object RandomIEnumerable(Random random, Type typ, string prefix, int depth)
+        private object RandomIEnumerable(Random random, TypeInfo typeInfo, string prefix, int depth)
         {
             Array array = null;
-            Type[] types = typ.GetGenericArguments();
+            Type[] types = typeInfo.GetGenericArguments();
 
             if (types.Length == 1)
             {
@@ -182,11 +183,11 @@ namespace SparkyTestHelpers.Mapping
             return array;
         }
 
-        private object RandomList(Random random, Type typ, string prefix, int depth)
+        private object RandomList(Random random, TypeInfo typeInfo, string prefix, int depth)
         {
             object list = null;
 
-            Type[] genericArguments = typ.GetGenericArguments();
+            Type[] genericArguments = typeInfo.GetGenericArguments();
 
             if (genericArguments.Length == 1)
             {

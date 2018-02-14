@@ -33,10 +33,12 @@ namespace SparkyTestHelpers.Mapping
         internal MapTester()
         {
             Type sourceType = typeof(TSource);
+            TypeInfo sourceTypeInfo = sourceType.GetTypeInfo();
             Type destType = typeof(TDestination);
+            TypeInfo destTypeInfo = destType.GetTypeInfo();
             _memberTesters = new Dictionary<string, MapMemberTester<TSource, TDestination>>();
-            _destProperties = PropertyEnumerator.GetPublicInstanceReadWriteProperties(destType);
-            PropertyInfo[] srcProperties = PropertyEnumerator.GetPublicInstanceReadWriteProperties(sourceType);
+            _destProperties = PropertyEnumerator.GetPublicInstanceReadWriteProperties(destTypeInfo);
+            PropertyInfo[] srcProperties = PropertyEnumerator.GetPublicInstanceReadWriteProperties(sourceTypeInfo);
 
             string[] commonPropertyNames = srcProperties
                 .Join(_destProperties, dest => dest.Name, src => src.Name, (dest, src) => dest.Name)
@@ -44,8 +46,8 @@ namespace SparkyTestHelpers.Mapping
 
             foreach (string propertyName in commonPropertyNames)
             {
-                PropertyInfo srcProperty = sourceType.GetProperty(propertyName);
-                PropertyInfo destProperty = destType.GetProperty(propertyName);
+                PropertyInfo srcProperty = sourceTypeInfo.GetProperty(propertyName);
+                PropertyInfo destProperty = destTypeInfo.GetProperty(propertyName);
 
                 SetTesterForProperty(propertyName,
                     new MapMemberTester<TSource, TDestination>(
@@ -59,7 +61,7 @@ namespace SparkyTestHelpers.Mapping
         /// Log destination property values when <see cref="AssertMappedValues(TSource, TDestination)"/> is called.
         /// </summary>
         /// <param name="action">"Callback" function to receive/log messages. 
-        /// (If null, <see cref="System.Console.WriteLine"/> is used.</param>
+        /// (If null, <see cref="Console.WriteLine()"/> is used.</param>
         /// <returns>"This" <see cref="MapTester{TSource, TDestination}"/></returns>
         public MapTester<TSource, TDestination> WithLogging(Action<string> action = null)
         {
@@ -70,8 +72,6 @@ namespace SparkyTestHelpers.Mapping
         /// <summary>
         /// Specify <typeparamref name="TDestination"/> property that should be ignored when asserting mapping results.
         /// </summary>
-        /// <typeparam name="TSource"></typeparam>
-        /// <typeparam name="TDestination"></typeparam>
         /// <param name="destExpression">Expression to get property name.</param>
         /// <returns>"This" <see cref="MapMemberTester{TSource, TDestination}"/>.</returns>
         /// <example><![CDATA[
@@ -154,7 +154,7 @@ namespace SparkyTestHelpers.Mapping
         }
 
         /// <summary>
-        /// Define <see cref="MapMemberTester{TSource, TDestination"/> for
+        /// Define <see cref="MapMemberTester{TSource, TDestination}"/> for
         /// <typeparamref name="TDestination"/> property.
         /// </summary>
         /// <remarks>

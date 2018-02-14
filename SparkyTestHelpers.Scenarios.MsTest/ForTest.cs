@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace SparkyTestHelpers.Scenarios.MsTest
 {
@@ -52,7 +53,7 @@ namespace SparkyTestHelpers.Scenarios.MsTest
         {
             Type enumType = typeof(TEnum);
 
-            if (!enumType.IsEnum)
+            if (!enumType.GetTypeInfo().IsEnum)
             {
                 throw new InvalidOperationException($"{enumType} is not an Enum type.");
             }
