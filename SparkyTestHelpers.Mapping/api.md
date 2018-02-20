@@ -1,9 +1,7 @@
 
 _see also_:
 * **[SparkyTestHelpers.AutoMapper](https://www.nuget.org/packages/SparkyTestHelpers.AutoMapper/)**: Additional **SparkyTestHelpers.Mapping** extension methods for **AutoMapper**
-* **[SparkyTestHelpers](https://www.nuget.org/packages/SparkyTestHelpers/)**: exception expectation and "scenario test" (row test) helpers
-* **[SparkyTestHelpers.Moq](https://www.nuget.org/packages/SparkyTestHelpers.Moq)**: syntax helpers for testing with [Moq](https://github.com/moq)
-
+* the rest of the [**"Sparky suite"** of .NET utilities and test helpers](https://www.nuget.org/profiles/BrianSchroer)
 ---
 ## MapTester<TSource, TDestination>
 *class SparkyTestHelpers.Mapping.MapTester<TSource, TDestination>*

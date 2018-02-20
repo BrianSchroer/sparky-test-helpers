@@ -83,11 +83,11 @@ namespace SparkyTestHelpers.Mapping.UnitTests
         }
 
         [TestMethod]
-        public void ShouldEqual_should_use_specified_source_property()
+        public void ShouldEqual_should_use_specified_callback_function()
         {
-            _mapTester.WhereMember(dest => dest.Name).ShouldEqual(src => $"{src.FirstName} {src.LastName}");
-
             string expected = $"{_source.FirstName} {_source.LastName}";
+
+            _mapTester.WhereMember(dest => dest.Name).ShouldEqual(src => expected);
 
             AssertExceptionMessageContaining(
                 $"Mapping test failed for property \"Name\". Expected<{expected}>. Actual: <{_dest.Name}>");

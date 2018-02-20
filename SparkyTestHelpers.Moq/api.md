@@ -1,10 +1,7 @@
 ## [Moq](https://github.com/moq) syntax helpers ##
 
 _see also_:
-* **[SparkyTestHelpers](https://www.nuget.org/packages/SparkyTestHelpers/)**: exception expectation and "scenario test" (row test) helpers
-* **[SparkyTestHelpers.Mapping](https://www.nuget.org/packages/SparkyTestHelpers.Mapping)**: Helpers for testing properties "mapped" from one type to another
-* **[SparkyTestHelpers.AutoMapper](https://www.nuget.org/packages/SparkyTestHelpers.AutoMapper/)**: Additional **SparkyTestHelpers.Mapping** extension methods for **AutoMapper**
-* **[SparkyTestHelpers.Scenarios.MsTest](https://www.nuget.org/packages/SparkyTestHelpers.Scenarios.MsTest/)**: better scenario test `Assert.Inconclusive()` handling with Visual Studio test runner
+* the rest of the [**"Sparky suite"** of .NET utilities and test helpers](https://www.nuget.org/profiles/BrianSchroer)
 ---
 
 ### "Any" syntax

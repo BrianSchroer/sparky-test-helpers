@@ -1,8 +1,8 @@
 
 _see also_:
+* **[SparkyTools.AutoMapper](https://www.nuget.org/packages/SparkyTools.AutoMapper)**: AutoMapper syntax helpers
 * **[SparkyTestHelpers.Mapping](https://www.nuget.org/packages/SparkyTestHelpers.Mapping)**: Helpers for testing properties "mapped" from one type to another
-* **[SparkyTestHelpers](https://www.nuget.org/packages/SparkyTestHelpers/)**: exception expectation and "scenario test" (row test) helpers
-* **[SparkyTestHelpers.Moq](https://www.nuget.org/packages/SparkyTestHelpers.Moq)**: syntax helpers for testing with [Moq](https://github.com/moq)
+* the rest of the [**"Sparky suite"** of .NET utilities and test helpers](https://www.nuget.org/profiles/BrianSchroer)
 ---
 This package extends **[SparkyTestHelpers.Mapping](https://www.nuget.org/packages/SparkyTestHelpers.Mapping)** with some additional extension methods specifically for use with **[AutoMapper](http://automapper.org/)**. 
 

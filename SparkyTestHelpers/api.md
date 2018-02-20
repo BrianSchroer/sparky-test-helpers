@@ -2,10 +2,7 @@
 * **SparkyTestHelpers.Scenarios**: for testing a method with a variety of different input scenarios
 
 _see also_: 
-* **[SparkyTestHelpers.Mapping](https://www.nuget.org/packages/SparkyTestHelpers.Mapping)**: Helpers for testing properties "mapped" from one type to another
-* **[SparkyTestHelpers.AutoMapper](https://www.nuget.org/packages/SparkyTestHelpers.AutoMapper/)**: Additional **SparkyTestHelpers.Mapping** extension methods for **AutoMapper**
-* **[SparkyTestHelpers.Moq](https://www.nuget.org/packages/SparkyTestHelpers.Moq)**: syntax helpers for testing with **Moq**
-* **[SparkyTestHelpers.Scenarios.MsTest](https://www.nuget.org/packages/SparkyTestHelpers.Scenarios.MsTest/)**: better scenario test `Assert.Inconclusive()` handling with Visual Studio test runner
+* the rest of the [**"Sparky suite"** of .NET utilities and test helpers](https://www.nuget.org/profiles/BrianSchroer)
 ---
 ## AssertExceptionNotThrown
 Assert exception is not thrown when an action is executed. This method doesn't do much,

@@ -3,7 +3,9 @@ This package contains an implementation of **[SparkyTestHelpers](https://www.nug
 The only differences are:
 * If you use MsTest's `Assert.Inconclusive()` in a scenario test, your scenario "suite" will be recognized as inconclusive and not as a failure by the Visual Studio test runner.
 * The "using" statement is `using SparkyTestHelpers.Scenarios.MsTest;` instead of `using SparkyTestHelpers.Scenarios;` 
-
+---
+_see also_:
+* the rest of the [**"Sparky suite"** of .NET utilities and test helpers](https://www.nuget.org/profiles/BrianSchroer)
 ---
 ## MsTestScenarioTester<TScenario>
 
