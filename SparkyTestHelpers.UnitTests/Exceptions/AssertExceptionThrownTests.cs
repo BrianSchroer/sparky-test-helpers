@@ -148,7 +148,7 @@ namespace SparkyTestHelpers.UnitTests.Exceptions
         {
             const string message = "Crap";
             string expected =
-                $"Expected message matching \"^Whoops$\". Actual: \"{message}\"."
+                $"Expected message \"Whoops\". Actual: \"{message}\"."
                 + "\n(message from System.InvalidOperationException.)";
 
             try
@@ -182,7 +182,7 @@ namespace SparkyTestHelpers.UnitTests.Exceptions
             const string message = "This message doesn't start with Whoops!";
 
             string expected =
-                $"Expected message matching \"^Whoops!.*$\". Actual: \"{message}\"."
+                $"Expected message starting with \"Whoops!\". Actual: \"{message}\"."
                 + "\n(message from System.InvalidOperationException.)";
 
             try
@@ -216,7 +216,7 @@ namespace SparkyTestHelpers.UnitTests.Exceptions
             const string message = "This is not the message you're looking for.";
 
             string expected =
-                $"Expected message matching \"Whoops!\". Actual: \"{message}\"."
+                $"Expected message containing \"Whoops!\". Actual: \"{message}\"."
                 + "\n(message from System.InvalidOperationException.)";
 
             try

@@ -36,8 +36,8 @@ namespace SparkyTestHelpers.Exceptions
     {
         private readonly bool _allowDerivedTypes;
         private readonly Type _expectedExceptionType;
-        private bool _shouldMatchMessagePattern;
-        private string _messagePattern;
+
+        private Func<string, string> _checkMessage = null;
 
         private AssertExceptionThrown(Type exceptionType, bool allowDerivedTypes = false)
         {
@@ -59,7 +59,6 @@ namespace SparkyTestHelpers.Exceptions
         {
             return new AssertExceptionThrown(typeof(TException), allowDerivedTypes: false);
         }
-
 
         /// <summary>
         /// Create new <see cref="AssertExceptionThrown" /> instance for testing
@@ -86,7 +85,10 @@ namespace SparkyTestHelpers.Exceptions
         /// </returns>
         public AssertExceptionThrown WithMessage(string expected)
         {
-            return SetMessagePattern($"^{Regex.Escape(expected)}$");
+            return SetCheckMessageFunction(actual => 
+                (actual.Equals(expected, StringComparison.CurrentCulture)) 
+                    ? null 
+                    : $"Expected message \"{expected}\"");
         }
 
         /// <summary>
@@ -99,7 +101,10 @@ namespace SparkyTestHelpers.Exceptions
         /// </returns>
         public AssertExceptionThrown WithMessageStartingWith(string expected)
         {
-            return SetMessagePattern($"^{Regex.Escape(expected)}.*$");
+            return SetCheckMessageFunction(actual =>
+                (actual.StartsWith(expected, StringComparison.CurrentCulture))
+                    ? null
+                    : $"Expected message starting with \"{expected}\"");
         }
 
         /// <summary>
@@ -112,7 +117,10 @@ namespace SparkyTestHelpers.Exceptions
         /// </returns>
         public AssertExceptionThrown WithMessageContaining(string expected)
         {
-            return SetMessagePattern(Regex.Escape(expected));
+            return SetCheckMessageFunction(actual =>
+                (actual.Contains(expected))
+                    ? null
+                    : $"Expected message containing \"{expected}\"");
         }
 
         /// <summary>
@@ -125,7 +133,10 @@ namespace SparkyTestHelpers.Exceptions
         /// </returns>
         public AssertExceptionThrown WithMessageMatching(string regExPattern)
         {
-            return SetMessagePattern(regExPattern);
+            return SetCheckMessageFunction(actual =>
+                (Regex.IsMatch(actual, regExPattern))
+                    ? null
+                    : $"Expected message matching \"{regExPattern}\"");
         }
 
         /// <summary>
@@ -147,11 +158,14 @@ namespace SparkyTestHelpers.Exceptions
 
                 if (type == _expectedExceptionType || (_allowDerivedTypes && IsSubclass(ex, _expectedExceptionType)))
                 {
-                    if (_shouldMatchMessagePattern && !Regex.IsMatch(ex.Message, _messagePattern))
+                    if (_checkMessage != null)
                     {
-                        throw new ExpectedExceptionNotThrownException(
-                          $"Expected message matching \"{_messagePattern}\". Actual: \"{ex.Message}\"."
-                          + $"\n(message from {type.FullName}.)");
+                        string errorMessage = _checkMessage(ex.Message ?? string.Empty);
+                        if (!string.IsNullOrWhiteSpace(errorMessage))
+                        {
+                            throw new ExpectedExceptionNotThrownException(
+                                $"{errorMessage}. Actual: \"{ex.Message}\".\n(message from {type.FullName}.)");
+                        }
                     }
                 }
                 else
@@ -176,15 +190,14 @@ namespace SparkyTestHelpers.Exceptions
             return ex.GetType().GetTypeInfo().IsSubclassOf(baseType);
         }
 
-        private AssertExceptionThrown SetMessagePattern(string pattern)
+        private AssertExceptionThrown SetCheckMessageFunction(Func<string, string> function)
         {
-            if (_shouldMatchMessagePattern)
+            if (_checkMessage != null)
             {
                 throw new InvalidOperationException("Only one \"WithMessage...\" call is allowed.");
             }
 
-            _shouldMatchMessagePattern = true;
-            _messagePattern = pattern;
+            _checkMessage = function;
 
             return this;
         }
