@@ -2,11 +2,11 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("SparkyTestHelpers.XmlConfig.UnitTests")]
+[assembly: AssemblyTitle("SparkyTestHelpers.AppSettings.UnitTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SparkyTestHelpers.XmlConfig.UnitTests")]
+[assembly: AssemblyProduct("SparkyTestHelpers.AppSettings.UnitTests")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

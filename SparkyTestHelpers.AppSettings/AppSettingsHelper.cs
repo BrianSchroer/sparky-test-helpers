@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
 
-namespace SparkyTestHelpers.XmlConfig
+namespace SparkyTestHelpers.AppSettings
 {
     /// <summary>
     /// This helper is used to test .config AppSettings values and restore the original

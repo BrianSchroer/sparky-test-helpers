@@ -4,8 +4,9 @@ using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Specialized;
 using SparkyTestHelpers.Exceptions;
+using System.Collections.Generic;
 
-namespace SparkyTestHelpers.XmlConfig.UnitTests
+namespace SparkyTestHelpers.AppSettings.UnitTests
 {
     /// <summary>
     /// <see cref="AppSettingsHelper"/> tests.
@@ -54,6 +55,16 @@ namespace SparkyTestHelpers.XmlConfig.UnitTests
 
             string actual = GetAppSettingsString();
             Assert.AreEqual(expected, GetAppSettingsString());
+        }
+
+        [TestMethod]
+        public void TestDependencyProvider_should_work()
+        {
+            Func<string, string> getAppSetting = 
+                AppSettings.TestDependencyProvider(new Dictionary<string, string>{ { "testKey", "testValue" } }).GetValue();
+
+            Assert.AreEqual("testValue", getAppSetting("testKey"));
+            Assert.IsNull(getAppSetting("undefinedKey"));
         }
 
         private string GetAppSettingsString()

@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Brian Schroer</Authors>
     <Company>Brian Schroer</Company>
-    <Description>Test helpers for web.config / app.config</Description>
+    <Description>Helpers for testing code that uses ConfigurationManager.AppSettings</Description>
     <Copyright>Copyright © Brian Schroer 2018</Copyright>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="SparkyTestHelpers" Version="1.2.2" />
+    <PackageReference Include="SparkyTools.DependencyProvider" Version="1.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
   </ItemGroup>
 
