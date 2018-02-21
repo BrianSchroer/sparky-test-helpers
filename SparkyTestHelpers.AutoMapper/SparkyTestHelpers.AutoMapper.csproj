@@ -12,8 +12,8 @@
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.0</Version>
-    <PackageReleaseNotes>v1.2.0: Target .NET Standard 1.5</PackageReleaseNotes>
+    <Version>1.2.1</Version>
+    <PackageReleaseNotes>v1.2.1: Upgrade dependencies</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
