@@ -43,9 +43,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkyTestHelpers.AppSettin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkyTestHelpers.AppSettings.UnitTests", "SparkyTestHelpers.AppSettings.UnitTests\SparkyTestHelpers.AppSettings.UnitTests.csproj", "{6128D1EF-15B9-42D3-B0C9-4463D5A02B56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkyTestHelpers.XmlTransformation", "SparkyTestHelpers.XmlTransformation\SparkyTestHelpers.XmlTransformation.csproj", "{164B7B2E-2C94-4ED1-841F-9AF011C6535B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkyTestHelpers.XmlConfig", "SparkyTestHelpers.XmlConfig\SparkyTestHelpers.XmlConfig.csproj", "{164B7B2E-2C94-4ED1-841F-9AF011C6535B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkyTestHelpers.XmlTransformation.UnitTests", "SparkyTestHelpers.XmlTransformation.UnitTests\SparkyTestHelpers.XmlTransformation.UnitTests.csproj", "{3771B0F8-2744-44A6-9ED3-A0FA441997BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkyTestHelpers.XmlConfig.UnitTests", "SparkyTestHelpers.XmlConfig.UnitTests\SparkyTestHelpers.XmlConfig.UnitTests.csproj", "{3771B0F8-2744-44A6-9ED3-A0FA441997BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

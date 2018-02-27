@@ -7,8 +7,8 @@
     <ProjectGuid>{164B7B2E-2C94-4ED1-841F-9AF011C6535B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SparkyTestHelpers.XmlTransformation</RootNamespace>
-    <AssemblyName>SparkyTestHelpers.XmlTransformation</AssemblyName>
+    <RootNamespace>SparkyTestHelpers.XmlConfig</RootNamespace>
+    <AssemblyName>SparkyTestHelpers.XmlConfig</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -105,11 +105,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="XmlTester.cs" />
     <Compile Include="DuplicateCheck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransformResults.cs" />
-    <Compile Include="XmlTransformException.cs" />
-    <Compile Include="XmlTransformValidator.cs" />
+    <Compile Include="XmlTesterException.cs" />
+    <Compile Include="ConfigXmlTester.cs" />
     <Compile Include="XmlTransformHelper.cs" />
   </ItemGroup>
   <ItemGroup>

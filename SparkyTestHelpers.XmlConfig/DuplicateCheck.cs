@@ -1,4 +1,4 @@
-﻿namespace SparkyTestHelpers.XmlTransformation
+﻿namespace SparkyTestHelpers.XmlConfig
 {
     internal class DuplicateCheck
     {

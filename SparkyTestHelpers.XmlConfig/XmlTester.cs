@@ -3,63 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using SparkyTestHelpers.Scenarios;
 
-namespace SparkyTestHelpers.XmlTransformation
+namespace SparkyTestHelpers.XmlConfig
 {
     /// <summary>
-    /// Helper class for validating XML (.config) file values.
+    /// Helper class for testing <see cref="System.Xml.Linq.XDocument"/> values.
     /// </summary>
-    public class XmlTransformValidator
+    public class XmlTester
     {
         private string _exceptionPrefix;
 
         /// <summary>
-        /// <see cref="XDocument"/> for transformed web.config XML.
+        /// The <see cref="XDocument"/> being tested.
         /// </summary>
-        public XDocument ConfigXDocument { get; set; }
+        public XDocument XDocument { get; private set; }
 
         /// <summary>
-        /// Creates a new <see cref="XmlTransformValidator"/> instance.
+        /// Creates a new <see cref="XmlTester"/> instance.
         /// </summary>
-        /// <param name="configXDocument">The .config file <see cref="XDocument"/> to be validated.</param>
+        /// <param name="xml">XML string to be parsed to an <see cref="System.Xml.Linq.XDocument"/> for testing.</param>
         /// <param name="exceptionPrefix">(Optional) prefix for exception messages.</param>
-        public XmlTransformValidator(XDocument configXDocument, string exceptionPrefix = null)
+        public XmlTester(string xml, string exceptionPrefix = null) : this(XDocument.Parse(xml), exceptionPrefix) 
         {
-            ConfigXDocument = configXDocument;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="XmlTester"/> instance.
+        /// </summary>
+        /// <param name="xDocument">The <see cref="System.Xml.Linq.XDocument"/> to be tested.</param>
+        /// <param name="exceptionPrefix">(Optional) prefix for exception messages.</param>
+        public XmlTester(XDocument xDocument, string exceptionPrefix = null)
+        {
+            XDocument = xDocument;
             _exceptionPrefix = exceptionPrefix;
-        }
-
-        /// <summary>
-        /// Assert that specified configuration/appSettings key doesn't exist.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <exception cref="XmlTransformException" if key is found. />
-        public void AssertAppSettingsKeyDoesNotExist(string key)
-        {
-            AssertElementDoesNotExist(AppSettingsKeyXPath(key));
-        }
-
-        /// <summary>
-        /// Assert expected value for configuation/appSettings key.
-        /// </summary>
-        /// <param name="key">The appSettings key.</param>
-        /// <param name="expectedValue">The expected value.</param>
-        public void AssertAppSettingsValue(string key, string expectedValue)
-        {
-            AssertAttributeValue(AppSettingsKeyXPath(key), "value", expectedValue);
-        }
-
-        /// <summary>
-        /// Assert expected values for configuration/appSettings keys.
-        /// </summary>
-        /// <param name="keysAndValues">
-        /// <see cref="IDictionary{TKey, TValue}"/> or other
-        /// <see cref="IEnumerable{KeyValuePair{String, String}"/> of keys / expected values.
-        /// </param>
-        public void AssertAppSettingsValues(IEnumerable<KeyValuePair<string, string>> keysAndValues)
-        {
-            keysAndValues.TestEach(scanario => AssertAppSettingsValue(scanario.Key, scanario.Value));
         }
 
         /// <summary>
@@ -68,7 +44,7 @@ namespace SparkyTestHelpers.XmlTransformation
         /// <param name="elementExpression">Element XPath expression.</param>
         /// <param name="attributeName">Attribute name.</param>
         /// <param name="expectedValue">Expected attribute value.</param>
-        /// <exception cref="XmlTransformException" if element not found or unexpected attribute value. />
+        /// <exception cref="XmlTesterException" if element not found or unexpected attribute value. />
         public void AssertAttributeValue(string elementExpression, string attributeName, string expectedValue)
         {
             XElement elem = AssertElementExists(elementExpression);
@@ -79,7 +55,7 @@ namespace SparkyTestHelpers.XmlTransformation
         /// Assert element does not exist for specified XPath expresion.
         /// </summary>
         /// <param name="expression">XPath expression.</param>
-        /// <exception cref="XmlTransformException" if element is found. />
+        /// <exception cref="XmlTesterException" if element is found. />
         public void AssertElementDoesNotExist(string expression)
         {
             XElement elem = GetElement(expression);
@@ -95,7 +71,7 @@ namespace SparkyTestHelpers.XmlTransformation
         /// </summary>
         /// <param name="expression">XPath expression.</param>
         /// <returns>The found <see cref="XElement"/> instance.</returns>
-        /// <exception cref="XmlTransformException" if element not found. />
+        /// <exception cref="XmlTesterException" if element not found. />
         public XElement AssertElementExists(string expression)
         {
             XElement elem = GetElement(expression);
@@ -137,20 +113,20 @@ namespace SparkyTestHelpers.XmlTransformation
         /// <returns><see cref="XElement"/> (null if not found).</returns>
         public XElement GetElement(string expression)
         {
-            return ConfigXDocument.XPathSelectElement(expression);
+            return XDocument.XPathSelectElement(expression);
         }
 
         /// <summary>
         /// Get elements matching XPath expression.
         /// </summary>
         /// <param name="expression">XPath expression.</param>
-        /// <returns><see cref="XElement"/>.</returns>
+        /// <returns><see cref="XElement"/>s.</returns>
         public IEnumerable<XElement> GetElements(string expression)
         {
-            return ConfigXDocument.XPathSelectElements(expression);
+            return XDocument.XPathSelectElements(expression);
         }
 
-        private void AssertElementAttributeValue(
+        protected void AssertElementAttributeValue(
             XElement elem, string elementExpression, string attributeName, string expectedValue)
         {
             string actual = GetAttributeValue(elem, attributeName);
@@ -170,27 +146,22 @@ namespace SparkyTestHelpers.XmlTransformation
             }
         }
 
-        private static string AppSettingsKeyXPath(string key)
-        {
-            return $"configuration/appSettings/add[@key='{key}']";
-        }
-
         /// <summary>
-        /// Assert failure by throwing <see cref="XmlTransformException"/>.
+        /// Assert failure by throwing <see cref="XmlTesterException"/>.
         /// </summary>
         /// <param name="message">The failure message.</param>
-        private void AssertFail(string message)
+        protected void AssertFail(string message)
         {
-            throw new XmlTransformException($"{_exceptionPrefix}{message}");
+            throw new XmlTesterException($"{_exceptionPrefix}{message}");
         }
 
-        private static string FormatFailureMessage(string elementExpression, string attributeName = null)
+        protected static string FormatFailureMessage(string elementExpression, string attributeName = null)
         {
             string formattedExpression = $"Element: <{elementExpression.Replace("/", ">/<")}>";
 
             return (attributeName == null)
                 ? formattedExpression
-                : $"{formattedExpression} Attribute: \"{attributeName}\".";
+                : $"{formattedExpression} Attribute: \"{attributeName}\"";
         }
     }
 }

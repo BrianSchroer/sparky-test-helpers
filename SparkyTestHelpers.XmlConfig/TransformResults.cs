@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace SparkyTestHelpers.XmlTransformation
+namespace SparkyTestHelpers.XmlConfig
 {
     internal class TransformResults
     {

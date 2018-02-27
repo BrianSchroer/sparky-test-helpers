@@ -13,6 +13,12 @@ SparkyTestHelper.Scenarios extensions for better scenario testing with MSTest / 
 * [Source Code](/SparkyTestHelpers.Scenarios.MsTest)
 * [API documentation](/SparkyTestHelpers.Scenarios.MsTest/api.md)
 
+## SparkyTestHelpers.AppSettings
+Unit test helpers for "appSettings" values in XML .config files:
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.AppSettings/)
+* [Source Code](/SparkyTestHelpers.AppSettings)
+* [API documentation](/SparkyTestHelpers.AppSettings/api.md)
+
 ## SparkyTestHelpers.Mapping
 Unit test helpers for verifying values of properties "mapped" from one type to another:
 * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Mapping/)
@@ -24,9 +30,15 @@ Additional AutoMapper extension methods for SparkyTestHelpers.Mapping:
 * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.AutoMapper/)
 * [Source Code](/SparkyTestHelpers.AutoMapper)
 * [API documentation](/SparkyTestHelpers.AutoMapper/api.md)
-*   
+
 ## SparkyTestHelpers.Moq
 Unit test syntax helpers for the **Moq** mocking framework:
 * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Moq/)
 * [Source Code](/SparkyTestHelpers.Moq)
 * [API documentation](/SparkyTestHelpers.Moq/api.md)
+
+## SparkyTestHelpers.XmlConfig
+Unit test helpers for XML .config files:
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.XmlConfig/)
+* [Source Code](/SparkyTestHelpers.XmlConfig)
+* [API documentation](/SparkyTestHelpers.XmlConfig/api.md)

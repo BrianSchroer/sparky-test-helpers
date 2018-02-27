@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
-namespace SparkyTestHelpers.XmlTransformation
+namespace SparkyTestHelpers.XmlConfig
 {
     /// <summary>
     /// Helper class for unit testing XML (.config) file transformations.
@@ -60,7 +60,7 @@ namespace SparkyTestHelpers.XmlTransformation
         /// </summary>
         /// <param name="expression">XPath expression.</param>
         /// <returns>The found <see cref="XElement"/> instance.</returns>
-        /// <exception cref="XmlTransformException" if element not found. />
+        /// <exception cref="XmlTesterException" if element not found. />
         public XElement AssertElementExists(string expression)
         {
             XElement elem = GetElement(expression);
@@ -110,7 +110,7 @@ namespace SparkyTestHelpers.XmlTransformation
         private void AssertFail(string message)
         {
             string prefix = $"Testing XML transformation for {string.Join(" / ", _transformFiles ?? new string[0])}\n";
-            throw new XmlTransformException($"{prefix}{message}");
+            throw new XmlTesterException($"{prefix}{message}");
         }
 
         private static string FormatFailureMessage(string elementExpression, string attributeName = null)
