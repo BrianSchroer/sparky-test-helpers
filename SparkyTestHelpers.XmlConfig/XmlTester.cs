@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using SparkyTestHelpers.Scenarios;
 
 namespace SparkyTestHelpers.XmlConfig
 {
@@ -11,7 +13,7 @@ namespace SparkyTestHelpers.XmlConfig
     /// </summary>
     public class XmlTester
     {
-        private string _exceptionPrefix;
+        private readonly string _exceptionPrefix;
 
         /// <summary>
         /// The <see cref="XDocument"/> being tested.
@@ -44,11 +46,52 @@ namespace SparkyTestHelpers.XmlConfig
         /// <param name="elementExpression">Element XPath expression.</param>
         /// <param name="attributeName">Attribute name.</param>
         /// <param name="expectedValue">Expected attribute value.</param>
-        /// <exception cref="XmlTesterException" if element not found or unexpected attribute value. />
+        /// <exception cref="XmlTesterException" if element not found, attribute not found, or value does not match. />
         public void AssertAttributeValue(string elementExpression, string attributeName, string expectedValue)
         {
             XElement elem = AssertElementExists(elementExpression);
-            AssertElementAttributeValue(elem, elementExpression, attributeName, expectedValue);
+
+            AssertElementAttributeValue(elem, elementExpression, attributeName,
+                actual => actual.Equals(expectedValue, StringComparison.CurrentCulture)
+                    ? null
+                    : $"Expected: <{expectedValue}> actual: <{actual}>");
+        }
+
+        /// <summary>
+        /// Assert that element attributes have expected values.
+        /// </summary>
+        /// <param name="elementExpression">Element XPath expresion.</param>
+        /// <param name="attributeNamesAndExpectedValues">
+        /// <see cref="IDictionary{String, String}"/> or other
+        /// <see cref="IEnumerable{KeyValuePair{String, String}"/> of attribute names / expected values.
+        /// </param>
+        public void AssertAttributeValues(string elementExpression, 
+            IEnumerable<KeyValuePair<string, string>> attributeNamesAndExpectedValues)
+        {
+            XElement elem = AssertElementExists(elementExpression);
+
+            attributeNamesAndExpectedValues.TestEach(kvp =>
+                AssertElementAttributeValue(elem, elementExpression, kvp.Key,
+                    actual => actual.Equals(kvp.Value, StringComparison.CurrentCulture)
+                        ? null
+                        : $"Expected: <{kvp.Value}> actual: <{actual}>"));
+        }
+
+        /// <summary>
+        /// Assert the element attribute value matches regular expression pattern.
+        /// </summary>
+        /// <param name="elementExpression">Element XPath expression.</param>
+        /// <param name="attributeName">Attribute name.</param>
+        /// <param name="pattern">Regex pattern for expected attribute value.</param>
+        /// <exception cref="XmlTesterException" if element not found, attribute not found, or value does not match. />
+        public void AssertAttributeValueMatch(string elementExpression, string attributeName, string pattern)
+        {
+            XElement elem = AssertElementExists(elementExpression);
+
+            AssertElementAttributeValue(elem, elementExpression, attributeName,
+                actual => Regex.Match(actual, pattern).Success
+                ? null
+                : $"Value \"{actual}\" doesn't match regex pattern \"{pattern}\".");
         }
 
         /// <summary>
@@ -63,6 +106,23 @@ namespace SparkyTestHelpers.XmlConfig
             if (elem != null)
             {
                 AssertFail($"Element should not exist: {FormatFailureMessage(expression)}");
+            }
+        }
+
+        /// <summary>
+        /// Assert that element exists, but does not have the specified attribute.
+        /// </summary>
+        /// <param name="elementExpression">Element XPath expression.</param>
+        /// <param name="attributeName">Attribute name.</param>
+        public void AssertElementDoesNotHaveAttribute(string elementExpression, string attributeName)
+        {
+            XElement elem = AssertElementExists(elementExpression);
+
+            XAttribute[] attributes = GetAttributeArray(elem, attributeName);
+
+            if (attributes.Length > 0)
+            {
+                AssertFail($"{FormatFailureMessage(elementExpression, attributeName)}: Attribute should not exist.");
             }
         }
 
@@ -85,6 +145,21 @@ namespace SparkyTestHelpers.XmlConfig
         }
 
         /// <summary>
+        /// Assert element/attribute value is a well-formed URI string.
+        /// </summary>
+        /// <param name="elementExpression">XPath expression.</param>
+        /// <param name="attributeName">Attribute name.</param>
+        public void AssertAttributeValueIsWellFormedUrl(string elementExpression, string attributeName)
+        {
+            XElement elem = AssertElementExists(elementExpression);
+
+            AssertElementAttributeValue(elem, elementExpression, attributeName,
+                actual => IsWellFormedUriString(actual)
+                ? null
+                : $"Value \"{actual}\" is not a well-formed URI string.");
+        }
+
+        /// <summary>
         /// Get XEmelent attribute value.
         /// </summary>
         /// <param name="elem">The <see cref="XElement"/>.</param>
@@ -92,7 +167,7 @@ namespace SparkyTestHelpers.XmlConfig
         /// <returns>The attribute value (null if not found).</returns>
         public string GetAttributeValue(XElement elem, string attributeName)
         {
-            XAttribute[] attributes = (elem.Attributes(attributeName) ?? Enumerable.Empty<XAttribute>()).ToArray();
+            XAttribute[] attributes = GetAttributeArray(elem, attributeName);
 
             switch (attributes.Length)
             {
@@ -126,8 +201,8 @@ namespace SparkyTestHelpers.XmlConfig
             return XDocument.XPathSelectElements(expression);
         }
 
-        protected void AssertElementAttributeValue(
-            XElement elem, string elementExpression, string attributeName, string expectedValue)
+        private void AssertElementAttributeValue(
+            XElement elem, string elementExpression, string attributeName, Func<string, string> valueChecker)
         {
             string actual = GetAttributeValue(elem, attributeName);
 
@@ -138,30 +213,38 @@ namespace SparkyTestHelpers.XmlConfig
             }
             else
             {
-                if (!actual.Equals(expectedValue, StringComparison.CurrentCulture))
+                string errorMessage = valueChecker(actual);
+                if (!string.IsNullOrWhiteSpace(errorMessage))
                 {
                     AssertFail(
-                        $"{FormatFailureMessage(elementExpression, attributeName)}: Expected: <{expectedValue}> actual: <{actual}>");
+                       $"{FormatFailureMessage(elementExpression, attributeName)}: {errorMessage}");
                 }
             }
+        }
+
+        private bool IsWellFormedUriString(string uriString)
+        {
+            return Uri.IsWellFormedUriString(uriString, UriKind.RelativeOrAbsolute);
         }
 
         /// <summary>
         /// Assert failure by throwing <see cref="XmlTesterException"/>.
         /// </summary>
         /// <param name="message">The failure message.</param>
-        protected void AssertFail(string message)
+        private void AssertFail(string message)
         {
             throw new XmlTesterException($"{_exceptionPrefix}{message}");
         }
 
-        protected static string FormatFailureMessage(string elementExpression, string attributeName = null)
+        private static string FormatFailureMessage(string elementExpression, string attributeName = null)
         {
-            string formattedExpression = $"Element: <{elementExpression.Replace("/", ">/<")}>";
+            string attributeString = (attributeName == null) ? null : $"@{attributeName}";
+            return $"{elementExpression}{attributeString}";
+        }
 
-            return (attributeName == null)
-                ? formattedExpression
-                : $"{formattedExpression} Attribute: \"{attributeName}\"";
+        private static XAttribute[] GetAttributeArray(XElement elem, string attributeName)
+        {
+            return (elem.Attributes(attributeName) ?? Enumerable.Empty<XAttribute>()).ToArray();
         }
     }
 }

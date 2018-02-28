@@ -113,7 +113,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigXmlTesterTests.cs" />
+    <Compile Include="XmlTesterTests.cs" />
+    <Compile Include="ConfigXPathTests.cs" />
+    <Compile Include="XmlTesterConfigExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

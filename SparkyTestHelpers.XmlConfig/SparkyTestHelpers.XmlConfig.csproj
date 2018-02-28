@@ -105,12 +105,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigXPath.cs" />
     <Compile Include="XmlTester.cs" />
     <Compile Include="DuplicateCheck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransformResults.cs" />
+    <Compile Include="XmlTesterConfigExtensions.cs" />
     <Compile Include="XmlTesterException.cs" />
-    <Compile Include="ConfigXmlTester.cs" />
     <Compile Include="XmlTransformHelper.cs" />
   </ItemGroup>
   <ItemGroup>
