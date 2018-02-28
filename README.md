@@ -37,8 +37,8 @@ Unit test syntax helpers for the **Moq** mocking framework:
 * [Source Code](/SparkyTestHelpers.Moq)
 * [API documentation](/SparkyTestHelpers.Moq/api.md)
 
-## SparkyTestHelpers.XmlConfig
+## SparkyTestHelpers.Xml
 Unit test helpers for XML .config files:
-* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.XmlConfig/)
-* [Source Code](/SparkyTestHelpers.XmlConfig)
-* [API documentation](/SparkyTestHelpers.XmlConfig/api.md)
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Xml/)
+* [Source Code](/SparkyTestHelpers.Xml)
+* [API documentation](/SparkyTestHelpers.Xml/api.md)
