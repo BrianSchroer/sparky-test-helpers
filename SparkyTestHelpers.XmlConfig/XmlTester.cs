@@ -14,19 +14,26 @@ namespace SparkyTestHelpers.XmlConfig
     public class XmlTester
     {
         private readonly string _exceptionPrefix;
+        private readonly string _xmlString;
+        private XDocument _xDocument;
 
         /// <summary>
         /// The <see cref="XDocument"/> being tested.
         /// </summary>
-        public XDocument XDocument { get; private set; }
+        public XDocument XDocument
+        {
+            get { return _xDocument ?? (_xDocument = XDocument.Parse(_xmlString)); }
+            private set { _xDocument = value; }
+        }
 
         /// <summary>
         /// Creates a new <see cref="XmlTester"/> instance.
         /// </summary>
         /// <param name="xml">XML string to be parsed to an <see cref="System.Xml.Linq.XDocument"/> for testing.</param>
         /// <param name="exceptionPrefix">(Optional) prefix for exception messages.</param>
-        public XmlTester(string xml, string exceptionPrefix = null) : this(XDocument.Parse(xml), exceptionPrefix) 
+        public XmlTester(string xml, string exceptionPrefix = null) : this((XDocument)null, exceptionPrefix) 
         {
+            _xmlString = xml;
         }
 
         /// <summary>
