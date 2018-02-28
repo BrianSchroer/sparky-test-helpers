@@ -6,6 +6,12 @@
     public static class ConfigXPath
     {
         /// <summary>
+        /// XPath string for anonymous authentication element.
+        /// </summary>
+        public static string AnonymousAuthentication => 
+            "configuration/system.webServer/security/authentication/anonymousAuthentication[@enabled]";
+
+        /// <summary>
         /// XPath string for appSettings elements.
         /// </summary>
         public static string AppSettings => "configuration/appSettings/add";
@@ -47,5 +53,11 @@
         /// XPath string for system.web compilation element.
         /// </summary>
         public static string SystemWebCompilation => "configuration/system.web/compilation";
+
+        /// <summary>
+        /// XPath string for Windows authentication element.
+        /// </summary>
+        public static string WindowsAuthentication =>
+            "configuration/system.webServer/security/authentication/windowsAuthentication";
     }
 }

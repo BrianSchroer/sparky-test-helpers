@@ -285,6 +285,19 @@ namespace SparkyTestHelpers.XmlConfig.UnitTests
                 .WhenExecuting(() => tester.GetClientEndpointAddress("badName"));
         }
 
+        [TestMethod]
+        public void ConfigXPath_authentication_constants_should_be_correct()
+        {
+            var tester = new XmlTester(FormattedXml(
+                "<system.webServer><security><authentication>"
+                + "<anonymousAuthentication enabled=\"true\" />"
+                + "<windowsAuthentication enabled=\"false\" />"
+                + "</authentication></security></system.webServer>"));
+
+            tester.AssertAttributeValue(ConfigXPath.AnonymousAuthentication, "enabled", "true");
+            tester.AssertAttributeValue(ConfigXPath.WindowsAuthentication, "enabled", "false");
+        }
+
         private string FormattedXml(string xml = null)
         {
             return string.Format(_xmlFormat, xml ?? FormattedAppSettingsSection());

@@ -105,7 +105,7 @@ namespace SparkyTestHelpers.XmlConfig
            
             if (elem != null)
             {
-                AssertFail($"Element should not exist: {FormatFailureMessage(expression)}");
+                AssertFail($"Element should not exist: {FormatExpressionAndAttribute(expression)}");
             }
         }
 
@@ -122,7 +122,7 @@ namespace SparkyTestHelpers.XmlConfig
 
             if (attributes.Length > 0)
             {
-                AssertFail($"{FormatFailureMessage(elementExpression, attributeName)}: Attribute should not exist.");
+                AssertFail($"{FormatExpressionAndAttribute(elementExpression, attributeName)}: Attribute should not exist.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace SparkyTestHelpers.XmlConfig
 
             if (elem == null)
             {
-                AssertFail($"Element not found: {FormatFailureMessage(expression)}");
+                AssertFail($"Element not found: {FormatExpressionAndAttribute(expression)}");
             }
 
             return elem;
@@ -157,6 +157,36 @@ namespace SparkyTestHelpers.XmlConfig
                 actual => IsWellFormedUriString(actual)
                 ? null
                 : $"Value \"{actual}\" is not a well-formed URI string.");
+        }
+
+        /// <summary>
+        /// Assert no duplicate elements found for element / key attribute combination.
+        /// </summary>
+        /// <param name="elementExpression">XPath expression for the element.</param>
+        /// <param name="keyAttributeName">The name of the "key" attribute to be checked for duplications.</param>
+        /// <param name="ignoreKeys">Optional key(s) to ignore when checking for duplicates.</param>
+        public void AssertNoDuplicateElements(
+            string elementExpression, string keyAttributeName, params string[] ignoreKeys)
+        {
+            string xPath = $"{elementExpression}[@{keyAttributeName}]";
+
+            IGrouping<string, XElement>[] groups =
+                GetElements(xPath)
+                .GroupBy(elem => elem.Attribute(keyAttributeName).Value)
+                .ToArray();
+
+            string[] duplicates = groups
+                .Where(g => g.Count() > 1 && !ignoreKeys.Contains(g.Key))
+                .Select(g => g.Key)
+                .ToArray();
+
+            if (duplicates.Any())
+            {
+                string keys = string.Join("\", \"", duplicates);
+                AssertFail(
+                    $"Multiple {FormatExpressionAndAttribute(elementExpression, keyAttributeName)}"
+                    + $" where {keyAttributeName} = \"{keys}\".");
+            }
         }
 
         /// <summary>
@@ -209,7 +239,7 @@ namespace SparkyTestHelpers.XmlConfig
             if (actual == null)
             {
                 AssertFail(
-                    $"Element found, but attribute does not exist: {FormatFailureMessage(elementExpression, attributeName)}");
+                    $"Element found, but attribute does not exist: {FormatExpressionAndAttribute(elementExpression, attributeName)}");
             }
             else
             {
@@ -217,7 +247,7 @@ namespace SparkyTestHelpers.XmlConfig
                 if (!string.IsNullOrWhiteSpace(errorMessage))
                 {
                     AssertFail(
-                       $"{FormatFailureMessage(elementExpression, attributeName)}: {errorMessage}");
+                       $"{FormatExpressionAndAttribute(elementExpression, attributeName)}: {errorMessage}");
                 }
             }
         }
@@ -236,7 +266,7 @@ namespace SparkyTestHelpers.XmlConfig
             throw new XmlTesterException($"{_exceptionPrefix}{message}");
         }
 
-        private static string FormatFailureMessage(string elementExpression, string attributeName = null)
+        private static string FormatExpressionAndAttribute(string elementExpression, string attributeName = null)
         {
             string attributeString = (attributeName == null) ? null : $"@{attributeName}";
             return $"{elementExpression}{attributeString}";

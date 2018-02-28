@@ -235,6 +235,54 @@ namespace SparkyTestHelpers.XmlConfig.UnitTests
                         ConfigXPath.ClientEndpointForName("testName"), "address"));
         }
 
+        [TestMethod]
+        public void AssertNoDuplicateElements_should_not_throw_exception_when_there_are_no_duplicates()
+        {
+            var tester = new XmlTester(FormattedXml(FormattedAppSettingsSection(
+                FormattedAppSettingsElem("key1", "value1") 
+                + FormattedAppSettingsElem("key2", "value2")
+                + FormattedAppSettingsElem("key3", "value3")
+                + FormattedAppSettingsElem("key4", "value4")
+            )));
+
+            AssertExceptionNotThrown.WhenExecuting(() => 
+                tester.AssertNoDuplicateElements(ConfigXPath.AppSettings, "key"));
+        }
+
+        [TestMethod]
+        public void AssertNoDuplicateElements_should_ignore_specified_keys()
+        {
+            var tester = new XmlTester(FormattedXml(FormattedAppSettingsSection(
+                FormattedAppSettingsElem("TransformApplied", "transform1")
+                + FormattedAppSettingsElem("TransformApplied", "transform2")
+                + FormattedAppSettingsElem("key1", "value1")
+                + FormattedAppSettingsElem("key2", "value2")
+                + FormattedAppSettingsElem("key3", "value3")
+                + FormattedAppSettingsElem("key4", "value4")
+            )));
+
+            AssertExceptionNotThrown.WhenExecuting(() => 
+                tester.AssertNoDuplicateElements(ConfigXPath.AppSettings, "key", "TransformApplied"));
+        }
+
+        [TestMethod]
+        public void AssertNoDuplicateElements_should_not_throw_exception_when_there_are_duplicates()
+        {
+            var tester = new XmlTester(FormattedXml(FormattedAppSettingsSection(
+                FormattedAppSettingsElem("key1", "value1")
+                + FormattedAppSettingsElem("key2", "value2")
+                + FormattedAppSettingsElem("key2", "value2a")
+                + FormattedAppSettingsElem("key3", "value3")
+                + FormattedAppSettingsElem("key3", "value3a")
+                + FormattedAppSettingsElem("key4", "value4")
+            )));
+
+            AssertExceptionThrown
+                .OfType<XmlTesterException>()
+                .WithMessage("Multiple configuration/appSettings/add@key where key = \"key2\", \"key3\".")
+                .WhenExecuting(() => tester.AssertNoDuplicateElements(ConfigXPath.AppSettings, "key"));
+        }
+
         private string FormattedXml(string xml = null)
         {
             return string.Format(_xmlFormat, xml ?? FormattedAppSettingsSection());
