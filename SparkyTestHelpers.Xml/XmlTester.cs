@@ -111,15 +111,15 @@ namespace SparkyTestHelpers.Xml
         /// <summary>
         /// Assert element does not exist for specified XPath expresion.
         /// </summary>
-        /// <param name="expression">XPath expression.</param>
+        /// <param name="elementExpression">XPath expression.</param>
         /// <exception cref="XmlTesterException" if element is found. />
-        public void AssertElementDoesNotExist(string expression)
+        public void AssertElementDoesNotExist(string elementExpression)
         {
-            XElement elem = GetElement(expression);
+            XElement elem = GetElement(elementExpression);
            
             if (elem != null)
             {
-                AssertFail($"Element should not exist: {FormatExpressionAndAttribute(expression)}");
+                AssertFail($"Element should not exist: {FormatXPath(elementExpression)}");
             }
         }
 
@@ -136,26 +136,50 @@ namespace SparkyTestHelpers.Xml
 
             if (attributes.Length > 0)
             {
-                AssertFail($"{FormatExpressionAndAttribute(elementExpression, attributeName)}: Attribute should not exist.");
+                AssertFail($"{FormatXPath(elementExpression, attributeName)}: Attribute should not exist.");
             }
         }
 
         /// <summary>
         /// Assert element exists for specified XPath expression.
         /// </summary>
-        /// <param name="expression">XPath expression.</param>
+        /// <param name="elementExpression">XPath expression.</param>
         /// <returns>The found <see cref="XElement"/> instance.</returns>
         /// <exception cref="XmlTesterException" if element not found. />
-        public XElement AssertElementExists(string expression)
+        public XElement AssertElementExists(string elementExpression)
         {
-            XElement elem = GetElement(expression);
+            XElement elem = GetElement(elementExpression);
 
             if (elem == null)
             {
-                AssertFail($"Element not found: {FormatExpressionAndAttribute(expression)}");
+                AssertFail($"Element not found: {FormatXPath(elementExpression)}");
             }
 
             return elem;
+        }
+
+        /// <summary>
+        /// Assert the element contains an expected text value.
+        /// </summary>
+        /// <param name="elementExpression">Element XPath expression.</param>
+        /// <param name="expectedText">The expected text.</param>
+        /// <exception cref="XmlTesterException" if element has children or text doesn't match. />
+        public void AssertElementText(string elementExpression, string expectedText)
+        {
+            XElement elem = AssertElementExists(elementExpression);
+
+            if (elem.HasElements)
+            {
+                AssertFail($"{FormatXPath(elementExpression)} has child element(s)." 
+                    + $" Expected element with text content: \"{expectedText}\".");
+            }
+
+            string actual = elem.Value;
+
+            if (!actual.Equals(expectedText, StringComparison.CurrentCulture))
+            {
+                AssertFail($"{FormatXPath(elementExpression)}: Expected text: <{expectedText}> actual: <{actual}>");
+            }
         }
 
         /// <summary>
@@ -198,7 +222,7 @@ namespace SparkyTestHelpers.Xml
             {
                 string keys = string.Join("\", \"", duplicates);
                 AssertFail(
-                    $"Multiple {FormatExpressionAndAttribute(elementExpression, keyAttributeName)}"
+                    $"Multiple {FormatXPath(elementExpression, keyAttributeName)}"
                     + $" where {keyAttributeName} = \"{keys}\".");
             }
         }
@@ -228,11 +252,11 @@ namespace SparkyTestHelpers.Xml
         /// <summary>
         /// Get first element matching XPath expression.
         /// </summary>
-        /// <param name="expression">XPath expression.</param>
+        /// <param name="elementExpression">XPath expression.</param>
         /// <returns><see cref="XElement"/> (null if not found).</returns>
-        public XElement GetElement(string expression)
+        public XElement GetElement(string elementExpression)
         {
-            return XDocument.XPathSelectElement(expression);
+            return XDocument.XPathSelectElement(elementExpression);
         }
 
         /// <summary>
@@ -253,15 +277,14 @@ namespace SparkyTestHelpers.Xml
             if (actual == null)
             {
                 AssertFail(
-                    $"Element found, but attribute does not exist: {FormatExpressionAndAttribute(elementExpression, attributeName)}");
+                    $"Element found, but attribute does not exist: {FormatXPath(elementExpression, attributeName)}");
             }
             else
             {
                 string errorMessage = valueChecker(actual);
                 if (!string.IsNullOrWhiteSpace(errorMessage))
                 {
-                    AssertFail(
-                       $"{FormatExpressionAndAttribute(elementExpression, attributeName)}: {errorMessage}");
+                    AssertFail($"{FormatXPath(elementExpression, attributeName)}: {errorMessage}");
                 }
             }
         }
@@ -280,7 +303,7 @@ namespace SparkyTestHelpers.Xml
             throw new XmlTesterException($"{_exceptionPrefix}{message}");
         }
 
-        private static string FormatExpressionAndAttribute(string elementExpression, string attributeName = null)
+        private static string FormatXPath(string elementExpression, string attributeName = null)
         {
             string attributeString = (attributeName == null) ? null : $"@{attributeName}";
             return $"{elementExpression}{attributeString}";

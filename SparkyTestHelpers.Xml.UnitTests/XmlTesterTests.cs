@@ -237,6 +237,57 @@ namespace SparkyTestHelpers.Xml.UnitTests
         }
 
         [TestMethod]
+        public void AssertElementText_should_throw_exception_when_element_not_found()
+        {
+            var tester = new XmlTester(FormattedXml());
+
+            AssertExceptionThrown
+                .OfType<XmlTesterException>()
+                .WithMessage("Element not found: configuration/textSection/textElem")
+                .WhenExecuting(() => tester.AssertElementText("configuration/textSection/textElem", "test string"));
+        }
+
+        [TestMethod]
+        public void AssertElementText_should_not_throw_exception_when_element_has_expected_text()
+        {
+            var tester = new XmlTester(FormattedXml("<textSection><textElem>test string</textElem></textSection>"));
+
+            AssertExceptionNotThrown
+                .WhenExecuting(() => tester.AssertElementText("configuration/textSection/textElem", "test string"));
+        }
+
+        [TestMethod]
+        public void AssertElementText_should_not_throw_exception_when_element_has_expected_text_and_attributes()
+        {
+            var tester = new XmlTester(FormattedXml("<textSection><textElem att1=\"value1\">test string</textElem></textSection>"));
+
+            AssertExceptionNotThrown
+                .WhenExecuting(() => tester.AssertElementText("configuration/textSection/textElem", "test string"));
+        }
+
+        [TestMethod]
+        public void AssertElementText_should_throw_exception_when_element_has_unexpected_text()
+        {
+            var tester = new XmlTester(FormattedXml("<textSection><textElem>wrong string</textElem></textSection>"));
+
+            AssertExceptionThrown
+                .OfType<XmlTesterException>()
+                .WithMessage("configuration/textSection/textElem: Expected text: <test string> actual: <wrong string>")
+                .WhenExecuting(() => tester.AssertElementText("configuration/textSection/textElem", "test string"));
+        }
+
+        [TestMethod]
+        public void AssertElementText_should_throw_exception_when_element_has_children()
+        {
+            var tester = new XmlTester(FormattedXml("<textSection><textElem><child>child text</child></textElem></textSection>"));
+
+            AssertExceptionThrown
+                .OfType<XmlTesterException>()
+                .WithMessage("configuration/textSection/textElem has child element(s). Expected element with text content: \"test string\".")
+                .WhenExecuting(() => tester.AssertElementText("configuration/textSection/textElem", "test string"));
+        }
+
+        [TestMethod]
         public void AssertNoDuplicateElements_should_not_throw_exception_when_there_are_no_duplicates()
         {
             var tester = new XmlTester(FormattedXml(FormattedAppSettingsSection(
