@@ -123,6 +123,21 @@ namespace SparkyTestHelpers.Xml.UnitTests
         }
 
         [TestMethod]
+        public void Transform_should_cache_TransformResults()
+        {
+            var transformer =
+                XmlTransformer.ForXmlFile("base.config")
+                .TransformedByFile("transform1.config", "transform2.config");
+
+            TransformResults results1 = transformer.Transform();
+            Assert.IsFalse(transformer.GotTransformResultsFromCache);
+
+            TransformResults results2 = transformer.Transform();
+            Assert.AreSame(results1, results2);
+            Assert.IsTrue(transformer.GotTransformResultsFromCache);
+        }
+
+        [TestMethod]
         public void Transform_should_work_with_single_level_transformation()
         {
             TransformResults results =

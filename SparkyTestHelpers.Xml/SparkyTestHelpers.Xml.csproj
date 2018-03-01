@@ -106,7 +106,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ConfigXPath.cs" />
-    <Compile Include="Transformation\PossiblePaths.cs" />
     <Compile Include="Transformation\XmlTransformer.cs" />
     <Compile Include="Transformation\TransformResults.cs" />
     <Compile Include="XmlTester.cs" />

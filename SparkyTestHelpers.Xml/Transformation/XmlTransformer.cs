@@ -14,16 +14,23 @@ namespace SparkyTestHelpers.Xml.Transformation
     /// </summary>
     public class XmlTransformer
     {
-        private PossiblePaths _basePathSpec;
-        private List<PossiblePaths> _transformPathSpecs = new List<PossiblePaths>();
+        private static readonly Dictionary<string, TransformResults> _transformResults
+            = new Dictionary<string, TransformResults>();
+
+        private static readonly object _transformResultsLock = new object();
+
+        private string[] _possibleBaseFilePaths;
+        private List<string[]> _transformPathsArray = new List<string[]>();
+
+        internal bool GotTransformResultsFromCache { get; private set; }
 
         /// <summary>
         /// Creates a new <see cref="XmlTransformer"/> instance.
         /// </summary>
         /// <param name="basePathSpec">The base file <see cref="PossiblePaths"/>.</param>
-        private XmlTransformer(PossiblePaths basePathSpec)
+        private XmlTransformer(string[] basePathSpec)
         {
-            _basePathSpec = basePathSpec;
+            _possibleBaseFilePaths = basePathSpec;
         }
 
         /// <summary>
@@ -41,7 +48,7 @@ namespace SparkyTestHelpers.Xml.Transformation
                 throw new ArgumentNullException(nameof(possiblePaths));
             }
 
-            return new XmlTransformer(new PossiblePaths(possiblePaths));
+            return new XmlTransformer(possiblePaths);
         }
 
         /// <summary>
@@ -59,7 +66,7 @@ namespace SparkyTestHelpers.Xml.Transformation
                 throw new ArgumentNullException(nameof(possiblePaths));
             }
 
-            _transformPathSpecs.Add(new PossiblePaths(possiblePaths));
+            _transformPathsArray.Add(possiblePaths);
             return this;
         }
 
@@ -69,13 +76,69 @@ namespace SparkyTestHelpers.Xml.Transformation
         /// <returns>The <see cref="TransformResults"/>.</returns>
         public TransformResults Transform()
         {
+            lock (_transformResultsLock)
+            {
+                string key = BuildResultsKey();
+
+                if (_transformResults.ContainsKey(key))
+                {
+                    GotTransformResultsFromCache = true;
+                    return _transformResults[key];
+                }
+
+                GotTransformResultsFromCache = false;
+                TransformResults results = GetTransformResults();
+                _transformResults.Add(key, results);
+                return results;
+            }
+        }
+
+        internal static string GetBaseFolder()
+        {
+            string filePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath.Replace("/", @"\");
+            return new FileInfo(filePath).DirectoryName;
+        }
+
+        internal static string RemoveXmlNamespaces(string xml)
+        {
+            return Regex.Replace(xml, "\\s*xmlns=\"[^ >]*\"", string.Empty);
+        }
+
+        /// <summary>
+        /// Resolve relative path.
+        /// </summary>
+        /// <param name="basePath">The base path.</param>
+        /// <param name="relativePath">The relative path.</param>
+        /// <returns>The resolved path.</returns>
+        internal static string ResolveRelativePath(string basePath, string relativePath)
+        {
+            return Path.GetFullPath(Path.Combine(basePath, relativePath));
+        }
+
+        private string BuildResultsKey()
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(string.Join("|", _possibleBaseFilePaths));
+
+            foreach (string[] possiblePaths in _transformPathsArray)
+            {
+                sb.Append("|");
+                sb.Append(string.Join("|", possiblePaths));
+            }
+
+            return sb.ToString();
+        }
+
+        private TransformResults GetTransformResults()
+        {
             var results = new TransformResults { Successful = true };
             var details = new StringBuilder();
             var transformFilePaths = new List<string>();
 
             string baseFolder = GetBaseFolder();
 
-            string baseFilePath = FindFilePath(baseFolder, _basePathSpec, details);
+            string baseFilePath = FindFilePath(baseFolder, _possibleBaseFilePaths, details);
 
             if (baseFilePath == null)
             {
@@ -86,9 +149,9 @@ namespace SparkyTestHelpers.Xml.Transformation
                 details.AppendLine($"Base XML file is {baseFilePath}");
                 baseFolder = new FileInfo(baseFilePath).DirectoryName;
 
-                foreach (PossiblePaths pathSpec in _transformPathSpecs)
+                foreach (string[] possibleTransformPaths in _transformPathsArray)
                 {
-                    string transformFilePath = FindFilePath(baseFolder, pathSpec, details);
+                    string transformFilePath = FindFilePath(baseFolder, possibleTransformPaths, details);
                     if (transformFilePath == null)
                     {
                         results.Successful = false;
@@ -114,33 +177,11 @@ namespace SparkyTestHelpers.Xml.Transformation
             return results;
         }
 
-        internal static string GetBaseFolder()
-        {
-            string filePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath.Replace("/", @"\");
-            return new FileInfo(filePath).DirectoryName;
-        }
-
-        internal static string RemoveXmlNamespaces(string xml)
-        {
-            return Regex.Replace(xml, "\\s*xmlns=\"[^ >]*\"", string.Empty);
-        }
-
-        /// <summary>
-        /// Resolve relative path.
-        /// </summary>
-        /// <param name="basePath">The base path.</param>
-        /// <param name="relativePath">The relative path.</param>
-        /// <returns>The resolved path.</returns>
-        internal static string ResolveRelativePath(string basePath, string relativePath)
-        {
-            return Path.GetFullPath(Path.Combine(basePath, relativePath));
-        }
-
-        private string FindFilePath(string basePath, PossiblePaths pathSpec, StringBuilder details)
+        private string FindFilePath(string basePath, string[] pathSpec, StringBuilder details)
         {
             string foundPath = null;
 
-            foreach(string possiblePath in pathSpec.Paths)
+            foreach(string possiblePath in pathSpec)
             {
                 details.AppendLine($"Resolving \"{possiblePath}\" relative to \"{basePath}\"...");
                 string resolvedPath = ResolveRelativePath(basePath, possiblePath);
