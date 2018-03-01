@@ -166,7 +166,7 @@ namespace SparkyTestHelpers.Xml.Transformation
 
             if (results.Successful)
             {
-                PerformTransformations(baseFilePath, transformFilePaths.ToArray(), results, details);
+                ApplyTransformations(baseFilePath, transformFilePaths.ToArray(), results, details);
             }
             else
             {
@@ -202,7 +202,7 @@ namespace SparkyTestHelpers.Xml.Transformation
             return foundPath;
         }
 
-        private void PerformTransformations(
+        private void ApplyTransformations(
             string baseFilePath, 
             string[] transformFilePaths, 
             TransformResults results, 
@@ -216,17 +216,18 @@ namespace SparkyTestHelpers.Xml.Transformation
 
                 foreach (string transformFilePath in transformFilePaths)
                 {
-                    using (var transformation = new XmlTransformation(transformFilePath))
+                    using (var sr = new StreamReader(transformFilePath))
+                    using (var transformation = new XmlTransformation(sr.BaseStream, new TransformationLogger(details)))
                     {
-                        details.Append($"Applying transformation file {transformFilePath}...");
+                        details.AppendLine($"\nApplying transformation file {transformFilePath}...");
 
                         if (transformation.Apply(transformableDocument))
                         {
-                            details.AppendLine("Successful!");
+                            details.AppendLine("Transformation Successful!");
                         }
                         else
                         {
-                            details.AppendLine("Unsuccessful.");
+                            details.AppendLine("Transformation Failed.");
                             results.Successful = false;
                             results.ErrorMessage = $"Transformation failed for file \"{transformFilePath}\".";
                             break;

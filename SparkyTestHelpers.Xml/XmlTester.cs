@@ -14,26 +14,15 @@ namespace SparkyTestHelpers.Xml
     public class XmlTester
     {
         private readonly string _exceptionPrefix;
-        private readonly string _xmlString;
         private XDocument _xDocument;
+        private Func<XDocument> _initializeXDocument;
 
         /// <summary>
         /// The <see cref="XDocument"/> being tested.
         /// </summary>
         public XDocument XDocument
         {
-            get { return _xDocument ?? (_xDocument = XDocument.Parse(_xmlString)); }
-            private set { _xDocument = value; }
-        }
-
-        /// <summary>
-        /// Creates a new <see cref="XmlTester"/> instance.
-        /// </summary>
-        /// <param name="xml">XML string to be parsed to an <see cref="System.Xml.Linq.XDocument"/> for testing.</param>
-        /// <param name="exceptionPrefix">(Optional) prefix for exception messages.</param>
-        public XmlTester(string xml, string exceptionPrefix = null) : this((XDocument)null, exceptionPrefix) 
-        {
-            _xmlString = xml;
+            get { return _xDocument ?? (_xDocument = _initializeXDocument()); }
         }
 
         /// <summary>
@@ -41,9 +30,27 @@ namespace SparkyTestHelpers.Xml
         /// </summary>
         /// <param name="xDocument">The <see cref="System.Xml.Linq.XDocument"/> to be tested.</param>
         /// <param name="exceptionPrefix">(Optional) prefix for exception messages.</param>
-        public XmlTester(XDocument xDocument, string exceptionPrefix = null)
+        public XmlTester(XDocument xDocument, string exceptionPrefix = null) : this(() => xDocument, exceptionPrefix)
         {
-            XDocument = xDocument;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="XmlTester"/> instance.
+        /// </summary>
+        /// <param name="xml">XML string to be parsed to an <see cref="System.Xml.Linq.XDocument"/> for testing.</param>
+        /// <param name="exceptionPrefix">(Optional) prefix for exception messages.</param>
+        public XmlTester(string xml, string exceptionPrefix = null) : this (() => XDocument.Parse(xml), exceptionPrefix) 
+        {
+        }
+
+        /// <summary>
+        /// Private constructor chained to by public constructors.
+        /// </summary>
+        /// <param name="initializeXDocument">Function to initialize the <see cref="XDocument"/>.</param>
+        /// <param name="exceptionPrefix">(Optional) prefix for exception messages.</param>
+        private XmlTester(Func<XDocument> initializeXDocument, string exceptionPrefix = null)
+        {
+            _initializeXDocument = initializeXDocument;
             _exceptionPrefix = exceptionPrefix;
         }
 

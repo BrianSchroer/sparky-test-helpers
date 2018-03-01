@@ -143,7 +143,7 @@ namespace SparkyTestHelpers.Xml.UnitTests
             TransformResults results =
                 XmlTransformer
                     .ForXmlFile("SparkyTestHelpers.Xml.UnitTests.dll.config")
-                    .TransformedByFile("app.transform1.config", RelativePathTo("app.transform1.config"))
+                    .TransformedByFile(RelativePaths("app.transform1.config"))
                     .Transform();
 
             Console.WriteLine(results.TransformationDetails);
@@ -160,8 +160,8 @@ namespace SparkyTestHelpers.Xml.UnitTests
             TransformResults results =
                 XmlTransformer
                     .ForXmlFile("SparkyTestHelpers.Xml.UnitTests.dll.config")
-                    .TransformedByFile("app.transform1.config", RelativePathTo("app.transform1.config"))
-                    .TransformedByFile("app.transform2.config", RelativePathTo("app.transform2.config"))
+                    .TransformedByFile(RelativePaths("app.transform1.config"))
+                    .TransformedByFile(RelativePaths("app.transform2.config"))
                     .Transform();
 
             Console.WriteLine(results.TransformationDetails);
@@ -179,7 +179,7 @@ namespace SparkyTestHelpers.Xml.UnitTests
             TransformResults results =
                 XmlTransformer
                     .ForXmlFile("SparkyTestHelpers.Xml.UnitTests.dll.config")
-                    .TransformedByFile("app.transform1.config", RelativePathTo("app.transform1.config"))
+                    .TransformedByFile(RelativePaths("app.transform1.config"))
                     .Transform();
 
             Assert.IsTrue(results.Successful);
@@ -190,7 +190,12 @@ namespace SparkyTestHelpers.Xml.UnitTests
             xmlTester.AssertAppSettingsValue("Key1", "Value1 updated by transform1");
         }
 
-        private static string RelativePathTo(string filePath) =>
-            $"../../../../../../../../SparkyTestHelpers.Xml.UnitTests/{filePath}";
+        private static string[] RelativePaths(string filePath) =>
+            new[]
+            {
+                filePath,
+                $"../../../SparkyTestHelpers.Xml.UnitTests/{filePath}",
+                $"../../../../../../../../SparkyTestHelpers.Xml.UnitTests/{filePath}"
+            };
     }
 }
