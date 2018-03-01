@@ -36,6 +36,11 @@ namespace SparkyTestHelpers.Xml.Transformation
         /// <returns>The <see cref="XmlTransformer"/>.</returns>
         public static XmlTransformer ForXmlFile(params string[] possiblePaths)
         {
+            if (possiblePaths?.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(possiblePaths));
+            }
+
             return new XmlTransformer(new PossiblePaths(possiblePaths));
         }
 
@@ -49,6 +54,11 @@ namespace SparkyTestHelpers.Xml.Transformation
         /// <returns>"This" <see cref="XmlTransformer"/.></returns>
         public XmlTransformer TransformedByFile(params string[] possiblePaths)
         {
+            if (possiblePaths?.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(possiblePaths));
+            }
+
             _transformPathSpecs.Add(new PossiblePaths(possiblePaths));
             return this;
         }
@@ -73,11 +83,12 @@ namespace SparkyTestHelpers.Xml.Transformation
             }
             else
             {
+                details.AppendLine($"Base XML file is {baseFilePath}");
                 baseFolder = new FileInfo(baseFilePath).DirectoryName;
 
                 foreach (PossiblePaths pathSpec in _transformPathSpecs)
                 {
-                    string transformFilePath = FindFilePath(baseFilePath, pathSpec, details);
+                    string transformFilePath = FindFilePath(baseFolder, pathSpec, details);
                     if (transformFilePath == null)
                     {
                         results.Successful = false;
@@ -131,9 +142,9 @@ namespace SparkyTestHelpers.Xml.Transformation
 
             foreach(string possiblePath in pathSpec.Paths)
             {
-                details.Append($"Resolving \"{possiblePath}\" relative to \"{basePath}\"...");
+                details.AppendLine($"Resolving \"{possiblePath}\" relative to \"{basePath}\"...");
                 string resolvedPath = ResolveRelativePath(basePath, possiblePath);
-                details.Append($"{resolvedPath}...");
+                details.Append($"Resolved path {resolvedPath}...");
 
                 if (File.Exists(resolvedPath))
                 {
@@ -158,7 +169,7 @@ namespace SparkyTestHelpers.Xml.Transformation
         {
             using (var transformableDocument = new XmlTransformableDocument { PreserveWhitespace = true })
             {
-                details.AppendLine($"Loading {baseFilePath} to XmlTransformableDocument..");
+                details.AppendLine($"Loading {baseFilePath} to XmlTransformableDocument...");
 
                 transformableDocument.Load(baseFilePath);
 
@@ -166,10 +177,15 @@ namespace SparkyTestHelpers.Xml.Transformation
                 {
                     using (var transformation = new XmlTransformation(transformFilePath))
                     {
-                        details.AppendLine($"Applying transformation file {transformFilePath}...");
+                        details.Append($"Applying transformation file {transformFilePath}...");
 
-                        if (!transformation.Apply(transformableDocument))
+                        if (transformation.Apply(transformableDocument))
                         {
+                            details.AppendLine("Successful!");
+                        }
+                        else
+                        {
+                            details.AppendLine("Unsuccessful.");
                             results.Successful = false;
                             results.ErrorMessage = $"Transformation failed for file \"{transformFilePath}\".";
                             break;

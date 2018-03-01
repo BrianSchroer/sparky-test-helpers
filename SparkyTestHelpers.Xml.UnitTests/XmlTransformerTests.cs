@@ -2,7 +2,9 @@
 using SparkyTestHelpers.Xml.Transformation;
 using SparkyTestHelpers.Exceptions;
 using SparkyTestHelpers.Scenarios;
+using SparkyTestHelpers.Xml.Config;
 using System;
+using System.Xml.Linq;
 
 namespace SparkyTestHelpers.Xml.UnitTests
 {
@@ -12,6 +14,56 @@ namespace SparkyTestHelpers.Xml.UnitTests
     [TestClass]
     public class XmlTransformerTests
     {
+        [TestMethod]
+        public void ForXmlFile_should_throw_exception_if_no_paths_specified()
+        {
+            AssertExceptionThrown
+                .OfType<ArgumentNullException>()
+                .WithMessage("Value cannot be null.\r\nParameter name: possiblePaths")
+                .WhenExecuting(() => XmlTransformer.ForXmlFile());
+        }
+
+        [TestMethod]
+        public void ForXmlFile_should_return_XmlTransformer_when_one_or_more_paths_specified()
+        {
+            ForTest.Scenarios
+            (
+                new[] { "path1" },
+                new[] { "path1", "path2" }
+            )
+            .TestEach(scenario => AssertExceptionNotThrown.WhenExecuting(() =>
+            {
+                var transformer = XmlTransformer.ForXmlFile(scenario);
+                Assert.IsInstanceOfType(transformer, typeof(XmlTransformer));
+            }));
+        }
+
+        [TestMethod]
+        public void TransformedByFile_should_throw_exception_if_no_paths_specified()
+        {
+            var transformer = XmlTransformer.ForXmlFile("baseFile");
+
+            AssertExceptionThrown
+                .OfType<ArgumentNullException>()
+                .WithMessage("Value cannot be null.\r\nParameter name: possiblePaths")
+                .WhenExecuting(() => transformer.TransformedByFile());
+        }
+
+        [TestMethod]
+        public void TransformedByFile_should_return_XmlTransformer_when_one_or_more_paths_specified()
+        {
+            ForTest.Scenarios
+            (
+                new[] { "path1" },
+                new[] { "path1", "path2" }
+            )
+            .TestEach(scenario => AssertExceptionNotThrown.WhenExecuting(() =>
+            {
+                var transformer = XmlTransformer.ForXmlFile(scenario);
+                Assert.AreSame(transformer, transformer.TransformedByFile(scenario));
+            }));
+        }
+
         [TestMethod]
         public void GetBasePath_should_return_path()
         {
@@ -23,6 +75,12 @@ namespace SparkyTestHelpers.Xml.UnitTests
         {
             ForTest.Scenarios
             (
+                new
+                {
+                    Base = @"C:\SourceCode\sparky-test-helpers\.vs\SparkyTestHelpers\lut\0\t\SparkyTestHelpers.Xml.UnitTests\bin\Debug",
+                    Relative = "../../../../../../../../app.transform1.config",
+                    Expected = @"C:\SourceCode\sparky-test-helpers\app.transform1.config"
+                },
                 new { Base = @"c:\folder\subfolder", Relative = @"something\web.config", Expected = @"c:\folder\subfolder\something\web.config" },
                 new { Base = @"c:\folder\subfolder", Relative = @"/something/web.config", Expected = @"c:\something\web.config" },
                 // Can use either forward or backward slashes:
@@ -35,7 +93,7 @@ namespace SparkyTestHelpers.Xml.UnitTests
             )
             .TestEach(scenario =>
                 Assert.AreEqual(
-                    scenario.Expected.ToLowerInvariant(), 
+                    scenario.Expected.ToLowerInvariant(),
                     XmlTransformer.ResolveRelativePath(scenario.Base, scenario.Relative).ToLowerInvariant()));
         }
 
@@ -48,5 +106,76 @@ namespace SparkyTestHelpers.Xml.UnitTests
                     "<assemblyBinding xmlns=\"urn:schemas-microsoft-com:asm.v1\">"
                     + "<assemblyBinding xmlns=\"urn:schemas-microsoft-com:asm.v1\">"));
         }
+
+        [TestMethod]
+        public void Transform_should_work_with_no_transform_files()
+        {
+            TransformResults results =
+                XmlTransformer
+                    .ForXmlFile("SparkyTestHelpers.Xml.UnitTests.dll.config")
+                    .Transform();
+
+            Console.WriteLine(results.TransformationDetails);
+            Assert.IsTrue(results.Successful);
+            Assert.IsNull(results.ErrorMessage);
+            StringAssert.Contains(results.TransformedXml, "Original Value1");
+            Assert.IsInstanceOfType(results.XDocument, typeof(XDocument));
+        }
+
+        [TestMethod]
+        public void Transform_should_work_with_single_level_transformation()
+        {
+            TransformResults results =
+                XmlTransformer
+                    .ForXmlFile("SparkyTestHelpers.Xml.UnitTests.dll.config")
+                    .TransformedByFile("app.transform1.config", RelativePathTo("app.transform1.config"))
+                    .Transform();
+
+            Console.WriteLine(results.TransformationDetails);
+            Assert.IsTrue(results.Successful);
+            Assert.IsNull(results.ErrorMessage);
+            StringAssert.Contains(results.TransformedXml, "Value1 updated by transform1");
+            StringAssert.Contains(results.TransformedXml, "transform1 applied");
+            Assert.IsInstanceOfType(results.XDocument, typeof(XDocument));
+        }
+
+        [TestMethod]
+        public void Transform_should_work_with_two_level_transformation()
+        {
+            TransformResults results =
+                XmlTransformer
+                    .ForXmlFile("SparkyTestHelpers.Xml.UnitTests.dll.config")
+                    .TransformedByFile("app.transform1.config", RelativePathTo("app.transform1.config"))
+                    .TransformedByFile("app.transform2.config", RelativePathTo("app.transform2.config"))
+                    .Transform();
+
+            Console.WriteLine(results.TransformationDetails);
+            Assert.IsTrue(results.Successful);
+            Assert.IsNull(results.ErrorMessage);
+            StringAssert.Contains(results.TransformedXml, "Value1 updated by transform2");
+            StringAssert.Contains(results.TransformedXml, "transform1 applied");
+            StringAssert.Contains(results.TransformedXml, "transform2 applied");
+            Assert.IsInstanceOfType(results.XDocument, typeof(XDocument));
+        }
+
+        [TestMethod]
+        public void Transform_XElement_into_XMlTester_should_work()
+        {
+            TransformResults results =
+                XmlTransformer
+                    .ForXmlFile("SparkyTestHelpers.Xml.UnitTests.dll.config")
+                    .TransformedByFile("app.transform1.config", RelativePathTo("app.transform1.config"))
+                    .Transform();
+
+            Assert.IsTrue(results.Successful);
+
+            XmlTester xmlTester = new XmlTester(results.XDocument);
+            Assert.IsInstanceOfType(xmlTester, typeof(XmlTester));
+
+            xmlTester.AssertAppSettingsValue("Key1", "Value1 updated by transform1");
+        }
+
+        private static string RelativePathTo(string filePath) =>
+            $"../../../../../../../../SparkyTestHelpers.Xml.UnitTests/{filePath}";
     }
 }
