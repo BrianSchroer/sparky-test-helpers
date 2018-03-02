@@ -1,22 +1,23 @@
 
 _see also_:
-* **[SparkyTestHelpers.AutoMapper](https://www.nuget.org/packages/SparkyTestHelpers.AutoMapper/)**: Additional **SparkyTestHelpers.Mapping** extension methods for **AutoMapper**
 * the rest of the [**"Sparky suite"** of .NET utilities and test helpers](https://www.nuget.org/profiles/BrianSchroer)
 ---
 ## MapTester<TSource, TDestination>
 *class SparkyTestHelpers.Mapping.MapTester<TSource, TDestination>*
 
-This class is for testing that properties were successfully "mapped" from one type to another.
+This class is for testing that properties were successfully "mapped" from one type to another, either via **AutoMapper** or another automatic mapping framework, or by hand-written "*destination.X = source.X*;" code.
+
+See **[SparkyTestHelpers.AutoMapper](https://www.nuget.org/packages/SparkyTestHelpers.AutoMapper/)** for additional extension methods specifically for working with **AutoMapper**.
 
 **Methods**
-* *MapTester<TSource, TDestination>* **WithLogging** *([Action<String> action])* 
-    - (optional) log property values when asserting. If called without an action, defaults to Console.WriteLine. 
-* *MapTester<TSource, TDestination>* **IgnoringMember** *(Expression<Func<TDestination, Object>> destExpression)*  
-* *MapMemberTester<TSource, TDestination>* **WhereMember** *(Expression<Func<TDestination, Object>> destExpression)*  
-* *void* **AssertMappedValues** *(TSource source, TDestination dest)*  
+* *MapTester<TSource, TDestination>* **WithLogging**(*Action<*String*> action*)   
+   (optional) "Callback" action to log property values when asserting. If called without an action, defaults to Console.WriteLine. 
+* *MapTester<TSource, TDestination>* **IgnoringMember**(*Expression<Func<TDestination, Object>> destExpression*) 
+* *MapMemberTester<TSource, TDestination>* **WhereMember**(*Expression<Func<TDestination, Object>> destExpression*)  
+* *void* **AssertMappedValues**(*TSource source, TDestination dest*)  
 
 **Static Methods**
-* *MapTester<TSource, TDestination>* **ForMap** *()* 
+* *MapTester<TSource, TDestination>* **ForMap**() 
 
 **Example**
 
@@ -36,10 +37,9 @@ using SparkyTestHelpers.Mapping;
             Assert.AreEqual(src.Rate / 100, dest.Percent))
         .AssertMappedValues(foo, bar);
 ```
-As with AutoMapper, you don't have to configure anything for properties with the same name/type in the source and destination instances.
-**AssertMappedValues** considers those successful if the source/destination values matter.
+You don't have to configure anything for properties with the same name/type in the source and destination instances. **AssertMappedValues**() considers those successful if the source/destination values match.
 
-Use **IgnoringMember** for destination properties that are not mapped or which you need to test in another way.
+Use **IgnoringMember** for destination properties that are not mapped, or which you need to test in another way.
 
 Use **WhereMember** to "dot" to the **ShouldEqual**, **ShouldEqualValue** and **IsTestedBy** functions.
 
@@ -50,12 +50,12 @@ Use **WhereMember** to "dot" to the **ShouldEqual**, **ShouldEqualValue** and **
 This class is for testing that a property was successfully "mapped" from one type to another.
 
 **Methods**
-* *MapTester<TSource, TDestination>* **ShouldEqual** *(Expression<Func<TSource, Object>> sourceExpression)*  
-    - use to verify destination property mapped from differently named source property(s)
-* *MapTester<TSource, TDestination>* **ShouldEqualValue** *(Object value)* 
-    - use to verify destination property using a constant or some other value not derived from the source 
-* *MapTester<TSource, TDestination>* **IsTestedBy** *(Action<TSource, TDestination> customTest)* 
-    - use for custom complex validation that doesn't fit one of the other verification methods
+* *MapTester<TSource, TDestination>* **ShouldEqual**(*Expression<Func<TSource, Object>> sourceExpression*)   
+   use to verify destination property mapped from differently named source property(s)
+* *MapTester<TSource, TDestination>* **ShouldEqualValue**(*Object value*)   
+   use to verify destination property using a constant or some other value not derived from the source 
+* *MapTester<TSource, TDestination>* **IsTestedBy**(*Action<TSource, TDestination> customTest*)   
+   use for custom complex validation that doesn't fit one of the other verification methods
 
 ---
 ## RandomValuesHelper
@@ -65,8 +65,8 @@ Test helper for updating class instance properties with random values (so you
 can fill a "source" instance without writing a lot of code).
 
 **Methods**
-* *T* **CreateInstanceWithRandomValues** *()*  
-* *T* **UpdatePropertiesWithRandomValues** *(T instance)*  
+* *T* **CreateInstanceWithRandomValues**()  
+* *T* **UpdatePropertiesWithRandomValues**(*T instance*)  
 ---
 **Example**
 
