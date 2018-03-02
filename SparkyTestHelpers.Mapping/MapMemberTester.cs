@@ -55,6 +55,7 @@ namespace SparkyTestHelpers.Mapping
         /// </summary>
         /// <param name="sourceExpression">Expression to get source property name.</param>
         /// <returns>"Parent" <see cref="MapTester{TSource, TDestination}"/>.</returns>
+        /// <example>
         /// <code><![CDATA[
         ///     MapTester
         ///         .ForMap<Foo, Bar>()
@@ -75,6 +76,7 @@ namespace SparkyTestHelpers.Mapping
         /// </summary>
         /// <param name="value">The expected value.</param>
         /// <returns>"Parent" <see cref="MapTester{TSource, TDestination}"/>.</returns>
+        /// <example>
         /// <code><![CDATA[
         ///     MapTester
         ///         .ForMap<Foo, Bar>()
@@ -92,9 +94,10 @@ namespace SparkyTestHelpers.Mapping
         /// <summary>
         /// Specify custom test for property mapping.
         /// </summary>
-        /// <param name="value">Action that examines the source and destination instances 
+        /// <param name="customTest">Action that examines the source and destination instances 
         /// and asserts property map success.</param>
         /// <returns>"Parent" <see cref="MapTester{TSource, TDestination}"/>.</returns>
+        /// <example>
         /// <code><![CDATA[
         ///     MapTester
         ///         .ForMap<Foo, Bar>()

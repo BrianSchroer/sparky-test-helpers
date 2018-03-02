@@ -76,7 +76,7 @@ namespace SparkyTestHelpers.Moq
         public static List<T> List<T>() => It.IsAny<List<T>>();
 
         /// <summary>
-        /// <see cref="It.IsAny{Dictionary}" wrapper.
+        /// <see cref="It.IsAny{Dictionary}" /> wrapper.
         /// </summary>
         public static Dictionary<TKey, TValue> Dictionary<TKey, TValue>() 
             => It.IsAny<Dictionary<TKey, TValue>>();
