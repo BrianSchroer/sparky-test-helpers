@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SparkyTestHelpers.Xml")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Helpers to perform .config file XML transformations, and to test the resulting transformed XML (or actually any XML, whether it's .config format or not).")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Brian Schroer")]
 [assembly: AssemblyProduct("SparkyTestHelpers.Xml")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright © Brian Schroer 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: InternalsVisibleTo("SparkyTestHelpers.Xml.UnitTests")]

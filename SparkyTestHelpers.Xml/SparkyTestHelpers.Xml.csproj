@@ -117,9 +117,12 @@
     <Compile Include="XmlTesterException.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="NuGet.documentation.md" />
     <None Include="api.md" />
     <None Include="app.config" />
+    <None Include="nuget-instructions.md" />
     <None Include="packages.config" />
+    <None Include="SparkyTestHelpers.Xml.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
