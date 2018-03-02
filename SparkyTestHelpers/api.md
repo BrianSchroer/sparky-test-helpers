@@ -119,12 +119,9 @@ ForTest.Scenarios(*array*)
     Assert.AreEqual(scenario.IsGoodDate, DateTime.TryParse(scenario.DateString, out dt));
 });
 ```
-* *ScenarioTester* **AfterEachTest**(*Action<*TScenario*>)
+* *ScenarioTester* **AfterEachTest**(*Action<*TScenario*>*)
  
-    Defines function called after each scenario is tested.
-    The function receives the scenario and the exception (if any) caught by the test. 
-    If the function returns true, the scenario test is "passed". 
-    If false, exception is thrown to fail the test
+    Defines function called after each scenario is tested. The function receives the scenario and the exception (if any) caught by the test. If the function returns true, the scenario test is "passed". If false, exception is thrown to fail the test.
 
 **Example**
 ```csharp
