@@ -35,6 +35,11 @@ using SparkyTestHelpers.Xml.Transformation;
 ### SparkyTestHelpers.Xml.XmlTester
 Helper class for testing [XDocument](https://msdn.microsoft.com/en-us/library/system.xml.linq.xdocument) values (from .config file or any XML source).
 
+**Constructors**
+* *XmlTester* XmlTester(*String xml*)
+* *XmlTester* XmlTester(*XDocument xDocument*)
+
+
 **Methods**
 
 * *void* **AssertAttributeValue** *(String elementExpression, String attributeName, String expectedValue)*  
