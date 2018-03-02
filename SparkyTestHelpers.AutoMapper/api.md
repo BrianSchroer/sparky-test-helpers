@@ -13,20 +13,20 @@ This package extends **[SparkyTestHelpers.Mapping](https://www.nuget.org/package
 This class is for testing that properties were successfully "mapped" from one type to another.
 
 **Methods**
-* *MapTester<TSource, TDestination>* **WithLogging** *([Action<String> action])* 
-    - (optional) log property values when asserting. If called without an action, defaults to Console.WriteLine. 
-* *MapTester<TSource, TDestination>* **IgnoringMember** *(Expression<Func<TDestination, Object>> destExpression)*  
-* *MapMemberTester<TSource, TDestination>* **WhereMember** *(Expression<Func<TDestination, Object>> destExpression)*  
-* *void* **AssertMappedValues** *(TSource source, TDestination dest)*  
+* *MapTester<TSource, TDestination>* **WithLogging** *(Action<*String*> action)*    
+   (*optional*) Log property values when asserting. If called without an action, defaults to Console.WriteLine. 
+* *MapTester<TSource, TDestination>* **IgnoringMember**(*Expression<Func<TDestination, Object>> destExpression*)  
+* *MapMemberTester<TSource, TDestination>* **WhereMember**(*Expression<Func<TDestination, Object>> destExpression*)  
+* *void* **AssertMappedValues**(*TSource source, TDestination dest*)  
 
 **Extension Methods for AutoMapper**
-* *TDestination* **AssertAutoMappedValues** *(TSource source)*
-    - calls Mapper.Map<TSource, TDestination>(source), then AssertMappedValues()
-* *TDestination* **AssertAutoMappedRandomValues** *()*
-    - uses **RandomValuesHelper** to create a new TSource instance, calls Mapper.Map<TSource, TDestination>(source), then AssertMappedValues()
+* *TDestination* **AssertAutoMappedValues**(*TSource source*)   
+   calls **Mapper.Map**<*TSource, TDestination*>(source), then **AssertMappedValues**()
+* *TDestination* **AssertAutoMappedRandomValues**()   
+   uses **RandomValuesHelper** to create a new TSource instance, calls **Mapper.Map**<*TSource, TDestination*>(source), then **AssertMappedValues**()
     
 **Static Methods**
-* *MapTester<TSource, TDestination>* **ForMap** *()* 
+* *MapTester<TSource, TDestination>* **ForMap**( 
 
 **Examples**
 
@@ -60,7 +60,7 @@ using SparkyTestHelpers.AutoMapper;
     MapTester.ForMap<Baz, Qux>.AssertAutoMappedRandomValues();
 ```
 As with AutoMapper, you don't have to configure anything for properties with the same name/type in the source and destination instances.
-**AssertMappedValues** considers those successful if the source/destination values matter.
+**AssertMappedValues** considers those successful if the source/destination values matxh.
 
 Use **IgnoringMember** for destination properties that are not mapped or which you need to test in another way.
 
@@ -73,12 +73,12 @@ Use **WhereMember** to "dot" to the **ShouldEqual**, **ShouldEqualValue** and **
 This class is for testing that a property was successfully "mapped" from one type to another.
 
 **Methods**
-* *MapTester<TSource, TDestination>* **ShouldEqual** *(Expression<Func<TSource, Object>> sourceExpression)*  
-    - use to verify destination property mapped from differently named source property(s)
-* *MapTester<TSource, TDestination>* **ShouldEqualValue** *(Object value)* 
-    - use to verify destination property using a constant or some other value not derived from the source 
-* *MapTester<TSource, TDestination>* **IsTestedBy** *(Action<TSource, TDestination> customTest)* 
-    - use for custom complex validation that doesn't fit one of the other verification methods
+* *MapTester<TSource, TDestination>* **ShouldEqual**(*Expression<Func<TSource, Object>> sourceExpression*)   
+   use to verify destination property mapped from differently named source property(s)
+* *MapTester<TSource, TDestination>* **ShouldEqualValue**(*Object value*)   
+   use to verify destination property using a constant or some other value not derived from the source 
+* *MapTester<TSource, TDestination>* **IsTestedBy** (*Action<TSource, TDestination> customTest*)   
+   use for custom complex validation that doesn't fit one of the other verification methods
 
 ---
 ## RandomValuesHelper
@@ -88,8 +88,8 @@ Test helper for updating class instance properties with random values (so you
 can fill a "source" instance without writing a lot of code).
 
 **Methods**
-* *T* **CreateInstanceWithRandomValues** *()*  
-* *T* **UpdatePropertiesWithRandomValues** *(T instance)*  
+* *T* **CreateInstanceWithRandomValues**()  
+* *T* **UpdatePropertiesWithRandomValues**(*T instance*)  
 ---
 **Example**
 
