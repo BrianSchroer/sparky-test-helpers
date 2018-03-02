@@ -186,7 +186,7 @@ An **XmlTransformer** instance is created starting with the static "fluent" **Fo
 
 ```.ForXmlFile("../../web.config", "../../../web.config")```
 
-t takes an array because the relative file locaion can differ depending on the test runner (Visual Studio / ReSharper / build on server, etc.). The Transform method resolves each specified possible path and uses the first one where a file is found.
+It takes an array because the relative file locaion can differ depending on the test runner (Visual Studio / ReSharper / build on server, etc.). The Transform method resolves each specified possible path and uses the first one where a file is found.
 
 **TransformedByFile** also takes a [params string array[(https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/params), but one path will probably suffice because these paths are resolved relative to the file found by **ForXmlFile**, and it's likely that your base .config and transform .config file(s) are in the same folder. (You can "dot together" multiple **TransformedByFile** clauses for multi-stage transformations.)
 
