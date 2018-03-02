@@ -27,10 +27,10 @@ namespace SparkyTestHelpers.Xml.Transformation
         /// <summary>
         /// Creates a new <see cref="XmlTransformer"/> instance.
         /// </summary>
-        /// <param name="basePathSpec">The base file <see cref="PossiblePaths"/>.</param>
-        private XmlTransformer(string[] basePathSpec)
+        /// <param name="possiblePaths">The base file possible paths.</param>
+        private XmlTransformer(string[] possiblePaths)
         {
-            _possibleBaseFilePaths = basePathSpec;
+            _possibleBaseFilePaths = possiblePaths;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace SparkyTestHelpers.Xml.Transformation
         /// Path(s) where the transform XML file might be found. (Can be absolute path or relative to
         /// the base path passed to <see cref="XmlTransformer.ForXmlFile(string[])"/>.
         /// </param>
-        /// <returns>"This" <see cref="XmlTransformer"/.></returns>
+        /// <returns>"This" <see cref="XmlTransformer"/>.></returns>
         public XmlTransformer TransformedByFile(params string[] possiblePaths)
         {
             if (possiblePaths?.Length == 0)
@@ -133,12 +133,12 @@ namespace SparkyTestHelpers.Xml.Transformation
         private TransformResults GetTransformResults()
         {
             var results = new TransformResults { Successful = true };
-            var details = new StringBuilder();
+            var log = new StringBuilder();
             var transformFilePaths = new List<string>();
 
             string baseFolder = GetBaseFolder();
 
-            string baseFilePath = FindFilePath(baseFolder, _possibleBaseFilePaths, details);
+            string baseFilePath = FindFilePath(baseFolder, _possibleBaseFilePaths, log);
 
             if (baseFilePath == null)
             {
@@ -146,12 +146,12 @@ namespace SparkyTestHelpers.Xml.Transformation
             }
             else
             {
-                details.AppendLine($"Base XML file is {baseFilePath}");
+                log.AppendLine($"Base XML file is {baseFilePath}");
                 baseFolder = new FileInfo(baseFilePath).DirectoryName;
 
                 foreach (string[] possibleTransformPaths in _transformPathsArray)
                 {
-                    string transformFilePath = FindFilePath(baseFolder, possibleTransformPaths, details);
+                    string transformFilePath = FindFilePath(baseFolder, possibleTransformPaths, log);
                     if (transformFilePath == null)
                     {
                         results.Successful = false;
@@ -166,36 +166,36 @@ namespace SparkyTestHelpers.Xml.Transformation
 
             if (results.Successful)
             {
-                ApplyTransformations(baseFilePath, transformFilePaths.ToArray(), results, details);
+                ApplyTransformations(baseFilePath, transformFilePaths.ToArray(), results, log);
             }
             else
             {
                 results.ErrorMessage = "File not found.";
             }
 
-            results.TransformationDetails = details.ToString();
+            results.Log = log.ToString();
             return results;
         }
 
-        private string FindFilePath(string basePath, string[] pathSpec, StringBuilder details)
+        private string FindFilePath(string basePath, string[] pathSpec, StringBuilder log)
         {
             string foundPath = null;
 
             foreach(string possiblePath in pathSpec)
             {
-                details.AppendLine($"Resolving \"{possiblePath}\" relative to \"{basePath}\"...");
+                log.AppendLine($"Resolving \"{possiblePath}\" relative to \"{basePath}\"...");
                 string resolvedPath = ResolveRelativePath(basePath, possiblePath);
-                details.Append($"Resolved path {resolvedPath}...");
+                log.Append($"Resolved path {resolvedPath}...");
 
                 if (File.Exists(resolvedPath))
                 {
-                    details.AppendLine("Found!");
+                    log.AppendLine("Found!");
                     foundPath = resolvedPath;
                     break;
                 }
                 else
                 {
-                    details.AppendLine("Not found.");
+                    log.AppendLine("Not found.");
                 }
             }
 
@@ -206,28 +206,28 @@ namespace SparkyTestHelpers.Xml.Transformation
             string baseFilePath, 
             string[] transformFilePaths, 
             TransformResults results, 
-            StringBuilder details)
+            StringBuilder log)
         {
             using (var transformableDocument = new XmlTransformableDocument { PreserveWhitespace = true })
             {
-                details.AppendLine($"Loading {baseFilePath} to XmlTransformableDocument...");
+                log.AppendLine($"Loading {baseFilePath} to XmlTransformableDocument...");
 
                 transformableDocument.Load(baseFilePath);
 
                 foreach (string transformFilePath in transformFilePaths)
                 {
                     using (var sr = new StreamReader(transformFilePath))
-                    using (var transformation = new XmlTransformation(sr.BaseStream, new TransformationLogger(details)))
+                    using (var transformation = new XmlTransformation(sr.BaseStream, new TransformationLogger(log)))
                     {
-                        details.AppendLine($"\nApplying transformation file {transformFilePath}...");
+                        log.AppendLine($"\nApplying transformation file {transformFilePath}...");
 
                         if (transformation.Apply(transformableDocument))
                         {
-                            details.AppendLine("Transformation Successful!");
+                            log.AppendLine("Transformation Successful!");
                         }
                         else
                         {
-                            details.AppendLine("Transformation Failed.");
+                            log.AppendLine("Transformation Failed.");
                             results.Successful = false;
                             results.ErrorMessage = $"Transformation failed for file \"{transformFilePath}\".";
                             break;

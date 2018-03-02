@@ -13,8 +13,9 @@ namespace SparkyTestHelpers.Xml.Config
         /// Assert that specified configuration/appSettings key doesn't exist.
         /// </summary>
 
+        /// <param name="xmlTester">The <see cref="XmlTester"/></param>
         /// <param name="key">The key.</param>
-        /// <exception cref="XmlTesterException" if key is found. />
+        /// <exception cref="XmlTesterException">if key is found.</exception>
         public static void AssertAppSettingsKeyDoesNotExist(this XmlTester xmlTester, string key)
         {
             xmlTester.AssertElementDoesNotExist(ConfigXPath.AppSettingForKey(key));
@@ -26,6 +27,7 @@ namespace SparkyTestHelpers.Xml.Config
         /// <param name="xmlTester"><see cref="XmlTester"/>.</param>
         /// <param name="key">The appSettings key.</param>
         /// <param name="expectedValue">The expected value.</param>
+        /// <exception cref="XmlTesterException">if element not found, attribute not found, or value does not match.</exception>
         public static void AssertAppSettingsValue(this XmlTester xmlTester, string key, string expectedValue)
         {
             xmlTester.AssertAttributeValue(ConfigXPath.AppSettingForKey(key), "value", expectedValue);
@@ -36,10 +38,11 @@ namespace SparkyTestHelpers.Xml.Config
         /// </summary>
         /// <param name="xmlTester"><see cref="XmlTester"/>.</param>
         /// <param name="key">The appSettings key.</param>
-        /// <param name="expectedValue">The RegEx pattern.</param>
-        public static void AssertAppSettingsValueMatch(this XmlTester xmlTester, string key, string pattern)
+        /// <param name="regExPattern">The RegEx pattern.</param>
+        /// <exception cref="XmlTesterException">if element not found, attribute not found, or value does not match.</exception>
+        public static void AssertAppSettingsValueMatch(this XmlTester xmlTester, string key, string regExPattern)
         {
-            xmlTester.AssertAttributeValueMatch(ConfigXPath.AppSettingForKey(key), "value", pattern);
+            xmlTester.AssertAttributeValueMatch(ConfigXPath.AppSettingForKey(key), "value", regExPattern);
         }
 
         /// <summary>
@@ -48,8 +51,9 @@ namespace SparkyTestHelpers.Xml.Config
         /// <param name="xmlTester"><see cref="XmlTester"/>.</param>
         /// <param name="keysAndValues">
         /// <see cref="IDictionary{String, String}"/> or other
-        /// <see cref="IEnumerable{KeyValuePair{String, String}"/> of keys / expected values.
+        /// <see cref="IEnumerable{KeyValuePair}"/> of keys / expected values.
         /// </param>
+        /// <exception cref="XmlTesterException">if element not found or value does not match.</exception>
         public static void AssertAppSettingsValues(
             this XmlTester xmlTester, IEnumerable<KeyValuePair<string, string>> keysAndValues)
         {
@@ -62,6 +66,7 @@ namespace SparkyTestHelpers.Xml.Config
         /// </summary>
         /// <param name="xmlTester"><see cref="XmlTester"/>.</param>
         /// <param name="endpointName">The endpoint name.</param>
+        /// <exception cref="XmlTesterException">if endpoint not found or address is not a well-formed URL.</exception>
         public static void AssertClientEndpointAddressIsWellFormedUrl(this XmlTester xmlTester, string endpointName)
         {
             xmlTester.AssertAttributeValueIsWellFormedUrl(ConfigXPath.ClientEndpointForName(endpointName), "address");
@@ -71,6 +76,7 @@ namespace SparkyTestHelpers.Xml.Config
         /// Assert that all ServiceModel client endpoint addresses are well-formed URLs.
         /// </summary>
         /// <param name="xmlTester"><see cref="XmlTester"/>.</param>
+        /// <exception cref="XmlTesterException">if any endpoint address is not a well-formed URL.</exception>
         public static void AssertClientEndpointAddressesAreWellFormedUrls(this XmlTester xmlTester)
         {
             xmlTester.GetClientEndpointElements().TestEach(endpoint =>
@@ -78,12 +84,22 @@ namespace SparkyTestHelpers.Xml.Config
         }
 
         /// <summary>
-        /// Assert that confirmation/system.web/compilation "debug" attribute has been removed.
+        /// Assert that confirmation/system.web/compilation "debug" attribute has been removed or set to false.
         /// </summary>
         /// <param name="xmlTester"><see cref="XmlTester"/>.</param>
-        public static void AssertCompilationDebugAttributeRemoved(this XmlTester xmlTester)
+        /// <exception cref="XmlTesterException">if element has debug value of true.</exception>
+        public static void AssertCompilationDebugFalse(this XmlTester xmlTester)
         {
-            xmlTester.AssertElementDoesNotHaveAttribute(ConfigXPath.SystemWebCompilation, "debug");
+            var elem = xmlTester.GetElement(ConfigXPath.SystemWebCompilation);
+
+            if (elem != null)
+            {
+                string value = xmlTester.GetAttributeValue(elem, "debug");
+                if (value == "true")
+                {
+                    xmlTester.AssertAttributeValue(ConfigXPath.SystemWebCompilation, "debug", "false");
+                }
+            }
         }
 
         /// <summary>

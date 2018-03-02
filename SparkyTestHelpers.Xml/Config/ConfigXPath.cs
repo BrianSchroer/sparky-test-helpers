@@ -9,7 +9,7 @@
         /// XPath string for anonymous authentication element.
         /// </summary>
         public static string AnonymousAuthentication => 
-            "configuration/system.webServer/security/authentication/anonymousAuthentication[@enabled]";
+            "configuration/system.webServer/security/authentication/anonymousAuthentication";
 
         /// <summary>
         /// XPath string for appSettings elements.

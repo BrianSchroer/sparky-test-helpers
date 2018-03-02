@@ -115,7 +115,7 @@ namespace SparkyTestHelpers.Xml.UnitTests
                     .ForXmlFile("SparkyTestHelpers.Xml.UnitTests.dll.config")
                     .Transform();
 
-            Console.WriteLine(results.TransformationDetails);
+            Console.WriteLine(results.Log);
             Assert.IsTrue(results.Successful);
             Assert.IsNull(results.ErrorMessage);
             StringAssert.Contains(results.TransformedXml, "Original Value1");
@@ -146,7 +146,7 @@ namespace SparkyTestHelpers.Xml.UnitTests
                     .TransformedByFile(RelativePaths("app.transform1.config"))
                     .Transform();
 
-            Console.WriteLine(results.TransformationDetails);
+            Console.WriteLine(results.Log);
             Assert.IsTrue(results.Successful);
             Assert.IsNull(results.ErrorMessage);
             StringAssert.Contains(results.TransformedXml, "Value1 updated by transform1");
@@ -164,7 +164,7 @@ namespace SparkyTestHelpers.Xml.UnitTests
                     .TransformedByFile(RelativePaths("app.transform2.config"))
                     .Transform();
 
-            Console.WriteLine(results.TransformationDetails);
+            Console.WriteLine(results.Log);
             Assert.IsTrue(results.Successful);
             Assert.IsNull(results.ErrorMessage);
             StringAssert.Contains(results.TransformedXml, "Value1 updated by transform2");

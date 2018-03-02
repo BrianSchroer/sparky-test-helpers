@@ -30,6 +30,6 @@ namespace SparkyTestHelpers.Xml.Transformation
         /// <summary>
         /// Details about the files and transformation steps involved.
         /// </summary>
-        public string TransformationDetails { get; set; }
+        public string Log { get; set; }
     }
 }

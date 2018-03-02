@@ -112,7 +112,7 @@ namespace SparkyTestHelpers.Mapping
         /// </summary>
         /// <param name="source">An instance of type <typeparamref name="TDestination"/>.</param>
         /// <param name="dest">An instance of type <typeparamref name="TDestination"/>.</param>
-        /// <exception cref="ScenarioTestFailureException"> if dest properties don't have expected values.</exception>
+        /// <exception cref="ScenarioTestFailureException">if dest properties don't have expected values.</exception>
         /// <example>
         /// <code><![CDATA[
         ///     MapTester

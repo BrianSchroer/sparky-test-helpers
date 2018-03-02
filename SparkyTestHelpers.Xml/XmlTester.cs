@@ -60,7 +60,7 @@ namespace SparkyTestHelpers.Xml
         /// <param name="elementExpression">Element XPath expression.</param>
         /// <param name="attributeName">Attribute name.</param>
         /// <param name="expectedValue">Expected attribute value.</param>
-        /// <exception cref="XmlTesterException" if element not found, attribute not found, or value does not match. />
+        /// <exception cref="XmlTesterException">if element not found, attribute not found, or value does not match.</exception>
         public void AssertAttributeValue(string elementExpression, string attributeName, string expectedValue)
         {
             XElement elem = AssertElementExists(elementExpression);
@@ -77,8 +77,9 @@ namespace SparkyTestHelpers.Xml
         /// <param name="elementExpression">Element XPath expresion.</param>
         /// <param name="attributeNamesAndExpectedValues">
         /// <see cref="IDictionary{String, String}"/> or other
-        /// <see cref="IEnumerable{KeyValuePair{String, String}"/> of attribute names / expected values.
+        /// <see cref="IEnumerable{KeyValuePair}"/> of attribute names / expected values.
         /// </param>
+        /// <exception cref="XmlTesterException">if element not found, attribute not found, or value does not match.</exception>
         public void AssertAttributeValues(string elementExpression, 
             IEnumerable<KeyValuePair<string, string>> attributeNamesAndExpectedValues)
         {
@@ -97,7 +98,7 @@ namespace SparkyTestHelpers.Xml
         /// <param name="elementExpression">Element XPath expression.</param>
         /// <param name="attributeName">Attribute name.</param>
         /// <param name="pattern">Regex pattern for expected attribute value.</param>
-        /// <exception cref="XmlTesterException" if element not found, attribute not found, or value does not match. />
+        /// <exception cref="XmlTesterException">if element not found, attribute not found, or value does not match.</exception>
         public void AssertAttributeValueMatch(string elementExpression, string attributeName, string pattern)
         {
             XElement elem = AssertElementExists(elementExpression);
@@ -112,7 +113,7 @@ namespace SparkyTestHelpers.Xml
         /// Assert element does not exist for specified XPath expresion.
         /// </summary>
         /// <param name="elementExpression">XPath expression.</param>
-        /// <exception cref="XmlTesterException" if element is found. />
+        /// <exception cref="XmlTesterException">if element is found.</exception>
         public void AssertElementDoesNotExist(string elementExpression)
         {
             XElement elem = GetElement(elementExpression);
@@ -128,6 +129,7 @@ namespace SparkyTestHelpers.Xml
         /// </summary>
         /// <param name="elementExpression">Element XPath expression.</param>
         /// <param name="attributeName">Attribute name.</param>
+        /// <exception cref="XmlTesterException">if element has attribute.</exception>
         public void AssertElementDoesNotHaveAttribute(string elementExpression, string attributeName)
         {
             XElement elem = AssertElementExists(elementExpression);
@@ -145,7 +147,7 @@ namespace SparkyTestHelpers.Xml
         /// </summary>
         /// <param name="elementExpression">XPath expression.</param>
         /// <returns>The found <see cref="XElement"/> instance.</returns>
-        /// <exception cref="XmlTesterException" if element not found. />
+        /// <exception cref="XmlTesterException">if element not found.</exception>
         public XElement AssertElementExists(string elementExpression)
         {
             XElement elem = GetElement(elementExpression);
@@ -163,7 +165,7 @@ namespace SparkyTestHelpers.Xml
         /// </summary>
         /// <param name="elementExpression">Element XPath expression.</param>
         /// <param name="expectedText">The expected text.</param>
-        /// <exception cref="XmlTesterException" if element has children or text doesn't match. />
+        /// <exception cref="XmlTesterException">if element has children or text doesn't match.</exception>
         public void AssertElementText(string elementExpression, string expectedText)
         {
             XElement elem = AssertElementExists(elementExpression);
@@ -187,6 +189,7 @@ namespace SparkyTestHelpers.Xml
         /// </summary>
         /// <param name="elementExpression">XPath expression.</param>
         /// <param name="attributeName">Attribute name.</param>
+        /// <exception cref="XmlTesterException">if value is not well-formed URI string.</exception>
         public void AssertAttributeValueIsWellFormedUrl(string elementExpression, string attributeName)
         {
             XElement elem = AssertElementExists(elementExpression);
@@ -203,6 +206,7 @@ namespace SparkyTestHelpers.Xml
         /// <param name="elementExpression">XPath expression for the element.</param>
         /// <param name="keyAttributeName">The name of the "key" attribute to be checked for duplications.</param>
         /// <param name="ignoreKeys">Optional key(s) to ignore when checking for duplicates.</param>
+        /// <exception cref="XmlTesterException">if duplicate element(s) found.</exception>
         public void AssertNoDuplicateElements(
             string elementExpression, string keyAttributeName, params string[] ignoreKeys)
         {
@@ -228,7 +232,7 @@ namespace SparkyTestHelpers.Xml
         }
 
         /// <summary>
-        /// Get XEmelent attribute value.
+        /// Get XElement attribute value.
         /// </summary>
         /// <param name="elem">The <see cref="XElement"/>.</param>
         /// <param name="attributeName">The attribute name.</param>

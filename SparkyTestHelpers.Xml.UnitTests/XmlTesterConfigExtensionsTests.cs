@@ -158,21 +158,36 @@ namespace SparkyTestHelpers.Xml.UnitTests
         }
 
         [TestMethod]
-        public void AssertCompilationDebugAttributeRemoved_should_not_throw_exception_when_attribute_has_been_removed()
+        public void AssertCompilationDebugFalse_should_not_throw_exception_when_element_does_not_exist()
         {
-            var tester = new XmlTester(FormattedXml("<system.web><compilation defaultLanguage=\"c#\" /></system.web>"));
-            AssertExceptionNotThrown.WhenExecuting(() => tester.AssertCompilationDebugAttributeRemoved());
+            var tester = new XmlTester(FormattedXml("<system.web></system.web>"));
+            AssertExceptionNotThrown.WhenExecuting(() => tester.AssertCompilationDebugFalse());
         }
 
         [TestMethod]
-        public void AssertCompilationDebugAttributeRemoved_should_throw_exception_when_attribute_has_not_been_removed()
+        public void AssertCompilationDebugFalse_should_not_throw_exception_when_attribute_has_been_removed()
+        {
+            var tester = new XmlTester(FormattedXml("<system.web><compilation defaultLanguage=\"c#\" /></system.web>"));
+            AssertExceptionNotThrown.WhenExecuting(() => tester.AssertCompilationDebugFalse());
+        }
+
+        [TestMethod]
+        public void AssertCompilationDebugFalse_should_not_throw_exception_when_attribute_is_false()
+        {
+            var tester = new XmlTester(FormattedXml("<system.web><compilation defaultLanguage=\"c#\" debug=\"false\" /></system.web>"));
+
+            AssertExceptionNotThrown.WhenExecuting(() => tester.AssertCompilationDebugFalse());
+        }
+
+        [TestMethod]
+        public void AssertCompilationDebugFalse_should_throw_exception_when_attribute_is_true()
         {
             var tester = new XmlTester(FormattedXml("<system.web><compilation defaultLanguage=\"c#\" debug=\"true\" /></system.web>"));
 
             AssertExceptionThrown
                 .OfType<XmlTesterException>()
-                .WithMessage("configuration/system.web/compilation@debug: Attribute should not exist.")
-                .WhenExecuting(() => tester.AssertCompilationDebugAttributeRemoved());
+                .WithMessage("configuration/system.web/compilation@debug: Expected: <false> actual: <true>")
+                .WhenExecuting(() => tester.AssertCompilationDebugFalse());
         }
 
         [TestMethod]
