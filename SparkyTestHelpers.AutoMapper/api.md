@@ -17,7 +17,8 @@ This class is for testing that properties were successfully "mapped" from one ty
    (optional) "Callback" action to log property values when asserting. If called without an action, defaults to Console.WriteLine. 
 * *MapTester<TSource, TDestination>* **IgnoringMember**(*Expression<Func<TDestination, Object>> destExpression*)  
 * *MapMemberTester<TSource, TDestination>* **WhereMember**(*Expression<Func<TDestination, Object>> destExpression*)  
-* *void* **AssertMappedValues**(*TSource source, TDestination dest*)  
+* *void* **AssertMappedValues**(*TSource source, TDestination dest*)     
+   throws exception if any source/destination map validation specifications fail, or if any destination properties aren’t either tested or **IgnoreMember**’d. 
 
 **Extension Methods for AutoMapper**
 * *TDestination* **AssertAutoMappedValues**(*TSource source*)   
