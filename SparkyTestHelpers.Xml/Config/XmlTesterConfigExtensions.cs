@@ -62,7 +62,7 @@ namespace SparkyTestHelpers.Xml.Config
         }
 
         /// <summary>
-        /// Assert that ServiceModel client endpoint address is a well-formed URLs.
+        /// Assert that ServiceModel client endpoint address is a well-formed URL.
         /// </summary>
         /// <param name="xmlTester"><see cref="XmlTester"/>.</param>
         /// <param name="endpointName">The endpoint name.</param>

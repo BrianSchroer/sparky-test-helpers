@@ -36,8 +36,8 @@ using SparkyTestHelpers.Xml.Transformation;
 Helper class for testing [XDocument](https://msdn.microsoft.com/en-us/library/system.xml.linq.xdocument) values (from .config file or any XML source).
 
 **Constructors**
-* *XmlTester* XmlTester(*String xml*)
-* *XmlTester* XmlTester(*XDocument xDocument*)
+* *XmlTester* **XmlTester**(*String xml*)
+* *XmlTester* **XmlTester**(*XDocument xDocument*)
 
 
 **Methods**
@@ -93,7 +93,7 @@ Helper class for testing [XDocument](https://msdn.microsoft.com/en-us/library/sy
 * *void* **AssertAppSettingsValues** *(IEnumerable<KeyValuePair<String, String>> keysAndValues)*  
   For specified dictionary of keys / expected values, verify that the actual appSetting values match. 
 * *void* **AssertClientEndpointAddressIsWellFormedUrl** *(String endpointName)*  
-  Assert that ServiceModel client endpoint address is a well-formed URLs.  
+  Assert that ServiceModel client endpoint address is a well-formed URL.  
 * *void* **AssertClientEndpointAddressesAreWellFormedUrls** *()*  
   Assert that all ServiceModel client endpoint addresses are well-formed URLs.  
 * *void* **AssertCompilationDebugFalse** *()*  
