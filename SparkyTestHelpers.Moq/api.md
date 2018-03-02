@@ -1,10 +1,14 @@
-## [Moq](https://github.com/moq) syntax helpers ##
+﻿## [Moq](https://github.com/moq) syntax helpers ##
 
 _see also_:
 * the rest of the [**"Sparky suite"** of .NET utilities and test helpers](https://www.nuget.org/profiles/BrianSchroer)
 ---
 
-### "Any" syntax
+[Moq, “the most popular and friendly mocking framework for .NET”](https://github.com/moq/moq4) is great, but some of the syntax is a bit unwieldy.
+
+This NuGet package provides extension methods that allow you to use Moq with “wieldier” (Is that a word?) syntax:
+
+### “Any” - Syntax alternative to “It.IsAny<*T*>”
 
 ```csharp
 _mock.Setup(x => x.DoSomething(
@@ -28,10 +32,10 @@ _mock.Setup(x => x.DoSomething(
 * Any.Int
 * Any.Object
 * Any.String
-* Any.InstanceOf<T>
-* Any.Array<T>
-* Any.IEnumerable<T>
-* Any.List<T>
+* Any.InstanceOf<*T*>
+* Any.Array<*T*>
+* Any.IEnumerable<*T*>
+* Any.List<*T*>
 * Any.Dictionary<TKey, TValue>
 * Any.KeyValuePair<TKey, TValue>
 * Any.Tuple<T1, T2>
@@ -76,18 +80,34 @@ _mock.Setup(x => x.Foo(It.Is<int>(i => i % 2 == 0))).Returns(true);
 _mock.Setup(x => x.Foo(Any.Int.Where(i => i % 2 == 0))).Returns(true);
 ```
 ### *mock*.Expression extension method
-...makes it easy to create a reusable expression so you don't duplicate code in ".Setup" and ".Verify" calls:
+...makes it easy to create a reusable expression so you don't duplicate code in ".Setup" and ".Verify" calls. This test:
 ```csharp
-_mock.Setup(x => x.Foo(Any.String, Any.Int, Any.InstanceOf<Bar>())).Returns(true);
+// Arrange:
+_mock.Setup(x => x.Foo(
+    Any.String, Any.Int, Any.InstanceOf<Bar>())
+    ).Returns(true);
+
+// Act:
 subjectUnderTest.Fooify("yo", 5, myBar);
-_mock.VerifyOneCallTo(x => x.Foo(Any.String, Any.Int, Any.InstanceOf<Bar>()));
+
+//Assert:
+_mock.VerifyOneCallTo(x => x.Foo(
+    Any.String, Any.Int, Any.InstanceOf<Bar>()));
 ```
-...can be coded as:
+...where you have to code the same “*x => x.Foo(
+ Any.String, Any.Int, Any.InstanceOf<*Bar*>()*” expression for both the .Setup and .Verify calls  -  can be simplified to:
 ```csharp
 using SparkyTestHelpers.Moq;
 . . .
-var fooExp = _mock.Expression(x => x.Foo(Any.String, Any.Int, Any.InstanceOf<Bar>()));
+// Arrange:
+var fooExp = _mock.Expression(x => 
+    x.Foo(Any.String, Any.Int, Any.InstanceOf<Bar>()));
 _mock.Setup(fooExp).Returns(true);
+
+// Act:
 subjectUnderTest.Fooify("yo", 5, myBar);
+
+// Assert:
 _mock.VerifyOneCallTo(fooExp);
 ```
+...so you only have to code the expression once, reducing finger fatigue and the possibility of the Setup and Verify expressions not matching because of a typo!
