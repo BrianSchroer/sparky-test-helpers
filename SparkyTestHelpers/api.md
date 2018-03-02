@@ -10,7 +10,7 @@ but clarifies the intent of tests that wish to show that an action works correct
 
 **Static Methods**
 
-* _void_ **WhenExecuting** _(Action action)_ 
+* _void_ **WhenExecuting**_(Action action)_ 
 
 **Example**
 
@@ -29,7 +29,7 @@ Why use this instead of something like the VisualStudio TestTools ExpectedExcept
 * It lets you to check the exception message.
 * It lets you assert the exception is thrown for a specific statement, not just anywhere in the code under test.
 
-There is no public constructor for this class. It's constructed using the "fluent" static factory method **AssertExceptionThrown.OfType<TException>()**.
+There is no public constructor for this class. It's constructed using the "fluent" static factory method **AssertExceptionThrown.OfType<*TException*>()**.
 
 **Example**
 
@@ -57,34 +57,33 @@ AssertExceptionThrown
 
 **Static Methods**
 
-* _AssertExceptionThrown_.**OfType<TException>\***()\*
+* _AssertExceptionThrown_.OfType<*TException*>()   
+   Set up to test that the action under test throws an exception of this specific type.
 
-  * Set up to test that the action under test throws an exception of this specific type.
-
-* _AssertExceptionThrown_.**OfTypeOrSubclassOfType<TException>\***()\*
-  * Set up to test that the action under test throws an exception of this type of a subclass of this type.
+* _AssertExceptionThrown_.OfTypeOrSubclassOfType<*TException*>\()   
+   Set up to test that the action under test throws an exception of this type of a subclass of this type.
 ---
 
-## ScenarioTester<TScenario>
-VisualStudio.TestTools doesn't have "RowTest" or "TestCase" attributes like NUnit or other .NET testing frameworks. (It does have "data-driven tests", but it's pretty cumbersome.) This class provides the ability to execute the same test code for multiple test cases and, after all test cases have been executed, failing the unit test if any of the test cases failed.
+## ScenarioTester<*TScenario*>
+VisualStudio.TestTools now has ["DataMemberTest" and "DataRow" attributes](http://pmichaels.net/2016/07/23/using-mstest-datarow-as-a-substitute-for-nunit-testcase/),  but they didn't when I started using the framework, so I wrote my own "scenerio testing" tool based my experience with NUnit "TestCase" attributes. This class provides the ability to execute the same test code for multiple test cases and, after all test cases have been executed, fail the unit test if any of the test cases failed.
 
-Even if you're not testing with MSTest/VisualStudio.TestTools, these helpers provide an alternative syntax for "row testing".
+Even if your test framework has attribute-based scenario testing, these helpers provide an alternative syntax that you might find useful.
 
-This class is rarely used directly. It's easier to use with IEnumerable<TScenario>.**TestEach** or **ForTest.Scenarios** (see below).
+This class is rarely used directly. It's easier to use with IEnumerable<*TScenario*>.**TestEach** or **ForTest.Scenarios** (see below).
 
 When one or more of the scenarios fails, the failure exception shows which were unsuccessful, for example, this scenario test:
 
 ```csharp
 ForTest.Scenarios
 (
-    new { DateString = "1/31/2023", ShouldBeValid = true },
-    new { DateString = "2/31/2023", ShouldBeValid = true },
-    new { DateString = "6/31/2023", ShouldBeValid = false }
+    new { DateString = "1/31/2023", IsGoodDate = true },
+    new { DateString = "2/31/2023", IsGoodDate = true },
+    new { DateString = "6/31/2023", IsGoodDate = false }
 )
 .TestEach(scenario =>
 {
     DateTime dt;
-    Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));
+    Assert.AreEqual(scenario.IsGoodDate, DateTime.TryParse(scenario.DateString, out dt));
 });
 ```
 
@@ -94,16 +93,16 @@ ForTest.Scenarios
 Test method SparkyTestHelpers.UnitTests.DateTests threw exception:
 SparkyTestHelpers.Scenarios.ScenarioTestFailureException: Scenario[1] (2 of 3) - Assert.AreEqual failed. Expected:<True>. Actual:<False>.
 
-Scenario data - anonymousType: {"DateString":"2/31/2023","ShouldBeValid":true}
+Scenario data - anonymousType: {"DateString":"2/31/2023","IsGoodDate":true}
 
 Scenario[2] (3 of 3) - Assert.AreEqual failed. Expected:<True>. Actual:<False>.
 
-Scenario data - anonymousType: {"DateString":"4/31/2023","ShouldBeValid":true}
+Scenario data - anonymousType: {"DateString":"4/31/2023","IsGoodDate":true}
 ```
 
 **Public Methods**
 
-* *ScenarioTester* **BeforeEachTest** (*Action&lt;TScenario&gt;*)
+* *ScenarioTester* **BeforeEachTest**(Action<*TScenario*>)
  
     Defines action to called before each scenario is tested.
 
@@ -117,10 +116,10 @@ ForTest.Scenarios(*array*)
 .TestEach(scenario =>
 {
     DateTime dt;
-    Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));
+    Assert.AreEqual(scenario.IsGoodDate, DateTime.TryParse(scenario.DateString, out dt));
 });
 ```
-* *ScenarioTester* **AfterEachTest** (*Action&lt;TScenario&gt;*)
+* *ScenarioTester* **AfterEachTest**(*Action<*TScenario*>)
  
     Defines function called after each scenario is tested.
     The function receives the scenario and the exception (if any) caught by the test. 
@@ -132,23 +131,24 @@ ForTest.Scenarios(*array*)
 ForTest.Scenarios(*array*)
 .AfterEachTest((scenario, ex) => 
 {
-    // do something, e.g. log scenario details, decide if scenario with exception should be passed
+    // do something, e.g. log scenario details, 
+    // decide if scenario with exception should be passed
     return ex == null;
 });
 .TestEach(scenario =>
 {
     DateTime dt;
-    Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));
+    Assert.AreEqual(scenario.IsGoodDate, DateTime.TryParse(scenario.DateString, out dt));
 });
 ```
  ---
 
 ## ScenarioTesterExtension
-**ScenarioTester<TScenario>** extension methods.
+**ScenarioTester<*TScenario*>** extension methods.
 
 **Static Methods**
 
-* _ScenarioTester<TScenario>_ **TestEach** _(IEnumerable<TScenario> enumerable, Action<TScenario> test)_
+* _ScenarioTester<*TScenario*>_ **TestEach**_(IEnumerable<*TScenario*> enumerable, Action<*TScenario*> test)_
 
 **Example**
 
@@ -157,23 +157,23 @@ using SparkyTestHelpers.Scenarios;
 . . .
 new []
 {
-    new { DateString = "1/31/2023", ShouldBeValid = true },  
-    new { DateString = "2/31/2023", ShouldBeValid = false } 
+    new { DateString = "1/31/2023", IsGoodDate = true },  
+    new { DateString = "2/31/2023", IsGoodDate = false } 
 }
 .TestEach(scenario =>
 {
     DateTime dt;
-    Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));  
+    Assert.AreEqual(scenario.IsGoodDate, DateTime.TryParse(scenario.DateString, out dt));  
 });  
 ```
 ---
 
 ## ForTest
-"Syntactic sugar" methods for working with **ScenarioTester<TScenario>**
+"Syntactic sugar" methods for working with **ScenarioTester<*TScenario*>**
 
 **Static Methods**
 
-* _TScenario[]_ **Scenarios** _(TScenario[] scenarios)_ - creates array of scenarios that can be "dotted" to the **TestEach** extension method:
+* **ForTest.Scenarios**_(TScenario[] scenarios)_ - creates array of scenarios that can be "dotted" to the **TestEach** extension method:
 
 **Example**
 
@@ -182,17 +182,17 @@ using SparkyTestHelpers.Scenarios;
 . . .
 ForTest.Scenarios
 (
-    new { DateString = "1/31/2023", ShouldBeValid = true },  
-    new { DateString = "2/31/2023", ShouldBeValid = false }
+    new { DateString = "1/31/2023", IsGoodDate = true },  
+    new { DateString = "2/31/2023", IsGoodDate = false }
 )
 .TestEach(scenario =>
 {
     DateTime dt;
-    Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));  
+    Assert.AreEqual(scenario.IsGoodDate, DateTime.TryParse(scenario.DateString, out dt));  
 });  
 ```
 
-* _IEnumerable<TEnum>_ **EnumValues** _()_ - tests each value in an enum.
+* _IEnumerable<*TEnum*>_ **EnumValues**_()_ - tests each value in an enum.
 
 **_Example_**
 
@@ -203,7 +203,7 @@ ForTest.EnumValues<OrderStatus>()
     .TestEach(orderStatus => foo.Bar(orderStatus));
 ```
 
-* _IEnumerable<TEnum>_ **ExceptFor** _(IEnumerable<TEnum> values, TEnum[] valuesToExclude)_ - Exclude enum values from test scenarios.
+* _IEnumerable<*TEnum*>_ **ExceptFor**_(IEnumerable<*TEnum*> values, TEnum[] valuesToExclude)_ - Exclude enum values from test scenarios.
 
 **_Example_**
 
