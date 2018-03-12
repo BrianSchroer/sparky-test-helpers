@@ -125,9 +125,12 @@ namespace SparkyTestHelpers.Mapping.UnitTests
         [TestMethod]
         public void IgnoringMember_should_exclude_dest_member_check()
         {
-            _mapTester.IgnoringMember(x => x.DestOnly);
+            var input = new RestaurantEditModel { Cuisine = CuisineType.Italian, Name = "Test name" };
+            var output = new Restaurant { Cuisine = CuisineType.Italian, Name = "Test name" };
 
-            AssertMappedValues();
+            MapTester.ForMap<RestaurantEditModel, Restaurant>()
+                .WhereMember(dest => dest.Id).ShouldEqualValue(0) 
+                .AssertMappedValues(input, output);
         }
 
         private void AssertMappedValues()

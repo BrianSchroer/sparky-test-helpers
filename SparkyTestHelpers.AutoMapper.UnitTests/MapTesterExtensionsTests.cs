@@ -21,7 +21,10 @@ namespace SparkyTestHelpers.AutoMapper.UnitTests
         public void TestInitialize()
         {
             Mapper.Reset();
-            Mapper.Initialize(cfg => cfg.CreateMap<Source, Dest>());
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Source, Dest>();
+            });
 
             Mapper.AssertConfigurationIsValid();
         }

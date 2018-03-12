@@ -97,7 +97,7 @@ namespace SparkyTestHelpers.Mapping
         /// ]]></example>
         public MapMemberTester<TSource, TDestination> WhereMember(Expression<Func<TDestination, object>> destExpression)
         {
-            string propertyName = GetPropertyName(destExpression.Body);
+            string propertyName = GetPropertyName(destExpression);
 
             var memberTester = new MapMemberTester<TSource, TDestination>(this, destExpression.Compile());
 
@@ -254,11 +254,29 @@ namespace SparkyTestHelpers.Mapping
             return value.ToString();
         }
 
-        private static string GetPropertyName(Expression expression)
+        private static string GetPropertyName(Expression<Func<TDestination, object>> expression)
         {
-            string[] parts = expression.ToString().Trim(new[] { '(', ')' }).Split('.');
+            string name = null;
 
-            return parts.Last();
+            var memberExpression = expression.Body as MemberExpression;
+
+            if (memberExpression == null)
+            {
+                var unaryExpression = expression.Body as UnaryExpression;
+                if (unaryExpression != null)
+                {
+                    memberExpression = unaryExpression?.Operand as MemberExpression;
+                }
+            }
+
+            name = (memberExpression.Member as PropertyInfo)?.Name;
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new InvalidOperationException($"Invalid property expression: \"{expression}\".");
+            }
+
+            return name;
         }
     }
 }
