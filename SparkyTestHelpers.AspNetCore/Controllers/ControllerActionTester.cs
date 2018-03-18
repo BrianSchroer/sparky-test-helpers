@@ -9,27 +9,42 @@ namespace SparkyTestHelpers.AspNetCore.Controllers
     /// </summary>
     public class ControllerActionTester
     {
+        private readonly Controller _controller;
         private readonly Func<IActionResult> _controllerAction;
         private IModelTester _modelTester;
         private string _expectedViewName = null;
 
         /// <summary>
-        /// Private constructor - Only called by <see cref="ControllerActionTester.ForAction(Func{IActionResult})"/>.
+        /// Called by the 
+        /// <see cref="ControllerTester{TController}.Action(System.Linq.Expressions.Expression{Func{TController, Func{IActionResult}}})"/>
+        /// method.
         /// </summary>
-        /// <param name="controllerAction"></param>
-        private ControllerActionTester(Func<IActionResult> controllerAction)
+        /// <param name="controller">The "parent" <see cref="Controller"/>.</param>
+        /// <param name="controllerAction">"Callback" function that privides the controller action to be tested.</param>
+        internal ControllerActionTester(Controller controller, Func<IActionResult> controllerAction)
         {
+            _controller = controller;
             _controllerAction = controllerAction;
         }
 
         /// <summary>
-        /// Creates a new <see cref="ControllerActionTester"/> for the specified controller action.
+        /// Sets up ModelState.IsValid == true.
         /// </summary>
-        /// <param name="controllerAction">The controller action.</param>
-        /// <returns></returns>
-        public static ControllerActionTester ForAction(Func<IActionResult> controllerAction)
+        /// <returns>"This" <see cref="ControllerActionTester"/>.</returns>
+        public ControllerActionTester WhenModelStateIsValid()
         {
-            return new ControllerActionTester(controllerAction);
+            SetModelStateIsValid();
+            return this;
+        }
+
+        /// <summary>
+        /// Sets up ModelState.IsValid == false.
+        /// </summary>
+        /// <returns>"This" <see cref="ControllerActionTester"/>.</returns>
+        public ControllerActionTester WhenModelStateIsNotValid()
+        {
+            SetModelStateIsValid(false);
+            return this;
         }
 
         /// <summary>
@@ -164,6 +179,16 @@ namespace SparkyTestHelpers.AspNetCore.Controllers
             if (!string.Equals(expectedViewName, actual, StringComparison.InvariantCulture))
             {
                 throw new ControllerActionTestException($"Expected ViewName <{expectedViewName}>. Actual: <{actual}>.");
+            }
+        }
+
+        private void SetModelStateIsValid(bool isValid = true)
+        {
+            _controller.ModelState.Clear();
+
+            if (!isValid)
+            {
+                _controller.ModelState.AddModelError("key", "message");
             }
         }
     }
