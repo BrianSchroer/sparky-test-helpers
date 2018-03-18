@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SparkyTestHelpers.AspNetCore.Controllers;
 using SparkyTestHelpers.AspNetCore.UnitTests.Models;
@@ -6,7 +6,7 @@ using SparkyTestHelpers.Exceptions;
 using SparkyTestHelpers.Scenarios;
 using System;
 
-namespace SparkyTestHelpers.AspNetCore.UnitTests
+namespace SparkyTestHelpers.AspNetCore.UnitTests.Controllers
 {
     /// <summary>
     /// <see cref="ControllerActionTester"/> unit tests.

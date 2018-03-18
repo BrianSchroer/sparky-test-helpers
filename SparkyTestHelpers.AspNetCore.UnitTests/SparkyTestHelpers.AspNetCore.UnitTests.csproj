@@ -226,7 +226,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControllerActionTesterTests.cs" />
+    <Compile Include="Controllers\ControllerActionTesterTests.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TestModel2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
