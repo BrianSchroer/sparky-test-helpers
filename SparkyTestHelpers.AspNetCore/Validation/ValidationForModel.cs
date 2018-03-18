@@ -110,7 +110,7 @@ namespace SparkyTestHelpers.AspNetCore.Validation
         /// </summary>
         /// <param name="modelModificationAction">"callback" action.</param>
         /// <returns>"This" <see cref="ValidationForModel{TModel}"/> instance.</returns>
-        public ValidationForModel<TModel> With(Action<TModel> modelModificationAction)
+        public ValidationForModel<TModel> When(Action<TModel> modelModificationAction)
         {
             _model = Clone(_originalModel);
             modelModificationAction(_model);
@@ -183,7 +183,7 @@ namespace SparkyTestHelpers.AspNetCore.Validation
 
         private static string FormatMemberNames(IEnumerable<string> memberNames)
         {
-            return $"Member(s): \"{string.Join("\", \"", memberNames)}\"";
+            return $"Member(s): \"{string.Join("\", \"", memberNames.OrderBy(x => x))}\"";
         }
     }
 }

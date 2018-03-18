@@ -6,7 +6,7 @@ using SparkyTestHelpers.Exceptions;
 using SparkyTestHelpers.Scenarios;
 using System;
 
-namespace SparkyTestHelpers.AspNetCore.UnitTests.Controllers
+namespace SparkyTestHelpers.AspNetCore.UnitTests
 {
     /// <summary>
     /// <see cref="ControllerActionTester"/> unit tests.
