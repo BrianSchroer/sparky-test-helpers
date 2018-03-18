@@ -139,10 +139,11 @@ namespace SparkyTestHelpers.AspNetCore.Controllers
         {
             Type expectedType = typeof(TActionResultType);
 
-            if (!TypeTester.IsOfType(actionResult, expectedType))
+            if (actionResult == null || !TypeTester.IsOfType(actionResult, expectedType))
             {
+                string actualTypeName = (actionResult == null) ? "null" : actionResult.GetType().FullName;
                 throw new ControllerActionTestException(
-                    $"Expected IActionResult type: {expectedType.FullName}. Actual: {actionResult.GetType().FullName}.");
+                    $"Expected IActionResult type: {expectedType.FullName}. Actual: {actualTypeName}.");
             }
 
             return (TActionResultType)actionResult;
