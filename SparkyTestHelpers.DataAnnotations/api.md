@@ -56,15 +56,15 @@ Validation.For(foo)
 ```
 
 There are also **ShouldReturn.** methods for standard **ValidationAttribute**s:
-* [CreditCard]: `.ShouldReturn.CreditCardErrorFor(x => x.Foo);`
-* [EmailAddress]: `.ShouldReturn.EmailAddressErrorFor(x => x.Foo);;;;`
-* [EnumDataType]:`.ShouldReturn.EnumDataTypeErrorFor(x => x.Foo)`
-* [MaxLength]: `.ShouldReturn.MaxLengthErrorFor(x => x.Foo)`
-* [MinLength]: `.ShouldReturn.MinLengthErrorFor(x => x.Foo)`
-* [Phone]: `.ShouldReturn.PhoneErrorFor(x => x.Foo);`
-* [Range]: `.ShouldReturn.RangeErrorFor(x => x.Foo);`
-* [RegularExpression]: `.ShouldReturn.RegularExpressionErrorFor(x => x.Foo);`
-* [Required]: `.ShouldReturn.RequiredErrorFor(x => x.Foo);`
-* [StringLength]: `.ShouldReturn.StringLengthErrorFor(x => x.Foo);`
+* [CreditCard]: ShouldReturn.**CreditCardErrorFor**(*x => x.Foo*);
+* [EmailAddress]: ShouldReturn.**EmailAddressErrorFor**(*x => x.Foo*);
+* [EnumDataType]: ShouldReturn.**EnumDataTypeErrorFor**(*x => x.Foo*);
+* [MaxLength]: ShouldReturn.**MaxLengthErrorFor**(*x => x.Foo*);
+* [MinLength]: ShouldReturn.**MinLengthErrorFor**(*x => x.Foo*);
+* [Phone]: ShouldReturn.**PhoneErrorFor**(*x => x.Foo*);
+* [Range]: ShouldReturn.**RangeErrorFor**(*x => x.Foo*);
+* [RegularExpression]: ShouldReturn.**RegularExpressionErrorFor**(*x => x.Foo*);
+* [Required]: ShouldReturn.**RequiredErrorFor**(*x => x.Foo*);
+* [StringLength]: ShouldReturn.**StringLengthErrorFor**(*x => x.Foo*);
 
 You don't have to specify the expected error message for **.ForValidationAttribute** method or for the methods listed above. The validation tester automatically determines the error message from the attribute.
