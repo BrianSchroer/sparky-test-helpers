@@ -34,7 +34,6 @@ namespace SparkyTestHelpers.DataAnnotations
             return _validationForModel.ShouldReturnNoErrors();
         }
  
-
         /// <summary>
         /// Asserts that <typeparamref name="TModel"/> validation results in a CreditCard error for the specified field.
         /// </summary>
@@ -159,7 +158,7 @@ namespace SparkyTestHelpers.DataAnnotations
             Expression<Func<TModel, object>> expression) where TAttribute : ValidationAttribute
         {
             MemberInfo memberInfo = ReflectionHelper.GetMemberInfo(expression);
-            return new ValidationResultTester<TModel>(_validationForModel, memberInfo).WithErrorForAttribute<TAttribute>();
+            return new ValidationResultTester<TModel>(_validationForModel, memberInfo).ForValidationAttribute<TAttribute>();
         }
     }
 }

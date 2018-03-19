@@ -47,13 +47,13 @@ namespace SparkyTestHelpers.DataAnnotations
         /// <typeparam name="TAttribute">The <see cref="ValidationAttribute"/> type.</typeparam>
         /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
         /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
-        public ValidationForModel<TModel> WithErrorForAttribute<TAttribute>() where TAttribute : ValidationAttribute
+        public ValidationForModel<TModel> ForValidationAttribute<TAttribute>() where TAttribute : ValidationAttribute
         {
             string memberName = _memberInfo.Name;
             string displayName = ReflectionHelper.GetDisplayName(_memberInfo);
             var validationAttribute = ReflectionHelper.GetValidationAttribute<TAttribute>(_memberInfo);
 
-            return WithErrorMessage(validationAttribute.FormatErrorMessage(displayName));
+            return WithMessage(validationAttribute.FormatErrorMessage(displayName));
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace SparkyTestHelpers.DataAnnotations
         /// <param name="expectedErrorMessage">The expected error message.</param>
         /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
         /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
-        public ValidationForModel<TModel> WithErrorMessage(string expectedErrorMessage)
+        public ValidationForModel<TModel> WithMessage(string expectedErrorMessage)
         {
             return _validationForModel.AssertResultMatch(
                 _memberNames, 

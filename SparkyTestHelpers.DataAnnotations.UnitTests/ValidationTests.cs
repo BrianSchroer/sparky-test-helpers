@@ -30,7 +30,7 @@ namespace SparkyTestHelpers.DataAnnotations.UnitTests
             ValidationResult[] results = _validationForModel.ValidationResults.ToArray();
             Assert.AreEqual(0, results.Length);
 
-            _validationForModel.When(x => x.StringProp1= null);
+            _validationForModel.When(x => x.StringProp1 = null);
             results = _validationForModel.ValidationResults.ToArray();
             Assert.AreEqual(1, results.Length);
         }
@@ -165,7 +165,7 @@ namespace SparkyTestHelpers.DataAnnotations.UnitTests
             _validationForModel
                 .When(x => x.StringProp1= string.Empty)
                 .ShouldReturn.ErrorFor(x => x.StringProp1)
-                .WithErrorMessage($"The {nameof(StringProp1)} field is required.");
+                .WithMessage($"The {nameof(StringProp1)} field is required.");
         }
 
         [TestMethod]
@@ -176,7 +176,7 @@ namespace SparkyTestHelpers.DataAnnotations.UnitTests
                  .WithMessage($"Expected \"The {nameof(StringProp1)} field is required.\". Member(s): \"{nameof(StringProp1)}\". Found:"
                     + "\n(no validation errors)\n")
                 .WhenExecuting(() =>
-                    _validationForModel.ShouldReturn.ErrorFor(x => x.StringProp1).WithErrorMessage($"The {nameof(StringProp1)} field is required."));
+                    _validationForModel.ShouldReturn.ErrorFor(x => x.StringProp1).WithMessage($"The {nameof(StringProp1)} field is required."));
         }
 
         [TestMethod]
@@ -263,7 +263,7 @@ namespace SparkyTestHelpers.DataAnnotations.UnitTests
                     .ShouldReturn
                         .ErrorFor(x => x.StringProp2)
                         .AndFor(x => x.StringProp3)
-                        .WithErrorMessage("Invalid StringProp2/StringProp3 combination."));
+                        .WithMessage("Invalid StringProp2/StringProp3 combination."));
         }
 
         [TestMethod]
@@ -279,7 +279,7 @@ namespace SparkyTestHelpers.DataAnnotations.UnitTests
                     _validationForModel
                     .When(x => x.StringProp2 = "wrong")
                     .ShouldReturn.ErrorFor(x => x.StringProp2).AndFor(x => x.StringProp3)
-                    .WithErrorMessage("wrong"));
+                    .WithMessage("wrong"));
         }
 
         [TestMethod]
@@ -295,7 +295,7 @@ namespace SparkyTestHelpers.DataAnnotations.UnitTests
                     _validationForModel
                     .When(x => x.StringProp2 = "wrong")
                     .ShouldReturn.ErrorFor(x => x.StringProp1).AndFor(x => x.StringProp2)
-                    .WithErrorMessage("wrong"));
+                    .WithMessage("wrong"));
         }
 
         [TestMethod]

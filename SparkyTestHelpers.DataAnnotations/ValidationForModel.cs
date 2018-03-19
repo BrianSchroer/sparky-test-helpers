@@ -141,7 +141,7 @@ namespace SparkyTestHelpers.DataAnnotations
 
         /// <summary>
         /// Called by
-        /// <see cref="ValidationResultTester{TModel}.WithErrorMessage(string)"/>,
+        /// <see cref="ValidationResultTester{TModel}.WithMessage(string)"/>,
         /// <see cref="ValidationResultTester{TModel}.WithErrorMessageContaining(string)"/>,
         /// <see cref="ValidationResultTester{TModel}.WithErrorMessageMatching(string)"/>,
         /// <see cref="ValidationResultTester{TModel}.WithErrorMessageStartingWith(string)"/>.
