@@ -1,4 +1,4 @@
-namespace SparkyTestHelpers.AspNetCore.Validation
+namespace SparkyTestHelpers.DataAnnotations
 {
     /// <summary>
     /// <see cref="ValidationForModel{TModel}"/> "factory" class.

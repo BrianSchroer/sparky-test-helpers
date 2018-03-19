@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace SparkyTestHelpers.AspNetCore.Validation
+namespace SparkyTestHelpers.DataAnnotations
 {
     /// <summary>
     /// Expectation to be verified after <typeparamref name="TModel"/> is validated.

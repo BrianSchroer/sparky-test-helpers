@@ -1,11 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.ComponentModel.DataAnnotations;
-using SparkyTestHelpers.AspNetCore.Validation;
+using SparkyTestHelpers.DataAnnotations;
 using System.Linq;
 using SparkyTestHelpers.Exceptions;
 using System;
 
-namespace SparkyTestHelpers.AspNetCore.UnitTests
+namespace SparkyTestHelpers.DataAnnotations.UnitTests
 {
     [TestClass]
     public class ValidationTests
@@ -15,7 +15,7 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
         [TestInitialize]
         public void TestInitialize()
         {
-            _validationForModel = Validation.Validation.For(this);
+            _validationForModel = Validation.For(this);
         }
 
         [TestMethod]

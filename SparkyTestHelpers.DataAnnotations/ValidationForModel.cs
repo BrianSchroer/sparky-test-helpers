@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace SparkyTestHelpers.AspNetCore.Validation
+namespace SparkyTestHelpers.DataAnnotations
 {
     /// <summary>
     /// Model validation tester.

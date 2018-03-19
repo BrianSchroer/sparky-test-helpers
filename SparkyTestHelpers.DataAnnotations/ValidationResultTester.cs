@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace SparkyTestHelpers.AspNetCore.Validation
+namespace SparkyTestHelpers.DataAnnotations
 {
     /// <summary>
     /// This class is used to specify <see cref="ValidationResult"/> expectations.

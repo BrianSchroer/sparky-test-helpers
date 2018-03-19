@@ -19,6 +19,12 @@ Unit test helpers for "appSettings" values in XML .config files:
 * [Source Code](/SparkyTestHelpers.AppSettings)
 * [API documentation](/SparkyTestHelpers.AppSettings/api.md)
 
+## SparkyTestHelpers.DataAnnotations
+Unit test helpers for validation with DataAnnotation attributes: 
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.DataAnnotations/)
+* [Source Code](/SparkyTestHelpers.DataAnnotations)
+* [API documentation](/SparkyTestHelpers.DataAnnotations/api.md)
+
 ## SparkyTestHelpers.Mapping
 Unit test helpers for verifying values of properties "mapped" from one type to another:
 * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Mapping/)

@@ -1,6 +1,6 @@
 using System;
 
-namespace SparkyTestHelpers.AspNetCore.Validation
+namespace SparkyTestHelpers.DataAnnotations
 {
     /// <summary>
     /// Exception thrown by <see cref="ValidationForModel{TModel}"/>.

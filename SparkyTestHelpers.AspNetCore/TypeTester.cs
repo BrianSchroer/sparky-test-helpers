@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace SparkyTestHelpers.AspNetCore.Controllers
+namespace SparkyTestHelpers.AspNetCore
 {
     /// <summary>
     /// <see cref="Type"/> tester.

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 
-namespace SparkyTestHelpers.AspNetCore.Controllers
+namespace SparkyTestHelpers.AspNetCore
 {
     /// <summary>
     /// Helper for testing ASP.NET Core MVC controller actions.

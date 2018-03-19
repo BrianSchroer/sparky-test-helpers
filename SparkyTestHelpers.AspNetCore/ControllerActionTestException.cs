@@ -1,6 +1,6 @@
 using System;
 
-namespace SparkyTestHelpers.AspNetCore.Controllers
+namespace SparkyTestHelpers.AspNetCore
 {
     /// <summary>
     /// Exception thrown by <see cref="ControllerActionTester"/>.
