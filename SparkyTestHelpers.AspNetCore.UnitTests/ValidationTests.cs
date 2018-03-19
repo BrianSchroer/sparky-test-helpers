@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using SparkyTestHelpers.AspNetCore.Validation;
 using System.Linq;
 using SparkyTestHelpers.Exceptions;
+using System;
 
 namespace SparkyTestHelpers.AspNetCore.UnitTests
 {
@@ -29,7 +30,7 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
             ValidationResult[] results = _validationForModel.ValidationResults.ToArray();
             Assert.AreEqual(0, results.Length);
 
-            _validationForModel.When(x => x.StringProp1 = null);
+            _validationForModel.When(x => x.StringProp1= null);
             results = _validationForModel.ValidationResults.ToArray();
             Assert.AreEqual(1, results.Length);
         }
@@ -37,7 +38,7 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
         [TestMethod]
         public void ValidationForModel_With_should_return_self()
         {
-            ValidationForModel<ValidationTests> response = _validationForModel.When(x => x.StringProp1 = null);
+            ValidationForModel<ValidationTests> response = _validationForModel.When(x => x.StringProp1= null);
             Assert.AreSame(_validationForModel, response);
         }
 
@@ -60,54 +61,75 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
                  .WithMessage("Expected 0 validation errors. Found 1."
-                    + "\nError Message: \"The StringProp1 field is required.\". Member(s): \"StringProp1\".\n")
-                .WhenExecuting(() => _validationForModel.When(x => x.StringProp1 = null).ShouldReturn.NoErrors());
+                    + $"\nError Message: \"The {nameof(StringProp1)} field is required.\". Member(s): \"{nameof(StringProp1)}\".\n")
+                .WhenExecuting(() => _validationForModel.When(x => x.StringProp1= null).ShouldReturn.NoErrors());
         }
 
         [TestMethod]
-        public void ValidationShouldReturn_RequiredFieldErrorFor_should_not_throw_exception_when_error_is_found()
+        public void ValidationShouldReturn_RequiredErrorFor_should_not_throw_exception_when_error_is_found()
         {
             AssertExceptionNotThrown.WhenExecuting(() => 
-                _validationForModel.When(x => x.StringProp1 = null).ShouldReturn.RequiredFieldErrorFor(x => x.StringProp1));
+                _validationForModel.When(x => x.StringProp1= null).ShouldReturn.RequiredErrorFor(x => x.StringProp1));
         }
 
         [TestMethod]
-        public void ValidationShouldReturn_RequiredFieldErrorFor_should_throw_exception_when_wrong_field_name_is_specified()
+        public void ValidationShouldReturn_RequiredErrorFor_should_throw_exception_when_wrong_field_name_is_specified()
         {
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
                 .WithMessage(
                     "Expected " 
-                    + "\"The StringProp2 field is required.\". Member(s): \"StringProp2\"." 
+                    + $"\"The {nameof(StringProp3)} Display Name field is required.\". Member(s): \"{nameof(StringProp3)}\"." 
                     + " Found:\nError Message: "
-                    + "\"The StringProp1 field is required.\". Member(s): \"StringProp1\".\n")
+                    + $"\"The {nameof(StringProp1)} field is required.\". Member(s): \"{nameof(StringProp1)}\".\n")
                 .WhenExecuting(() =>
-                    _validationForModel.When(x => x.StringProp1 = null).ShouldReturn.RequiredFieldErrorFor(x => x.StringProp2)
+                    _validationForModel.When(x => x.StringProp1= null).ShouldReturn.RequiredErrorFor(x => x.StringProp3)
                 );
         }
 
         [TestMethod]
-        public void ValidationShouldReturn_RequiredFieldErrorFor_should_throw_exception_when_no_errors_are_found()
+        public void ValidationShouldReturn_RequiredErrorFor_should_throw_exception_when_no_errors_are_found()
         {
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
-                .WithMessage("Expected \"The StringProp2 field is required.\". Member(s): \"StringProp2\". Found:"
+                .WithMessage($"Expected \"The {nameof(StringProp3)} Display Name field is required.\". Member(s): \"{nameof(StringProp3)}\". Found:"
                     + "\n(no validation errors)\n")
-                .WhenExecuting(() => _validationForModel.ShouldReturn.RequiredFieldErrorFor(x => x.StringProp2));
+                .WhenExecuting(() => _validationForModel.ShouldReturn.RequiredErrorFor(x => x.StringProp3));
         }
 
         [TestMethod]
-        public void ValidationShouldReturn_RequiredFieldErrorFor_should_use_Display_Names()
+        public void ValidationShouldReturn_RequiredErrorFor_should_use_Display_Names()
         {
             AssertExceptionNotThrown.WhenExecuting(() =>
-                _validationForModel.When(x => x.StringProp3 = null).ShouldReturn.RequiredFieldErrorFor(x => x.StringProp3));
+                _validationForModel.When(x => x.StringProp3 = null).ShouldReturn.RequiredErrorFor(x => x.StringProp3));
 
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
-                .WithMessage("Expected \"The StringProp3 Display Name field is required.\". Member(s): \"StringProp3\". Found:"
+                .WithMessage($"Expected \"The {nameof(StringProp3)} Display Name field is required.\". Member(s): \"{nameof(StringProp3)}\". Found:"
                     + "\n(no validation errors)\n")
                 .WhenExecuting(() => 
-                    _validationForModel.When(x => x.StringProp3 = "x").ShouldReturn.RequiredFieldErrorFor(x => x.StringProp3));
+                    _validationForModel.When(x => x.StringProp3 = "x").ShouldReturn.RequiredErrorFor(x => x.StringProp3));
+        }
+         
+        [TestMethod]
+        public void ValidationShouldReturn_MaxLengthErrorFor_should_not_throw_exception_when_error_is_found()
+        {
+            AssertExceptionNotThrown.WhenExecuting(() =>
+                _validationForModel
+                    .When(x => x.StringProp1= new string('x', 81))
+                    .ShouldReturn.MaxLengthErrorFor(x => x.StringProp1));
+        }
+
+        [TestMethod]
+        public void ValidationShouldReturn_MaxLengthErrorFor_should_throw_exception_when_no_errors_are_found()
+        {
+            AssertExceptionThrown
+                .OfType<ValidationTestException>()
+                .WithMessage(
+                    $"Expected \"The field {nameof(StringProp1)} must be a string or array type with a maximum length of '80'.\"." 
+                    + $" Member(s): \"{nameof(StringProp1)}\". Found:"
+                    + "\n(no validation errors)\n")
+                .WhenExecuting(() => _validationForModel.ShouldReturn.MaxLengthErrorFor(x => x.StringProp1));
         }
 
         [TestMethod]
@@ -115,8 +137,8 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
         {
             AssertExceptionNotThrown.WhenExecuting(() =>
                 _validationForModel
-                    .When(x => x.StringProp1 = new string('x', 81))
-                    .ShouldReturn.StringLengthErrorFor(x => x.StringProp1, 80));
+                    .When(x => x.StringProp4 = new string('x', 51))
+                    .ShouldReturn.StringLengthErrorFor(x => x.StringProp4));
         }
 
         [TestMethod]
@@ -125,23 +147,9 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
                 .WithMessage(
-                    "Expected \"The field StringProp1 must be a string or array type with a maximum length of '80'.\". Member(s): \"StringProp1\". Found:"
+                    $"Expected \"The field StringProp4 must be a string with a maximum length of 50.\". Member(s): \"StringProp4\". Found:"
                     + "\n(no validation errors)\n")
-                .WhenExecuting(() => _validationForModel.ShouldReturn.StringLengthErrorFor(x => x.StringProp1, 80));
-        }
-
-        [TestMethod]
-        public void ValidationShouldReturn_StringLengthErrorFor_should_throw_exception_when_wrong_length_is_specified()
-        {
-            AssertExceptionThrown
-                .OfType<ValidationTestException>()
-                .WithMessage(
-                    "Expected "
-                    + "\"The field StringProp1 must be a string or array type with a maximum length of '70'.\". Member(s): \"StringProp1\"." 
-                    + " Found:\nError Message: "
-                    + "\"The field StringProp1 must be a string or array type with a maximum length of '80'.\". Member(s): \"StringProp1\".\n")
-                .WhenExecuting(() => 
-                    _validationForModel.When(x => x.StringProp1 = new string('x', 81)).ShouldReturn.StringLengthErrorFor(x => x.StringProp1, 70));
+                .WhenExecuting(() => _validationForModel.ShouldReturn.StringLengthErrorFor(x => x.StringProp4));
         }
 
         [TestMethod]
@@ -155,9 +163,9 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
         public void ValidationResultTester_WithErrorMessage_should_not_throw_exception_when_expected_error_is_found()
         {
             _validationForModel
-                .When(x => x.StringProp1 = string.Empty)
+                .When(x => x.StringProp1= string.Empty)
                 .ShouldReturn.ErrorFor(x => x.StringProp1)
-                .WithErrorMessage("The StringProp1 field is required.");
+                .WithErrorMessage($"The {nameof(StringProp1)} field is required.");
         }
 
         [TestMethod]
@@ -165,19 +173,19 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
         {
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
-                 .WithMessage("Expected \"The StringProp1 field is required.\". Member(s): \"StringProp1\". Found:"
+                 .WithMessage($"Expected \"The {nameof(StringProp1)} field is required.\". Member(s): \"{nameof(StringProp1)}\". Found:"
                     + "\n(no validation errors)\n")
                 .WhenExecuting(() =>
-                    _validationForModel.ShouldReturn.ErrorFor(x => x.StringProp1).WithErrorMessage("The StringProp1 field is required."));
+                    _validationForModel.ShouldReturn.ErrorFor(x => x.StringProp1).WithErrorMessage($"The {nameof(StringProp1)} field is required."));
         }
 
         [TestMethod]
         public void ValidationResultTester_WithErrorMessageStartingWith_should_not_throw_exception_when_expected_error_is_found()
         {
             _validationForModel
-                .When(x => x.StringProp1 = string.Empty)
+                .When(x => x.StringProp1= string.Empty)
                 .ShouldReturn.ErrorFor(x => x.StringProp1)
-                .WithErrorMessageStartingWith("The StringProp1 field is req");
+                .WithErrorMessageStartingWith($"The {nameof(StringProp1)} field is req");
         }
 
         [TestMethod]
@@ -186,12 +194,12 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
                 .WithMessage(
-                    "Expected error message starting with \"wrong\". Member(s): \"StringProp1\"."
+                    $"Expected error message starting with \"wrong\". Member(s): \"{nameof(StringProp1)}\"."
                     + " Found:\nError Message: "
-                    + "\"The StringProp1 field is required.\". Member(s): \"StringProp1\".\n")
+                    + $"\"The {nameof(StringProp1)} field is required.\". Member(s): \"{nameof(StringProp1)}\".\n")
                 .WhenExecuting(() =>
                     _validationForModel
-                        .When(x => x.StringProp1 = null)
+                        .When(x => x.StringProp1= null)
                         .ShouldReturn.ErrorFor(x => x.StringProp1)
                         .WithErrorMessageStartingWith("wrong"));
         }
@@ -200,9 +208,9 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
         public void ValidationResultTester_WithErrorMessageContaining_should_not_throw_exception_when_expected_error_is_found()
         {
             _validationForModel
-                .When(x => x.StringProp1 = string.Empty)
+                .When(x => x.StringProp1= string.Empty)
                 .ShouldReturn.ErrorFor(x => x.StringProp1)
-                .WithErrorMessageContaining("StringProp1 field is req");
+                .WithErrorMessageContaining($"{nameof(StringProp1)} field is req");
         }
 
         [TestMethod]
@@ -211,12 +219,12 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
                 .WithMessage(
-                    "Expected error message containing \"wrong\". Member(s): \"StringProp1\"."
+                    $"Expected error message containing \"wrong\". Member(s): \"{nameof(StringProp1)}\"."
                     + " Found:\nError Message: "
-                    + "\"The StringProp1 field is required.\". Member(s): \"StringProp1\".\n")
+                    + $"\"The {nameof(StringProp1)} field is required.\". Member(s): \"{nameof(StringProp1)}\".\n")
                 .WhenExecuting(() =>
                     _validationForModel
-                        .When(x => x.StringProp1 = null)
+                        .When(x => x.StringProp1= null)
                         .ShouldReturn.ErrorFor(x => x.StringProp1)
                         .WithErrorMessageContaining("wrong"));
         }
@@ -225,9 +233,9 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
         public void ValidationResultTester_WithErrorMessageMatching_should_not_throw_exception_when_expected_error_is_found()
         {
             _validationForModel
-                .When(x => x.StringProp1 = string.Empty)
+                .When(x => x.StringProp1= string.Empty)
                 .ShouldReturn.ErrorFor(x => x.StringProp1)
-                .WithErrorMessageMatching(".*StringProp1 field.*");
+                .WithErrorMessageMatching($".*{nameof(StringProp1)} field.*");
         }
 
         [TestMethod]
@@ -236,12 +244,12 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
                 .WithMessage(
-                    "Expected error message matching \"wrong\". Member(s): \"StringProp1\"."
+                    $"Expected error message matching \"wrong\". Member(s): \"{nameof(StringProp1)}\"."
                     + " Found:\nError Message: "
-                    + "\"The StringProp1 field is required.\". Member(s): \"StringProp1\".\n")
+                    + $"\"The {nameof(StringProp1)} field is required.\". Member(s): \"{nameof(StringProp1)}\".\n")
                 .WhenExecuting(() =>
                     _validationForModel
-                        .When(x => x.StringProp1 = null)
+                        .When(x => x.StringProp1= null)
                         .ShouldReturn.ErrorFor(x => x.StringProp1)
                         .WithErrorMessageMatching("wrong"));
         }
@@ -264,9 +272,9 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
                 .WithMessage(
-                    "Expected \"wrong\". Member(s): \"StringProp2\", \"StringProp3\"."
+                    $"Expected \"wrong\". Member(s): \"{nameof(StringProp2)}\", \"{nameof(StringProp3)}\"."
                     + " Found:\nError Message: "
-                    + "\"Invalid StringProp2/StringProp3 combination.\". Member(s): \"StringProp2\", \"StringProp3\".\n")
+                    + $"\"Invalid StringProp2/StringProp3 combination.\". Member(s): \"{nameof(StringProp2)}\", \"{nameof(StringProp3)}\".\n")
                 .WhenExecuting(() =>
                     _validationForModel
                     .When(x => x.StringProp2 = "wrong")
@@ -280,14 +288,50 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
                 .WithMessage(
-                    "Expected \"wrong\". Member(s): \"StringProp1\", \"StringProp2\"."
+                    $"Expected \"wrong\". Member(s): \"{nameof(StringProp1)}\", \"{nameof(StringProp2)}\"."
                     + " Found:\nError Message: "
-                    + "\"Invalid StringProp2/StringProp3 combination.\". Member(s): \"StringProp2\", \"StringProp3\".\n")
+                    + $"\"Invalid StringProp2/StringProp3 combination.\". Member(s): \"{nameof(StringProp2)}\", \"StringProp3\".\n")
                 .WhenExecuting(() =>
                     _validationForModel
                     .When(x => x.StringProp2 = "wrong")
                     .ShouldReturn.ErrorFor(x => x.StringProp1).AndFor(x => x.StringProp2)
                     .WithErrorMessage("wrong"));
+        }
+
+        [TestMethod]
+        public void ValidationResultTester_should_handle_CreditCard_error()
+        {
+            _validationForModel.When(x => x.CreditCard = "x").ShouldReturn.CreditCardErrorFor(x => x.CreditCard);
+        }
+
+        [TestMethod]
+        public void ValidationResultTester_should_handle_EmailAddress_error()
+        {
+            _validationForModel.When(x => x.EmailAddress = "some@emai l.com").ShouldReturn.EmailAddressErrorFor(x => x.EmailAddress);
+        }
+
+        [TestMethod]
+        public void ValidationResultTester_should_handle_Enum_error()
+        {
+            _validationForModel.When(x => x.EnumString = "Invalid").ShouldReturn.EnumDataTypeErrorFor(x => x.EnumString);
+        }
+
+        [TestMethod]
+        public void ValidationResultTester_should_handle_MinLength_error()
+        {
+            _validationForModel.When(x => x.MinLength = "A").ShouldReturn.MinLengthErrorFor(x => x.MinLength);
+        }
+
+        [TestMethod]
+        public void ValidationResultTester_should_handle_Phone_error()
+        {
+            _validationForModel.When(x => x.Phone = "A").ShouldReturn.PhoneErrorFor(x => x.Phone);
+        }
+
+        [TestMethod]
+        public void ValidationResultTester_should_handle_Range_error()
+        {
+            _validationForModel.When(x => x.Range = 100).ShouldReturn.RangeErrorFor(x => x.Range);
         }
 
         #region Model properties and logic
@@ -301,6 +345,30 @@ namespace SparkyTestHelpers.AspNetCore.UnitTests
         [Required]
         [Display(Name = "StringProp3 Display Name")]
         public string StringProp3 { get; set; } = "StringProp3 value";
+
+        [StringLength(50)]
+        public string StringProp4 { get; set; } = "StringProp4 value";
+
+        [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$")]
+        public string StringProp5 { get; set; } = "Value";
+
+        [CreditCard]
+        public string CreditCard { get; set; } = "4012888888881881";
+
+        [EmailAddress]
+        public string EmailAddress { get; set; } = "brianschroer@gmail.com";
+
+        [EnumDataType(typeof(StringComparison))]
+        public string EnumString { get; set; } = StringComparison.CurrentCulture.ToString();
+
+        [MinLength(5)]
+        public string MinLength { get; set; } = "ABCDEFG";
+
+        [Phone]
+        public string Phone { get; set; } = "(314) 567-8900";
+
+        [Range(10, 20)]
+        public int Range { get; set; } = 15;
 
         public static ValidationResult ValidateStringProp2(string value, ValidationContext context)
         {

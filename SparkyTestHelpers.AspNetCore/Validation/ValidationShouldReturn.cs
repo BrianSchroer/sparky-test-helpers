@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -32,41 +33,116 @@ namespace SparkyTestHelpers.AspNetCore.Validation
         {
             return _validationForModel.ShouldReturnNoErrors();
         }
+ 
 
         /// <summary>
-        /// Asserts that <typeparamref name="TModel"/> validation results in a "required field" error for the
-        /// specified field.
+        /// Asserts that <typeparamref name="TModel"/> validation results in a CreditCard error for the specified field.
         /// </summary>
         /// <param name="expression">"Callback" expression to specify the field name.</param>
         /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
         /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
-        public ValidationForModel<TModel> RequiredFieldErrorFor(Expression<Func<TModel, object>> expression)
+        public ValidationForModel<TModel> CreditCardErrorFor(Expression<Func<TModel, object>> expression)
         {
-            MemberInfo memberInfo = ReflectionHelper.GetMemberInfo(expression);
-            string memberName = memberInfo.Name;
-            string displayName = ReflectionHelper.GetDisplayName(memberInfo);
-
-            return new ValidationResultTester<TModel>(_validationForModel, memberName)
-                .WithErrorMessage($"The {displayName} field is required.");
+            return ValidationAttributeError<CreditCardAttribute>(expression); 
         }
 
         /// <summary>
-        /// Asserts that <typeparamref name="TModel"/> validation results in a string length error for the
-        /// specified field.
+        /// Asserts that <typeparamref name="TModel"/> validation results in a EmailAddress error for the specified field.
         /// </summary>
         /// <param name="expression">"Callback" expression to specify the field name.</param>
-        /// <param name="maxLength">The maximum string length.</param>
         /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
         /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
-        public ValidationForModel<TModel> StringLengthErrorFor(Expression<Func<TModel, object>> expression, int maxLength)
+        public ValidationForModel<TModel> EmailAddressErrorFor(Expression<Func<TModel, object>> expression)
         {
-            MemberInfo memberInfo = ReflectionHelper.GetMemberInfo(expression);
-            string memberName = memberInfo.Name;
-            string displayName = ReflectionHelper.GetDisplayName(memberInfo);
+            return ValidationAttributeError<EmailAddressAttribute>(expression);
+        }
 
-            return new ValidationResultTester<TModel>(_validationForModel, memberName)
-                .WithErrorMessage(
-                    $"The field {displayName} must be a string or array type with a maximum length of '{maxLength}'.");
+        /// <summary>
+        /// Asserts that <typeparamref name="TModel"/> validation results in a EnumDataType error for the specified field.
+        /// </summary>
+        /// <param name="expression">"Callback" expression to specify the field name.</param>
+        /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
+        /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
+        public ValidationForModel<TModel> EnumDataTypeErrorFor(Expression<Func<TModel, object>> expression)
+        {
+            return ValidationAttributeError<EnumDataTypeAttribute>(expression);
+        }
+
+        /// <summary>
+        /// Asserts that <typeparamref name="TModel"/> validation results in a MaxLength error for the specified field.
+        /// </summary>
+        /// <param name="expression">"Callback" expression to specify the field name.</param>
+        /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
+        /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
+        public ValidationForModel<TModel> MaxLengthErrorFor(Expression<Func<TModel, object>> expression)
+        {
+            return ValidationAttributeError<MaxLengthAttribute>(expression);
+        }
+
+        /// <summary>
+        /// Asserts that <typeparamref name="TModel"/> validation results in a MinLength error for the specified field.
+        /// </summary>
+        /// <param name="expression">"Callback" expression to specify the field name.</param>
+        /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
+        /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
+        public ValidationForModel<TModel> MinLengthErrorFor(Expression<Func<TModel, object>> expression)
+        {
+            return ValidationAttributeError<MinLengthAttribute>(expression);
+        }
+
+        /// <summary>
+        /// Asserts that <typeparamref name="TModel"/> validation results in a Phone error for the specified field.
+        /// </summary>
+        /// <param name="expression">"Callback" expression to specify the field name.</param>
+        /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
+        /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
+        public ValidationForModel<TModel> PhoneErrorFor(Expression<Func<TModel, object>> expression)
+        {
+            return ValidationAttributeError<PhoneAttribute>(expression);
+        }
+
+        /// <summary>
+        /// Asserts that <typeparamref name="TModel"/> validation results in a Range error for the specified field.
+        /// </summary>
+        /// <param name="expression">"Callback" expression to specify the field name.</param>
+        /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
+        /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
+        public ValidationForModel<TModel> RangeErrorFor(Expression<Func<TModel, object>> expression)
+        {
+            return ValidationAttributeError<RangeAttribute>(expression);
+        }
+
+        /// <summary>
+        /// Asserts that <typeparamref name="TModel"/> validation results in a RegularExpression error for the specified field.
+        /// </summary>
+        /// <param name="expression">"Callback" expression to specify the field name.</param>
+        /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
+        /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
+        public ValidationForModel<TModel> RegularExpressionErrorFor(Expression<Func<TModel, object>> expression)
+        {
+            return ValidationAttributeError<RegularExpressionAttribute>(expression);
+        }
+
+        /// <summary>
+        /// Asserts that <typeparamref name="TModel"/> validation results in a Required error for the specified field.
+        /// </summary>
+        /// <param name="expression">"Callback" expression to specify the field name.</param>
+        /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
+        /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
+        public ValidationForModel<TModel> RequiredErrorFor(Expression<Func<TModel, object>> expression)
+        {
+            return ValidationAttributeError<RequiredAttribute>(expression);
+        }
+
+        /// <summary>
+        /// Asserts that <typeparamref name="TModel"/> validation results in a StringLength error for the specified field.
+        /// </summary>
+        /// <param name="expression">"Callback" expression to specify the field name.</param>
+        /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
+        /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
+        public ValidationForModel<TModel> StringLengthErrorFor(Expression<Func<TModel, object>> expression)
+        {
+            return ValidationAttributeError<StringLengthAttribute>(expression);
         }
 
         /// <summary>
@@ -76,7 +152,14 @@ namespace SparkyTestHelpers.AspNetCore.Validation
         /// <returns>New <see cref="ValidationResultTester{TModel}"/> instance.</returns>
         public ValidationResultTester<TModel> ErrorFor(Expression<Func<TModel, object>> expression)
         {
-            return new ValidationResultTester<TModel>(_validationForModel, ReflectionHelper.GetFieldName(expression));
+            return new ValidationResultTester<TModel>(_validationForModel, ReflectionHelper.GetMemberInfo(expression));
+        }
+
+        private ValidationForModel<TModel> ValidationAttributeError<TAttribute>(
+            Expression<Func<TModel, object>> expression) where TAttribute : ValidationAttribute
+        {
+            MemberInfo memberInfo = ReflectionHelper.GetMemberInfo(expression);
+            return new ValidationResultTester<TModel>(_validationForModel, memberInfo).WithErrorForAttribute<TAttribute>();
         }
     }
 }

@@ -37,9 +37,26 @@ namespace SparkyTestHelpers.AspNetCore.Validation
 
         public static string GetDisplayName(MemberInfo memberInfo)
         {
-            var att = memberInfo.GetCustomAttribute<DisplayAttribute>();
+            var att = GetAttribute<DisplayAttribute>(memberInfo);
 
             return (att == null) ? memberInfo.Name : att.GetName();
+        }
+
+        public static TAttribute GetAttribute<TAttribute>(MemberInfo memberInfo) where TAttribute : Attribute
+        {
+            return memberInfo.GetCustomAttribute<TAttribute>();
+        }
+
+        public static TAttribute GetValidationAttribute<TAttribute>(MemberInfo memberInfo) where TAttribute : ValidationAttribute
+        {
+            TAttribute att = GetAttribute<TAttribute>(memberInfo);
+
+            if (att == null)
+            {
+                throw new ValidationTestException($"No {typeof(TAttribute).Name} was found for the {memberInfo.Name} field.");
+            }
+
+            return att;
         }
     }
 }

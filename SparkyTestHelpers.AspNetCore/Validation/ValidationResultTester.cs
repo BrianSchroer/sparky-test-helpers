@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace SparkyTestHelpers.AspNetCore.Validation
@@ -12,6 +14,7 @@ namespace SparkyTestHelpers.AspNetCore.Validation
     public class ValidationResultTester<TModel>
     {
         private readonly ValidationForModel<TModel> _validationForModel;
+        private readonly MemberInfo _memberInfo;
         private readonly List<string> _memberNames;
 
         /// <summary>
@@ -19,10 +22,11 @@ namespace SparkyTestHelpers.AspNetCore.Validation
         /// </summary>
         /// <param name="validationForModel"></param>
         /// <param name="memberName"></param>
-        internal ValidationResultTester(ValidationForModel<TModel> validationForModel, string memberName)
+        internal ValidationResultTester(ValidationForModel<TModel> validationForModel, MemberInfo memberInfo)
         {
             _validationForModel = validationForModel;
-            _memberNames = new List<string> { memberName };
+            _memberInfo = memberInfo;
+            _memberNames = new List<string> { memberInfo.Name };
         }
 
         /// <summary>
@@ -34,6 +38,22 @@ namespace SparkyTestHelpers.AspNetCore.Validation
         {
             _memberNames.Add(ReflectionHelper.GetFieldName(expression));
             return this;
+        }
+
+        /// <summary>
+        /// Asserts that <typeparamref name="TModel"/> validation results in a <see cref="ValidationResult"/>
+        /// for the specified member name(s) and <typeparamref name="TAttribute"/> type.
+        /// </summary>
+        /// <typeparam name="TAttribute">The <see cref="ValidationAttribute"/> type.</typeparam>
+        /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
+        /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
+        public ValidationForModel<TModel> WithErrorForAttribute<TAttribute>() where TAttribute : ValidationAttribute
+        {
+            string memberName = _memberInfo.Name;
+            string displayName = ReflectionHelper.GetDisplayName(_memberInfo);
+            var validationAttribute = ReflectionHelper.GetValidationAttribute<TAttribute>(_memberInfo);
+
+            return WithErrorMessage(validationAttribute.FormatErrorMessage(displayName));
         }
 
         /// <summary>
