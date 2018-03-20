@@ -1,12 +1,12 @@
 using System;
 using System.Reflection;
 
-namespace SparkyTestHelpers.AspNetCore
+namespace SparkyTestHelpers.AspNetMvc.Common
 {
     /// <summary>
     /// <see cref="Type"/> tester.
     /// </summary>
-    internal static class TypeTester
+    public static class TypeTester
     {
         /// <summary>
         /// Is object of expected type?

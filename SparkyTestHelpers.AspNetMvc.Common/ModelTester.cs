@@ -1,12 +1,12 @@
 using System;
 
-namespace SparkyTestHelpers.AspNetCore
+namespace SparkyTestHelpers.AspNetMvc.Common
 {
     /// <summary>
     /// <see cref="ViewResult.Model"/> tester for <see cref="ControllerActionTester"/>.
     /// </summary>
     /// <typeparam name="TModel"></typeparam>
-    internal class ModelTester<TModel> : IModelTester
+    public class ModelTester<TModel> : IModelTester
     {
         private readonly Action<TModel> _validate;
 
@@ -28,7 +28,7 @@ namespace SparkyTestHelpers.AspNetCore
             if (model == null || !TypeTester.IsOfType(model, typeof(TModel)))
             {
                 string actualTypeName = (model == null) ? "null" : model.GetType().FullName;
-                throw new ControllerActionTestException(
+                throw new ControllerTestException(
                    $"Expected model type: {typeof(TModel).FullName}. Actual: {actualTypeName}.");
             }
 

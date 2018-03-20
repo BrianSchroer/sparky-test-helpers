@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using SparkyTestHelpers.AspNetMvc.Common;
 using System;
 using System.Linq;
 
-namespace SparkyTestHelpers.AspNetCore
+namespace SparkyTestHelpers.AspNetMvc.Core
 {
     /// <summary>
     /// Helper for testing ASP.NET Core MVC controller actions.
@@ -28,22 +29,12 @@ namespace SparkyTestHelpers.AspNetCore
         }
 
         /// <summary>
-        /// Sets up ModelState.IsValid == true.
+        /// Sets up ModelState.IsValid value.
         /// </summary>
         /// <returns>"This" <see cref="ControllerActionTester"/>.</returns>
-        public ControllerActionTester WhenModelStateIsValid()
+        public ControllerActionTester WhenModelStateIsValidEquals(bool isValid)
         {
-            SetModelStateIsValid();
-            return this;
-        }
-
-        /// <summary>
-        /// Sets up ModelState.IsValid == false.
-        /// </summary>
-        /// <returns>"This" <see cref="ControllerActionTester"/>.</returns>
-        public ControllerActionTester WhenModelStateIsNotValid()
-        {
-            SetModelStateIsValid(false);
+            SetModelStateIsValid(isValid);
             return this;
         }
 
@@ -79,7 +70,7 @@ namespace SparkyTestHelpers.AspNetCore
         /// type that should be returned from the action.</typeparam>
         /// <param name="validate">(Optional) callback validation action.</param>
         /// <returns>The <typeparamref name="TActionResultType"/> returned from the controller action.</returns>
-        /// <exception cref="ControllerActionTestException">if any errors are asserted.</exception>
+        /// <exception cref="ControllerTestException">if any errors are asserted.</exception>
         public TActionResultType TestResult<TActionResultType>(Action<TActionResultType> validate = null)
             where TActionResultType : IActionResult
         {
@@ -96,7 +87,7 @@ namespace SparkyTestHelpers.AspNetCore
         /// <param name="expectedActionName">The expected action name.</param>
         /// <param name="validate">(Optional) callback validation action.</param>
         /// <returns>The <see cref="RedirectToActionResult"/> returned from the controller action.</returns>
-        public RedirectToActionResult TestRedirectToAction(
+        public RedirectToActionResult TestRedirectToActionResult(
             string expectedActionName, Action<RedirectToActionResult> validate = null)
         {
             return TestResult<RedirectToActionResult>(result =>
@@ -105,7 +96,7 @@ namespace SparkyTestHelpers.AspNetCore
 
                 if (!string.Equals(expectedActionName, actual, StringComparison.InvariantCulture))
                 {
-                    throw new ControllerActionTestException($"Expected ActionName <{expectedActionName}>. Actual: <{actual}>.");
+                    throw new ControllerTestException($"Expected ActionName <{expectedActionName}>. Actual: <{actual}>.");
                 }
 
                 validate?.Invoke(result);
@@ -118,7 +109,7 @@ namespace SparkyTestHelpers.AspNetCore
         /// <param name="expectedRoute">The expected route.</param>
         /// <param name="validate">(Optional) callback validation function.</param>
         /// <returns>The <see cref="RedirectToRouteResult"/> returned from the controller action.</returns>
-        public RedirectToRouteResult TestRedirectToRoute(
+        public RedirectToRouteResult TestRedirectToRouteResult(
             string expectedRoute, Action<RedirectToRouteResult> validate = null)
         {
             return TestResult<RedirectToRouteResult>(result =>
@@ -127,7 +118,7 @@ namespace SparkyTestHelpers.AspNetCore
 
                 if (!string.Equals(expectedRoute, actual, StringComparison.InvariantCulture))
                 {
-                    throw new ControllerActionTestException($"Expected route <{expectedRoute}>. Actual: <{actual}>.");
+                    throw new ControllerTestException($"Expected route <{expectedRoute}>. Actual: <{actual}>.");
                 }
 
                 validate?.Invoke(result);
@@ -157,8 +148,8 @@ namespace SparkyTestHelpers.AspNetCore
             if (actionResult == null || !TypeTester.IsOfType(actionResult, expectedType))
             {
                 string actualTypeName = (actionResult == null) ? "null" : actionResult.GetType().FullName;
-                throw new ControllerActionTestException(
-                    $"Expected IActionResult type: {expectedType.FullName}. Actual: {actualTypeName}.");
+                throw new ControllerTestException(
+                    $"Expected IActionResult type {expectedType.FullName}. Actual: {actualTypeName}.");
             }
 
             return (TActionResultType)actionResult;
@@ -178,7 +169,7 @@ namespace SparkyTestHelpers.AspNetCore
 
             if (!string.Equals(expectedViewName, actual, StringComparison.InvariantCulture))
             {
-                throw new ControllerActionTestException($"Expected ViewName <{expectedViewName}>. Actual: <{actual}>.");
+                throw new ControllerTestException($"Expected ViewName <{expectedViewName}>. Actual: <{actual}>.");
             }
         }
 

@@ -7,8 +7,8 @@
     <ProjectGuid>{0E996CB6-CFBA-4A2F-9D43-8AB8C8997809}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SparkyTestHelpers.AspNetCore.UnitTests</RootNamespace>
-    <AssemblyName>SparkyTestHelpers.AspNetCore.UnitTests</AssemblyName>
+    <RootNamespace>SparkyTestHelpers.AspNetMvc.Core.UnitTests</RootNamespace>
+    <AssemblyName>SparkyTestHelpers.AspNetMvc.Core.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -239,6 +239,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerActionTesterTests.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TestModel2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -251,6 +252,14 @@
     <ProjectReference Include="..\SparkyTestHelpers.AspNetCore\SparkyTestHelpers.AspNetCore.csproj">
       <Project>{a6104aeb-ec4c-4453-be72-8c4542c79258}</Project>
       <Name>SparkyTestHelpers.AspNetCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SparkyTestHelpers.AspNetMvc.Common\SparkyTestHelpers.AspNetMvc.Common.csproj">
+      <Project>{1293C389-734B-4ABB-9CE9-09E168079A63}</Project>
+      <Name>SparkyTestHelpers.AspNetMvc.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SparkyTestHelpers.AspNetMvc.Core\SparkyTestHelpers.AspNetMvc.Core.csproj">
+      <Project>{69a948a0-a147-4595-a994-59ffc76403b2}</Project>
+      <Name>SparkyTestHelpers.AspNetMvc.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

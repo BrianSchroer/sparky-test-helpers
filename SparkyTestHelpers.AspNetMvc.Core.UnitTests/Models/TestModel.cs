@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SparkyTestHelpers.AspNetCore.UnitTests.Models
+namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests.Models
 {
-    class TestModel2
+    class TestModel
     {
     }
 }
