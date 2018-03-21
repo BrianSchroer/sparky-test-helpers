@@ -14,6 +14,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         private readonly Func<IActionResult> _controllerAction;
         private IModelTester _modelTester;
         private string _expectedViewName = null;
+        private bool _expectedViewNameSpecified;
 
         /// <summary>
         /// Called by the 
@@ -39,7 +40,9 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         }
 
         /// <summary>
-        /// Specifies that the <see cref="TestView(Action{ViewResult})"/> method should throw an exception
+        /// Specifies that the
+        /// <see cref="TestView(Action{ViewResult})"/> and
+        /// <see cref="TestPartialView(Action{PartialViewResult})"/> methods should throw an exception
         /// if the action result's .ViewName doesn't match the <paramref name="expectedViewName"/>.
         /// </summary>
         /// <param name="expectedViewName">The expected view name.</param>
@@ -47,6 +50,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         public ControllerActionTester ExpectingViewName(string expectedViewName)
         {
             _expectedViewName = expectedViewName;
+            _expectedViewNameSpecified = true;
             return this;
         }
 
@@ -114,6 +118,21 @@ namespace SparkyTestHelpers.AspNetMvc.Core
             return TestResult<JsonResult>(result =>
             {
                 _modelTester?.Test(result.Value);
+                validate?.Invoke(result);
+            });
+        }
+
+        /// <summary>
+        /// Test that controller action returns a <see cref="PartialViewResult"/>.
+        /// </summary>
+        /// <param name="validate">(Optional) callback validation function.</param>
+        /// <returns>The <see cref="PartialViewResult"/> returned from the controller action.</returns>
+        public PartialViewResult TestPartialView(Action<PartialViewResult> validate = null)
+        {
+            return TestResult<PartialViewResult>(result =>
+            {
+                AssertViewName(_expectedViewName, result.ViewName);
+                _modelTester?.Test(result.Model);
                 validate?.Invoke(result);
             });
         }
@@ -210,7 +229,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         {
             return TestResult<ViewResult>(result =>
             {
-                AssertViewName(result, _expectedViewName);
+                AssertViewName(_expectedViewName, result.ViewName);
                 _modelTester?.Test(result.Model);
                 validate?.Invoke(result);
             });
@@ -231,14 +250,17 @@ namespace SparkyTestHelpers.AspNetMvc.Core
             return (TActionResultType)actionResult;
         }
 
-        private void AssertViewName(IActionResult actionResult, string expectedViewName)
+        private void AssertViewName(string expectedViewName, string actualViewName)
         {
-            string expected = expectedViewName ?? string.Empty;
-            string actual = ((ViewResult)actionResult).ViewName ?? string.Empty;
-
-            if (!string.Equals(expected, actual, StringComparison.InvariantCulture))
+            if (_expectedViewNameSpecified)
             {
-                throw new ControllerTestException($"Expected ViewName <{expectedViewName}>. Actual: <{actual}>.");
+                string expected = expectedViewName ?? string.Empty;
+                string actual = actualViewName ?? string.Empty;
+
+                if (!string.Equals(expected, actual, StringComparison.InvariantCulture))
+                {
+                    throw new ControllerTestException($"Expected ViewName <{expected}>. Actual: <{actual}>.");
+                }
             }
         }
 

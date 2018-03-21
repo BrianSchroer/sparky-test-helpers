@@ -31,6 +31,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                 new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestEmpty(), typeof(EmptyResult), typeof(ViewResult)),
                 new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestFile(), typeof(FileResult), typeof(ViewResult)),
                 new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestJson(), typeof(JsonResult), typeof(ViewResult)),
+                new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestPartialView(), typeof(PartialViewResult), typeof(ViewResult)),
                 new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestRedirectToAction("x"), typeof(RedirectToActionResult), typeof(ViewResult)),
                 new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestRedirectToPage("testPageName"), typeof(RedirectToPageResult), typeof(ViewResult)),
                 new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestRedirectToRoute("x"), typeof(RedirectToRouteResult), typeof(ViewResult)),
@@ -150,6 +151,89 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                         .TestJson(r =>
                         {
                             Assert.IsInstanceOfType(r, typeof(JsonResult));
+                            throw testException;
+                        }));
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestPartialView_should_return_PartialViewResult()
+        {
+            PartialViewResult PartialViewResult = _controllerTester.Action(x => x.PartialViewAction).TestPartialView();
+            Assert.IsNotNull(PartialViewResult);
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestPartialView_should_not_throw_exception_for_expected_PartialViewName()
+        {
+            AssertExceptionNotThrown.WhenExecuting(() =>
+                _controllerTester.Action(x => x.DisplayDifferentPartialView)
+                    .ExpectingViewName("DifferentPartialViewName").TestPartialView());
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestPartialView_should_throw_exception_for_unexpected_PartialViewName()
+        {
+            AssertExceptionThrown
+                .OfType<ControllerTestException>()
+                .WithMessage("Expected ViewName <expected>. Actual: <DifferentPartialViewName>.")
+                .WhenExecuting(() =>
+                    _controllerTester.Action(x => x.DisplayDifferentPartialView)
+                        .ExpectingViewName("expected").TestPartialView());
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestPartialView_should_throw_exception_when_ExpectingModel_but_model_is_null()
+        {
+            AssertExceptionThrown
+                .OfType<ControllerTestException>()
+                .WithMessage($"Expected model type: {typeof(TestModel).FullName}. Actual: null.")
+                .WhenExecuting(() =>
+                    _controllerTester.Action(x => x.PartialViewWithNullModel).ExpectingModel<TestModel>().TestPartialView());
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestPartialView_should_throw_exception_when_ExpectingModel_and_model_is_different_type()
+        {
+            AssertExceptionThrown
+                .OfType<ControllerTestException>()
+                .WithMessage($"Expected model type: {typeof(TestModel2).FullName}. Actual: {typeof(TestModel).FullName}.")
+                .WhenExecuting(() =>
+                    _controllerTester.Action(x => x.PartialViewAction).ExpectingModel<TestModel2>().TestPartialView());
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestPartialView_should_call_model_validate_method()
+        {
+            var testException = new InvalidOperationException("test exception");
+
+            AssertExceptionThrown
+                .OfType<InvalidOperationException>()
+                .WithMessage(testException.Message)
+                .WhenExecuting(() =>
+                    _controllerTester
+                        .Action(x => x.PartialViewAction)
+                        .ExpectingModel<TestModel>(m =>
+                        {
+                            Assert.IsInstanceOfType(m, typeof(TestModel));
+                            throw testException;
+                        })
+                        .TestPartialView());
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestPartialView_should_call_result_validate_method()
+        {
+            var testException = new InvalidOperationException("test exception");
+
+            AssertExceptionThrown
+                .OfType<InvalidOperationException>()
+                .WithMessage(testException.Message)
+                .WhenExecuting(() =>
+                    _controllerTester
+                        .Action(x => x.PartialViewAction)
+                        .TestPartialView(r =>
+                        {
+                            Assert.IsInstanceOfType(r, typeof(PartialViewResult));
                             throw testException;
                         }));
         }
@@ -405,6 +489,11 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
             return View("DifferentViewName", new TestModel());
         }
 
+        public IActionResult DisplayDifferentPartialView()
+        {
+            return PartialView("DifferentPartialViewName", new TestModel());
+        }
+
         public IActionResult Empty()
         {
             return new EmptyResult();
@@ -415,12 +504,12 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
             return File(new byte[0], "application/x-msdownload", "testFileName");
         }
 
-        public ActionResult Json()
+        public IActionResult Json()
         {
             return Json(new TestModel());
         }
 
-        public ActionResult JsonNull()
+        public IActionResult JsonNull()
         {
             return Json(null);
         }
@@ -430,6 +519,16 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
             return (ModelState.IsValid)
                 ? RedirectToAction("ValidAction")
                 : RedirectToAction("InvalidAction");
+        }
+
+        public IActionResult PartialViewAction()
+        {
+            return PartialView("PartialViewName", new TestModel());
+        }
+
+        public IActionResult PartialViewWithNullModel()
+        {
+            return PartialView("PartialViewName");
         }
 
         public IActionResult RedirectToActionAction()
