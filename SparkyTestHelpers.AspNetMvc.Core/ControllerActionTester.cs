@@ -39,7 +39,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         }
 
         /// <summary>
-        /// Specifies that the <see cref="TestViewResult(Action{ViewResult})"/> method should throw an exception
+        /// Specifies that the <see cref="TestView(Action{ViewResult})"/> method should throw an exception
         /// if the action result's .ViewName doesn't match the <paramref name="expectedViewName"/>.
         /// </summary>
         /// <param name="expectedViewName">The expected view name.</param>
@@ -51,8 +51,10 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         }
 
         /// <summary>
-        /// Specifies that the <see cref="TestViewResult(Action{ViewResult})"/> method should throw an exception
-        /// if the action result's .Model type doesn't match <typeparamref name="TModelType"/>.
+        /// Specifies that the
+        /// <see cref="TestView(Action{ViewResult})"/> or
+        /// <see cref="TestJson(Action{JsonResult})"/> method should throw an exception
+        /// if the action result's .Model or .Value type doesn't match <typeparamref name="TModelType"/>.
         /// </summary>
         /// <typeparam name="TModelType">The expected model type.</typeparam>
         /// <param name="validate">(Optional) callback action to preform additional model validation.</param>
@@ -61,6 +63,124 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         {
             _modelTester = new ModelTester<TModelType>(validate);
             return this;
+        }
+
+        /// <summary>
+        /// Tests that controller action returns a <see cref="ContentResult"/>.
+        /// </summary>
+        /// <param name="validate">(Optional) callback validation function.</param>
+        /// <returns>The <see cref="ContentResult"/> returned from the controller action.</returns>
+        public ContentResult TestContent(Action<ContentResult> validate = null)
+        {
+            return TestResult<ContentResult>(result =>
+            {
+                validate?.Invoke(result);
+            });
+        }
+
+        /// <summary>
+        /// Tests that controller action returns a <see cref="EmptyResult"/>.
+        /// </summary>
+        /// <param name="validate">(Optional) callback validation function.</param>
+        /// <returns>The <see cref="EmptyResult"/> returned from the controller action.</returns>
+        public EmptyResult TestEmpty(Action<EmptyResult> validate = null)
+        {
+            return TestResult<EmptyResult>(result =>
+            {
+                validate?.Invoke(result);
+            });
+        }
+
+        /// <summary>
+        /// Tests that controller action returns a <see cref="FileResult"/>.
+        /// </summary>
+        /// <param name="validate">(Optional) callback validation function.</param>
+        /// <returns>The <see cref="FileResult"/> returned from the controller action.</returns>
+        public FileResult TestFile(Action<FileResult> validate = null)
+        {
+            return TestResult<FileResult>(result =>
+            {
+                validate?.Invoke(result);
+            });
+        }
+
+        /// <summary>
+        /// Tests that controller action returns a <see cref="JsonResult"/>.
+        /// </summary>
+        /// <param name="validate">(Optional) callback validation function.</param>
+        /// <returns>The <see cref="JsonResult"/> returned from the controller action.</returns>
+        public JsonResult TestJson(Action<JsonResult> validate = null)
+        {
+            return TestResult<JsonResult>(result =>
+            {
+                _modelTester?.Test(result.Value);
+                validate?.Invoke(result);
+            });
+        }
+
+        /// <summary>
+        /// Tests that controller action redirects to the specified action name.
+        /// </summary>
+        /// <param name="expectedActionName">The expected action name.</param>
+        /// <param name="validate">(Optional) callback validation action.</param>
+        /// <returns>The <see cref="RedirectToActionResult"/> returned from the controller action.</returns>
+        public RedirectToActionResult TestRedirectToAction(
+            string expectedActionName, Action<RedirectToActionResult> validate = null)
+        {
+            return TestResult<RedirectToActionResult>(result =>
+            {
+                string actual = result.ActionName;
+
+                if (!string.Equals(expectedActionName, actual, StringComparison.InvariantCulture))
+                {
+                    throw new ControllerTestException($"Expected ActionName <{expectedActionName}>. Actual: <{actual}>.");
+                }
+
+                validate?.Invoke(result);
+            });
+        }
+
+        /// <summary>
+        /// Tests that controller action returns a <see cref="RedirectToPageResult"/>.
+        /// </summary>
+        /// <param name="expectedPageName">The expected page name.</param>
+        /// <param name="validate">(Optional) callback validation function.</param>
+        /// <returns>The <see cref="FileResult"/> returned from the controller action.</returns>
+        public RedirectToPageResult TestRedirectToPage(string expectedPageName, Action<RedirectToPageResult> validate = null)
+        {
+            return TestResult<RedirectToPageResult>(result =>
+            {
+                string actual = result.PageName;
+
+                if (!string.Equals(expectedPageName, actual, StringComparison.InvariantCulture))
+                {
+                    throw new ControllerTestException($"Expected PageName <{expectedPageName}>. Actual: <{actual}>.");
+                }
+
+                validate?.Invoke(result);
+            });
+        }
+
+        /// <summary>
+        /// Tests that controller action redirects to the specified route.
+        /// </summary>
+        /// <param name="expectedRoute">The expected route.</param>
+        /// <param name="validate">(Optional) callback validation function.</param>
+        /// <returns>The <see cref="RedirectToRouteResult"/> returned from the controller action.</returns>
+        public RedirectToRouteResult TestRedirectToRoute(
+            string expectedRoute, Action<RedirectToRouteResult> validate = null)
+        {
+            return TestResult<RedirectToRouteResult>(result =>
+            {
+                string actual = string.Join("/", result.RouteValues.Values.Select(v => v.ToString()));
+
+                if (!string.Equals(expectedRoute, actual, StringComparison.InvariantCulture))
+                {
+                    throw new ControllerTestException($"Expected route <{expectedRoute}>. Actual: <{actual}>.");
+                }
+
+                validate?.Invoke(result);
+            });
         }
 
         /// <summary>
@@ -82,60 +202,16 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         }
 
         /// <summary>
-        /// Tests that controller action redirects to the specified action name.
-        /// </summary>
-        /// <param name="expectedActionName">The expected action name.</param>
-        /// <param name="validate">(Optional) callback validation action.</param>
-        /// <returns>The <see cref="RedirectToActionResult"/> returned from the controller action.</returns>
-        public RedirectToActionResult TestRedirectToActionResult(
-            string expectedActionName, Action<RedirectToActionResult> validate = null)
-        {
-            return TestResult<RedirectToActionResult>(result =>
-            {
-                string actual = result.ActionName;
-
-                if (!string.Equals(expectedActionName, actual, StringComparison.InvariantCulture))
-                {
-                    throw new ControllerTestException($"Expected ActionName <{expectedActionName}>. Actual: <{actual}>.");
-                }
-
-                validate?.Invoke(result);
-            });
-        }
-
-        /// <summary>
-        /// Tests that controller action redirects to the specified route.
-        /// </summary>
-        /// <param name="expectedRoute">The expected route.</param>
-        /// <param name="validate">(Optional) callback validation function.</param>
-        /// <returns>The <see cref="RedirectToRouteResult"/> returned from the controller action.</returns>
-        public RedirectToRouteResult TestRedirectToRouteResult(
-            string expectedRoute, Action<RedirectToRouteResult> validate = null)
-        {
-            return TestResult<RedirectToRouteResult>(result =>
-            {
-                string actual = string.Join("/", result.RouteValues.Values.Select(v => v.ToString()));
-
-                if (!string.Equals(expectedRoute, actual, StringComparison.InvariantCulture))
-                {
-                    throw new ControllerTestException($"Expected route <{expectedRoute}>. Actual: <{actual}>.");
-                }
-
-                validate?.Invoke(result);
-            });
-        }
-
-        /// <summary>
         /// Tests that controller action returns a <see cref="ViewResult"/>.
         /// </summary>
         /// <param name="validate">(Optional) callback validation function.</param>
-        /// <returns>THe <see cref="ViewResult"/> returned from the controller action.</returns>
-        public ViewResult TestViewResult(Action<ViewResult> validate = null)
+        /// <returns>The <see cref="ViewResult"/> returned from the controller action.</returns>
+        public ViewResult TestView(Action<ViewResult> validate = null)
         {
             return TestResult<ViewResult>(result =>
             {
                 AssertViewName(result, _expectedViewName);
-                AssertModelType(result);
+                _modelTester?.Test(result.Model);
                 validate?.Invoke(result);
             });
         }
@@ -155,19 +231,12 @@ namespace SparkyTestHelpers.AspNetMvc.Core
             return (TActionResultType)actionResult;
         }
 
-        private void AssertModelType(IActionResult actionResult)
-        {
-            if (_modelTester != null)
-            {
-                _modelTester.Test(((ViewResult)actionResult)?.Model);
-            }
-        }
-
         private void AssertViewName(IActionResult actionResult, string expectedViewName)
         {
-            string actual = ((ViewResult)actionResult).ViewName;
+            string expected = expectedViewName ?? string.Empty;
+            string actual = ((ViewResult)actionResult).ViewName ?? string.Empty;
 
-            if (!string.Equals(expectedViewName, actual, StringComparison.InvariantCulture))
+            if (!string.Equals(expected, actual, StringComparison.InvariantCulture))
             {
                 throw new ControllerTestException($"Expected ViewName <{expectedViewName}>. Actual: <{actual}>.");
             }

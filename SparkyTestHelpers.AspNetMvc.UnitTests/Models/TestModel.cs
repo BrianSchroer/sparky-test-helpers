@@ -1,4 +1,4 @@
-namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests.Models
+namespace SparkyTestHelpers.AspNetMvc.UnitTests.Models
 {
     public class TestModel
     {

@@ -23,139 +23,315 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestRedirectToActionResult_should_throw_exception_when_result_is_not_RedirectToActionResult()
+        public void ControllerActionTester_Test_methods_should_throw_exception_when_result_is_not_expected_IActionResult_type()
         {
-            AssertExceptionThrown
-                .OfType<ControllerTestException>()
-                .WithMessage(
-                    $"Expected IActionResult type {typeof(RedirectToActionResult).FullName}. Actual: {typeof(ViewResult).FullName}.")
-                .WhenExecuting(() => _controllerTester.Action(x => x.Index).TestRedirectToActionResult("ActionName"));
+            ForTest.Scenarios
+            (
+                new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestContent(), typeof(ContentResult), typeof(ViewResult)),
+                new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestEmpty(), typeof(EmptyResult), typeof(ViewResult)),
+                new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestFile(), typeof(FileResult), typeof(ViewResult)),
+                new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestJson(), typeof(JsonResult), typeof(ViewResult)),
+                new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestRedirectToAction("x"), typeof(RedirectToActionResult), typeof(ViewResult)),
+                new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestRedirectToPage("testPageName"), typeof(RedirectToPageResult), typeof(ViewResult)),
+                new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestRedirectToRoute("x"), typeof(RedirectToRouteResult), typeof(ViewResult)),
+                new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestResult<JsonResult>(), typeof(JsonResult), typeof(ViewResult)),
+                new ActionTypeScenario(() => _controllerTester.Action(x => x.Json).TestView(), typeof(ViewResult), typeof(JsonResult))
+            )
+            .TestEach(scenario =>
+            {
+                AssertExceptionThrown
+                    .OfType<ControllerTestException>()
+                    .WithMessage($"Expected IActionResult type {scenario.ExpectedTypeName}. Actual: {scenario.ActualTypeName}.")
+                    .WhenExecuting(() => scenario.TestAction());
+            });
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestRedirectToActionResult_should_throw_exception_for_unexpected_ActionName()
+        public void ControllerActionTester_TestContent_should_call_validate()
+        {
+            var testException = new InvalidOperationException("test exception");
+
+            AssertExceptionThrown
+                .OfType<InvalidOperationException>()
+                .WithMessage(testException.Message)
+                .WhenExecuting(() =>
+                    _controllerTester.Action(x => x.Content).TestContent(r =>
+                    {
+                        Assert.AreEqual("test content", r.Content);
+                        throw testException;
+                    }));
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestEmpty_should_call_validate()
+        {
+            var testException = new InvalidOperationException("test exception");
+
+            AssertExceptionThrown
+                .OfType<InvalidOperationException>()
+                .WithMessage(testException.Message)
+                .WhenExecuting(() =>
+                    _controllerTester.Action(x => x.Empty).TestEmpty(r => throw testException));
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestFile_should_call_validate()
+        {
+            var testException = new InvalidOperationException("test exception");
+
+            AssertExceptionThrown
+                .OfType<InvalidOperationException>()
+                .WithMessage(testException.Message)
+                .WhenExecuting(() =>
+                    _controllerTester.Action(x => x.FileAction).TestFile(r => 
+                    {
+                        Assert.AreEqual("testFileName", r.FileDownloadName);
+                        throw testException;
+                    }));
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestJson_should_return_JsonResult()
+        {
+            JsonResult JsonResult = _controllerTester.Action(x => x.Json).TestJson();
+            Assert.IsNotNull(JsonResult);
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestJson_should_throw_exception_when_ExpectingModel_but_model_is_null()
+        {
+            AssertExceptionThrown
+                .OfType<ControllerTestException>()
+                .WithMessage($"Expected model type: {typeof(TestModel).FullName}. Actual: null.")
+                .WhenExecuting(() =>
+                    _controllerTester.Action(x => x.JsonNull).ExpectingModel<TestModel>().TestJson());
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestJson_should_throw_exception_when_ExpectingModel_and_model_is_different_type()
+        {
+            AssertExceptionThrown
+                .OfType<ControllerTestException>()
+                .WithMessage($"Expected model type: {typeof(TestModel2).FullName}. Actual: {typeof(TestModel).FullName}.")
+                .WhenExecuting(() =>
+                    _controllerTester.Action(x => x.Json).ExpectingModel<TestModel2>().TestJson());
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestJson_should_call_model_validate_method()
+        {
+            var testException = new InvalidOperationException("test exception");
+
+            AssertExceptionThrown
+                .OfType<InvalidOperationException>()
+                .WithMessage(testException.Message)
+                .WhenExecuting(() =>
+                    _controllerTester
+                        .Action(x => x.Json)
+                        .ExpectingModel<TestModel>(m =>
+                        {
+                            Assert.IsInstanceOfType(m, typeof(TestModel));
+                            throw testException;
+                        })
+                        .TestJson());
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestJson_should_call_result_validate_method()
+        {
+            var testException = new InvalidOperationException("test exception");
+
+            AssertExceptionThrown
+                .OfType<InvalidOperationException>()
+                .WithMessage(testException.Message)
+                .WhenExecuting(() =>
+                    _controllerTester
+                        .Action(x => x.Json)
+                        .TestJson(r =>
+                        {
+                            Assert.IsInstanceOfType(r, typeof(JsonResult));
+                            throw testException;
+                        }));
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestRedirectToAction_should_throw_exception_for_unexpected_ActionName()
         {
             AssertExceptionThrown
                 .OfType<ControllerTestException>()
                 .WithMessage("Expected ActionName <WrongName>. Actual: <ActionName>.")
-                .WhenExecuting(() => _controllerTester.Action(x => x.RedirectToActionAction).TestRedirectToActionResult("WrongName"));
+                .WhenExecuting(() => _controllerTester.Action(x => x.RedirectToActionAction).TestRedirectToAction("WrongName"));
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestRedirectToActionResult_should_not_throw_exception_for_expected_ActionName()
+        public void ControllerActionTester_TestRedirectToAction_should_not_throw_exception_for_expected_ActionName()
         {
             AssertExceptionNotThrown.WhenExecuting(() => 
             {
                 RedirectToActionResult result = 
-                    _controllerTester.Action(x => x.RedirectToActionAction).TestRedirectToActionResult("ActionName");
+                    _controllerTester.Action(x => x.RedirectToActionAction).TestRedirectToAction("ActionName");
                 Assert.IsNotNull(result);
             });
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestRedirectToRouteResult_should_throw_exception_when_result_is_not_RedirectToRouteResult()
+        public void ControllerActionTester_TestRedirectToAction_should_call_validate_method()
         {
+            var testException = new InvalidOperationException("test exception");
+
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
-                .WithMessage(
-                    $"Expected IActionResult type {typeof(RedirectToRouteResult).FullName}. Actual: {typeof(ViewResult).FullName}.")
-                .WhenExecuting(() => _controllerTester.Action(x => x.Index).TestRedirectToRouteResult("Foo/Details/3"));
+                .OfType<InvalidOperationException>()
+                .WithMessage(testException.Message)
+                .WhenExecuting(() =>
+                    _controllerTester
+                        .Action(x => x.RedirectToActionAction)
+                        .TestRedirectToAction("ActionName", r =>
+                        {
+                            Assert.IsInstanceOfType(r, typeof(RedirectToActionResult));
+                            throw testException;
+                        }));
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestRedirectToRouteResult_should_throw_exception_for_unexpected_route()
+        public void ControllerActionTester_TestRedirectToRoute_should_throw_exception_for_unexpected_route()
         {
             AssertExceptionThrown
                 .OfType<ControllerTestException>()
                 .WithMessage("Expected route <wrong>. Actual: <Foo/Details/3>.")
-                .WhenExecuting(() => _controllerTester.Action(x => x.RedirectToRouteAction).TestRedirectToRouteResult("wrong"));
+                .WhenExecuting(() => _controllerTester.Action(x => x.RedirectToRouteAction).TestRedirectToRoute("wrong"));
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestRedirectToActionResult_should_not_throw_exception_for_expected_route()
+        public void ControllerActionTester_TestRedirectToRoute_should_not_throw_exception_for_expected_route()
         {
             AssertExceptionNotThrown.WhenExecuting(() =>
             {
                 RedirectToRouteResult result =
-                    _controllerTester.Action(x => x.RedirectToRouteAction).TestRedirectToRouteResult("Foo/Details/3");
+                    _controllerTester.Action(x => x.RedirectToRouteAction).TestRedirectToRoute("Foo/Details/3");
                 Assert.IsNotNull(result);
             });
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestViewResult_should_return_ViewResult()
+        public void ControllerActionTester_TestRedirectToRoute_should_call_validate_method()
         {
-            ViewResult viewResult = _controllerTester.Action(x => x.Index).TestViewResult();
+            var testException = new InvalidOperationException("test exception");
+
+            AssertExceptionThrown
+                .OfType<InvalidOperationException>()
+                .WithMessage(testException.Message)
+                .WhenExecuting(() =>
+                    _controllerTester
+                        .Action(x => x.RedirectToRouteAction)
+                        .TestRedirectToRoute("Foo/Details/3", r =>
+                        {
+                            Assert.IsInstanceOfType(r, typeof(RedirectToRouteResult));
+                            throw testException;
+                        }));
+        }
+
+        [TestMethod]
+        public void ControllerPageTester_TestRedirectToPage_should_throw_exception_for_unexpected_PageName()
+        {
+            AssertExceptionThrown
+                .OfType<ControllerTestException>()
+                .WithMessage("Expected PageName <WrongName>. Actual: <testPageName>.")
+                .WhenExecuting(() => _controllerTester.Action(x => x.RedirectToPageAction).TestRedirectToPage("WrongName"));
+        }
+
+        [TestMethod]
+        public void ControllerPageTester_TestRedirectToPage_should_not_throw_exception_for_expected_PageName()
+        {
+            AssertExceptionNotThrown.WhenExecuting(() =>
+            {
+                RedirectToPageResult result =
+                    _controllerTester.Action(x => x.RedirectToPageAction).TestRedirectToPage("testPageName");
+                Assert.IsNotNull(result);
+            });
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestRedirectToPage_should_call_validate_method()
+        {
+            var testException = new InvalidOperationException("test exception");
+
+            AssertExceptionThrown
+                .OfType<InvalidOperationException>()
+                .WithMessage(testException.Message)
+                .WhenExecuting(() =>
+                    _controllerTester
+                        .Action(x => x.RedirectToPageAction)
+                        .TestRedirectToPage("testPageName", r =>
+                        {
+                            Assert.IsInstanceOfType(r, typeof(RedirectToPageResult));
+                            throw testException;
+                        }));
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestView_should_return_ViewResult()
+        {
+            ViewResult viewResult = _controllerTester.Action(x => x.Index).TestView();
             Assert.IsNotNull(viewResult);
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestViewResult_should_not_throw_exception_for_default_View()
+        public void ControllerActionTester_TestView_should_not_throw_exception_for_default_View()
         {
-            AssertExceptionNotThrown.WhenExecuting(() => _controllerTester.Action(x => x.Index).TestViewResult());
+            AssertExceptionNotThrown.WhenExecuting(() => _controllerTester.Action(x => x.Index).TestView());
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestViewResult_should_throw_exception_when_result_is_not_ViewResult()
-        {
-            AssertExceptionThrown
-                .OfType<ControllerTestException>()
-                .WithMessage(
-                    $"Expected IActionResult type {typeof(ViewResult).FullName}. Actual: {typeof(RedirectToActionResult).FullName}.")
-                .WhenExecuting(() => _controllerTester.Action(x => () => x.ModelValidationAction(666)).TestViewResult());
-        }
-
-        [TestMethod]
-        public void ControllerActionTester_TestViewResult_should_not_throw_exception_for_expected_ViewName()
+        public void ControllerActionTester_TestView_should_not_throw_exception_for_expected_ViewName()
         {
             AssertExceptionNotThrown.WhenExecuting(() =>
                 _controllerTester.Action(x => x.DisplayDifferentView)
-                    .ExpectingViewName("DifferentViewName").TestViewResult());
+                    .ExpectingViewName("DifferentViewName").TestView());
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestViewResult_should_throw_exception_for_unexpected_ViewName()
+        public void ControllerActionTester_TestView_should_throw_exception_for_unexpected_ViewName()
         {
             AssertExceptionThrown
                 .OfType<ControllerTestException>()
                 .WithMessage("Expected ViewName <expected>. Actual: <DifferentViewName>.")
                 .WhenExecuting(() =>
                     _controllerTester.Action(x => x.DisplayDifferentView)
-                        .ExpectingViewName("expected").TestViewResult());
+                        .ExpectingViewName("expected").TestView());
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestViewResult_should_throw_exception_for_unexpected_view_name_when_actual_is_none()
+        public void ControllerActionTester_TestView_should_throw_exception_for_unexpected_view_name_when_actual_is_none()
         {
             AssertExceptionThrown
                 .OfType<ControllerTestException>()
                 .WithMessage("Expected ViewName <expected>. Actual: <>.")
                 .WhenExecuting(() => 
-                    _controllerTester.Action(x => x.Index).ExpectingViewName("expected").TestViewResult());
+                    _controllerTester.Action(x => x.Index).ExpectingViewName("expected").TestView());
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestViewResult_should_throw_exception_when_ExpectingModel_but_model_is_null()
+        public void ControllerActionTester_TestView_should_throw_exception_when_ExpectingModel_but_model_is_null()
         {
             AssertExceptionThrown
                 .OfType<ControllerTestException>()
                 .WithMessage($"Expected model type: {typeof(TestModel).FullName}. Actual: null.")
                 .WhenExecuting(() => 
-                    _controllerTester.Action(x => x.Index).ExpectingModel<TestModel>().TestViewResult());
+                    _controllerTester.Action(x => x.Index).ExpectingModel<TestModel>().TestView());
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestViewResult_should_throw_exception_when_ExpectingModel_and_model_is_different_type()
+        public void ControllerActionTester_TestView_should_throw_exception_when_ExpectingModel_and_model_is_different_type()
         {
             AssertExceptionThrown
                 .OfType<ControllerTestException>()
                 .WithMessage($"Expected model type: {typeof(TestModel2).FullName}. Actual: {typeof(TestModel).FullName}.")
                 .WhenExecuting(() => 
-                    _controllerTester.Action(x => x.DisplayTestModel).ExpectingModel<TestModel2>().TestViewResult());
+                    _controllerTester.Action(x => x.DisplayTestModel).ExpectingModel<TestModel2>().TestView());
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestViewResult_should_call_model_validate_method()
+        public void ControllerActionTester_TestView_should_call_model_validate_method()
         {
             var testException = new InvalidOperationException("test exception");
 
@@ -170,11 +346,11 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                             Assert.IsInstanceOfType(m, typeof(TestModel));
                             throw testException;
                         })
-                        .TestViewResult());
+                        .TestView());
         }
 
         [TestMethod]
-        public void ControllerActionTester_TestViewResult_should_call_result_validate_method()
+        public void ControllerActionTester_TestView_should_call_result_validate_method()
         {
             var testException = new InvalidOperationException("test exception");
 
@@ -184,7 +360,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                 .WhenExecuting(() =>
                     _controllerTester
                         .Action(x => x.DisplayTestModel)
-                        .TestViewResult(r => 
+                        .TestView(r => 
                         {
                             Assert.IsInstanceOfType(r, typeof(ViewResult));
                             throw testException;
@@ -204,14 +380,19 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                 _controllerTester
                     .Action(x => () => x.ModelValidationAction(3))
                     .WhenModelStateIsValidEquals(scenario.IsValid)
-                    .TestRedirectToActionResult(scenario.Expected);
+                    .TestRedirectToAction(scenario.Expected);
             });
         }
 
-        #region Controller actions
+ #region Controller actions
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Content()
+        {
+            return Content("test content");
         }
 
         public IActionResult DisplayTestModel()
@@ -222,6 +403,26 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public IActionResult DisplayDifferentView()
         {
             return View("DifferentViewName", new TestModel());
+        }
+
+        public IActionResult Empty()
+        {
+            return new EmptyResult();
+        }
+
+        public IActionResult FileAction()
+        {
+            return File(new byte[0], "application/x-msdownload", "testFileName");
+        }
+
+        public ActionResult Json()
+        {
+            return Json(new TestModel());
+        }
+
+        public ActionResult JsonNull()
+        {
+            return Json(null);
         }
 
         public IActionResult ModelValidationAction(int id)
@@ -241,6 +442,28 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
             return RedirectToRoute(new { controller = "Foo", action = "Details", id = 3 });
         }
 
-        #endregion
+        public IActionResult RedirectToPageAction()
+        {
+            return RedirectToPage("testPageName");
+        }
+
+ #endregion
+
+        private class ActionTypeScenario
+        {
+            public string ActualTypeName { get; set; }
+            public string ExpectedTypeName { get; set; }
+            public Action TestAction { get; set; }
+
+            public ActionTypeScenario(
+                Action testAction,
+                Type expectedType = null,
+                Type actualType = null)
+            {
+                ExpectedTypeName = expectedType?.FullName;
+                ActualTypeName = actualType?.FullName;
+                TestAction = testAction;
+            }
+        }
     }
 }
