@@ -6,21 +6,20 @@
     <Description>.NET Unit test helpers for asserting that ASP.NET MVC Core controller actions return expected results</Description>
     <Copyright>Copyright © Brian Schroer 2018</Copyright>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
-    <PackageIconUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageIconUrl>
+    <PackageProjectUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <PackageTags>test, testing, unittest, aspnet, mvc, aspnetmvc, aspnetcore, mvccore, aspnetmvccore</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <PackageReleaseNotes>v1.0.2: simplified dependencies</PackageReleaseNotes>
+    <RepositoryUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
-    <PackageReference Include="SparkyTestHelpers" Version="1.2.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\SparkyTestHelpers.AspNetMvc.Common\SparkyTestHelpers.AspNetMvc.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-namespace SparkyTestHelpers.AspNetMvc.Common
+namespace SparkyTestHelpers.AspNetMvc
 {
     public interface IModelTester
     {

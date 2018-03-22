@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace SparkyTestHelpers.AspNetMvc.Common
+namespace SparkyTestHelpers.AspNetMvc
 {
     /// <summary>
     /// <see cref="Type"/> tester.

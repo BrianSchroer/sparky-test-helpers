@@ -1,6 +1,6 @@
 using System;
 
-namespace SparkyTestHelpers.AspNetMvc.Common
+namespace SparkyTestHelpers.AspNetMvc.Core
 {
     /// <summary>
     /// <see cref="ViewResult.Model"/> tester for <see cref="ControllerActionTester"/>.

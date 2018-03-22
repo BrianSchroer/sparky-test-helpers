@@ -157,10 +157,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SparkyTestHelpers.AspNetMvc.Common\SparkyTestHelpers.AspNetMvc.Common.csproj">
-      <Project>{1293c389-734b-4abb-9ce9-09e168079a63}</Project>
-      <Name>SparkyTestHelpers.AspNetMvc.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SparkyTestHelpers.AspNetMvc\SparkyTestHelpers.AspNetMvc.csproj">
       <Project>{9e28282f-36f7-4e5f-a7e2-4ee5a3a6917d}</Project>
       <Name>SparkyTestHelpers.AspNetMvc</Name>
