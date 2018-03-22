@@ -9,6 +9,7 @@
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
     <PackageIconUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageIconUrl>
     <PackageTags>test, testing, unittest, aspnet, mvc, aspnetmvc, aspnetcore, mvccore, aspnetmvccore</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
