@@ -1,16 +1,15 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SparkyTestHelpers.AspNetMvc")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription(".NET Unit test helpers for asserting that ASP.NET MVC Core controller actions return expected results")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Brian Schroer")]
 [assembly: AssemblyProduct("SparkyTestHelpers.AspNetMvc")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright © Brian Schroer 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Brian Schroer</Authors>
+    <Description>.NET Unit test helpers for asserting that ASP.NET MVC Core controller actions return expected results</Description>
+    <Copyright>Copyright © Brian Schroer 2018</Copyright>
+    <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageIconUrl>
+    <PackageTags>test, testing, unittest, aspnet, mvc, aspnetmvc, aspnetcore, mvccore, aspnetmvccore</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

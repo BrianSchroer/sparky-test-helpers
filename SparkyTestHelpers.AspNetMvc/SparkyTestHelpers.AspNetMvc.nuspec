@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/BrianSchroer/sparky-test-helpers</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</iconUrl>
+    <repository url="https://github.com/BrianSchroer/sparky-test-helpers" />
+    <description>$description$</description>
+    <releaseNotes></releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>test, testing, unittest, aspnet, mvc, aspnetmvc</tags>
+  </metadata>
+</package>

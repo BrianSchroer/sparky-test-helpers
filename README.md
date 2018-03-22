@@ -19,6 +19,18 @@ Unit test helpers for "appSettings" values in XML .config files:
 * [Source Code](/SparkyTestHelpers.AppSettings)
 * [API documentation](/SparkyTestHelpers.AppSettings/api.md)
 
+## SparkyTestHelpers.AspNetMvc
+Unit test helpers for ASP.NET MVC (.NET Framework version)
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.AspNetMvc/)
+* [Source Code](/SparkyTestHelpers.AspNetMvc)
+* [API documentation](/SparkyTestHelpers.AspNetMvc/api.md)
+
+## SparkyTestHelpers.AspNetMvc.Core
+Unit test helpers for ASP.NET MVC (.NET Core version)
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.AspNetMvc.Core/)
+* [Source Code](/SparkyTestHelpers.AspNetMvc.Core)
+* [API documentation](/SparkyTestHelpers.AspNetMvc.Core/api.md)
+
 ## SparkyTestHelpers.DataAnnotations
 Unit test helpers for validation with DataAnnotation attributes: 
 * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.DataAnnotations/)
