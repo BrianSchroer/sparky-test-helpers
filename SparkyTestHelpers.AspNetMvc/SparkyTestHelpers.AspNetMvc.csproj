@@ -68,6 +68,12 @@
     <Compile Include="IModelTester.cs" />
     <Compile Include="ModelTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routing\Mocks\MockHttpContextBase.cs" />
+    <Compile Include="Routing\Mocks\MockHttpRequestBase.cs" />
+    <Compile Include="Routing\Mocks\MockHttpResponseBase.cs" />
+    <Compile Include="Routing\RouteTester.cs" />
+    <Compile Include="Routing\RouteTesterException.cs" />
+    <Compile Include="Routing\RoutingAsserter.cs" />
     <Compile Include="TypeTester.cs" />
   </ItemGroup>
   <ItemGroup>

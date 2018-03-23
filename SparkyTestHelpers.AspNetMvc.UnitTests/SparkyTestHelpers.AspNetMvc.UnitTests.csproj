@@ -148,10 +148,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="RoutingAsserterTests.cs" />
+    <Compile Include="Routing\LegacyUrlRoute.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TestModel2.cs" />
     <Compile Include="ControllerActionTesterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routing\RouteConfig.cs" />
+    <Compile Include="RouteTesterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
