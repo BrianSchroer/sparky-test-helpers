@@ -82,6 +82,31 @@ namespace SparkyTestHelpers.AspNetMvc.Routing
         }
 
         /// <summary>
+        /// Assert that the test URL is mapped to the expected <see cref="RouteData"/> controller, action and (optional) id values.
+        /// </summary>
+        /// <param name="routeValues">object with "controller", "action" properties.</param>
+        /// <returns>The "parent" <see cref="RouteTester"/>.</returns>
+        /// <exception cref="RouteTesterException">if mapping does not result in the expected values.</exception>
+        /// <example>
+        /// <code><![CDATA[
+        ///     _routeTester.ForUrl("Home/Index").AssertMapTo(new { controller = "Home", action = "Index" });
+        ///     _routeTester.ForUrl("Order/Details/3").AssertMapTo(new { controller = "Order", action = "Details", id = 3 });
+        /// ]]></code>
+        /// </example>
+        public RouteTester AssertMapTo(object routeValues)
+        {
+            Dictionary<string, object> dict = 
+                routeValues.GetType().GetProperties().ToDictionary(x => x.Name, x => x.GetValue(routeValues, null));
+
+            if (!dict.ContainsKey("id"))
+            {
+                dict.Add("id", null);
+            }
+
+            return AssertMapTo(dict);
+        }
+
+        /// <summary>
         /// Assert that the test URL is mapped to the expected controller action.
         /// </summary>
         /// <typeparam name="TController">The controller type.</typeparam>

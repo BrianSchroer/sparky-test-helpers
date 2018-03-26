@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SparkyTestHelpers.AspNetMvc")]
-[assembly: AssemblyDescription(".NET Unit test helpers for asserting that ASP.NET MVC Core controller actions return expected results")]
+[assembly: AssemblyDescription(".NET Unit test helpers for ASP.NET MVC routing and for asserting that ASP.NET MVC controller actions return expected results")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Brian Schroer")]
 [assembly: AssemblyProduct("SparkyTestHelpers.AspNetMvc")]
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.1.0")]
-[assembly: AssemblyFileVersion("1.0.1.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]

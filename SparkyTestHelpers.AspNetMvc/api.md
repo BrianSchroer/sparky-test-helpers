@@ -6,7 +6,7 @@ _see also_:
 
 Instantiation:
 ```csharp
-using SparkyTestHelpers.AspNetMvc
+using SparkyTestHelpers.AspNetMvc;
 ```
 
 ```csharp
@@ -66,4 +66,59 @@ All *validate* "callback" actions shown above are optional.
         .WhenModelStateIsValidEquals(true)
         .ExpectingViewName("UpdateSuccessful")
         .TestRedirectToRoute("Home/UpdateSuccessful");
+```
+## RouteTester
+**RouteTester** and **RoutingAsserter** provide methods to assert that a given relative URL maps to the expected [RouteData.Values](https://docs.microsoft.com/en-us/dotnet/api/system.web.routing.routedata.values?view=netframework-4.7#System_Web_Routing_RouteData_Values). The **RoutingAsserter.AssertMapTo** overloads provide multiple ways to specify the expected values...
+
+**Constructor**
+
+ public **RouteTester**(Action<*RouteCollection*> *routeRegistrationMethod*)
+
+```csharp
+using SparkyTestHelpers.AspNetMvc.Routing;
+. . .
+    var routeTester = new RouteTester(RouteConfig.RegisterRoutes);
+```
+
+### methods
+
+* .**ForUrl**(string *relativeUrl*) - creates a new **RoutingAsserter** instance.
+
+## RoutingAsserter
+
+### methods
+
+* .**AssertMapTo**(IDictionary<string, object> *expectedValues*)
+* .**AssertMapTo**(object *routeValues*)
+* .**AssertMapTo**(string *controller*, string *action*, (object *id*)) - id defaults to null
+* .**AssertMapTo<*TController*>**(Expression<Func<TController, Func<*ActionResult*>>> *actionExpression*)
+* .**AssertRedirectTo**(string **expectedUrl**, (HttpStatusCode *expectedStatusCode)) - expectedStatusCode defaults to HttpStatusCode.Redirect (302)
+
+### examples
+
+```csharp
+routeTester.ForUrl("Default.aspx)
+    .AssertRedirectTo("Home/LegacyRedirect");
+
+// alternate syntaxes for asserting Home/Index routing:
+routeTester.ForUrl("Home/Index")
+    .AssertMapTo(new Dictionary<string, object> 
+        { { "controller", "Home" }, { "action", "Index" }, { "id", null } );
+routeTester.ForUrl("Home/Index")
+    .AssertMapTo(new {controller = "Home", action = "Index"});
+routeTester.ForUrl("Home/Index")
+    .AssertMapTo("Home", "Index");
+routeTester.ForUrl("Home/Index")
+    .AssertMapTo<HomeController>(x => x.Index);
+
+// alternate syntaxes for asserting Order/Details/3 routing:
+routeTester.ForUrl("Order/Details/3")
+    .AssertMapTo(new Dictionary<string, object> 
+        { { "controller", "Order" }, { "action", "Details" }, { "id", 3 } );
+routeTester.ForUrl("Order/Details/3")
+    .AssertMapTo(new {controller = "Order", action = "Details", id = 3 });
+routeTester.ForUrl("Order/Details/3")
+    .AssertMapTo("Order", "Details", 3);
+routeTester.ForUrl("Order/Details/3")
+    .AssertMapTo<OrderController>(x => () => x.Details(3));
 ```

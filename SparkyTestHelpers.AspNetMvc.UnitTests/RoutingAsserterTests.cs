@@ -62,7 +62,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         }
 
         [TestMethod]
-        public void RoutingAssert_AssertMapTo_controller_action_id_should_throw_exception_when_values_do_not_match()
+        public void RoutingAsserter_AssertMapTo_controller_action_id_should_throw_exception_when_values_do_not_match()
         {
             AssertExceptionThrown
                 .OfType<RouteTesterException>()
@@ -70,6 +70,27 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
                 .WhenExecuting(() =>
                     _routeTester.ForUrl("Home/Index")
                     .AssertMapTo("Order", "Details", 3));
+        }
+
+        [TestMethod]
+        public void RoutingAsserter_AssertMapTo_dynamic_object_should_not_throw_exception_when_values_match()
+        {
+            AssertExceptionNotThrown.WhenExecuting(() =>
+                _routeTester.ForUrl("Home/INdex").AssertMapTo(new { controller = "Home", action = "Index" }));
+
+            AssertExceptionNotThrown.WhenExecuting(() =>
+                _routeTester.ForUrl("Order/Details/3").AssertMapTo(new { controller = "Order", action = "Details", id = 3 }));
+        }
+
+        [TestMethod]
+        public void RoutingAsserter_AssertMapTo_dynamic_object_should_throw_exception_when_values_do_not_match()
+        {
+            AssertExceptionThrown
+                .OfType<RouteTesterException>()
+                .WithMessage("Expected: \naction: \"Details\", controller: \"Order\", id: \"3\". \nActual: \naction: \"Index\", controller: \"Home\", id: (null).")
+                .WhenExecuting(() =>
+                    _routeTester.ForUrl("Home/Index")
+                    .AssertMapTo(new { controller = "Order", action = "Details", id = 3 }));
         }
 
         [TestMethod]
