@@ -40,7 +40,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
             .TestEach(scenario =>
             {
                 AssertExceptionThrown
-                    .OfType<ControllerTestException>()
+                    .OfType<ActionTestException>()
                     .WithMessage($"Expected IActionResult type {scenario.ExpectedTypeName}. Actual: {scenario.ActualTypeName}.")
                     .WhenExecuting(() => scenario.TestAction());
             });
@@ -101,7 +101,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public void ControllerActionTester_TestJson_should_throw_exception_when_ExpectingModel_but_model_is_null()
         {
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
+                .OfType<ActionTestException>()
                 .WithMessage($"Expected model type: {typeof(TestModel).FullName}. Actual: null.")
                 .WhenExecuting(() =>
                     _controllerTester.Action(x => x.JsonNull).ExpectingModel<TestModel>().TestJson());
@@ -111,7 +111,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public void ControllerActionTester_TestJson_should_throw_exception_when_ExpectingModel_and_model_is_different_type()
         {
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
+                .OfType<ActionTestException>()
                 .WithMessage($"Expected model type: {typeof(TestModel2).FullName}. Actual: {typeof(TestModel).FullName}.")
                 .WhenExecuting(() =>
                     _controllerTester.Action(x => x.Json).ExpectingModel<TestModel2>().TestJson());
@@ -173,7 +173,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public void ControllerActionTester_TestPartialView_should_throw_exception_for_unexpected_PartialViewName()
         {
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
+                .OfType<ActionTestException>()
                 .WithMessage("Expected ViewName <expected>. Actual: <DifferentPartialViewName>.")
                 .WhenExecuting(() =>
                     _controllerTester.Action(x => x.DisplayDifferentPartialView)
@@ -184,7 +184,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public void ControllerActionTester_TestPartialView_should_throw_exception_when_ExpectingModel_but_model_is_null()
         {
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
+                .OfType<ActionTestException>()
                 .WithMessage($"Expected model type: {typeof(TestModel).FullName}. Actual: null.")
                 .WhenExecuting(() =>
                     _controllerTester.Action(x => x.PartialViewWithNullModel).ExpectingModel<TestModel>().TestPartialView());
@@ -194,7 +194,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public void ControllerActionTester_TestPartialView_should_throw_exception_when_ExpectingModel_and_model_is_different_type()
         {
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
+                .OfType<ActionTestException>()
                 .WithMessage($"Expected model type: {typeof(TestModel2).FullName}. Actual: {typeof(TestModel).FullName}.")
                 .WhenExecuting(() =>
                     _controllerTester.Action(x => x.PartialViewAction).ExpectingModel<TestModel2>().TestPartialView());
@@ -241,7 +241,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public void ControllerActionTester_TestRedirectToAction_should_throw_exception_for_unexpected_ActionName()
         {
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
+                .OfType<ActionTestException>()
                 .WithMessage("Expected ActionName <WrongName>. Actual: <ActionName>.")
                 .WhenExecuting(() => _controllerTester.Action(x => x.RedirectToActionAction).TestRedirectToAction("WrongName"));
         }
@@ -279,7 +279,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public void ControllerActionTester_TestRedirectToRoute_should_throw_exception_for_unexpected_route()
         {
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
+                .OfType<ActionTestException>()
                 .WithMessage("Expected route <wrong>. Actual: <Foo/Details/3>.")
                 .WhenExecuting(() => _controllerTester.Action(x => x.RedirectToRouteAction).TestRedirectToRoute("wrong"));
         }
@@ -317,7 +317,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public void ControllerPageTester_TestRedirectToPage_should_throw_exception_for_unexpected_PageName()
         {
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
+                .OfType<ActionTestException>()
                 .WithMessage("Expected PageName <WrongName>. Actual: <testPageName>.")
                 .WhenExecuting(() => _controllerTester.Action(x => x.RedirectToPageAction).TestRedirectToPage("WrongName"));
         }
@@ -376,7 +376,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public void ControllerActionTester_TestView_should_throw_exception_for_unexpected_ViewName()
         {
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
+                .OfType<ActionTestException>()
                 .WithMessage("Expected ViewName <expected>. Actual: <DifferentViewName>.")
                 .WhenExecuting(() =>
                     _controllerTester.Action(x => x.DisplayDifferentView)
@@ -387,7 +387,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public void ControllerActionTester_TestView_should_throw_exception_for_unexpected_view_name_when_actual_is_none()
         {
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
+                .OfType<ActionTestException>()
                 .WithMessage("Expected ViewName <expected>. Actual: <>.")
                 .WhenExecuting(() => 
                     _controllerTester.Action(x => x.Index).ExpectingViewName("expected").TestView());
@@ -397,7 +397,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public void ControllerActionTester_TestView_should_throw_exception_when_ExpectingModel_but_model_is_null()
         {
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
+                .OfType<ActionTestException>()
                 .WithMessage($"Expected model type: {typeof(TestModel).FullName}. Actual: null.")
                 .WhenExecuting(() => 
                     _controllerTester.Action(x => x.Index).ExpectingModel<TestModel>().TestView());
@@ -407,7 +407,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         public void ControllerActionTester_TestView_should_throw_exception_when_ExpectingModel_and_model_is_different_type()
         {
             AssertExceptionThrown
-                .OfType<ControllerTestException>()
+                .OfType<ActionTestException>()
                 .WithMessage($"Expected model type: {typeof(TestModel2).FullName}. Actual: {typeof(TestModel).FullName}.")
                 .WhenExecuting(() => 
                     _controllerTester.Action(x => x.DisplayTestModel).ExpectingModel<TestModel2>().TestView());

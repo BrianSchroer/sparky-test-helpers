@@ -1,38 +1,37 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
 
 namespace SparkyTestHelpers.AspNetMvc.Core
 {
     /// <summary>
-    /// Helper for testing ASP.NET Core MVC controller actions.
+    /// Helper for testing ASP.NET Core MVC PageModel actions.
     /// </summary>
-    public class ControllerActionTester
+    public class PageModelActionTester<TPageModel> where TPageModel : PageModel
     {
-        private readonly Controller _controller;
-        private readonly Func<IActionResult> _controllerAction;
+        private readonly PageModel _pageModel;
+        private readonly Func<IActionResult> _pageModelAction;
         private IModelTester _modelTester;
-        private string _expectedViewName = null;
-        private bool _expectedViewNameSpecified;
 
         /// <summary>
         /// Called by the 
-        /// <see cref="ControllerTester{TController}.Action(System.Linq.Expressions.Expression{Func{TController, Func{IActionResult}}})"/>
+        /// <see cref="PageModelTester{TPageModel}.Action(System.Linq.Expressions.Expression{Func{TPageModel, Func{IActionResult}}})"/>
         /// method.
         /// </summary>
-        /// <param name="controller">The "parent" <see cref="Controller"/>.</param>
-        /// <param name="controllerAction">"Callback" function that privides the controller action to be tested.</param>
-        internal ControllerActionTester(Controller controller, Func<IActionResult> controllerAction)
+        /// <param name="pageModel">The "parent" <see cref="PageModel"/>.</param>
+        /// <param name="pageModelAction">"Callback" function that privides the pageModel action to be tested.</param>
+        internal PageModelActionTester(TPageModel pageModel, Func<IActionResult> pageModelAction)
         {
-            _controller = controller;
-            _controllerAction = controllerAction;
+            _pageModel = pageModel;
+            _pageModelAction = pageModelAction;
         }
 
         /// <summary>
         /// Sets up ModelState.IsValid value.
         /// </summary>
-        /// <returns>"This" <see cref="ControllerActionTester"/>.</returns>
-        public ControllerActionTester WhenModelStateIsValidEquals(bool isValid)
+        /// <returns>"This" <see cref="PageModelActionTester"/>.</returns>
+        public PageModelActionTester<TPageModel> WhenModelStateIsValidEquals(bool isValid)
         {
             SetModelStateIsValid(isValid);
             return this;
@@ -40,39 +39,39 @@ namespace SparkyTestHelpers.AspNetMvc.Core
 
         /// <summary>
         /// Specifies that the
-        /// <see cref="TestView(Action{ViewResult})"/> and
-        /// <see cref="TestPartialView(Action{PartialViewResult})"/> methods should throw an exception
-        /// if the action result's .ViewName doesn't match the <paramref name="expectedViewName"/>.
-        /// </summary>
-        /// <param name="expectedViewName">The expected view name.</param>
-        /// <returns>"This" <see cref="ControllerActionTester"/>.</returns>
-        public ControllerActionTester ExpectingViewName(string expectedViewName)
-        {
-            _expectedViewName = expectedViewName;
-            _expectedViewNameSpecified = true;
-            return this;
-        }
-
-        /// <summary>
-        /// Specifies that the
-        /// <see cref="TestView(Action{ViewResult})"/> or
-        /// <see cref="TestJson(Action{JsonResult})"/> method should throw an exception
+        /// <see cref="TestPage(Action{PageResult})"/> or
+        /// <see cref="TestJsonResult(Action{JsonResult})"/> method should throw an exception
         /// if the action result's .Model or .Value type doesn't match <typeparamref name="TModelType"/>.
         /// </summary>
+        /// <remarks>
+        /// The <see cref="ExpectingModel(Action{TPageModel})"/> method is easier to use 
+        /// with <see cref="TestPage(Action{PageResult})"/>.
+        /// </remarks>
         /// <typeparam name="TModelType">The expected model type.</typeparam>
         /// <param name="validate">(Optional) callback action to preform additional model validation.</param>
-        /// <returns>"This" <see cref="ControllerActionTester"/>.</returns>
-        public ControllerActionTester ExpectingModel<TModelType>(Action<TModelType> validate = null)
+        /// <returns>"This" <see cref="PageModelActionTester"/>.</returns>
+        public PageModelActionTester<TPageModel> ExpectingModel<TModelType>(Action<TModelType> validate = null)
         {
             _modelTester = new ModelTester<TModelType>(validate);
             return this;
         }
 
         /// <summary>
-        /// Tests that controller action returns a <see cref="ContentResult"/>.
+        /// Specifies "callback" function that validates the <see cref="TPageModel"/> 
+        /// when <see cref="TestPage(Action{PageResult})"/> is called.
+        /// </summary>
+        /// <param name="validate">Callback action to perform model validation.</param>
+        /// <returns>"This" <see cref="PageModelActionTester"/>.</returns>
+        public PageModelActionTester<TPageModel> ExpectingModel(Action<TPageModel> validate)
+        {
+            return ExpectingModel<TPageModel>(validate);
+        }
+
+        /// <summary>
+        /// Tests that PageModel action returns a <see cref="ContentResult"/>.
         /// </summary>
         /// <param name="validate">(Optional) callback validation function.</param>
-        /// <returns>The <see cref="ContentResult"/> returned from the controller action.</returns>
+        /// <returns>The <see cref="ContentResult"/> returned from the PageModel action.</returns>
         public ContentResult TestContent(Action<ContentResult> validate = null)
         {
             return TestResult<ContentResult>(result =>
@@ -82,23 +81,10 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         }
 
         /// <summary>
-        /// Tests that controller action returns a <see cref="EmptyResult"/>.
+        /// Tests that PageModel action returns a <see cref="FileResult"/>.
         /// </summary>
         /// <param name="validate">(Optional) callback validation function.</param>
-        /// <returns>The <see cref="EmptyResult"/> returned from the controller action.</returns>
-        public EmptyResult TestEmpty(Action<EmptyResult> validate = null)
-        {
-            return TestResult<EmptyResult>(result =>
-            {
-                validate?.Invoke(result);
-            });
-        }
-
-        /// <summary>
-        /// Tests that controller action returns a <see cref="FileResult"/>.
-        /// </summary>
-        /// <param name="validate">(Optional) callback validation function.</param>
-        /// <returns>The <see cref="FileResult"/> returned from the controller action.</returns>
+        /// <returns>The <see cref="FileResult"/> returned from the PageModel action.</returns>
         public FileResult TestFile(Action<FileResult> validate = null)
         {
             return TestResult<FileResult>(result =>
@@ -108,11 +94,11 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         }
 
         /// <summary>
-        /// Tests that controller action returns a <see cref="JsonResult"/>.
+        /// Tests that PageModel action returns a <see cref="JsonResult"/>.
         /// </summary>
         /// <param name="validate">(Optional) callback validation function.</param>
-        /// <returns>The <see cref="JsonResult"/> returned from the controller action.</returns>
-        public JsonResult TestJson(Action<JsonResult> validate = null)
+        /// <returns>The <see cref="JsonResult"/> returned from the PageModel action.</returns>
+        public JsonResult TestJsonResult(Action<JsonResult> validate = null)
         {
             return TestResult<JsonResult>(result =>
             {
@@ -122,26 +108,25 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         }
 
         /// <summary>
-        /// Test that controller action returns a <see cref="PartialViewResult"/>.
+        /// Tests that PageModel action returns a <see cref="PageResult"/>.
         /// </summary>
         /// <param name="validate">(Optional) callback validation function.</param>
-        /// <returns>The <see cref="PartialViewResult"/> returned from the controller action.</returns>
-        public PartialViewResult TestPartialView(Action<PartialViewResult> validate = null)
+        /// <returns>The <see cref="PageResult"/> returned from the PageModel action.</returns>
+        public PageResult TestPage(Action<PageResult> validate = null)
         {
-            return TestResult<PartialViewResult>(result =>
+            return TestResult<PageResult>(result =>
             {
-                AssertViewName(_expectedViewName, result.ViewName);
-                _modelTester?.Test(result.Model);
+                _modelTester?.Test(_pageModel);
                 validate?.Invoke(result);
             });
         }
 
         /// <summary>
-        /// Tests that controller action redirects to the specified action name.
+        /// Tests that PageModel action redirects to the specified action name.
         /// </summary>
         /// <param name="expectedActionName">The expected action name.</param>
         /// <param name="validate">(Optional) callback validation action.</param>
-        /// <returns>The <see cref="RedirectToActionResult"/> returned from the controller action.</returns>
+        /// <returns>The <see cref="RedirectToActionResult"/> returned from the PageModel action.</returns>
         public RedirectToActionResult TestRedirectToAction(
             string expectedActionName, Action<RedirectToActionResult> validate = null)
         {
@@ -159,11 +144,11 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         }
 
         /// <summary>
-        /// Tests that controller action returns a <see cref="RedirectToPageResult"/>.
+        /// Tests that PageModel action returns a <see cref="RedirectToPageResult"/>.
         /// </summary>
         /// <param name="expectedPageName">The expected page name.</param>
         /// <param name="validate">(Optional) callback validation function.</param>
-        /// <returns>The <see cref="FileResult"/> returned from the controller action.</returns>
+        /// <returns>The <see cref="FileResult"/> returned from the PageModel action.</returns>
         public RedirectToPageResult TestRedirectToPage(string expectedPageName, Action<RedirectToPageResult> validate = null)
         {
             return TestResult<RedirectToPageResult>(result =>
@@ -180,11 +165,11 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         }
 
         /// <summary>
-        /// Tests that controller action redirects to the specified route.
+        /// Tests that PageModel action redirects to the specified route.
         /// </summary>
         /// <param name="expectedRoute">The expected route.</param>
         /// <param name="validate">(Optional) callback validation function.</param>
-        /// <returns>The <see cref="RedirectToRouteResult"/> returned from the controller action.</returns>
+        /// <returns>The <see cref="RedirectToRouteResult"/> returned from the PageModel action.</returns>
         public RedirectToRouteResult TestRedirectToRoute(
             string expectedRoute, Action<RedirectToRouteResult> validate = null)
         {
@@ -202,36 +187,21 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         }
 
         /// <summary>
-        /// Test the result of the controller action.
+        /// Test the result of the pageModel action.
         /// </summary>
         /// <typeparam name="TActionResultType">The expected <see cref="IActionResult"/> 
         /// type that should be returned from the action.</typeparam>
         /// <param name="validate">(Optional) callback validation action.</param>
-        /// <returns>The <typeparamref name="TActionResultType"/> returned from the controller action.</returns>
+        /// <returns>The <typeparamref name="TActionResultType"/> returned from the PageModel action.</returns>
         /// <exception cref="ActionTestException">if any errors are asserted.</exception>
         public TActionResultType TestResult<TActionResultType>(Action<TActionResultType> validate = null)
             where TActionResultType : IActionResult
         {
-            TActionResultType actionResult = AssertActionResultType<TActionResultType>(_controllerAction());
+            TActionResultType actionResult = AssertActionResultType<TActionResultType>(_pageModelAction());
 
             validate?.Invoke(actionResult);
 
             return actionResult;
-        }
-
-        /// <summary>
-        /// Tests that controller action returns a <see cref="ViewResult"/>.
-        /// </summary>
-        /// <param name="validate">(Optional) callback validation function.</param>
-        /// <returns>The <see cref="ViewResult"/> returned from the controller action.</returns>
-        public ViewResult TestView(Action<ViewResult> validate = null)
-        {
-            return TestResult<ViewResult>(result =>
-            {
-                AssertViewName(_expectedViewName, result.ViewName);
-                _modelTester?.Test(result.Model);
-                validate?.Invoke(result);
-            });
         }
 
         private TActionResultType AssertActionResultType<TActionResultType>(IActionResult actionResult)
@@ -249,27 +219,18 @@ namespace SparkyTestHelpers.AspNetMvc.Core
             return (TActionResultType)actionResult;
         }
 
-        private void AssertViewName(string expectedViewName, string actualViewName)
-        {
-            if (_expectedViewNameSpecified)
-            {
-                string expected = expectedViewName ?? string.Empty;
-                string actual = actualViewName ?? string.Empty;
-
-                if (!string.Equals(expected, actual, StringComparison.InvariantCulture))
-                {
-                    throw new ActionTestException($"Expected ViewName <{expected}>. Actual: <{actual}>.");
-                }
-            }
-        }
-
         private void SetModelStateIsValid(bool isValid = true)
         {
-            _controller.ModelState.Clear();
+            if (_pageModel.PageContext == null)
+            {
+                _pageModel.PageContext = new PageContext();
+            }
+
+            _pageModel.ModelState.Clear();
 
             if (!isValid)
             {
-                _controller.ModelState.AddModelError("key", "message");
+                _pageModel.ModelState.AddModelError("key", "message");
             }
         }
     }

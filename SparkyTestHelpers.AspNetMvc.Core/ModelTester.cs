@@ -28,7 +28,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
             if (model == null || !TypeTester.IsOfType(model, typeof(TModel)))
             {
                 string actualTypeName = (model == null) ? "null" : model.GetType().FullName;
-                throw new ControllerTestException(
+                throw new ActionTestException(
                    $"Expected model type: {typeof(TModel).FullName}. Actual: {actualTypeName}.");
             }
 

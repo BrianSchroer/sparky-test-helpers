@@ -3,25 +3,25 @@ using System;
 namespace SparkyTestHelpers.AspNetMvc.Core
 {
     /// <summary>
-    /// Exception thrown by <see cref="ControllerActionTester"/>.
+    /// ASP.NET MVC Core action test exception. 
     /// </summary>
-    public class ControllerTestException : Exception
+    public class ActionTestException : Exception
     {
-        public ControllerTestException() : base()
+        public ActionTestException() : base()
         {
         }
 
-        public ControllerTestException(string message)
+        public ActionTestException(string message)
             : base(message)
         {
         }
 
-        public ControllerTestException(string message, Exception innerException)
+        public ActionTestException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
-        protected ControllerTestException(
+        protected ActionTestException(
             System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
             : base(info, context)
         {

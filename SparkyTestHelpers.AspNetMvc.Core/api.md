@@ -2,7 +2,8 @@ _see also_:
 * **[SparkyTestHelpers.AspNetMvc](https://www.nuget.org/packages/SparkyTestHelpers.AspNetMvc)** - the .NET Framework version of this package
 * the rest of the [**"Sparky suite"** of .NET utilities and test helpers](https://www.nuget.org/profiles/BrianSchroer)
 ---
-## ControllerTester<*TController*>
+## Controller Action test helpers
+### ControllerTester<*TController*>
 
 Instantiation:
 ```csharp
@@ -16,7 +17,7 @@ using SparkyTestHelpers.AspNetMvc
 
 It doesn't do anything on its own - just provides an **Action**(*actionDefinitionExpression*) method that's used to create a... 
 
-## ControllerActionTester
+### ControllerActionTester
 ```csharp
     var controllerActionTester = 
         new ControllerTester<HomeController>(homeController).Action(x => x.Index);
@@ -37,12 +38,12 @@ ControllerActionTester has several **.Test**... methods used to assert that the 
 
 **Additional methods:**
 * **.ExpectingViewName**(*string expectedViewName*) - used with **.TestView** and **.TestPartialView**
-* **.ExpectingModel<*TModelType*>**(*Action<*TModelType*> validate*) - using with **.TestView** and **.TestJson**
+* **.ExpectingModel<*TModelType*>**(*Action<*TModelType*> validate*) - used with **.TestView** and **.TestJson**
 * **WhenModelStateIsValidEquals**(*bool isValid*) - used to test conditional logic based on ModelState.IsValid
 
 All *validate* "callback" actions shown above are optional.
 
-### Examples
+#### Examples
 
 ```csharp
     var homeController = new HomeController(/* with test dependencies */);
@@ -66,4 +67,63 @@ All *validate* "callback" actions shown above are optional.
         .WhenModelStateIsValidEquals(true)
         .ExpectingViewName("UpdateSuccessful")
         .TestRedirectToRoute("Home/UpdateSuccessful");
+```
+## [Razor Page](https://docs.microsoft.com/en-us/aspnet/core/mvc/razor-pages/?tabs=visual-studio) test helpers
+
+### PageModelTester<*TPageModel*>
+
+ASP.NET MVC Razor Page **PageModel**s have a lot in common with Controllers (they kind of combine the "C" and "M" of MVC), so the tester classes are pretty similar to **ControllerTester** and **ControllerActionTester**...
+
+PageModelTester Instantiation:
+```csharp
+using SparkyTestHelpers.AspNetMvc
+```
+
+```csharp
+    var homeModel = new HomeModel(/* with test dependencies */);
+    var pageTester = new PageModelTester<HomeModel>(homeModel);
+```
+
+It doesn't do anything on its own - just provides an **Action**(*actionDefinitionExpression*) method that's used to create a... 
+
+### PageModelActionTester<*TPageModel*>
+```csharp
+    var actionTester = 
+        new PageModelTester<HomeModel>(homeModel).Action(x => x.OnGet);
+```
+PageModelActionTester has several **.Test**... methods used to assert that the PageModel action returns the expected **IActionResult** implementation. There are methods for many standard result types, plus the generic **TestResult<*TActionResultType*>** method:
+
+* **.TestContent**((*optional*) *Action<*ContentResult*> validate*)
+* **.TestFile**((*optional*) *Action<*FileResult*> validate*)
+* **.TestJsonResult**((*optional*) *Action<*JsonResult*> validate*)
+* **.TestPage**((*optional*) *Action<*PageResult*> validate*)
+* **.TestRedirectToAction**(*string expecteActionName, (*optional*)  Action<*RedirectToRouteResult*> validate*)
+* **.TestRedirectToPage**(*string expectedPageName, (*optional*) Action<*RedirectToPageResult*> validate*)
+* **.TestRedirectToRoute**(*string expectedRoute, (*optional*) Action<*RedirectToRouteResult*> validate*)
+* **.TestResult<*TActionResultType*>**((*optional*) *Action<*TActionResultType*> validate*)
+
+**Additional methods:**
+* **.ExpectingModel<*TModelType*>**((*optional*) *Action<*TModelType*> validate*) - used with **.TestJson**. Can also be used with **.TestPage**, but it's more efficient to use...
+* **.ExpectingModel**(*Action<*TPageModel*> validate*) - used with **.TestPage** to perform validation PageModel property validation
+* **WhenModelStateIsValidEquals**(*bool isValid*) - used to test conditional logic based on ModelState.IsValid
+
+```csharp
+    var homeModel = new HomeModel(/* with test dependencies */);
+    var pageTester = new PageModelTester<HomeModel>(homeModel);
+
+    pageTester
+        .Action(x => x.OnGet)
+        .ExpectingModel(model => Assert.IsTrue(model.Foo))
+        .TestPage();
+
+    pageTester
+        .Action(x => x.OnPost)
+        .WhenModelStateIsValidEquals(false)
+        .ExpectingModel(model => Assert.AreEqual(expectedErrorMessage, model.ErrorMessage))
+        .TestPage();
+
+    pageTester
+        .Action(x => x.Post)
+        .WhenModelStateIsValidEquals(true)
+        .TestRedirectToPage("UpdateSuccessful");
 ```

@@ -13,6 +13,8 @@ namespace SparkyTestHelpers.AspNetMvc.Routing
     /// </summary>
     public class RoutingAsserter
     {
+        private string _area;
+        private bool _areaSpecified;
         private readonly string _relativeUrl;
         private readonly RouteTester _routeTester;
 
@@ -46,7 +48,7 @@ namespace SparkyTestHelpers.AspNetMvc.Routing
         /// </example>
         public RouteTester AssertMapTo(IDictionary<string, object> expectedValues)
         {
-            string expected = FormatValues(expectedValues);
+            string expected = FormatValues(AreaAwareDictionary(expectedValues));
             string actual = FormatValues(_routeTester.GetRouteData(_relativeUrl).Values);
 
             if (!actual.Equals(expected, StringComparison.InvariantCultureIgnoreCase))
@@ -159,6 +161,42 @@ namespace SparkyTestHelpers.AspNetMvc.Routing
         public RouteTester AssertRedirectTo(string redirectUrl, HttpStatusCode httpStatusCode = HttpStatusCode.Redirect)
         {
             return _routeTester.AssertRedirect(_relativeUrl, redirectUrl, httpStatusCode);
+        }
+
+        /// <summary>
+        /// Specify expected "area" value.
+        /// </summary>
+        /// <param name="area">The area.</param>
+        /// <returns>"This" <see cref="RoutingAsserter"/> instance.</returns>
+        public RoutingAsserter ExpectingArea(string area)
+        {
+            _area = area;
+            _areaSpecified = true;
+            return this;
+        }
+
+        private IDictionary<string, object> AreaAwareDictionary(IDictionary<string, object> expectedValues)
+        {
+            var areaAwareDictionary = new Dictionary<string, object>(expectedValues);
+
+            if (_areaSpecified)
+            {
+                if (areaAwareDictionary.ContainsKey("area"))
+                {
+                    string areaFromDict = areaAwareDictionary["area"].ToString();
+                    if (areaFromDict != _area)
+                    {
+                        throw new RouteTesterException(
+                            $"ExpectingArea(\"{_area}\") conflicts with expectedValues[\"area\"] value: \"{areaFromDict}\".");
+                    }
+                }
+                else
+                {
+                    areaAwareDictionary.Add("area", _area);
+                }
+            }
+
+            return areaAwareDictionary;
         }
 
         private static string FormatValues(IDictionary<string, object> dict)
