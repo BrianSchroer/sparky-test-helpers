@@ -30,7 +30,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                 new ActionTypeScenario(() => _pageTester.Action(x => x.OnGet).TestContent(), typeof(ContentResult), typeof(PageResult)),
                 new ActionTypeScenario(() => _pageTester.Action(x => x.OnGet).TestFile(), typeof(FileResult), typeof(PageResult)),
                 new ActionTypeScenario(() => _pageTester.Action(x => x.OnGet).TestJsonResult(), typeof(JsonResult), typeof(PageResult)),
-                new ActionTypeScenario(() => _pageTester.Action(x => x.OnGet).TestRedirectToAction("x"), typeof(RedirectToActionResult), typeof(PageResult)),
+                new ActionTypeScenario(() => _pageTester.Action(x => x.OnGet).TestRedirectToAction("action", "controller"), typeof(RedirectToActionResult), typeof(PageResult)),
                 new ActionTypeScenario(() => _pageTester.Action(x => x.OnGet).TestRedirectToPage("testPageName"), typeof(RedirectToPageResult), typeof(PageResult)),
                 new ActionTypeScenario(() => _pageTester.Action(x => x.OnGet).TestRedirectToRoute("x"), typeof(RedirectToRouteResult), typeof(PageResult)),
                 new ActionTypeScenario(() => _pageTester.Action(x => x.OnGet).TestResult<JsonResult>(), typeof(JsonResult), typeof(PageResult))
@@ -141,21 +141,25 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestRedirectToAction_should_throw_exception_for_unexpected_ActionName()
+        public void PageModelTester_TestRedirectToAction_should_throw_exception_for_unexpected_action()
         {
             AssertExceptionThrown
                 .OfType<ActionTestException>()
-                .WithMessage("Expected ActionName <WrongName>. Actual: <ActionName>.")
-                .WhenExecuting(() => _pageTester.Action(x => x.RedirectToActionAction).TestRedirectToAction("WrongName"));
+                .WithMessage("Expected <{\"ActionName\":\"WrongAction\",\"ControllerName\":\"WrongController\",\"RouteValues\":null}>."
+                    + " Actual: <{\"ActionName\":\"ActionName\",\"ControllerName\":\"ControllerName\",\"RouteValues\":null}>.")
+                .WhenExecuting(() => 
+                    _pageTester.Action(x => x.RedirectToActionAction)
+                    .TestRedirectToAction("WrongAction", "WrongController"));
         }
 
         [TestMethod]
-        public void PageModelTester_TestRedirectToAction_should_not_throw_exception_for_expected_ActionName()
+        public void PageModelTester_TestRedirectToAction_should_not_throw_exception_for_expected_action()
         {
             AssertExceptionNotThrown.WhenExecuting(() => 
             {
                 RedirectToActionResult result = 
-                    _pageTester.Action(x => x.RedirectToActionAction).TestRedirectToAction("ActionName");
+                    _pageTester.Action(x => x.RedirectToActionAction)
+                        .TestRedirectToAction("ActionName", "ControllerName");
                 Assert.IsNotNull(result);
             });
         }
@@ -171,7 +175,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                 .WhenExecuting(() =>
                     _pageTester
                         .Action(x => x.RedirectToActionAction)
-                        .TestRedirectToAction("ActionName", r =>
+                        .TestRedirectToAction("ActionName", "ControllerName", null, r =>
                         {
                             Assert.IsInstanceOfType(r, typeof(RedirectToActionResult));
                             throw testException;
@@ -356,7 +360,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
 
         public IActionResult RedirectToActionAction()
         {
-            return RedirectToAction("ActionName");
+            return RedirectToAction("ActionName", "ControllerName");
         }
 
         public IActionResult RedirectToRouteAction()

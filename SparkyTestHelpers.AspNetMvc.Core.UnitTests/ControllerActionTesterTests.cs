@@ -242,7 +242,8 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         {
             AssertExceptionThrown
                 .OfType<ActionTestException>()
-                .WithMessage("Expected ActionName <WrongName>. Actual: <ActionName>.")
+                .WithMessage("Expected <{\"ActionName\":\"WrongName\",\"ControllerName\":null,\"RouteValues\":null}>." 
+                    + " Actual: <{\"ActionName\":\"ActionName\",\"ControllerName\":null,\"RouteValues\":null}>.")
                 .WhenExecuting(() => _controllerTester.Action(x => x.RedirectToActionAction).TestRedirectToAction("WrongName"));
         }
 
@@ -268,7 +269,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                 .WhenExecuting(() =>
                     _controllerTester
                         .Action(x => x.RedirectToActionAction)
-                        .TestRedirectToAction("ActionName", r =>
+                        .TestRedirectToAction("ActionName", null, null, r =>
                         {
                             Assert.IsInstanceOfType(r, typeof(RedirectToActionResult));
                             throw testException;

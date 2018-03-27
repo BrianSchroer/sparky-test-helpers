@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 
@@ -125,18 +126,27 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         /// Tests that PageModel action redirects to the specified action name.
         /// </summary>
         /// <param name="expectedActionName">The expected action name.</param>
+        /// <param name="expectedControllerName">The expected controller name.</param>
+        /// <param name="expectedRouteValues">The expected route values.</param>
         /// <param name="validate">(Optional) callback validation action.</param>
         /// <returns>The <see cref="RedirectToActionResult"/> returned from the PageModel action.</returns>
         public RedirectToActionResult TestRedirectToAction(
-            string expectedActionName, Action<RedirectToActionResult> validate = null)
+            string expectedActionName,
+            string expectedControllerName = null,
+            object expectedRouteValues = null,
+            Action<RedirectToActionResult> validate = null)
         {
+            if (expectedActionName == null)
+                throw new ArgumentNullException(nameof(expectedActionName));
+
             return TestResult<RedirectToActionResult>(result =>
             {
-                string actual = result.ActionName;
+                string expected = FormatRedirectToActionValues(expectedActionName, expectedControllerName, expectedRouteValues);
+                string actual = FormatRedirectToActionValues(result.ActionName, result.ControllerName, result.RouteValues);
 
-                if (!string.Equals(expectedActionName, actual, StringComparison.InvariantCulture))
+                if (!string.Equals(expected, actual, StringComparison.InvariantCulture))
                 {
-                    throw new ActionTestException($"Expected ActionName <{expectedActionName}>. Actual: <{actual}>.");
+                    throw new ActionTestException($"Expected <{expected}>. Actual: <{actual}>.");
                 }
 
                 validate?.Invoke(result);
@@ -232,6 +242,17 @@ namespace SparkyTestHelpers.AspNetMvc.Core
             {
                 _pageModel.ModelState.AddModelError("key", "message");
             }
+        }
+
+        private static string FormatRedirectToActionValues(string actionName, string controllerName, object routeValues)
+        {
+            return JsonConvert.SerializeObject(
+                new
+                {
+                    ActionName = actionName,
+                    ControllerName = controllerName,
+                    RouteValues = routeValues
+                });
         }
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 
@@ -143,15 +144,19 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         /// <param name="validate">(Optional) callback validation action.</param>
         /// <returns>The <see cref="RedirectToActionResult"/> returned from the controller action.</returns>
         public RedirectToActionResult TestRedirectToAction(
-            string expectedActionName, Action<RedirectToActionResult> validate = null)
+            string expectedActionName,
+            string expectedControllerName = null,
+            object expectedRouteValues = null,
+            Action<RedirectToActionResult> validate = null)
         {
             return TestResult<RedirectToActionResult>(result =>
             {
-                string actual = result.ActionName;
+                string expected = FormatRedirectToActionValues(expectedActionName, expectedControllerName, expectedRouteValues);
+                string actual = FormatRedirectToActionValues(result.ActionName, result.ControllerName, result.RouteValues);
 
-                if (!string.Equals(expectedActionName, actual, StringComparison.InvariantCulture))
+                if (!string.Equals(expected, actual, StringComparison.InvariantCulture))
                 {
-                    throw new ActionTestException($"Expected ActionName <{expectedActionName}>. Actual: <{actual}>.");
+                    throw new ActionTestException($"Expected <{expected}>. Actual: <{actual}>.");
                 }
 
                 validate?.Invoke(result);
@@ -271,6 +276,17 @@ namespace SparkyTestHelpers.AspNetMvc.Core
             {
                 _controller.ModelState.AddModelError("key", "message");
             }
+        }
+
+        private static string FormatRedirectToActionValues(string actionName, string controllerName, object routeValues)
+        {
+            return JsonConvert.SerializeObject(
+                new
+                {
+                    ActionName = actionName,
+                    ControllerName = controllerName,
+                    RouteValues = routeValues
+                });
         }
     }
 }
