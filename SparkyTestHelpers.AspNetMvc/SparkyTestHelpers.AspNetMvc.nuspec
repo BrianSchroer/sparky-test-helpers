@@ -12,7 +12,7 @@
     <iconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</iconUrl>
     <repository url="https://github.com/BrianSchroer/sparky-test-helpers" />
     <description>$description$</description>
-    <releaseNotes>v1.1.0: added routing tests</releaseNotes>
+    <releaseNotes>v1.2.0: added AreaRegistration support</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>test, testing, unittest, aspnet, mvc, aspnetmvc, routing</tags>
   </metadata>

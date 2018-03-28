@@ -6,24 +6,16 @@ using System.Web.Mvc;
 namespace SparkyTestHelpers.AspNetMvc.UnitTests
 {
     /// <summary>
-    /// <see cref="RouteTester"/> / <see cref="RoutingAsserter"/> unit tests, using "RegisterRoutes" constructor.
+    /// <see cref="RouteTester"/> / <see cref="RoutingAsserter"/> unit tests, using <see cref="AreaRegistration"/> constructor.
     /// </summary>
     [TestClass]
-    public class RouteTesterTests : RouteTesterTestsBase
+    public class RouteTesterAreaTests : RouteTesterTestsBase
     {
         [TestInitialize]
         public void TestInitialize()
         {
-            _routeTester = new RouteTester(RouteConfig.RegisterRoutes);
-            //_routeTester = new RouteTester(new TestAreaRegistration());
+            _routeTester = new RouteTester(new TestAreaRegistration());
         }
-
-        //[TestMethod]
-        //public void Test_AreaRegistration()
-        //{
-        //    var testAreaRegistration = new TestAreaRegistration();
-        //    var routeTester = new RouteTester(testAreaRegistration);
-        //}
 
         private class TestAreaRegistration : AreaRegistration
         {
@@ -36,7 +28,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
                 context.MapRoute(
                     "TestArea_default",
                     "TestArea/{controller}/{action}/{id}",
-                    new { action = "Index", id = UrlParameter.Optional }
+                    new { controller = "Home", action = "Index", id = UrlParameter.Optional }
                 );
             }
         }

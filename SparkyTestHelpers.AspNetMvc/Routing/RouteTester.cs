@@ -12,9 +12,9 @@ namespace SparkyTestHelpers.AspNetMvc.Routing
     /// </summary>
     public class RouteTester
     {
-        private readonly MockHttpContextBase _context;
-        private readonly MockHttpRequestBase _request;
-        private readonly MockHttpResponseBase _response;
+        private MockHttpContextBase _context;
+        private MockHttpRequestBase _request;
+        private MockHttpResponseBase _response;
         private readonly Action<RouteCollection> _registerRoutes;
 
         private RouteCollection _routeCollection;
@@ -34,7 +34,7 @@ namespace SparkyTestHelpers.AspNetMvc.Routing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RouteTester"/> class.
+        /// Creates a new instance of the <see cref="RouteTester"/> class.
         /// </summary>
         /// <param name="routeRegistrationMethod">Action that registers routes.</param>
         /// <example>
@@ -49,6 +49,16 @@ namespace SparkyTestHelpers.AspNetMvc.Routing
             _request = new MockHttpRequestBase();
             _response = new MockHttpResponseBase();
             _context = new MockHttpContextBase(_request, _response);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="RouteTester"/> class, using <see cref="AreaRegistration"/>.
+        /// </summary>
+        /// <param name="areaRegistration"><see cref="AreaRegistration"/> instance.</param>
+        public RouteTester(AreaRegistration areaRegistration)
+            : this(routeCollection => RegisterArea(areaRegistration, routeCollection))
+        {
+            _request.AreaName = areaRegistration.AreaName;
         }
 
         /// <summary>
@@ -128,6 +138,12 @@ namespace SparkyTestHelpers.AspNetMvc.Routing
             _response.VerifyRedirectResults(redirectUrl, httpStatusCode);
 
             return this;
+        }
+
+        private static void RegisterArea(AreaRegistration areaRegistration, RouteCollection routeCollection)
+        {
+            var context = new AreaRegistrationContext(areaRegistration.AreaName, routeCollection);
+            areaRegistration.RegisterArea(context);
         }
     }
 }

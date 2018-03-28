@@ -150,7 +150,8 @@
   <ItemGroup>
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="RoutingAsserterTests.cs" />
+    <Compile Include="RouteTesterAreaTests.cs" />
+    <Compile Include="RouteTesterTestsBase.cs" />
     <Compile Include="Routing\LegacyUrlRoute.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TestModel2.cs" />

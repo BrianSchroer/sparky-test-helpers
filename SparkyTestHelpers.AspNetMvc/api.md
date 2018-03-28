@@ -70,14 +70,16 @@ All *validate* "callback" actions shown above are optional.
 ## RouteTester
 **RouteTester** and **RoutingAsserter** provide methods to assert that a given relative URL maps to the expected [RouteData.Values](https://docs.microsoft.com/en-us/dotnet/api/system.web.routing.routedata.values?view=netframework-4.7#System_Web_Routing_RouteData_Values). The **RoutingAsserter.AssertMapTo** overloads provide multiple ways to specify the expected values...
 
-**Constructor**
+**Constructors**
 
- public **RouteTester**(Action<*RouteCollection*> *routeRegistrationMethod*)
+* public **RouteTester**(Action<*RouteCollection*> *routeRegistrationMethod*)
+* public **RouteTester**(AreaRegistration *areaRegistration*)
 
 ```csharp
 using SparkyTestHelpers.AspNetMvc.Routing;
 . . .
     var routeTester = new RouteTester(RouteConfig.RegisterRoutes);
+    var areaRouteTester = new RouteTester(new FooAreaRegistration());
 ```
 
 ### methods
