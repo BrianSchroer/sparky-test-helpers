@@ -5,6 +5,7 @@ using SparkyTestHelpers.AspNetMvc.Core.UnitTests.Models;
 using SparkyTestHelpers.Exceptions;
 using SparkyTestHelpers.Scenarios;
 using System;
+using System.Threading.Tasks;
 
 namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
 {
@@ -23,7 +24,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_Test_methods_should_throw_exception_when_result_is_not_expected_IActionResult_type()
+        public void PageModelActionTester_Test_methods_should_throw_exception_when_result_is_not_expected_IActionResult_type()
         {
             ForTest.Scenarios
             (
@@ -45,7 +46,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestContent_should_call_validate()
+        public void PageModelActionTester_TestContent_should_call_validate()
         {
             var testException = new InvalidOperationException("test exception");
 
@@ -61,7 +62,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestFile_should_call_validate()
+        public void PageModelActionTester_TestFile_should_call_validate()
         {
             var testException = new InvalidOperationException("test exception");
 
@@ -77,14 +78,14 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestJsonResult_should_return_JsonResult()
+        public void PageModelActionTester_TestJsonResult_should_return_JsonResult()
         {
             JsonResult JsonResult = _pageTester.Action(x => x.Json).TestJsonResult();
             Assert.IsNotNull(JsonResult);
         }
 
         [TestMethod]
-        public void PageModelTester_TestJsonResult_should_throw_exception_when_ExpectingModel_but_model_is_null()
+        public void PageModelActionTester_TestJsonResult_should_throw_exception_when_ExpectingModel_but_model_is_null()
         {
             AssertExceptionThrown
                 .OfType<ActionTestException>()
@@ -94,7 +95,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestJsonResult_should_throw_exception_when_ExpectingModel_and_model_is_different_type()
+        public void PageModelActionTester_TestJsonResult_should_throw_exception_when_ExpectingModel_and_model_is_different_type()
         {
             AssertExceptionThrown
                 .OfType<ActionTestException>()
@@ -104,7 +105,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestJsonResult_should_call_model_validate_method()
+        public void PageModelActionTester_TestJsonResult_should_call_model_validate_method()
         {
             var testException = new InvalidOperationException("test exception");
 
@@ -123,7 +124,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestJsonResult_should_call_result_validate_method()
+        public void PageModelActionTester_TestJsonResult_should_call_result_validate_method()
         {
             var testException = new InvalidOperationException("test exception");
 
@@ -141,7 +142,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestRedirectToAction_should_throw_exception_for_unexpected_action()
+        public void PageModelActionTester_TestRedirectToAction_should_throw_exception_for_unexpected_action()
         {
             AssertExceptionThrown
                 .OfType<ActionTestException>()
@@ -153,7 +154,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestRedirectToAction_should_not_throw_exception_for_expected_action()
+        public void PageModelActionTester_TestRedirectToAction_should_not_throw_exception_for_expected_action()
         {
             AssertExceptionNotThrown.WhenExecuting(() => 
             {
@@ -165,7 +166,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestRedirectToAction_should_call_validate_method()
+        public void PageModelActionTester_TestRedirectToAction_should_call_validate_method()
         {
             var testException = new InvalidOperationException("test exception");
 
@@ -183,7 +184,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestRedirectToRoute_should_throw_exception_for_unexpected_route()
+        public void PageModelActionTester_TestRedirectToRoute_should_throw_exception_for_unexpected_route()
         {
             AssertExceptionThrown
                 .OfType<ActionTestException>()
@@ -192,7 +193,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestRedirectToRoute_should_not_throw_exception_for_expected_route()
+        public void PageModelActionTester_TestRedirectToRoute_should_not_throw_exception_for_expected_route()
         {
             AssertExceptionNotThrown.WhenExecuting(() =>
             {
@@ -203,7 +204,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestRedirectToRoute_should_call_validate_method()
+        public void PageModelActionTester_TestRedirectToRoute_should_call_validate_method()
         {
             var testException = new InvalidOperationException("test exception");
 
@@ -241,7 +242,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestRedirectToPage_should_call_validate_method()
+        public void PageModelActionTester_TestRedirectToPage_should_call_validate_method()
         {
             var testException = new InvalidOperationException("test exception");
 
@@ -259,21 +260,21 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestPage_should_return_PageResult()
+        public void PageModelActionTester_TestPage_should_return_PageResult()
         {
             PageResult PageResult = _pageTester.Action(x => x.OnGet).TestPage();
             Assert.IsNotNull(PageResult);
         }
 
         [TestMethod]
-        public void PageModelTester_TestPage_should_not_throw_exception_for_default_Page()
+        public void PageModelActionTester_TestPage_should_not_throw_exception_for_default_Page()
         {
             AssertExceptionNotThrown.WhenExecuting(() => _pageTester.Action(x => x.OnGet).TestPage());
         }
 
 
         [TestMethod]
-        public void PageModelTester_TestPage_should_call_model_validate_method()
+        public void PageModelActionTester_TestPage_should_call_model_validate_method()
         {
             var testException = new InvalidOperationException("test exception");
 
@@ -291,7 +292,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_TestPage_should_call_result_validate_method()
+        public void PageModelActionTester_TestPage_should_call_result_validate_method()
         {
             var testException = new InvalidOperationException("test exception");
 
@@ -309,7 +310,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void PageModelTester_WhenModelStateIsValidEquals_should_work_properly()
+        public void PageModelActionTester_WhenModelStateIsValidEquals_should_work_properly()
         {
             ForTest.Scenarios
             (
@@ -325,10 +326,23 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
             });
         }
 
- #region Controller actions
+        [TestMethod]
+        public void PageModelActionTester_using_async_constructor_should_work_properly()
+        {
+            AssertExceptionNotThrown.WhenExecuting(() =>
+                _pageTester.Action(x => x.AsyncAction)
+                .TestContent());
+        }
+
+        #region Controller actions
         public IActionResult OnGet()
         {
             return Page();
+        }
+
+        public async Task<IActionResult> AsyncAction()
+        {
+            return Content("test content");
         }
 
         public IActionResult Content()

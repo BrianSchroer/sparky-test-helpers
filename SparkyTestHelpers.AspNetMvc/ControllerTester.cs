@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace SparkyTestHelpers.AspNetMvc
@@ -31,6 +32,25 @@ namespace SparkyTestHelpers.AspNetMvc
             var func = expression.Compile();
 
             return new ControllerActionTester(_controller, func(_controller));
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="ControllerActionTester"/> instance for an async action.
+        /// </summary>
+        /// <param name="expression">Expression to specify the async controller action to be tested.</param>
+        /// <returns>New <see cref="ControllerActionTester"/> instance.</returns>
+        public ControllerActionTester Action(Expression<Func<TController, Func<Task<ActionResult>>>> expression)
+        {
+            Func<TController, Func<Task<ActionResult>>> funcWithTask = expression.Compile();
+
+            Func<ActionResult> func = () =>
+            {
+                Task<ActionResult> task = funcWithTask(_controller)();
+                task.Wait();
+                return task.Result;
+            };
+
+            return new ControllerActionTester(_controller, func);
         }
     }
 }

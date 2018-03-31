@@ -4,6 +4,7 @@ using SparkyTestHelpers.AspNetMvc.Core.UnitTests.Models;
 using SparkyTestHelpers.Exceptions;
 using SparkyTestHelpers.Scenarios;
 using System;
+using System.Threading.Tasks;
 
 namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
 {
@@ -468,8 +469,21 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
             });
         }
 
+        [TestMethod]
+        public void ControllerActionTester_using_async_constructor_should_work_properly()
+        {
+            AssertExceptionNotThrown.WhenExecuting(() =>
+                _controllerTester.Action(x => x.AsyncAction)
+                .TestView());
+        }
+
  #region Controller actions
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> AsyncAction()
         {
             return View();
         }

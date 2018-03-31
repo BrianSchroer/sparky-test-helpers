@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SparkyTestHelpers.AspNetMvc.Core
 {
@@ -26,12 +27,31 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         /// Creates a new <see cref="PageModelActionTester"/> instance.
         /// </summary>
         /// <param name="expression">Expression to specify the PageModel action to be tested.</param>
-        /// <returns>New <see cref="ControllerActionTester"/> instance.</returns>
+        /// <returns>New <see cref="PageModelActionTester"/> instance.</returns>
         public PageModelActionTester<TPageModel> Action(Expression<Func<TPageModel, Func<IActionResult>>> expression)
         {
             var func = expression.Compile();
 
             return new PageModelActionTester<TPageModel>(_pageModel, func(_pageModel));
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="PageModelActionTester"/> instance for an async action.
+        /// </summary>
+        /// <param name="expression">Expression to specify the async PageModel action to be tested.</param>
+        /// <returns>New <see cref="PageModelActionTester"/> instance.</returns>
+        public PageModelActionTester<TPageModel> Action(Expression<Func<TPageModel, Func<Task<IActionResult>>>> expression)
+        {
+            Func<TPageModel, Func<Task<IActionResult>>> funcWithTask = expression.Compile();
+
+            Func<IActionResult> func = () =>
+            {
+                Task<IActionResult> task = funcWithTask(_pageModel)();
+                task.Wait();
+                return task.Result;
+            };
+
+            return new PageModelActionTester<TPageModel>(_pageModel, func);
         }
     }
 }

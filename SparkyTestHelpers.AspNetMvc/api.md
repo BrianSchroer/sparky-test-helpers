@@ -21,6 +21,7 @@ It doesn't do anything on its own - just provides an **Action**(*actionDefinitio
     var controllerActionTester = 
         new ControllerTester<HomeController>(homeController).Action(x => x.Index);
 ```
+The *.Action* method argument is an expression for either a synchronous or async controller action method.
 
 ControllerActionTester has several **.Test**... methods used to assert that the controller action returns the expected **ActionResult** implementation. There are methods for all of the standard result types, plus the generic **TestResult<*TActionResultType*>** method:
 

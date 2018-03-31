@@ -23,6 +23,8 @@ It doesn't do anything on its own - just provides an **Action**(*actionDefinitio
         new ControllerTester<HomeController>(homeController).Action(x => x.Index);
 ```
 
+The *.Action* method argument is an expression for either a synchronous or async controller action method.
+
 ControllerActionTester has several **.Test**... methods used to assert that the controller action returns the expected **IActionResult** implementation. There are methods for all of the standard result types, plus the generic **TestResult<*TActionResultType*>** method:
 
 * **.TestContent**(*Action<*ContentResult*> validate*)
@@ -91,6 +93,9 @@ It doesn't do anything on its own - just provides an **Action**(*actionDefinitio
     var actionTester = 
         new PageModelTester<HomeModel>(homeModel).Action(x => x.OnGet);
 ```
+
+The *.Action* method argument is an expression for either a synchronous or async PageModel action method.
+
 PageModelActionTester has several **.Test**... methods used to assert that the PageModel action returns the expected **IActionResult** implementation. There are methods for many standard result types, plus the generic **TestResult<*TActionResultType*>** method:
 
 * **.TestContent**((*optional*) *Action<*ContentResult*> validate*)
@@ -107,6 +112,7 @@ PageModelActionTester has several **.Test**... methods used to assert that the P
 * **.ExpectingModel**(*Action<*TPageModel*> validate*) - used with **.TestPage** to perform validation PageModel property validation
 * **WhenModelStateIsValidEquals**(*bool isValid*) - used to test conditional logic based on ModelState.IsValid
 
+#### Examples
 ```csharp
     var homeModel = new HomeModel(/* with test dependencies */);
     var pageTester = new PageModelTester<HomeModel>(homeModel);
@@ -126,4 +132,37 @@ PageModelActionTester has several **.Test**... methods used to assert that the P
         .Action(x => x.Post)
         .WhenModelStateIsValidEquals(true)
         .TestRedirectToPage("UpdateSuccessful");
+```
+## [ViewComponent](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-components) test helpers
+**ViewComponentTester<*TViewComponent*>** and **ViewComponentInvocationTester** are very similar to their Controller... and PageModel... counterparts.
+
+### ViewComponentTester methods
+* **.Invocation**(*synchronous Invoke method expression*)
+* **.Invocation**(*async InvokeAsync method expression*)
+
+### ViewComponentInvocationTester methods
+* **.ExpectingViewName**(*string expectedViewName*) - used with **.TestView** 
+* **.ExpectingModel<*TModelType*>**(*Action<*TModelType*> validate*) - used with **.TestView**
+* **.TestContent**(*Action<*ContentViewComponentResult*> validate*)
+* **.TestHtmlContent**(*Action<*HtmlContentViewComponentResult*> validate*)
+* **.TestView**(*Action<*ViewViewComponentResult*> validate*)
+* **.TestResult<*TViewComponentResultType*>**(*Action<*TViewComponentResultType*> validate*)
+* **WhenModelStateIsValidEquals**(*bool isValid*) - used to test conditional logic based on ModelState.IsValid
+
+All *validate* "callback" actions shown above are optional.
+
+#### Examples
+```csharp
+using SparkyTestHelpers.AspNetMvc
+```
+```csharp
+new ViewComponentTester<FooViewComponent>()
+    .Invocation(x => x.Invoke)
+    .ExpectingViewName("Default")
+    .ExpectingModel(model => Assert.IsTrue(model.Baz))
+    .TestView();
+
+new ViewComponentTester<BarViewComponent>()
+    .Invocation(x => x.InvokeAsnyc)
+    .TestView();
 ```

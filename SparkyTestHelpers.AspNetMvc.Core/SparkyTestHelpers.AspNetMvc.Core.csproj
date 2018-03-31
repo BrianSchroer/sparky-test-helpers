@@ -10,9 +10,9 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <PackageTags>test, testing, unittest, aspnet, mvc, aspnetmvc, aspnetcore, mvccore, aspnetmvccore</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.1</Version>
-    <AssemblyVersion>2.0.1.0</AssemblyVersion>
-    <PackageReleaseNotes>v2.0: Added RazorPages testing, Replaced ControllerTestException with ActionTestException</PackageReleaseNotes>
+    <Version>2.1.0</Version>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+    <PackageReleaseNotes>v2.1: Added support for async actions</PackageReleaseNotes>
     <RepositoryUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
   </PropertyGroup>
 

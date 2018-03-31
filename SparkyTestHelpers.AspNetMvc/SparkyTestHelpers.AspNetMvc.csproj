@@ -65,6 +65,7 @@
     <Compile Include="ControllerActionTester.cs" />
     <Compile Include="ControllerTester.cs" />
     <Compile Include="ControllerTestException.cs" />
+    <Compile Include="IActionResult.cs" />
     <Compile Include="IModelTester.cs" />
     <Compile Include="ModelTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="api.md" />
+    <None Include="nuget-instructions.md" />
     <None Include="packages.config" />
     <None Include="SparkyTestHelpers.AspNetMvc.nuspec" />
   </ItemGroup>
