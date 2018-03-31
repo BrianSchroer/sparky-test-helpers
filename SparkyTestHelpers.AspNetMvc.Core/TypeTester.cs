@@ -12,7 +12,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         /// Is object of expected type?
         /// </summary>
         /// <param name="obj">The object to be tested.</param>
-        /// <param name="expectedType">The depected type.</param>
+        /// <param name="expectedType">The expected type.</param>
         /// <returns><c>true</c> if the object is of the expected type; otherwise, <c>false</c>.</returns>
         public static bool IsOfType(object obj, Type expectedType)
         {

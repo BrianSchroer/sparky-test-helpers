@@ -355,6 +355,7 @@
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TestModel2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewComponentInvocationTesterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
