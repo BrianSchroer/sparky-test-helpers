@@ -22,10 +22,14 @@ This class is for testing that properties were successfully "mapped" from one ty
 
 **Extension Methods for AutoMapper**
 * *TDestination* **AssertAutoMappedValues**(*TSource source*)   
-   calls **Mapper.Map**<*TSource, TDestination*>(source), then **AssertMappedValues**()
+   calls static **Mapper.Map**<*TSource, TDestination*>(source), then **AssertMappedValues**()
+* *TDestination* **AssertAutoMappedValues**(*TSource source, IMapper mapper*)   
+   calls **IMapper.Map**<*TSource, TDestination*>(source), then **AssertMappedValues**()
 * *TDestination* **AssertAutoMappedRandomValues**()   
-   uses **RandomValuesHelper** to create a new TSource instance, calls **Mapper.Map**<*TSource, TDestination*>(source), then **AssertMappedValues**()
-    
+   uses **RandomValuesHelper** to create a new TSource instance, calls static **Mapper.Map**<*TSource, TDestination*>(source), then **AssertMappedValues**()
+* *TDestination* **AssertAutoMappedRandomValues**(*IMapper mapper*)   
+   uses **RandomValuesHelper** to create a new TSource instance, calls **IMapper.Map**<*TSource, TDestination*>(source), then **AssertMappedValues**()
+ 
 **Static Methods**
 * *MapTester<TSource, TDestination>* **ForMap**( 
 
