@@ -143,10 +143,9 @@ namespace SparkyTestHelpers.Mapping.UnitTests
             var editRestaurantList = new RestaurantEditList {Restaurants = new[] {restaurantEditModel}};
 
             MapTester.ForMap<RestauranstList, RestaurantEditList>()
-                .WithLogging()
+                // ignored since the internal constructor of MapTester is what's being tested
                 .IgnoringMember(dest => dest.Restaurants)
                 .AssertMappedValues(restaurantList, editRestaurantList);
-            
         }
 
         private void AssertMappedValues()
