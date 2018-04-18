@@ -133,6 +133,22 @@ namespace SparkyTestHelpers.Mapping.UnitTests
                 .AssertMappedValues(input, output);
         }
 
+        [TestMethod]
+        public void HiddenProperty_should_resolve_to_top_most_member()
+        {
+            var restaurantEditModel = new RestaurantEditModel {Cuisine = CuisineType.Italian, Name = "Test name"};
+            var restaurantModel = new Restaurant {Cuisine = CuisineType.Italian, Name = "Test name"};
+
+            var restaurantList = new RestauranstList {Restaurants = new[] {restaurantModel}};
+            var editRestaurantList = new RestaurantEditList {Restaurants = new[] {restaurantEditModel}};
+
+            MapTester.ForMap<RestauranstList, RestaurantEditList>()
+                .WithLogging()
+                .IgnoringMember(dest => dest.Restaurants)
+                .AssertMappedValues(restaurantList, editRestaurantList);
+            
+        }
+
         private void AssertMappedValues()
         {
             AssertExceptionNotThrown.WhenExecuting(() => _mapTester.AssertMappedValues(_source, _dest));
