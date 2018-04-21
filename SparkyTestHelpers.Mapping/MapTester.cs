@@ -19,6 +19,8 @@ namespace SparkyTestHelpers.Mapping
 
         private readonly PropertyInfo[] _destProperties;
 
+        private bool _ignoringAllOtherMembers = false;
+
         private Action<string> _log = (message) => { };
 
         /// <summary>
@@ -56,7 +58,6 @@ namespace SparkyTestHelpers.Mapping
                         src => srcProperty.GetValue(src, null)));
             }
         }
-        
 
         /// <summary>
         /// Log destination property values when <see cref="AssertMappedValues(TSource, TDestination)"/> is called.
@@ -82,7 +83,37 @@ namespace SparkyTestHelpers.Mapping
         /// ]]></example>
         public MapTester<TSource, TDestination> IgnoringMember(Expression<Func<TDestination, object>> destExpression)
         {
-            WhereMember(destExpression).ShouldBeIgnored = true;
+            return IgnoringMembers(destExpression);
+        }
+
+        /// <summary>
+        /// Specify <typeparamref name="TDestination"/> properties that should be ignored when asserting mapping results.
+        /// </summary>
+        /// <param name="destExpressions">Array of expression to get property names.</param>
+        /// <returns>"This" <see cref="MapMemberTester{TSource, TDestination}"/>.</returns>
+        /// <example><![CDATA[
+        ///     MapTester.ForMap<Foo, Bar>()
+        ///         .IgnoringMembers(dest => dest.PropertyThatOnlyBarHas, dest => dest.Another, dest => dest.YetAnother)
+        ///         .AssertMappedValues(foo, bar);
+        /// ]]></example>
+        public MapTester<TSource, TDestination> IgnoringMembers(params Expression<Func<TDestination, object>>[] destExpressions)
+        {
+            foreach (var destExpression in destExpressions)
+            {
+                WhereMember(destExpression).ShouldBeIgnored = true;
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specify that all properties for which <see cref="WhereMember(Expression{Func{TDestination, object}})"/> has not been
+        /// called should be ignored when asserting mapping results.
+        /// </summary>
+        /// <returns>"This" <see cref="MapMemberTester{TSource, TDestination}"/>.</returns>
+        public MapTester<TSource, TDestination> IgnoringAllOtherMembers()
+        {
+            _ignoringAllOtherMembers = true;
             return this;
         }
 
@@ -149,7 +180,15 @@ namespace SparkyTestHelpers.Mapping
                     }
                     else
                     {
-                        throw new MapTesterException($"Property \"{propertyName}\" was not tested.");
+                        string message = $"Property \"{propertyName}\" was not tested.";
+                        if (_ignoringAllOtherMembers)
+                        {
+                            _log(message);
+                        }
+                        else
+                        {
+                            throw new MapTesterException(message);
+                        }
                     }
                 });
         }

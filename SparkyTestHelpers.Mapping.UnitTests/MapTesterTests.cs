@@ -4,6 +4,7 @@ using SparkyTestHelpers.Mapping.UnitTests.TestClasses;
 using SparkyTestHelpers.Scenarios;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SparkyTestHelpers.Mapping.UnitTests
 {
@@ -131,6 +132,20 @@ namespace SparkyTestHelpers.Mapping.UnitTests
             MapTester.ForMap<RestaurantEditModel, Restaurant>()
                 .WhereMember(dest => dest.Id).ShouldEqualValue(0) 
                 .AssertMappedValues(input, output);
+        }
+
+        [TestMethod]
+        public void IgnoringAllOtherMembers_should_work_as_expected()
+        {
+            var loggedMessages = new List<string>();
+
+            MapTester.ForMap<Source, Dest>()
+                .WithLogging(loggedMessages.Add)
+                .IgnoringMember(dest => dest.Children)
+                .IgnoringAllOtherMembers()
+                .AssertMappedValues(_source, _dest);
+
+            Assert.IsNotNull(loggedMessages.SingleOrDefault(x => x == "Property \"DestOnly\" was not tested."));
         }
 
         [TestMethod]
