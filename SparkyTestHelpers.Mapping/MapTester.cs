@@ -46,9 +46,9 @@ namespace SparkyTestHelpers.Mapping
 
             foreach (string propertyName in commonPropertyNames)
             {
-                PropertyInfo srcProperty = sourceTypeInfo.GetProperty(propertyName);
-                PropertyInfo destProperty = destTypeInfo.GetProperty(propertyName);
-
+                PropertyInfo srcProperty = PropertyInfoResolver.Instance.ResolveProperty(sourceTypeInfo, propertyName);
+                PropertyInfo destProperty = PropertyInfoResolver.Instance.ResolveProperty(destTypeInfo, propertyName);
+              
                 SetTesterForProperty(propertyName,
                     new MapMemberTester<TSource, TDestination>(
                         this,
@@ -56,6 +56,7 @@ namespace SparkyTestHelpers.Mapping
                         src => srcProperty.GetValue(src, null)));
             }
         }
+        
 
         /// <summary>
         /// Log destination property values when <see cref="AssertMappedValues(TSource, TDestination)"/> is called.
