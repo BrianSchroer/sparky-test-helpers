@@ -19,7 +19,8 @@ namespace SparkyTestHelpers.Mapping.UnitTests
 
             Console.WriteLine(
                 JsonConvert.SerializeObject(
-                    dummy, 
+                    dummy,
+                    Formatting.Indented,
                     new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy hh:mm:ss" },
                     new StringEnumConverter()));
         }
@@ -33,6 +34,7 @@ namespace SparkyTestHelpers.Mapping.UnitTests
             Console.WriteLine(
                 JsonConvert.SerializeObject(
                     dummy,
+                    Formatting.Indented,
                     new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy hh:mm:ss" },
                     new StringEnumConverter()));
         }

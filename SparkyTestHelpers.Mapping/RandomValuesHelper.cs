@@ -14,20 +14,41 @@ namespace SparkyTestHelpers.Mapping
         private static readonly Dictionary<Type, Func<Random, string, object>> _generatorDictionary
             = new Dictionary<Type, Func<Random, string, object>>
             {
-                { typeof(string), RandomString },
-                { typeof(bool), RandomBool },
-                { typeof(bool?), RandomBool },
                 { typeof(DateTime), RandomDateTime },
                 { typeof(DateTime?), RandomDateTime },
+                { typeof(Guid), RandomGuid },
+                { typeof(Guid?), RandomGuid },
+                { typeof(bool), RandomBoolean },
+                { typeof(bool?), RandomBoolean },
+                { typeof(byte), RandomByte },
+                { typeof(byte?), RandomByte },
+                { typeof(byte[]), RandomByteArray },
+                { typeof(sbyte), RandomSByte },
+                { typeof(sbyte?), RandomSByte },
+                { typeof(char), RandomChar },
+                { typeof(char?), RandomChar },
                 { typeof(decimal), RandomDecimal },
                 { typeof(decimal?), RandomDecimal },
                 { typeof(double), RandomDouble },
                 { typeof(double?), RandomDouble },
-                { typeof(int), RandomInt },
-                { typeof(int?), RandomInt },
-                { typeof(long), RandomLong },
-                { typeof(long?), RandomLong }
+                { typeof(float), RandomSingle },
+                { typeof(float?), RandomSingle },
+                { typeof(int), RandomInt32 },
+                { typeof(int?), RandomInt32 },
+                { typeof(uint), RandomUInt32 },
+                { typeof(uint?), RandomUInt32 },
+                { typeof(long), RandomInt64 },
+                { typeof(long?), RandomInt64 },
+                { typeof(ulong), RandomUInt64 },
+                { typeof(ulong?), RandomUInt64 },
+                { typeof(object), RandomString },
+                { typeof(short), RandomInt16 },
+                { typeof(short?), RandomInt16 },
+                { typeof(ushort), RandomUInt16 },
+                { typeof(ushort?), RandomUInt16 },
+                { typeof(string), RandomString }
             };
+
 
         private static readonly TypeInfo _iEnumerableTypeInfo = typeof(IEnumerable).GetTypeInfo();
         private static readonly TypeInfo _iListTypeInfo = typeof(IList).GetTypeInfo();
@@ -204,9 +225,26 @@ namespace SparkyTestHelpers.Mapping
             return list;
         }
 
-        private static object RandomBool(Random random, string prefix)
+        private static object RandomBoolean(Random random, string prefix)
         {
             return (random.Next() % 2 == 0);
+        }
+
+        private static object RandomByteArray(Random random, string prefix)
+        {
+            var buffer = new byte[random.Next(10, 100)];
+            random.NextBytes(buffer);
+            return buffer;
+        }
+
+        private static object RandomByte(Random random, string prefix)
+        {
+            return ((byte[])RandomByteArray(random, prefix))[0];
+        }
+
+        private static object RandomChar(Random random, string prefix)
+        {
+            return random.Next().ToString()[0];
         }
 
         private static object RandomDateTime(Random random, string prefix)
@@ -224,14 +262,49 @@ namespace SparkyTestHelpers.Mapping
             return random.NextDouble();
         }
 
-        private static object RandomInt(Random random, string prefix)
+        private static object RandomGuid(Random random, string prefix)
+        {
+            return Guid.NewGuid();
+        }
+
+        private static object RandomInt32(Random random, string prefix)
         {
             return random.Next();
         }
 
-        private static object RandomLong(Random random, string prefix)
+        private static object RandomUInt32(Random random, string prefix)
+        {
+            return Convert.ToUInt32(random.Next(0, Int32.MaxValue));
+        }
+
+        private static object RandomInt16(Random random, string prefix)
+        {
+            return Convert.ToInt16(random.Next(Int16.MinValue, Int16.MaxValue));
+        }
+
+        private static object RandomUInt16(Random random, string prefix)
+        {
+            return Convert.ToUInt16(random.Next(UInt16.MinValue, UInt16.MaxValue));
+        }
+
+        private static object RandomInt64(Random random, string prefix)
         {
             return (long)random.Next();
+        }
+
+        private static object RandomUInt64(Random random, string prefix)
+        {
+            return Convert.ToUInt64(random.Next(0, Int32.MaxValue));
+        }
+
+        private static object RandomSingle(Random random, string prefix)
+        {
+            return (float)random.NextDouble();
+        }
+
+        private static object RandomSByte(Random random, string prefix)
+        {
+            return Convert.ToSByte(random.Next(Convert.ToInt32(sbyte.MinValue), Convert.ToInt32(sbyte.MaxValue)));
         }
 
         private static object RandomString(Random random, string prefix)
