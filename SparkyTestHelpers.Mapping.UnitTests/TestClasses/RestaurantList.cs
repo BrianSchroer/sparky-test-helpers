@@ -1,6 +1,6 @@
 ﻿namespace SparkyTestHelpers.Mapping.UnitTests.TestClasses
 {
-    public class RestauranstList
+    public class RestaurantList
     {
         public Restaurant[] Restaurants { get; set; }
     }

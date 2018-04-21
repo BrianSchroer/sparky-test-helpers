@@ -46,8 +46,8 @@ namespace SparkyTestHelpers.Mapping
 
             foreach (string propertyName in commonPropertyNames)
             {
-                PropertyInfo srcProperty = PropertyInfoResolver.Instance.ResolveProperty(sourceTypeInfo, propertyName);
-                PropertyInfo destProperty = PropertyInfoResolver.Instance.ResolveProperty(destTypeInfo, propertyName);
+                PropertyInfo srcProperty = PropertyInfoResolver.Resolve(sourceTypeInfo, propertyName);
+                PropertyInfo destProperty = PropertyInfoResolver.Resolve(destTypeInfo, propertyName);
               
                 SetTesterForProperty(propertyName,
                     new MapMemberTester<TSource, TDestination>(

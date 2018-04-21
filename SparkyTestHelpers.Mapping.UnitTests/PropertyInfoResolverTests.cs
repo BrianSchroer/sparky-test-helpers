@@ -4,7 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SparkyTestHelpers.Mapping.UnitTests.TestClasses;
 
 namespace SparkyTestHelpers.Mapping.UnitTests
-{    
+{
+    /// <summary>
+    /// <see cref="PropertyInfoResolver"/> unit tests.
+    /// </summary>
     [TestClass]
     public class PropertyInfoResolverTests
     {
@@ -27,7 +30,7 @@ namespace SparkyTestHelpers.Mapping.UnitTests
         [TestMethod]
         public void PropertyInfoResolver_can_resolve_hidden_property()
         {
-            var propertyInfo = PropertyInfoResolver.Instance.ResolveProperty(typeof(RestaurantEditList).GetTypeInfo(),
+            var propertyInfo = PropertyInfoResolver.Resolve(typeof(RestaurantEditList).GetTypeInfo(),
                 nameof(RestaurantEditList.Restaurants));
             Assert.AreEqual(propertyInfo.PropertyType, typeof(RestaurantEditModel[]));
         }
