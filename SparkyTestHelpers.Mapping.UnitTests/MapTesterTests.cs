@@ -135,6 +135,20 @@ namespace SparkyTestHelpers.Mapping.UnitTests
         }
 
         [TestMethod]
+        public void IgnoringMemberNamesStartingWith_should_work_as_expected()
+        {
+            var loggedMessages = new List<string>();
+
+            MapTester.ForMap<Source, Dest>()
+                .WithLogging(loggedMessages.Add)
+                .IgnoringMemberNamesStartingWith("Dest")
+                .IgnoringMember(dest => dest.Children)
+                .AssertMappedValues(_source, _dest);
+
+            Assert.IsNotNull(loggedMessages.SingleOrDefault(x => x == "Property \"DestOnly\" was not tested."));
+        }
+
+        [TestMethod]
         public void IgnoringAllOtherMembers_should_work_as_expected()
         {
             var loggedMessages = new List<string>();

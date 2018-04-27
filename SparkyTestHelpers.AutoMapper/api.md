@@ -15,7 +15,9 @@ This class is for testing that properties were successfully "mapped" from one ty
 **Methods**
 * *MapTester<TSource, TDestination>* **WithLogging** *(Action<*String*> action)*    
    (optional) "Callback" action to log property values when asserting. If called without an action, defaults to Console.WriteLine. 
-* *MapTester<TSource, TDestination>* **IgnoringMember**(*Expression<Func<TDestination, Object>> destExpression*)  
+* *MapTester<TSource, TDestination>* **IgnoringMember**(*Expression<Func<TDestination, Object>> destExpression*) 
+* *MapTester<TSource, TDestination>* **IgnoringMembers**(*params Expression<Func<TDestination, Object>>[] destExpressions*) 
+* *MapTester<TSource, TDestination>* **IgnoringMemberNamesStartingWith**(*string prefix*)   
 * *MapMemberTester<TSource, TDestination>* **WhereMember**(*Expression<Func<TDestination, Object>> destExpression*)  
 * *void* **AssertMappedValues**(*TSource source, TDestination dest*)     
    throws exception if any source/destination map validation specifications fail, or if any destination properties aren’t either tested or **IgnoreMember**’d. 
@@ -31,7 +33,7 @@ This class is for testing that properties were successfully "mapped" from one ty
    uses **RandomValuesHelper** to create a new TSource instance, calls **IMapper.Map**<*TSource, TDestination*>(source), then **AssertMappedValues**()
  
 **Static Methods**
-* *MapTester<TSource, TDestination>* **ForMap**( 
+* *MapTester<*TSource, TDestination*> **ForMap**<*TSource, TDestination>*
 
 **Examples**
 
@@ -67,7 +69,7 @@ using SparkyTestHelpers.AutoMapper;
 As with AutoMapper, you don't have to configure anything for properties with the same name/type in the source and destination instances.
 **AssertMappedValues** considers those successful if the source/destination values matxh.
 
-Use **IgnoringMember** for destination properties that are not mapped or which you need to test in another way.
+Use **IgnoringMember**, **IgnoringMembers** or **IgnoringMemberNamesStartingWith** for destination properties that are not mapped or which you need to test in another way.
 
 Use **WhereMember** to "dot" to the **ShouldEqual**, **ShouldEqualValue** and **IsTestedBy** functions.
 

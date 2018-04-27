@@ -12,10 +12,9 @@
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.4</Version>
-    <PackageReleaseNotes>v1.3.1: Added IMapper instance methods
-v1.4 Updated SparkyTestHelpers.Mapping dependency to v1.4</PackageReleaseNotes>
-    <AssemblyVersion>1.4.0.0</AssemblyVersion>
+    <Version>1.5</Version>
+    <PackageReleaseNotes>v1.5: Added .IgnoringMemberNamesStartingWith</PackageReleaseNotes>
+    <AssemblyVersion>1.5.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

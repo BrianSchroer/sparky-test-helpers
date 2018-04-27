@@ -20,6 +20,7 @@ namespace SparkyTestHelpers.Mapping
         private readonly PropertyInfo[] _destProperties;
 
         private bool _ignoringAllOtherMembers = false;
+        private List<string> _ignoringMemberNamesStartingWith = new List<string>();
 
         private Action<string> _log = (message) => { };
 
@@ -107,6 +108,17 @@ namespace SparkyTestHelpers.Mapping
         }
 
         /// <summary>
+        /// Specify member name prefix for which properties should be ignored when asserting mapping results.
+        /// </summary>
+        /// <param name="prefix">The prefix.</param>
+        /// <returns>"This" <see cref="MapMemberTester{TSource, TDestination}"/>.</returns>
+        public MapTester<TSource, TDestination> IgnoringMemberNamesStartingWith(string prefix)
+        {
+            _ignoringMemberNamesStartingWith.Add(prefix);
+            return this;
+        }
+
+        /// <summary>
         /// Specify that all properties for which <see cref="WhereMember(Expression{Func{TDestination, object}})"/> has not been
         /// called should be ignored when asserting mapping results.
         /// </summary>
@@ -181,7 +193,7 @@ namespace SparkyTestHelpers.Mapping
                     else
                     {
                         string message = $"Property \"{propertyName}\" was not tested.";
-                        if (_ignoringAllOtherMembers)
+                        if (_ignoringAllOtherMembers || _ignoringMemberNamesStartingWith.Any(x => propertyName.StartsWith(x)))
                         {
                             _log(message);
                         }
