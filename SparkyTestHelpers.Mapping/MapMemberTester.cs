@@ -87,7 +87,7 @@ namespace SparkyTestHelpers.Mapping
         /// </example>
         public MapTester<TSource, TDestination> ShouldEqualValue(object value)
         {
-            GetExpectedValue = (src) => value;
+            GetExpectedValue = _ => value;
             return _mapTester;
         }
 
@@ -110,6 +110,27 @@ namespace SparkyTestHelpers.Mapping
         public MapTester<TSource, TDestination> IsTestedBy(Action<TSource, TDestination> customTest)
         {
             CustomTest = customTest;
+            return _mapTester;
+        }
+
+        /// <summary>
+        /// Specify custom test for property mapping.
+        /// </summary>
+        /// <param name="customTest">Action that examines the destination instances
+        /// and asserts property map success.</param>
+        /// <returns>"Parent" <see cref="MapTester{TSource, TDestination}"/>.</returns>
+        /// <example>
+        /// <code><![CDATA[
+        ///     MapTester
+        ///         .ForMap<Foo, Bar>()
+        ///         .WhereMember(dest => dest.IsValid).IsTestedBy((dest) => Assert.IsTrue(dest.IsValid))
+        ///         .AssertMappedValues(foo, bar);
+        /// ]]>
+        /// </code>
+        /// </example>
+        public MapTester<TSource, TDestination> IsTestedBy(Action<TDestination> customTest)
+        {
+            CustomTest = (_, dest) => customTest(dest);
             return _mapTester;
         }
     }
