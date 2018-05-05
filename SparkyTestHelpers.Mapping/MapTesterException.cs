@@ -14,5 +14,13 @@ namespace SparkyTestHelpers.Mapping
         public MapTesterException(string msg) : base(msg)
         {
         }
+
+        public MapTesterException() : base()
+        {
+        }
+
+        public MapTesterException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

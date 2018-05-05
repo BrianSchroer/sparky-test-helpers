@@ -308,27 +308,40 @@ namespace SparkyTestHelpers.Mapping
 
         private static string GetPropertyName(Expression<Func<TDestination, object>> expression)
         {
-            string name = null;
+            bool exceptionWasThrown = false;
 
-            var memberExpression = expression.Body as MemberExpression;
-
-            if (memberExpression == null)
+            try
             {
-                var unaryExpression = expression.Body as UnaryExpression;
-                if (unaryExpression != null)
+                string name = null;
+
+                var memberExpression = expression.Body as MemberExpression;
+
+                if (memberExpression == null)
                 {
-                    memberExpression = unaryExpression?.Operand as MemberExpression;
+                    var unaryExpression = expression.Body as UnaryExpression;
+                    if (unaryExpression != null)
+                    {
+                        memberExpression = unaryExpression?.Operand as MemberExpression;
+                    }
                 }
+
+                if (memberExpression?.Member != null)
+                {
+                    name = (memberExpression.Member as PropertyInfo)?.Name;
+                }
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    exceptionWasThrown = true;
+                    throw new MapTesterException($"Invalid property expression: \"{expression}\".");
+                }
+
+                return name;
             }
-
-            name = (memberExpression.Member as PropertyInfo)?.Name;
-
-            if (string.IsNullOrWhiteSpace(name))
+            catch (Exception ex) when (!exceptionWasThrown)
             {
-                throw new InvalidOperationException($"Invalid property expression: \"{expression}\".");
+                throw new MapTesterException($"Invalid property expression: \"{expression}\".", ex);
             }
-
-            return name;
         }
     }
 }

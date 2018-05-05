@@ -84,6 +84,14 @@ namespace SparkyTestHelpers.Mapping.UnitTests
         }
 
         [TestMethod]
+        public void WhereMember_should_throw_expected_exception_for_bad_property_name_expression()
+        {
+            AssertExceptionThrown
+                .OfType<MapTesterException>().WithMessage("Invalid property expression: \"dest => dest.Name.ToString()\".")
+                .WhenExecuting(() => _mapTester.WhereMember(dest => dest.Name.ToString()));
+        }
+
+        [TestMethod]
         public void ShouldEqual_should_use_specified_callback_function()
         {
             string expected = $"{_source.FirstName} {_source.LastName}";
