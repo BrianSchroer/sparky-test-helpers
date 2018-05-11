@@ -11,11 +11,10 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
-    <PackageReleaseNotes>v1.5: Added .IgnoringMemberNamesStartingWith
-v1.5.2: Improved invalid property expression handling</PackageReleaseNotes>
-    <AssemblyVersion>1.5.2.0</AssemblyVersion>
-    <FileVersion>1.5.2.0</FileVersion>
-    <Version>1.5.2</Version>
+    <PackageReleaseNotes>v1.6: Improved MapTesterException message formatting, added MapMemberTester.ShouldBeStringMatchFor method</PackageReleaseNotes>
+    <AssemblyVersion>1.6.0.0</AssemblyVersion>
+    <FileVersion>1.6.0.0</FileVersion>
+    <Version>1.6</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\SparkyTestHelpers.Mapping.xml</DocumentationFile>

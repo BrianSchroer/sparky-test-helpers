@@ -26,6 +26,8 @@ namespace SparkyTestHelpers.Mapping
         private readonly Regex _scenarioCountRegex = new Regex(@"Scenario\[\d\] \(\d of \d\) - ",
             RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
+        private List<string> _untestedProperties;
+
         private Action<string> _log = (message) => { };
 
         /// <summary>
@@ -176,6 +178,8 @@ namespace SparkyTestHelpers.Mapping
 
             _log($"Asserting mapping from \n{sourceName} to \n{destName}:");
 
+            _untestedProperties = new List<string>();
+
             try
             {
                 TestMappedProperties(source, dest);
@@ -191,6 +195,23 @@ namespace SparkyTestHelpers.Mapping
                         .Replace("Scenario data - ", string.Empty);
 
                     improvedMessage = _scenarioCountRegex.Replace(improvedMessage, string.Empty);
+
+                    string[] untestedProperties = _untestedProperties.ToArray();
+
+                    if (untestedProperties.Length > 0)
+                    {
+                        string ignoringMessage = ".IgnoringMembers(dest => "
+                            + string.Join(", dest => dest.", untestedProperties) + ")";
+
+                        if (untestedProperties.Length == 1)
+                        {
+                            ignoringMessage = ignoringMessage.Replace(".IgnoringMembers", ".IgnoringMember");
+                        }
+
+                        improvedMessage +=
+                            $"\n{new string('_', Console.BufferWidth)}\n" 
+                            + $"If you want to ignore the untested member(s), you can code:\n\n{ignoringMessage}";
+                    }
                 }
                 catch
                 {
@@ -252,6 +273,7 @@ namespace SparkyTestHelpers.Mapping
                         }
                         else
                         {
+                            _untestedProperties.Add(propertyName);
                             throw new MapTesterException(message);
                         }
                     }

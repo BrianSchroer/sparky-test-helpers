@@ -56,6 +56,8 @@ This class is for testing that a property was successfully "mapped" from one typ
 **Methods**
 * *MapTester<TSource, TDestination>* **ShouldEqual**(*Expression<Func<TSource, Object>> sourceExpression*)   
    use to verify destination property mapped from differently named source property(s)
+* *MapTester<TSource, TDestination>* **ShouldBeStringMatchFor**(*Expression<Func<TSource, Object>> sourceExpression*)   
+   use to verify the ".ToString()" values of the source and destination properties (useful for testing Enum mapping where the source/destination Enum types have the same names)
 * *MapTester<TSource, TDestination>* **ShouldEqualValue**(*Object value*)   
    use to verify destination property using a constant or some other value not derived from the source 
 * *MapTester<TSource, TDestination>* **IsTestedBy**(*Action<TSource, TDestination> customTest*)   
