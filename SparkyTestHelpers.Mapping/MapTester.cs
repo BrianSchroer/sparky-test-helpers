@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using SparkyTestHelpers.Scenarios;
 
 namespace SparkyTestHelpers.Mapping
@@ -21,6 +22,9 @@ namespace SparkyTestHelpers.Mapping
 
         private bool _ignoringAllOtherMembers = false;
         private List<string> _ignoringMemberNamesStartingWith = new List<string>();
+
+        private readonly Regex _scenarioCountRegex = new Regex(@"Scenario\[\d\] \(\d of \d\) - ",
+            RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
         private Action<string> _log = (message) => { };
 
@@ -172,6 +176,55 @@ namespace SparkyTestHelpers.Mapping
 
             _log($"Asserting mapping from \n{sourceName} to \n{destName}:");
 
+            try
+            {
+                TestMappedProperties(source, dest);
+            }
+            catch (ScenarioTestFailureException ex)
+            {
+                string improvedMessage = ex.Message;
+
+                try
+                {
+                    improvedMessage = ex.Message
+                        .Replace("scenarios tested", "properties tested")
+                        .Replace("Scenario data - ", string.Empty);
+
+                    improvedMessage = _scenarioCountRegex.Replace(improvedMessage, string.Empty);
+                }
+                catch
+                {
+                }
+
+                throw new MapTesterException(improvedMessage);
+            }
+        }
+
+        /// <summary>
+        /// Define <see cref="MapMemberTester{TSource, TDestination}"/> for
+        /// <typeparamref name="TDestination"/> property.
+        /// </summary>
+        /// <remarks>
+        /// This method is usually called by this class's constructor and by the
+        /// "WhereMember" and "IgnoreMember" extension methods.
+        /// </remarks>
+        /// <param name="propertyName">The <typeparamref name="TDestination"/> property name.</param>
+        /// <param name="memberTester">The <see cref="MapMemberTester{TSource, TDestination}"/> to be used
+        /// to test mapping for the property.</param>
+        private void SetTesterForProperty(string propertyName, MapMemberTester<TSource, TDestination> memberTester)
+        {
+            if (_memberTesters.ContainsKey(propertyName))
+            {
+                _memberTesters[propertyName] = memberTester;
+            }
+            else
+            {
+                _memberTesters.Add(propertyName, memberTester);
+            }
+        }
+
+        private void TestMappedProperties(TSource source, TDestination dest)
+        {
             _destProperties
                 .OrderBy(x => x.Name)
                 .Select(x => x.Name)
@@ -203,29 +256,6 @@ namespace SparkyTestHelpers.Mapping
                         }
                     }
                 });
-        }
-
-        /// <summary>
-        /// Define <see cref="MapMemberTester{TSource, TDestination}"/> for
-        /// <typeparamref name="TDestination"/> property.
-        /// </summary>
-        /// <remarks>
-        /// This method is usually called by this class's constructor and by the
-        /// "WhereMember" and "IgnoreMember" extension methods.
-        /// </remarks>
-        /// <param name="propertyName">The <typeparamref name="TDestination"/> property name.</param>
-        /// <param name="memberTester">The <see cref="MapMemberTester{TSource, TDestination}"/> to be used
-        /// to test mapping for the property.</param>
-        private void SetTesterForProperty(string propertyName, MapMemberTester<TSource, TDestination> memberTester)
-        {
-            if (_memberTesters.ContainsKey(propertyName))
-            {
-                _memberTesters[propertyName] = memberTester;
-            }
-            else
-            {
-                _memberTesters.Add(propertyName, memberTester);
-            }
         }
 
         private void AssertMappedValue(string propertyName, TSource source, TDestination dest,

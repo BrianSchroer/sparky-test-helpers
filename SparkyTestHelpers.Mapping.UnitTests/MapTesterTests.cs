@@ -69,7 +69,7 @@ namespace SparkyTestHelpers.Mapping.UnitTests
         public void AssertMappedValues_should_throw_exception_for_unmapped_dest_property()
         {
             AssertExceptionThrown
-                .OfType<ScenarioTestFailureException>()
+                .OfType<MapTesterException>()
                 .WithMessageContaining("Property \"DestOnly\" was not tested")
                 .WhenExecuting(() => MapTester.ForMap<Source, Dest>().AssertMappedValues(_source, _dest));
         }
@@ -133,7 +133,7 @@ namespace SparkyTestHelpers.Mapping.UnitTests
             diner.Cuisine = FoodType.Italian;
 
             AssertExceptionThrown
-                .OfType<ScenarioTestFailureException>()
+                .OfType<MapTesterException>()
                 .WithMessageContaining("Mapping test failed for property \"Cuisine\". Expected<German>. Actual: <Italian>")
                 .WhenExecuting(() => mapTester.AssertMappedValues(restaurant, diner));
         }
@@ -214,7 +214,7 @@ namespace SparkyTestHelpers.Mapping.UnitTests
             action = action ?? (() => _mapTester.AssertMappedValues(_source, _dest));
 
             AssertExceptionThrown
-                .OfType<ScenarioTestFailureException>()
+                .OfType<MapTesterException>()
                 .WithMessageContaining(subString)
                 .WhenExecuting(action);
         }
