@@ -120,6 +120,25 @@ namespace SparkyTestHelpers.Mapping.UnitTests
         }
 
         [TestMethod]
+        public void ShouldBeStringMatchFor_should_work_as_expected()
+        {
+            var restaurant = new Restaurant { Id = 24, Name = "TestName", Cuisine = CuisineType.German };
+            var diner = new Diner { Id = 24, Name = "TestName", Cuisine = FoodType.German };
+
+            var mapTester = MapTester.ForMap<Restaurant, Diner>()
+                .WhereMember(dest => dest.Cuisine).ShouldBeStringMatchFor(src => src.Cuisine);
+
+            AssertExceptionNotThrown.WhenExecuting(() => mapTester.AssertMappedValues(restaurant, diner));
+
+            diner.Cuisine = FoodType.Italian;
+
+            AssertExceptionThrown
+                .OfType<ScenarioTestFailureException>()
+                .WithMessageContaining("Mapping test failed for property \"Cuisine\". Expected<German>. Actual: <Italian>")
+                .WhenExecuting(() => mapTester.AssertMappedValues(restaurant, diner));
+        }
+
+        [TestMethod]
         public void IsTestedBy_should_use_custom_assertion()
         {
             string expected = $"{_source.FirstName} {_source.LastName}";

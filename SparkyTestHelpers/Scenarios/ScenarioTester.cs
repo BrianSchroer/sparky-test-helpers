@@ -162,7 +162,7 @@ namespace SparkyTestHelpers.Scenarios
                 }
             }
 
-            HandleCaughtExceptions(caughtExceptions);
+            HandleCaughtExceptions(caughtExceptions.ToArray());
 
             return this;
         }
@@ -224,11 +224,19 @@ namespace SparkyTestHelpers.Scenarios
             return jsonString;
         }
 
-        private void HandleCaughtExceptions(List<ScenarioException> caughtExceptions)
+        private void HandleCaughtExceptions(ScenarioException[] caughtExceptions)
         {
+            string separator = $"\n{new string('_', Console.BufferWidth)}\n";
+
             if (caughtExceptions.Any())
             {
-                string message = string.Join("\n", caughtExceptions.Select(x => x.Message).ToArray());
+                int scenarioCount = _scenarios.Length;
+                int failCount = caughtExceptions.Length;
+                int passCount = scenarioCount - failCount;
+
+                string message =
+                    $"{scenarioCount} scenarios tested. {passCount} passed. {failCount} failed.:\n{separator}"
+                    + string.Join(separator, caughtExceptions.Select(x => x.Message).ToArray());
 
                 if (caughtExceptions.All(IsInconclusiveException))
                 {

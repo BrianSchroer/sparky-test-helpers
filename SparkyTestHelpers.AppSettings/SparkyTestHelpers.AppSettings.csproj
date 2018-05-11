@@ -15,8 +15,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SparkyTestHelpers" Version="1.2.2" />
-    <PackageReference Include="SparkyTools.DependencyProvider" Version="1.0.0" />
+    <PackageReference Include="SparkyTestHelpers" Version="1.4.0" />
+    <PackageReference Include="SparkyTools.DependencyProvider" Version="1.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
   </ItemGroup>
 

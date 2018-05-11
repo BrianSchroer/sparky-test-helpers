@@ -69,7 +69,7 @@ namespace SparkyTestHelpers.UnitTests.Scenarios
                 string expected = "Scenario[1] (2 of 3) - Assert.Fail failed. Test b failed!"
                     + "\n\nScenario data - System.String: \"b\"\n";
 
-                Assert.AreEqual(expected, ex.Message);
+                StringAssert.Contains(ex.Message, expected);
             }
 
             Assert.AreEqual(scenarios.Length, callbackCount);
@@ -98,10 +98,37 @@ namespace SparkyTestHelpers.UnitTests.Scenarios
                 string expected =
                     "Scenario[0] (1 of 3) - Assert.Fail failed. Test a failed!"
                         + "\n\nScenario data - System.String: \"a\"\n"
+                        + $"\n{new string('_', Console.BufferWidth)}"
                         + "\nScenario[2] (3 of 3) - Assert.Fail failed. Test c failed!"
                         + "\n\nScenario data - System.String: \"c\"\n";
 
-                Assert.AreEqual(expected, ex.Message);
+                StringAssert.Contains(ex.Message, expected);
+            }
+        }
+
+        [TestMethod]
+        public void TestEach_should_throw_ScenarioTestFailureException_with_message_containing_counts()
+        {
+            var scenarios = new[] { "a", "b", "c" };
+
+            try
+            {
+                new ScenarioTester<string>(scenarios).TestEach(scenario =>
+                {
+
+                    if (scenario != "b")
+                    {
+                        Assert.Fail($"Test {scenario} failed!");
+                    }
+                });
+            }
+            catch (ScenarioTestFailureException ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                string expected = $"3 scenarios tested. 1 passed. 2 failed.:\n\n{new string('_', Console.BufferWidth)}";
+
+                StringAssert.StartsWith(ex.Message, expected);
             }
         }
 

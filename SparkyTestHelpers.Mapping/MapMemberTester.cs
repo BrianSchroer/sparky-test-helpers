@@ -133,5 +133,22 @@ namespace SparkyTestHelpers.Mapping
             CustomTest = (_, dest) => customTest(dest);
             return _mapTester;
         }
+
+        /// <summary>
+        /// Specifies that destination property .ToString() should match source property .ToString().
+        /// </summary>
+        /// <param name="sourceExpression">Expression to get source property name.</param>
+        /// <returns>"Parent" <see cref="MapTester{TSource, TDestination}"/>.</returns>
+        public MapTester<TSource, TDestination> ShouldBeStringMatchFor(Expression<Func<TSource, object>> sourceExpression)
+        {
+            Func<TSource, object> getSourceObjectValue = sourceExpression.Compile();
+            GetExpectedValue = src => getSourceObjectValue(src).ToString();
+
+            Func<TDestination, object> getDestObjectValue = GetActualValue;
+
+            GetActualValue = dest => getDestObjectValue(dest).ToString();
+
+            return _mapTester;
+        }
     }
 }

@@ -12,10 +12,10 @@
     <Copyright>Copyright © Brian Schroer 2018</Copyright>
     <PackageTags>test, testing, unittest, rowtest</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.3.0.0</AssemblyVersion>
-    <FileVersion>1.3.0.0</FileVersion>
-    <Version>1.3.0</Version>
-    <PackageReleaseNotes>v1.3: Changed icon, added AmbiguousMatchException fix
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
+    <FileVersion>1.4.0.0</FileVersion>
+    <Version>1.4</Version>
+    <PackageReleaseNotes>v1.4: Improved ScenarioTestFailureException formatting
 </PackageReleaseNotes>
   </PropertyGroup>
 

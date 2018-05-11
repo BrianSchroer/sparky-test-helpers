@@ -21,6 +21,6 @@ v1.5.2: Improved invalid property expression handling</PackageReleaseNotes>
     <DocumentationFile>bin\Release\netstandard2.0\SparkyTestHelpers.Mapping.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SparkyTestHelpers" Version="1.2.2" />
+    <PackageReference Include="SparkyTestHelpers" Version="1.4.0" />
   </ItemGroup>
 </Project>

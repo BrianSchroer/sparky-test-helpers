@@ -59,10 +59,15 @@ namespace SparkyTestHelpers.Mapping
         /// Creae an instance of the specified type and populate its properties with random values.
         /// </summary>
         /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+        /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
         /// <returns>New instance.</returns>
-        public T CreateInstanceWithRandomValues<T>()
+        public T CreateInstanceWithRandomValues<T>(Action<T> callback = null)
         {
-            return UpdatePropertiesWithRandomValues((T)Activator.CreateInstance(typeof(T)));
+            T instance = UpdatePropertiesWithRandomValues((T)Activator.CreateInstance(typeof(T)));
+
+            callback?.Invoke(instance);
+
+            return instance;
         }
 
         /// <summary>
