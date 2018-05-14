@@ -33,6 +33,8 @@ namespace SparkyTestHelpers.Mapping
         /// </summary>
         internal Action<TSource, TDestination> CustomTest { get; set; }
 
+        internal string TestDescription { get; set; }
+
         /// <summary>
         /// Creates a new <see cref="MapMemberTester{TSource, TDestination}"/> instance.
         /// </summary>
@@ -66,6 +68,8 @@ namespace SparkyTestHelpers.Mapping
         /// </example>
         public MapTester<TSource, TDestination> ShouldEqual(Expression<Func<TSource, object>> sourceExpression)
         {
+            string expressionString = sourceExpression.ToString();
+            TestDescription = $"ShouldEqual({expressionString})";
             GetExpectedValue = sourceExpression.Compile();
             return _mapTester;
         }
@@ -87,6 +91,14 @@ namespace SparkyTestHelpers.Mapping
         /// </example>
         public MapTester<TSource, TDestination> ShouldEqualValue(object value)
         {
+            string stringValue = (value == null)
+                ? "null" 
+                : (value is string)
+                    ? "\"" + value + "\""
+                    : value.ToString();
+
+            TestDescription = $"ShouldEqualValue({stringValue})";
+
             GetExpectedValue = _ => value;
             return _mapTester;
         }
@@ -109,6 +121,7 @@ namespace SparkyTestHelpers.Mapping
         /// </example>
         public MapTester<TSource, TDestination> IsTestedBy(Action<TSource, TDestination> customTest)
         {
+            TestDescription = "IsTestedBy((src, dest) => { /* custom test */ })";
             CustomTest = customTest;
             return _mapTester;
         }
@@ -130,6 +143,7 @@ namespace SparkyTestHelpers.Mapping
         /// </example>
         public MapTester<TSource, TDestination> IsTestedBy(Action<TDestination> customTest)
         {
+            TestDescription = "IsTestedBy(dest => { /* custom test */ })";
             CustomTest = (_, dest) => customTest(dest);
             return _mapTester;
         }
@@ -141,6 +155,8 @@ namespace SparkyTestHelpers.Mapping
         /// <returns>"Parent" <see cref="MapTester{TSource, TDestination}"/>.</returns>
         public MapTester<TSource, TDestination> ShouldBeStringMatchFor(Expression<Func<TSource, object>> sourceExpression)
         {
+            TestDescription = $"IsTestedBy({sourceExpression})";
+
             Func<TSource, object> getSourceObjectValue = sourceExpression.Compile();
             GetExpectedValue = src => getSourceObjectValue(src).ToString();
 

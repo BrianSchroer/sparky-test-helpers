@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SparkyTestHelpers.Mapping;
+using System;
 
 namespace SparkyTestHelpers.AutoMapper
 {
@@ -8,6 +9,27 @@ namespace SparkyTestHelpers.AutoMapper
     /// </summary>
     public static class MapTesterExtensions
     {
+        /// <summary>
+        /// Assert that all defined properties were successfully maped
+        /// from <typeparamref name="TSource"/> to <typeparamref name="TDestination"/>.
+        /// </summary>
+        /// <param name="source">An instance of type <typeparamref name="TDestination"/>.</param>
+        /// <param name="dest">An instance of type <typeparamref name="TDestination"/>.</param>
+        /// <exception cref="MapTesterException">if dest properties don't have expected values.</exception>
+        /// <example>
+        /// <code><![CDATA[
+        ///     MapTester
+        ///         .ForMap<Foo, Bar>()
+        ///         .AssertMappedValues(foo, bar);
+        /// ]]>
+        /// </code>
+        /// </example>
+        public static void AssertMappedValues<TSource, TDestination>(
+            this MapTester<TSource, TDestination> mapTester, TSource source, TDestination dest)
+        {
+            WithExceptionHandling(mapTester, () => mapTester.AssertMappedValues(source, dest));
+        }
+
         /// <summary>
         /// Using static Mapper, 
         /// maps <paramref name="source"/> to new <typeparamref name="TDestination"/> instance and
@@ -21,9 +43,14 @@ namespace SparkyTestHelpers.AutoMapper
         public static TDestination AssertAutoMappedValues<TSource, TDestination>(
             this MapTester<TSource, TDestination> mapTester, TSource source)
         {
-            TDestination mapped = Mapper.Map<TSource, TDestination>(source);
+            TDestination mapped = default(TDestination);
 
-            mapTester.AssertMappedValues(source, mapped);
+            WithExceptionHandling(mapTester, () =>
+            {
+                mapped = Mapper.Map<TSource, TDestination>(source);
+
+                mapTester.AssertMappedValues(source, mapped);
+            });
 
             return mapped;
         }
@@ -42,9 +69,13 @@ namespace SparkyTestHelpers.AutoMapper
         public static TDestination AssertAutoMappedValues<TSource, TDestination>(
             this MapTester<TSource, TDestination> mapTester, IMapper mapper, TSource source)
         {
-            TDestination mapped = mapper.Map<TSource, TDestination>(source);
+            TDestination mapped = default(TDestination);
 
-            mapTester.AssertMappedValues(source, mapped);
+            WithExceptionHandling(mapTester, () =>
+            {
+                mapped = mapper.Map<TSource, TDestination>(source);
+                mapTester.AssertMappedValues(source, mapped);
+            });
 
             return mapped;
         }
@@ -80,6 +111,32 @@ namespace SparkyTestHelpers.AutoMapper
         {
             var source = new RandomValuesHelper().CreateInstanceWithRandomValues<TSource>();
             return mapTester.AssertAutoMappedValues(mapper, source);
+        }
+
+        private static void WithExceptionHandling<TSource, TDestination>(MapTester<TSource, TDestination> mapTester, Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (MapTesterException ex)
+            {
+                string message = ExceptionHelper.AddSuggestedFixInfoToMessage(mapTester, ex);
+                if (message == ex.Message)
+                {
+                    throw;
+                }
+                throw new MapTesterException();
+            }
+            catch (AutoMapperConfigurationException ex)
+            {
+                string message = ExceptionHelper.AddSuggestedFixInfoToMessage(mapTester, ex);
+                if (message == ex.Message)
+                {
+                    throw;
+                }
+                throw new AutoMapperConfigurationException(message);
+            }
         }
     }
 }

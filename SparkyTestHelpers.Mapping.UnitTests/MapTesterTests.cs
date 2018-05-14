@@ -26,7 +26,7 @@ namespace SparkyTestHelpers.Mapping.UnitTests
                 FirstName = "Brian",
                 LastName = "Schroer",
                 FullName = "Brian Schroer",
-                Children = new [] {"Child1", "Child2" }
+                Children = new[] { "Child1", "Child2" }
             };
 
             _dest = new Dest
@@ -39,6 +39,7 @@ namespace SparkyTestHelpers.Mapping.UnitTests
             _mapTester = MapTester.ForMap<Source, Dest>()
                 //.WithLogging()
                 .IgnoringMember(dest => dest.DestOnly)
+                .IgnoringMember(dest => dest.Date)
                 .IgnoringMember(dest => dest.Children);
         }
 
@@ -157,7 +158,7 @@ namespace SparkyTestHelpers.Mapping.UnitTests
             var output = new Restaurant { Cuisine = CuisineType.Italian, Name = "Test name" };
 
             MapTester.ForMap<RestaurantEditModel, Restaurant>()
-                .WhereMember(dest => dest.Id).ShouldEqualValue(0) 
+                .WhereMember(dest => dest.Id).ShouldEqualValue(0)
                 .AssertMappedValues(input, output);
         }
 
@@ -169,6 +170,7 @@ namespace SparkyTestHelpers.Mapping.UnitTests
             MapTester.ForMap<Source, Dest>()
                 .WithLogging(loggedMessages.Add)
                 .IgnoringMemberNamesStartingWith("Dest")
+                .IgnoringMember(dest => dest.Date)
                 .IgnoringMember(dest => dest.Children)
                 .AssertMappedValues(_source, _dest);
 
@@ -192,16 +194,67 @@ namespace SparkyTestHelpers.Mapping.UnitTests
         [TestMethod]
         public void HiddenProperty_should_resolve_to_top_most_member()
         {
-            var restaurantEditModel = new RestaurantEditModel {Cuisine = CuisineType.Italian, Name = "Test name"};
-            var restaurantModel = new Restaurant {Cuisine = CuisineType.Italian, Name = "Test name"};
+            var restaurantEditModel = new RestaurantEditModel { Cuisine = CuisineType.Italian, Name = "Test name" };
+            var restaurantModel = new Restaurant { Cuisine = CuisineType.Italian, Name = "Test name" };
 
-            var restaurantList = new RestaurantList {Restaurants = new[] {restaurantModel}};
-            var editRestaurantList = new RestaurantEditList {Restaurants = new[] {restaurantEditModel}};
+            var restaurantList = new RestaurantList { Restaurants = new[] { restaurantModel } };
+            var editRestaurantList = new RestaurantEditList { Restaurants = new[] { restaurantEditModel } };
 
             MapTester.ForMap<RestaurantList, RestaurantEditList>()
                 // ignored since the internal constructor of MapTester is what's being tested
                 .IgnoringMember(dest => dest.Restaurants)
                 .AssertMappedValues(restaurantList, editRestaurantList);
+        }
+
+        [TestMethod]
+        public void ToString_should_return_expected_results()
+        {
+            const string Stan = "Stan";
+
+            ForTest.Scenarios
+            (
+                (
+                    MapTester: MapTester.ForMap<Source, Dest>().IgnoringMember(dest => dest.Children).IgnoringMember(dest => dest.DestOnly),
+                    Expected: "MapTester.ForMap<Source, Dest>().IgnoringMembers(dest => dest.Children, dest => dest.DestOnly)"
+                ),
+                (
+                    MapTester: MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Name).ShouldEqual(src => src.LastName),
+                    Expected: "MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Name).ShouldEqual(src => src.LastName)"
+                ),
+                (
+                    MapTester: MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Name).ShouldEqual(src => src.FirstName + src.LastName),
+                    Expected: "MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Name).ShouldEqual(src => (src.FirstName + src.LastName))"
+                ),
+                (
+                    MapTester: MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Id).ShouldEqualValue(1).WhereMember(dest => dest.Name).ShouldEqualValue("Stan"),
+                    Expected: "MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Id).ShouldEqualValue(1).WhereMember(dest => dest.Name).ShouldEqualValue(\"Stan\")"
+                ),
+                (
+                    MapTester: MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Name).ShouldEqualValue(null),
+                    Expected: "MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Name).ShouldEqualValue(null)"
+                ),
+                (
+                    MapTester: MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Name).ShouldEqualValue(Stan),
+                    Expected: "MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Name).ShouldEqualValue(\"Stan\")"
+                ),
+                (
+                    MapTester: MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Date).ShouldEqualValue(new DateTime(2018, 1, 15)),
+                    Expected: "MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Date).ShouldEqualValue(1/15/2018 12:00:00 AM)"
+                ),
+                (
+                    MapTester: MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Name).IsTestedBy((src, dest) => { /* custom test */ }),
+                    Expected: "MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Name).IsTestedBy((src, dest) => { /* custom test */ })"
+                ),
+                (
+                    MapTester: MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Name).IsTestedBy(dest => { /* custom test */ }),
+                    Expected: "MapTester.ForMap<Source, Dest>().WhereMember(dest => dest.Name).IsTestedBy(dest => { /* custom test */ })"
+                )
+            )
+            .TestEach(scenario =>
+            {
+                string actual = scenario.MapTester.ToString().Replace("\n", "").Replace("\t", "");
+                Assert.AreEqual(scenario.Expected, actual);
+            });
         }
 
         private void AssertMappedValues()

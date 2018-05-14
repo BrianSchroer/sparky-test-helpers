@@ -85,5 +85,22 @@ namespace SparkyTestHelpers.AutoMapper.UnitTests
             Assert.IsInstanceOfType(dest, typeof(Dest));
             Console.WriteLine(JsonConvert.SerializeObject(dest));
         }
+
+        [TestMethod]
+        public void ExceptionHelper_should_add_helpful_info_to_exception_message()
+        {
+            var mapperConfiguration = new MapperConfiguration(cfg => { });
+            var mapper = mapperConfiguration.CreateMapper();
+
+            AssertExceptionThrown
+                .OfType<AutoMapperConfigurationException>()
+                .WithMessageContaining("The following code snippet might be useful for making your map match the test:")
+                .WhenExecuting(() =>
+                    MapTester.ForMap<Dest, Source>()
+                        .WhereMember(dest => dest.FirstName).ShouldEqual(src => src.Name)
+                        .WhereMember(dest => dest.LastName).ShouldEqualValue(null)
+                        .IgnoringMember(dest => dest.Id)
+                        .AssertAutoMappedRandomValues(mapper));
+        }
     }
 }

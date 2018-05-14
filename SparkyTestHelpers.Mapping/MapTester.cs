@@ -1,11 +1,11 @@
-﻿using System;
+﻿using SparkyTestHelpers.Scenarios;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text.RegularExpressions;
-using SparkyTestHelpers.Scenarios;
+using System.Text;
 
 namespace SparkyTestHelpers.Mapping
 {
@@ -23,12 +23,9 @@ namespace SparkyTestHelpers.Mapping
         private bool _ignoringAllOtherMembers = false;
         private List<string> _ignoringMemberNamesStartingWith = new List<string>();
 
-        private readonly Regex _scenarioCountRegex = new Regex(@"Scenario\[\d\] \(\d of \d\) - ",
-            RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
-
         private List<string> _untestedProperties;
 
-        private Action<string> _log = (message) => { };
+        private Action<string> _log = (_) => { };
 
         /// <summary>
         /// Creates a new <see cref="MapTester{TSource, TDestination}"/> instance and initializes it
@@ -50,7 +47,7 @@ namespace SparkyTestHelpers.Mapping
             PropertyInfo[] srcProperties = PropertyEnumerator.GetPublicInstanceReadWriteProperties(sourceTypeInfo);
 
             string[] commonPropertyNames = srcProperties
-                .Join(_destProperties, dest => dest.Name, src => src.Name, (dest, src) => dest.Name)
+                .Join(_destProperties, dest => dest.Name, src => src.Name, (dest, _) => dest.Name)
                 .ToArray();
 
             foreach (string propertyName in commonPropertyNames)
@@ -162,7 +159,7 @@ namespace SparkyTestHelpers.Mapping
         /// </summary>
         /// <param name="source">An instance of type <typeparamref name="TDestination"/>.</param>
         /// <param name="dest">An instance of type <typeparamref name="TDestination"/>.</param>
-        /// <exception cref="ScenarioTestFailureException">if dest properties don't have expected values.</exception>
+        /// <exception cref="MapTesterException">if dest properties don't have expected values.</exception>
         /// <example>
         /// <code><![CDATA[
         ///     MapTester
@@ -186,38 +183,55 @@ namespace SparkyTestHelpers.Mapping
             }
             catch (ScenarioTestFailureException ex)
             {
-                string improvedMessage = ex.Message;
+                string message = ex.Message;
 
                 try
                 {
-                    improvedMessage = ex.Message
-                        .Replace("scenarios tested", "properties tested")
-                        .Replace("Scenario data - ", string.Empty);
-
-                    improvedMessage = _scenarioCountRegex.Replace(improvedMessage, string.Empty);
-
-                    string[] untestedProperties = _untestedProperties.ToArray();
-
-                    if (untestedProperties.Length > 0)
-                    {
-                        string ignoringMessage = ".IgnoringMembers(dest => "
-                            + string.Join(", dest => dest.", untestedProperties) + ")";
-
-                        if (untestedProperties.Length == 1)
-                        {
-                            ignoringMessage = ignoringMessage.Replace(".IgnoringMembers", ".IgnoringMember");
-                        }
-
-                        improvedMessage +=
-                            $"\n{new string('_', Console.BufferWidth)}\n" 
-                            + $"If you want to ignore the untested member(s), you can code:\n\n{ignoringMessage}";
-                    }
+                    message = 
+                        ExceptionHelper.ConvertToMapTesterExceptionMessage(ex)
+                        + ExceptionHelper.FormatUnmappedPropertiesHelperMessage(_untestedProperties);
                 }
                 catch
                 {
                 }
 
-                throw new MapTesterException(improvedMessage);
+                throw new MapTesterException(message);
+            }
+        }
+
+        public override string ToString()
+        {
+            try
+            {
+                string[] ignoredProperties = _destProperties.Where(x => MemberShouldBeIgnored(x.Name)).Select(x => x.Name).ToArray();
+
+                var sb = new StringBuilder($"\tMapTester.ForMap<{typeof(TSource).Name}, {typeof(TDestination).Name}>()");
+
+                foreach (string propertyName in _destProperties.Select(x => x.Name).Where(x => !ignoredProperties.Contains(x)))
+                {
+                    if (_memberTesters.ContainsKey(propertyName))
+                    {
+                        MapMemberTester<TSource, TDestination> mapMemberTester = _memberTesters[propertyName];
+                        string testDescription = mapMemberTester.TestDescription;
+                        if (!string.IsNullOrWhiteSpace(testDescription))
+                        {
+                            sb.Append($"\n\t\t.WhereMember(dest => dest.{propertyName}).{testDescription}");
+                        }
+                    }
+                }
+
+                if (ignoredProperties.Length > 0)
+                {
+                    sb.Append($"\n\t\t.IgnoringMember{((ignoredProperties.Length > 1) ? "s" : "")}(dest => dest.");
+                    sb.Append(string.Join(", dest => dest.", ignoredProperties));
+                    sb.Append(")");
+                }
+
+                return sb.ToString();
+            }
+            catch
+            {
+                return GetType().FullName;
             }
         }
 
@@ -251,23 +265,16 @@ namespace SparkyTestHelpers.Mapping
                 .Select(x => x.Name)
                 .TestEach(propertyName =>
                 {
-                    if (_memberTesters.ContainsKey(propertyName))
-                    {
-                        MapMemberTester<TSource, TDestination> memberTester = _memberTesters[propertyName];
+                    MapMemberTester<TSource, TDestination> memberTester = (_memberTesters.ContainsKey(propertyName))
+                        ? _memberTesters[propertyName]
+                        : null;
 
-                        if (memberTester.ShouldBeIgnored)
-                        {
-                            ReportIgnoredMember(propertyName, dest, memberTester);
-                        }
-                        else
-                        {
-                            AssertMappedValue(propertyName, source, dest, memberTester);
-                        }
-                    }
-                    else
+                    bool memberShouldBeIgnored = MemberShouldBeIgnored(propertyName, memberTester);
+
+                    if (memberTester == null)
                     {
                         string message = $"Property \"{propertyName}\" was not tested.";
-                        if (_ignoringAllOtherMembers || _ignoringMemberNamesStartingWith.Any(x => propertyName.StartsWith(x)))
+                        if (memberShouldBeIgnored)
                         {
                             _log(message);
                         }
@@ -277,7 +284,32 @@ namespace SparkyTestHelpers.Mapping
                             throw new MapTesterException(message);
                         }
                     }
+                    else
+                    {
+                        if (memberShouldBeIgnored)
+                        {
+                            ReportIgnoredMember(propertyName, dest, memberTester);
+                        }
+                        else
+                        {
+                            AssertMappedValue(propertyName, source, dest, memberTester);
+                        }
+                    }
                 });
+        }
+
+        private bool MemberShouldBeIgnored(string propertyName)
+        {
+            return MemberShouldBeIgnored(
+                propertyName,
+                _memberTesters.ContainsKey(propertyName) ? _memberTesters[propertyName] : null);
+        }
+
+        private bool MemberShouldBeIgnored(string propertyName, MapMemberTester<TSource, TDestination> memberTester)
+        {
+            return (memberTester?.ShouldBeIgnored ?? false)
+                || _ignoringAllOtherMembers 
+                || _ignoringMemberNamesStartingWith.Any(x => propertyName.StartsWith(x));
         }
 
         private void AssertMappedValue(string propertyName, TSource source, TDestination dest,
