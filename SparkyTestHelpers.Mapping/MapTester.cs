@@ -44,7 +44,7 @@ namespace SparkyTestHelpers.Mapping
             TypeInfo destTypeInfo = destType.GetTypeInfo();
             _memberTesters = new Dictionary<string, MapMemberTester<TSource, TDestination>>();
             _destProperties = PropertyEnumerator.GetPublicInstanceReadWriteProperties(destTypeInfo);
-            PropertyInfo[] srcProperties = PropertyEnumerator.GetPublicInstanceReadWriteProperties(sourceTypeInfo);
+            PropertyInfo[] srcProperties = PropertyEnumerator.GetPublicInstanceReadProperties(sourceTypeInfo);
 
             string[] commonPropertyNames = srcProperties
                 .Join(_destProperties, dest => dest.Name, src => src.Name, (dest, _) => dest.Name)

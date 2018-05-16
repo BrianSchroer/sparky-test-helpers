@@ -257,6 +257,22 @@ namespace SparkyTestHelpers.Mapping.UnitTests
             });
         }
 
+        [TestMethod]
+        public void Mapping_should_work_from_readonly_properties()
+        {
+            var source = new SourceWithReadOnlyProperties();
+
+            _dest = new Dest
+            {
+                Name = source.Name,
+                Id = source.Id
+            };
+
+            MapTester.ForMap<SourceWithReadOnlyProperties, Dest>()
+                .IgnoringMembers(dest => dest.DestOnly, dest => dest.Date, dest => dest.Children)
+                .AssertMappedValues(source, _dest);
+        }
+
         private void AssertMappedValues()
         {
             AssertExceptionNotThrown.WhenExecuting(() => _mapTester.AssertMappedValues(_source, _dest));
