@@ -126,7 +126,7 @@ namespace SparkyTestHelpers.AutoMapper
                 {
                     throw;
                 }
-                throw new MapTesterException();
+                throw new MapTesterException(message);
             }
             catch (AutoMapperConfigurationException ex)
             {

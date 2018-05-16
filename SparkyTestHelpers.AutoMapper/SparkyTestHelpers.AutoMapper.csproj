@@ -12,9 +12,10 @@
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.6.2</Version>
+    <Version>1.6.3</Version>
     <PackageReleaseNotes>Update SparkyTestHelpers.Mapping dependency to v1.6</PackageReleaseNotes>
-    <AssemblyVersion>1.6.2.0</AssemblyVersion>
+    <AssemblyVersion>1.6.3.0</AssemblyVersion>
+    <FileVersion>1.6.3.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
