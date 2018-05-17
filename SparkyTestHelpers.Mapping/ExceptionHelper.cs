@@ -8,7 +8,7 @@ namespace SparkyTestHelpers.Mapping
 {
     internal static class ExceptionHelper
     {
-        private static readonly Regex _scenarioCountRegex = new Regex(@"Scenario\[\d\] \(\d of \d\) - ",
+        private static readonly Regex _scenarioCountRegex = new Regex(@"Scenario\[\d*\] \(\d* of \d*\) - ",
             RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
         public static string ConvertToMapTesterExceptionMessage(ScenarioTestFailureException ex)

@@ -5,6 +5,8 @@ using SparkyTestHelpers.Scenarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace SparkyTestHelpers.Mapping.UnitTests
 {
@@ -291,6 +293,31 @@ namespace SparkyTestHelpers.Mapping.UnitTests
             MapTester.ForMap<SourceWithCaseDifferences, Dest>()
                 .IgnoringMembers(dest => dest.DestOnly, dest => dest.Date, dest => dest.Children)
                 .AssertMappedValues(source, _dest);
+        }
+
+        [TestMethod]
+        public void MapTester_exception_should_prettify_ScenarioTestFailureException()
+        {
+            var source = new Source();
+            var dummy = new Dummy();
+
+            string[] destPropertyNames =
+                PropertyEnumerator.GetPublicInstanceReadWriteProperties(typeof(Dummy).GetTypeInfo()).Select(x => x.Name).ToArray();
+            int propertyCount = destPropertyNames.Length;
+
+            string message = string.Empty;
+
+            try
+            {
+                MapTester.ForMap<Source, Dummy>().AssertMappedValues(source, dummy);
+            }
+            catch (MapTesterException ex)
+            {
+                message = ex.Message;
+            }
+
+            StringAssert.Contains(message, $"{propertyCount} properties tested. 0 passed. {propertyCount} failed.");
+            StringAssert.DoesNotMatch(message, new Regex("cenario"));
         }
 
         private void AssertMappedValues()
