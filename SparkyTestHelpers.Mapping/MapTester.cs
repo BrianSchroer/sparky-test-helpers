@@ -46,13 +46,16 @@ namespace SparkyTestHelpers.Mapping
             _destProperties = PropertyEnumerator.GetPublicInstanceReadWriteProperties(destTypeInfo);
             PropertyInfo[] srcProperties = PropertyEnumerator.GetPublicInstanceReadProperties(sourceTypeInfo);
 
-            string[] commonPropertyNames = srcProperties
-                .Join(_destProperties, dest => dest.Name, src => src.Name, (dest, _) => dest.Name)
+            Tuple<string, string>[] commonPropertyNames = srcProperties
+                .Join(_destProperties, src => src.Name.ToLowerInvariant(), dest => dest.Name.ToLowerInvariant(), (src, dest) => Tuple.Create(src.Name, dest.Name))
                 .ToArray();
 
-            foreach (string propertyName in commonPropertyNames)
+            foreach (Tuple<string, string> item in commonPropertyNames)
             {
-                PropertyInfo srcProperty = PropertyInfoResolver.Resolve(sourceTypeInfo, propertyName);
+                string sourcePropertyName = item.Item1;
+                string propertyName = item.Item2;
+
+                PropertyInfo srcProperty = PropertyInfoResolver.Resolve(sourceTypeInfo, sourcePropertyName);
                 PropertyInfo destProperty = PropertyInfoResolver.Resolve(destTypeInfo, propertyName);
               
                 SetTesterForProperty(propertyName,

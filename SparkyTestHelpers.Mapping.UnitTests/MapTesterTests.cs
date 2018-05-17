@@ -273,6 +273,26 @@ namespace SparkyTestHelpers.Mapping.UnitTests
                 .AssertMappedValues(source, _dest);
         }
 
+        [TestMethod]
+        public void Mapping_should_work_with_matching_properties_with_case_differences()
+        {
+            var source = new SourceWithCaseDifferences
+            {
+                ID = 123,
+                NaMe = "Test Name"
+            };
+
+            _dest = new Dest
+            {
+                Name = source.NaMe,
+                Id = source.ID
+            };
+
+            MapTester.ForMap<SourceWithCaseDifferences, Dest>()
+                .IgnoringMembers(dest => dest.DestOnly, dest => dest.Date, dest => dest.Children)
+                .AssertMappedValues(source, _dest);
+        }
+
         private void AssertMappedValues()
         {
             AssertExceptionNotThrown.WhenExecuting(() => _mapTester.AssertMappedValues(_source, _dest));
