@@ -115,28 +115,32 @@ namespace SparkyTestHelpers.AutoMapper
 
         private static void WithExceptionHandling<TSource, TDestination>(MapTester<TSource, TDestination> mapTester, Action action)
         {
-            try
-            {
-                action();
-            }
-            catch (MapTesterException ex)
-            {
-                string message = ExceptionHelper.AddSuggestedFixInfoToMessage(mapTester, ex);
-                if (message == ex.Message)
-                {
-                    throw;
-                }
-                throw new MapTesterException(message);
-            }
-            catch (AutoMapperConfigurationException ex)
-            {
-                string message = ExceptionHelper.AddSuggestedFixInfoToMessage(mapTester, ex);
-                if (message == ex.Message)
-                {
-                    throw;
-                }
-                throw new AutoMapperConfigurationException(message);
-            }
+            action();
+
+            //Remove exception message prettifier that turned out to be not so pretty:
+
+            //try
+            //{
+            //    action();
+            //}
+            //catch (MapTesterException ex)
+            //{
+            //    string message = ExceptionHelper.AddSuggestedFixInfoToMessage(mapTester, ex);
+            //    if (message == ex.Message)
+            //    {
+            //        throw;
+            //    }
+            //    throw new MapTesterException(message);
+            //}
+            //catch (AutoMapperConfigurationException ex)
+            //{
+            //    string message = ExceptionHelper.AddSuggestedFixInfoToMessage(mapTester, ex);
+            //    if (message == ex.Message)
+            //    {
+            //        throw;
+            //    }
+            //    throw new AutoMapperConfigurationException(message);
+            //}
         }
     }
 }
