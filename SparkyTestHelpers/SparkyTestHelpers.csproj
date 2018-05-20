@@ -12,10 +12,10 @@
     <Copyright>Copyright © Brian Schroer 2018</Copyright>
     <PackageTags>test, testing, unittest, rowtest</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.4.0.0</AssemblyVersion>
-    <FileVersion>1.4.0.0</FileVersion>
-    <Version>1.4</Version>
-    <PackageReleaseNotes>v1.4: Improved ScenarioTestFailureException formatting
+    <AssemblyVersion>1.5.0.0</AssemblyVersion>
+    <FileVersion>1.5.0.0</FileVersion>
+    <Version>1.5</Version>
+    <PackageReleaseNotes>v1.5: Added Enumerable "BeforeEachTest" and "AfterEachText" extension methods.
 </PackageReleaseNotes>
   </PropertyGroup>
 

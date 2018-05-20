@@ -9,6 +9,34 @@ namespace SparkyTestHelpers.Scenarios
     public static class ScenarioTesterExtension
     {
         /// <summary>
+        /// Defines <see cref="Action"/> to be called before each
+        /// <see cref="TestEach{TScenario}(IEnumerable{TScenario}, Action{TScenario})"/> call.
+        /// </summary>
+        /// <param name="enumerable">The test scenario enumerable.</param>
+        /// <param name="action">The action.</param>
+        /// <returns><see cref="ScenarioTester{TScenario}" /> instance.</returns>
+        public static ScenarioTester<TScenario> BeforeEachTest<TScenario>(
+            this IEnumerable<TScenario> enumerable, Action<TScenario> action)
+        {
+            return new ScenarioTester<TScenario>(enumerable).BeforeEachTest(action);
+        }
+
+        /// <summary>
+        /// Defines <see cref="Func{TScenario, Exception, Boolean}"/> to be called after each
+        /// <see cref="TestEach{TScenario}(IEnumerable{TScenario}, Action{TScenario})"/> call.
+        /// The function receives the scenario and the exception (if any) caught by the test. 
+        /// If the function returns true, the scenario test is "passed". If false, exception is thrown to fail the test.
+        /// </summary>
+        /// <param name="func">The "callback" function.</param>
+        /// <param name="action">The action.</param>
+        /// <returns><see cref="ScenarioTester{TScenario}" /> instance.</returns>
+        public static ScenarioTester<TScenario> AfterEachTest<TScenario>(
+            this IEnumerable<TScenario> enumerable, Func<TScenario, Exception, bool> func)
+        {
+            return new ScenarioTester<TScenario>(enumerable).AfterEachTest(func);
+        }
+
+        /// <summary>
         /// Calls the specified <paramref name="test" /> action for each scenario in enumerable.
         /// </summary>
         /// <param name="enumerable">The test scenario enumerable.</param>
