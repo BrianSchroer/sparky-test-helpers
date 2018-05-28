@@ -23,7 +23,7 @@ namespace SparkyTestHelpers.Mapping.UnitTests
         {
             var propertyInfo = typeof(RestaurantEditList).GetProperties()
                 .First(property => property.Name == nameof(RestaurantEditList.Restaurants));
-            
+
             Assert.AreEqual(propertyInfo.PropertyType, typeof(RestaurantEditModel[]));
         }
 

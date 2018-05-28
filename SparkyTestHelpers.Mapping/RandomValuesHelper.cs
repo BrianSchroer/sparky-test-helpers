@@ -11,6 +11,16 @@ namespace SparkyTestHelpers.Mapping
     /// </summary>
     public class RandomValuesHelper
     {
+        /// <summary>
+        /// Maximum number of items to generate for arrays / lists / IEnumerables.
+        /// </summary>
+        public int MaximumIEnumerableSize { get; set; } = 3;
+
+        /// <summary>
+        /// Maximum "depth" of "child" class instances to create.
+        /// </summary>
+        public int? MaximumDepth { get; set; }
+
         private static readonly Dictionary<Type, Func<Random, string, object>> _generatorDictionary
             = new Dictionary<Type, Func<Random, string, object>>
             {
@@ -49,14 +59,35 @@ namespace SparkyTestHelpers.Mapping
                 { typeof(string), RandomString }
             };
 
-
         private static readonly TypeInfo _iEnumerableTypeInfo = typeof(IEnumerable).GetTypeInfo();
         private static readonly TypeInfo _iListTypeInfo = typeof(IList).GetTypeInfo();
 
         private Dictionary<Type, int> _createdTypes;
 
         /// <summary>
-        /// Creae an instance of the specified type and populate its properties with random values.
+        /// Sets <see cref="MaximumIEnumerableSize"/> value.
+        /// </summary>
+        /// <param name="maximumIEnumerableSize">The maximum IENumerable size.</param>
+        /// <returns>"This" <see cref="RandomValuesHelper"/> instance.</returns>
+        public RandomValuesHelper WithMaximumIENumerableSize(int maximumIEnumerableSize)
+        {
+            MaximumIEnumerableSize = maximumIEnumerableSize;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="MaximumDepth"/> value.
+        /// </summary>
+        /// <param name="maximumDepth">The maximum depth.</param>
+        /// <returns>"This" <see cref="RandomValuesHelper"/> instance.</returns>
+        public RandomValuesHelper WithMaximumDepth(int maximumDepth)
+        {
+            MaximumDepth = maximumDepth;
+            return this;
+        }
+
+        /// <summary>
+        /// Create an instance of the specified type and populate its properties with random values.
         /// </summary>
         /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
         /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
@@ -79,7 +110,7 @@ namespace SparkyTestHelpers.Mapping
         public T UpdatePropertiesWithRandomValues<T>(T instance)
         {
             var random = new Random();
-            int depth = 0;
+            int depth = 1;
             _createdTypes = new Dictionary<Type, int>();
 
             UpdatePropertiesWithRandomValues(instance, random, typeof(T).GetTypeInfo(), depth);
@@ -89,9 +120,7 @@ namespace SparkyTestHelpers.Mapping
 
         private void UpdatePropertiesWithRandomValues(object instance, Random random, TypeInfo typeInfo, int depth)
         {
-            PropertyInfo[] properties = PropertyEnumerator.GetPublicInstanceReadWriteProperties(typeInfo);
-
-            foreach (PropertyInfo property in properties)
+            foreach (PropertyInfo property in PropertyEnumerator.GetPublicInstanceReadWriteProperties(typeInfo))
             {
                 var value = GetRandomValue(random, property.PropertyType, property.Name, depth);
 
@@ -141,9 +170,9 @@ namespace SparkyTestHelpers.Mapping
 
             if (typ != null)
             {
-                int itemCount = random.Next(1, 10);
+                int itemCount = random.Next(1, MaximumIEnumerableSize);
 
-                array = TryToCreateInstance(() => Array.CreateInstance(typ, itemCount)) as Array;
+                array = TryToCreateInstance(typ, () => Array.CreateInstance(typ, itemCount)) as Array;
 
                 if (array != null)
                 {
@@ -161,11 +190,17 @@ namespace SparkyTestHelpers.Mapping
 
         private object RandomClassInstance(Random random, Type typ, int depth)
         {
+            if (MaximumDepth.HasValue && MaximumDepth.Value < depth)
+            {
+                return null;
+            }
+
             object value = null;
             bool shouldCreateInstance;
 
             if (_createdTypes.ContainsKey(typ))
             {
+                // If we've already created a type at a higher level, stop. Don't create an infinite loop.
                 shouldCreateInstance = (_createdTypes[typ] == depth);
             }
             else
@@ -176,7 +211,7 @@ namespace SparkyTestHelpers.Mapping
 
             if (shouldCreateInstance)
             {
-                value = TryToCreateInstance(() => Activator.CreateInstance(typ));
+                value = TryToCreateInstance(typ, () => Activator.CreateInstance(typ));
 
                 if (value != null)
                 {
@@ -223,7 +258,7 @@ namespace SparkyTestHelpers.Mapping
                 {
                     Type genericListType = typeof(List<>).MakeGenericType(genericArguments);
 
-                    TryToCreateInstance(() => list = Activator.CreateInstance(genericListType, array));
+                    TryToCreateInstance(genericListType, () => list = Activator.CreateInstance(genericListType, array));
                 }
             }
 
@@ -317,11 +352,18 @@ namespace SparkyTestHelpers.Mapping
             return string.Format("{0}{1}", prefix, random.Next());
         }
 
-        private object TryToCreateInstance(Func<object> callback)
+        private object TryToCreateInstance(Type type, Func<object> callback)
         {
             object value = null;
 
-            try { value = callback(); } catch { }
+            try
+            {
+                value = callback();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{nameof(RandomValuesHelper)} was unable to create a {type.FullName} instance: {ex.Message}.");
+            }
 
             return value;
         }

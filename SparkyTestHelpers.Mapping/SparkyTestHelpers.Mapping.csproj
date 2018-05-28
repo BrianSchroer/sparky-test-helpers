@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard1.5</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Brian Schroer</Authors>
     <Company>Brian Schroer</Company>
     <Description>Unit test helpers for asserting public properties on class instances "mapped" from one type to another (via AutoMapper, another tool, or hand-written code) have the correct values.</Description>
@@ -11,10 +11,13 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
-    <PackageReleaseNotes>v1.7: Added support for read-only source properties and matching property names with case differences</PackageReleaseNotes>
-    <AssemblyVersion>1.7.0.0</AssemblyVersion>
-    <FileVersion>1.7.0.0</FileVersion>
-    <Version>1.7</Version>
+    <PackageReleaseNotes>v1.7.1: Added MaximumDepth, MaximumIEnumerableSize</PackageReleaseNotes>
+    <AssemblyVersion>1.7.1.0</AssemblyVersion>
+    <FileVersion>1.7.1.0</FileVersion>
+    <Version>1.7.1</Version>
+    <Product>SparkyTestHelpers.Mapping</Product>
+    <PackageId>SparkyTestHelpers.Mapping</PackageId>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\SparkyTestHelpers.Mapping.xml</DocumentationFile>
