@@ -42,7 +42,7 @@ namespace SparkyTestHelpers.AutoMapper.UnitTests
             Source source = new RandomValuesHelper().CreateInstanceWithRandomValues<Source>();
             Dest dest = null;
 
-            AssertExceptionNotThrown.WhenExecuting(() => 
+            AssertExceptionNotThrown.WhenExecuting(() =>
                 dest = MapTester.ForMap<Source, Dest>().AssertAutoMappedValues(source));
 
             Assert.IsInstanceOfType(dest, typeof(Dest));

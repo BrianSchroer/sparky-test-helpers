@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
-    <PackageReference Include="SparkyTestHelpers.Mapping" Version="1.7.0" />
+    <PackageReference Include="SparkyTestHelpers.Mapping" Version="1.7.1" />
   </ItemGroup>
 
 </Project>
