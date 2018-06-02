@@ -98,7 +98,7 @@ namespace SparkyTestHelpers.UnitTests.Scenarios
                 string expected =
                     "Scenario[0] (1 of 3) - Assert.Fail failed. Test a failed!"
                         + "\n\nScenario data - System.String: \"a\"\n"
-                        + $"\n{new string('_', Console.BufferWidth)}"
+                        + $"\n{new string('_', ConsoleHelper.GetWidth())}"
                         + "\nScenario[2] (3 of 3) - Assert.Fail failed. Test c failed!"
                         + "\n\nScenario data - System.String: \"c\"\n";
 
@@ -126,7 +126,7 @@ namespace SparkyTestHelpers.UnitTests.Scenarios
             {
                 Console.WriteLine(ex.Message);
 
-                string expected = $"3 scenarios tested. 1 passed. 2 failed.:\n\n{new string('_', Console.BufferWidth)}";
+                string expected = $"3 scenarios tested. 1 passed. 2 failed.:\n\n{new string('_', ConsoleHelper.GetWidth())}";
 
                 StringAssert.StartsWith(ex.Message, expected);
             }
@@ -178,7 +178,7 @@ namespace SparkyTestHelpers.UnitTests.Scenarios
             var expected = new InvalidOperationException("Something terrible happened!");
 
             new ScenarioTester<string>(new[] { "x" })
-                .AfterEachTest((scenario, ex) => 
+                .AfterEachTest((scenario, ex) =>
                 {
                     Assert.AreEqual(expected, ex);
                     return true;
@@ -194,7 +194,7 @@ namespace SparkyTestHelpers.UnitTests.Scenarios
             try
             {
                 new ScenarioTester<string>(new[] { "x" })
-                    .AfterEachTest((scenario, ex) => 
+                    .AfterEachTest((scenario, ex) =>
                     {
                         Assert.AreEqual(expected, ex);
                         return false;

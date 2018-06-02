@@ -12,10 +12,11 @@
     <Copyright>Copyright © Brian Schroer 2018</Copyright>
     <PackageTags>test, testing, unittest, rowtest</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.5.0.0</AssemblyVersion>
-    <FileVersion>1.5.0.0</FileVersion>
-    <Version>1.5</Version>
+    <AssemblyVersion>1.5.1.0</AssemblyVersion>
+    <FileVersion>1.5.1.0</FileVersion>
+    <Version>1.5.1</Version>
     <PackageReleaseNotes>v1.5: Added Enumerable "BeforeEachTest" and "AfterEachText" extension methods.
+v1.5.1: Fixed Console.BufferWidth IOException bug when running tests with ReSharper
 </PackageReleaseNotes>
   </PropertyGroup>
 

@@ -15,7 +15,7 @@ namespace SparkyTestHelpers.Scenarios
     /// </para>
     /// <para>
     /// This class provides the ability to execute the same test code for multiple test
-    /// cases and, after all test cases have been executed, failing the unit test if 
+    /// cases and, after all test cases have been executed, failing the unit test if
     /// any of the test cases failed.
     /// </para>
     /// </summary>
@@ -47,7 +47,7 @@ namespace SparkyTestHelpers.Scenarios
 
         /// <summary>
         /// Defines <see cref="Func{TScenario, Exception, Boolean}"/> to be called after testing each scenario.
-        /// The function receives the scenario and the exception (if any) caught by the test. 
+        /// The function receives the scenario and the exception (if any) caught by the test.
         /// If the function returns true, the scenario test is "passed". If false, exception is thrown to fail the test.
         /// </summary>
         /// <param name="func">The "callback" function.</param>
@@ -226,7 +226,7 @@ namespace SparkyTestHelpers.Scenarios
 
         private void HandleCaughtExceptions(ScenarioException[] caughtExceptions)
         {
-            string separator = $"\n{new string('_', Console.BufferWidth)}\n";
+            string separator = $"\n{new string('_', ConsoleHelper.GetWidth())}\n";
 
             if (caughtExceptions.Any())
             {
