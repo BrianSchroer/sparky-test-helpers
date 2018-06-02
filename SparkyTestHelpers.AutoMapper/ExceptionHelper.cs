@@ -24,7 +24,7 @@ namespace SparkyTestHelpers.AutoMapper
                         .Replace(".IsTestedBy((src, dest) => { /* custom test */ })", ".UseValue(() => ???)")
                         .Replace(".IgnoringMember", ".IgnoreMember");
 
-                    message = $"{message}\n{new string('_', Console.BufferWidth)}" 
+                    message = $"{message}\n{new string('_', ConsoleHelper.GetWidth())}"
                         + $"\nThe following code snippet might be useful for making your map match the test:\n"
                         + suggestedCode;
                 }

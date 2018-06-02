@@ -12,15 +12,15 @@
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.7</Version>
-    <PackageReleaseNotes>Update SparkyTestHelpers.Mapping dependency to v1.7</PackageReleaseNotes>
-    <AssemblyVersion>1.6.3.0</AssemblyVersion>
-    <FileVersion>1.6.3.0</FileVersion>
+    <Version>1.7.1</Version>
+    <PackageReleaseNotes>v1.7.1 Fixed Console.BufferWidth IOException bug when running tests with ReSharper</PackageReleaseNotes>
+    <AssemblyVersion>1.7.1.0</AssemblyVersion>
+    <FileVersion>1.7.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
-    <PackageReference Include="SparkyTestHelpers.Mapping" Version="1.7.1" />
+    <PackageReference Include="SparkyTestHelpers.Mapping" Version="1.7.2" />
   </ItemGroup>
 
 </Project>

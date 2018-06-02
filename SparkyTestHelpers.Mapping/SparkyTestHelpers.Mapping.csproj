@@ -11,10 +11,11 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
-    <PackageReleaseNotes>v1.7.1: Added MaximumDepth, MaximumIEnumerableSize</PackageReleaseNotes>
-    <AssemblyVersion>1.7.1.0</AssemblyVersion>
-    <FileVersion>1.7.1.0</FileVersion>
-    <Version>1.7.1</Version>
+    <PackageReleaseNotes>v1.7.1: Added MaximumDepth, MaximumIEnumerableSize
+v1.7.2 Fixed Console.BufferWidth IOException bug when running tests with ReSharper</PackageReleaseNotes>
+    <AssemblyVersion>1.7.2.0</AssemblyVersion>
+    <FileVersion>1.7.2.0</FileVersion>
+    <Version>1.7.2</Version>
     <Product>SparkyTestHelpers.Mapping</Product>
     <PackageId>SparkyTestHelpers.Mapping</PackageId>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
@@ -23,6 +24,6 @@
     <DocumentationFile>bin\Release\netstandard2.0\SparkyTestHelpers.Mapping.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SparkyTestHelpers" Version="1.5.0" />
+    <PackageReference Include="SparkyTestHelpers" Version="1.5.1" />
   </ItemGroup>
 </Project>

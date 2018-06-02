@@ -1,5 +1,4 @@
 ﻿using SparkyTestHelpers.Scenarios;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -43,7 +42,7 @@ namespace SparkyTestHelpers.Mapping
                 + string.Join(", dest => dest.", untestedProperties) + ")";
 
             return
-                $"\n{new string('_', Console.BufferWidth)}\n"
+                $"\n{new string('_', ConsoleHelper.GetWidth())}\n"
                 + $"If you want to ignore the untested member(s), you can code:\n\n{ignoringMessage}";
         }
     }
