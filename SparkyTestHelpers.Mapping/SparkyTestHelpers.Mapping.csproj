@@ -11,11 +11,10 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
-    <PackageReleaseNotes>v1.7.1: Added MaximumDepth, MaximumIEnumerableSize
-v1.7.2 Fixed Console.BufferWidth IOException bug when running tests with ReSharper</PackageReleaseNotes>
-    <AssemblyVersion>1.7.2.0</AssemblyVersion>
-    <FileVersion>1.7.2.0</FileVersion>
-    <Version>1.7.2</Version>
+    <PackageReleaseNotes>v1.8 RandomValuesHelper: Added "CreateRandom" pseudonym for "CreateInstanceWithRandomValues", individual "Random..." (e.g. "RandomBoolean", "RandomInt") methods.</PackageReleaseNotes>
+    <AssemblyVersion>1.8.0.0</AssemblyVersion>
+    <FileVersion>1.8.0.0</FileVersion>
+    <Version>1.8</Version>
     <Product>SparkyTestHelpers.Mapping</Product>
     <PackageId>SparkyTestHelpers.Mapping</PackageId>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>

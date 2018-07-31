@@ -12,10 +12,10 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, moq</PackageTags>
-    <Version>1.2.1</Version>
-    <AssemblyVersion>1.2.1.0</AssemblyVersion>
-    <FileVersion>1.2.1.0</FileVersion>
-    <PackageReleaseNotes>v1.2.1: Upgrade dependencies</PackageReleaseNotes>
+    <Version>1.3</Version>
+    <AssemblyVersion>1.3.0.0</AssemblyVersion>
+    <FileVersion>1.3.0.0</FileVersion>
+    <PackageReleaseNotes>v1.3: "Any" class made "partial" so it can be extended with your own domain types, added Any .Exception, .Float, .Guid, .Lazy&lt;T&gt;, .Nullable&lt;T&gt;, .One&lt;T&gt; (pseudonym for Any.InstanceOf&lt;T&gt;), .Short, .UInt, .ULong, .UShort</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

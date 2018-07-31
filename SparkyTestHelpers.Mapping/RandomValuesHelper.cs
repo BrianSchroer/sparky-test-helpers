@@ -41,21 +41,21 @@ namespace SparkyTestHelpers.Mapping
                 { typeof(decimal?), RandomDecimal },
                 { typeof(double), RandomDouble },
                 { typeof(double?), RandomDouble },
-                { typeof(float), RandomSingle },
-                { typeof(float?), RandomSingle },
-                { typeof(int), RandomInt32 },
-                { typeof(int?), RandomInt32 },
-                { typeof(uint), RandomUInt32 },
-                { typeof(uint?), RandomUInt32 },
-                { typeof(long), RandomInt64 },
-                { typeof(long?), RandomInt64 },
-                { typeof(ulong), RandomUInt64 },
-                { typeof(ulong?), RandomUInt64 },
+                { typeof(float), RandomFloat },
+                { typeof(float?), RandomFloat },
+                { typeof(int), RandomInt },
+                { typeof(int?), RandomInt },
+                { typeof(uint), RandomUInt },
+                { typeof(uint?), RandomUInt },
+                { typeof(long), RandomLong },
+                { typeof(long?), RandomLong },
+                { typeof(ulong), RandomULong },
+                { typeof(ulong?), RandomULong },
                 { typeof(object), RandomString },
-                { typeof(short), RandomInt16 },
-                { typeof(short?), RandomInt16 },
-                { typeof(ushort), RandomUInt16 },
-                { typeof(ushort?), RandomUInt16 },
+                { typeof(short), RandomShort },
+                { typeof(short?), RandomShort },
+                { typeof(ushort), RandomUShort },
+                { typeof(ushort?), RandomUShort },
                 { typeof(string), RandomString }
             };
 
@@ -89,6 +89,7 @@ namespace SparkyTestHelpers.Mapping
         /// <summary>
         /// Create an instance of the specified type and populate its properties with random values.
         /// </summary>
+        /// <remarks>"Pseudonym" of <see cref="CreateRandom{T}"/></remarks>
         /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
         /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
         /// <returns>New instance.</returns>
@@ -99,6 +100,18 @@ namespace SparkyTestHelpers.Mapping
             callback?.Invoke(instance);
 
             return instance;
+        }
+
+        /// <summary>
+        /// Create an instance of the specified type and populate its properties with random values.
+        /// </summary>
+        /// <remarks>"Pseudonym" of <see cref="CreateInstanceWithRandomValues{T}"/></remarks>
+        /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+        /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+        /// <returns>New instance.</returns>
+        public T CreateRandom<T>(Action<T> callback = null)
+        {
+            return CreateInstanceWithRandomValues<T>(callback);
         }
 
         /// <summary>
@@ -222,6 +235,167 @@ namespace SparkyTestHelpers.Mapping
             return value;
         }
 
+        /// <summary>
+        /// Get random Enum value.
+        /// </summary>
+        /// <typeparam name="TEnum">The Enum type.</typeparam>
+        /// <returns>Random <typeparamref name="TEnum"/> value.</returns>
+        public TEnum RandomEnumValue<TEnum>() where TEnum : struct, IConvertible
+        {
+            Type enumType = typeof(TEnum);
+
+            if (!enumType.GetTypeInfo().IsEnum)
+            {
+                throw new InvalidOperationException($"{enumType.FullName} is not an Enum type.");
+            }
+
+            return (TEnum) RandomEnum(new Random(), enumType);
+        }
+
+        /// <summary>
+        /// Get random bool value.
+        /// </summary>
+        /// <returns>Random <see cref="bool" /> value.</returns>
+        public bool RandomBoolean()
+        {
+            return (bool)RandomBoolean(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random byte value.
+        /// </summary>
+        /// <returns>Random <see cref="byte" /> value.</returns>
+        public byte RandomByte()
+        {
+            return (byte)RandomByte(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random char value.
+        /// </summary>
+        /// <returns>Random <see cref="char" /> value.</returns>
+        public char RandomChar()
+        {
+            return (char)RandomChar(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random DateTime value.
+        /// </summary>
+        /// <returns>Random <see cref="DateTime" /> value.</returns>
+        public DateTime RandomDateTime()
+        {
+            return (DateTime)RandomDateTime(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random decimal value.
+        /// </summary>
+        /// <returns>Random <see cref="decimal" /> value.</returns>
+        public decimal RandomDecimal()
+        {
+            return (decimal)RandomDecimal(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random double value.
+        /// </summary>
+        /// <returns>Random <see cref="double" /> value.</returns>
+        public double RandomDouble()
+        {
+            return (double)RandomDouble(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random Guid value.
+        /// </summary>
+        /// <returns>Random <see cref="Guid" /> value.</returns>
+        public Guid RandomGuid()
+        {
+            return (Guid)RandomGuid(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random int value.
+        /// </summary>
+        /// <returns>Random <see cref="int" /> value.</returns>
+        public int RandomInt()
+        {
+            return (int)RandomInt(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random uint value.
+        /// </summary>
+        /// <returns>Random <see cref="uint" /> value.</returns>
+        public uint RandomUInt()
+        {
+            return (uint)RandomUInt(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random short value.
+        /// </summary>
+        /// <returns>Random <see cref="short" /> value.</returns>
+        public short RandomShort()
+        {
+            return (short)RandomShort(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random ushort value.
+        /// </summary>
+        /// <returns>Random <see cref="ushort" /> value.</returns>
+        public ushort RandomUShort()
+        {
+            return (ushort)RandomUShort(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random long value.
+        /// </summary>
+        /// <returns>Random <see cref="long" /> value.</returns>
+        public long RandomLong()
+        {
+            return (long)RandomLong(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random ulong value.
+        /// </summary>
+        /// <returns>Random <see cref="ulong" /> value.</returns>
+        public ulong RandomULong()
+        {
+            return (ulong)RandomULong(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random float value.
+        /// </summary>
+        /// <returns>Random <see cref="float" /> value.</returns>
+        public float RandomFloat()
+        {
+            return (float)RandomFloat(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random sbyte value.
+        /// </summary>
+        /// <returns>Random <see cref="sbyte" /> value.</returns>
+        public sbyte RandomSByte()
+        {
+            return (sbyte)RandomSByte(new Random(), null);
+        }
+
+        /// <summary>
+        /// Get random string value.
+        /// </summary>
+        /// <returns>Random <see cref="string"/> value.</returns>
+        public string RandomString()
+        {
+            return RandomGuid().ToString();
+        }
+
         private object RandomEnum(Random random, Type enumType)
         {
             Array values = Enum.GetValues(enumType);
@@ -307,37 +481,37 @@ namespace SparkyTestHelpers.Mapping
             return Guid.NewGuid();
         }
 
-        private static object RandomInt32(Random random, string prefix)
+        private static object RandomInt(Random random, string prefix)
         {
             return random.Next();
         }
 
-        private static object RandomUInt32(Random random, string prefix)
+        private static object RandomUInt(Random random, string prefix)
         {
             return Convert.ToUInt32(random.Next(0, Int32.MaxValue));
         }
 
-        private static object RandomInt16(Random random, string prefix)
+        private static object RandomShort(Random random, string prefix)
         {
             return Convert.ToInt16(random.Next(Int16.MinValue, Int16.MaxValue));
         }
 
-        private static object RandomUInt16(Random random, string prefix)
+        private static object RandomUShort(Random random, string prefix)
         {
             return Convert.ToUInt16(random.Next(UInt16.MinValue, UInt16.MaxValue));
         }
 
-        private static object RandomInt64(Random random, string prefix)
+        private static object RandomLong(Random random, string prefix)
         {
             return (long)random.Next();
         }
 
-        private static object RandomUInt64(Random random, string prefix)
+        private static object RandomULong(Random random, string prefix)
         {
             return Convert.ToUInt64(random.Next(0, Int32.MaxValue));
         }
 
-        private static object RandomSingle(Random random, string prefix)
+        private static object RandomFloat(Random random, string prefix)
         {
             return (float)random.NextDouble();
         }
