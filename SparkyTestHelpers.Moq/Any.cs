@@ -22,6 +22,26 @@ namespace SparkyTestHelpers.Moq
     public static partial class Any
     {
         /// <summary>
+        /// <see cref="It.IsAny{Action}"/> wrapper.
+        /// </summary>
+        public static Action Action() => It.IsAny<Action>();
+
+        /// <summary>
+        /// <see cref="It.IsAny{Action}"/> of <typeparamref name="T"/> wrapper.
+        /// </summary>
+        public static Action<T> Action<T>() => It.IsAny<Action<T>>();
+
+        /// <summary>
+        /// <see cref="It.IsAny{Action}"/> of <typeparamref name="T1"/>, <typeparamref name="T2"/> wrapper.
+        /// </summary>
+        public static Action<T1, T2> Action<T1, T2>() => It.IsAny<Action<T1, T2>>();
+
+        /// <summary>
+        /// <see cref="It.IsAny{Action}"/> of <typeparamref name="T1"/>, <typeparamref name="T2"/>, <typeparamref name="T3"/> wrapper.
+        /// </summary>
+        public static Action<T1, T2, T3> Action<T1, T2, T3>() => It.IsAny<Action<T1, T2, T3>>();
+
+        /// <summary>
         /// <see cref="It.IsAny{Array}"/> of <typeparamref name="T"/> wrapper.
         /// </summary>
         public static T[] Array<T>() => It.IsAny<T[]>();
@@ -58,9 +78,19 @@ namespace SparkyTestHelpers.Moq
         public static Exception Exception => It.IsAny<Exception>();
 
         /// <summary>
-        /// <see cref="It.IsAny{float}()"/> wrapper.
+        /// <see cref="It.IsAny{Func}"/> of <typeparamref name="T"/> wrapper.
         /// </summary>
-        public static float Float => It.IsAny<float>();
+        public static Func<T> Func<T>() => It.IsAny<Func<T>>();
+
+        /// <summary>
+        /// <see cref="It.IsAny{Func}"/> of <typeparamref name="T1"/>, <typeparamref name="T2"/>> wrapper.
+        /// </summary>
+        public static Func<T1, T2> Func<T1, T2>() => It.IsAny<Func<T1, T2>>();
+
+        /// <summary>
+        /// <see cref="It.IsAny{Func}"/> of <typeparamref name="T1"/>, <typeparamref name="T2"/>>, <typeparamref name="T3"/> wrapper.
+        /// </summary>
+        public static Func<T1, T2, T3> Func<T1, T2, T3>() => It.IsAny<Func<T1, T2, T3>>();
 
         /// <summary>
         /// <see cref="It.IsAny{Guid}()"/> wrapper.
@@ -71,6 +101,11 @@ namespace SparkyTestHelpers.Moq
         /// <see cref="It.IsAny{IEnumerable}"/> of <typeparamref name="T"/> wrapper.
         /// </summary>
         public static IEnumerable<T> IEnumerable<T>() => It.IsAny<IEnumerable<T>>();
+
+        /// <summary>
+        /// <see cref="It.IsAny{IList}"/> of <typeparamref name="T"/> wrapper.
+        /// </summary>
+        public static IList<T> IList<T>() => It.IsAny<IList<T>>();
 
         /// <summary>
         /// <see cref="It.IsAny{T}" /> of <typeparamref name="T"/> wrapper.
@@ -104,7 +139,7 @@ namespace SparkyTestHelpers.Moq
         public static List<T> List<T>() => It.IsAny<List<T>>();
 
         /// <summary>
-        /// <see cref="It.IsAny{long}()"/> wrapper.
+        /// <see cref="It.IsAny{Int64}()"/> wrapper.
         /// </summary>
         public static long Long => It.IsAny<long>();
 
@@ -127,9 +162,14 @@ namespace SparkyTestHelpers.Moq
         public static T One<T>() => It.IsAny<T>();
 
         /// <summary>
-        /// <see cref="It.IsAny{short}()"/> wrapper.
+        /// <see cref="It.IsAny{Int16}()"/> wrapper.
         /// </summary>
         public static short Short => It.IsAny<short>();
+
+        /// <summary>
+        /// <see cref="It.IsAny{Single}()"/> wrapper.
+        /// </summary>
+        public static Single Single => It.IsAny<Single>();
 
         /// <summary>
         /// <see cref="It.IsAny{String}()"/> wrapper.
@@ -137,22 +177,32 @@ namespace SparkyTestHelpers.Moq
         public static string String => It.IsAny<string>();
 
         /// <summary>
+        /// <see cref="It.IsAny{TimeSpan}()"/> wrapper.
+        /// </summary>
+        public static TimeSpan TimeSpan => It.IsAny<TimeSpan>();
+
+        /// <summary>
         /// <see cref="It.IsAny{Tuple}"/> wrapper.
         /// </summary>
         public static Tuple<T1, T2> Tuple<T1, T2>() => It.IsAny<Tuple<T1, T2>>();
 
         /// <summary>
-        /// <see cref="It.IsAny{uint}()"/> wrapper.
+        /// <see cref="It.IsAny{Type}()"/> wrapper.
+        /// </summary>
+        public static Type Type => It.IsAny<Type>();
+
+        /// <summary>
+        /// <see cref="It.IsAny{UInt32}()"/> wrapper.
         /// </summary>
         public static uint UInt => It.IsAny<uint>();
 
         /// <summary>
-        /// <see cref="It.IsAny{ulong}()"/> wrapper.
+        /// <see cref="It.IsAny{UInt64}()"/> wrapper.
         /// </summary>
         public static ulong ULong => It.IsAny<ulong>();
 
         /// <summary>
-        /// <see cref="It.IsAny{ushort}()"/> wrapper.
+        /// <see cref="It.IsAny{UINt16}()"/> wrapper.
         /// </summary>
         public static ushort UShort => It.IsAny<ushort>();
     }

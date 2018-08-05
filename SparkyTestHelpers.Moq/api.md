@@ -25,20 +25,41 @@ _mock.Setup(x => x.DoSomething(
 ```
 
 #### "Any" members:
+* Any.Action
+* Any.Action<*T*>
+* Any.Action<*T1, T2*>
+* Any.Action<*T1, T2, T3*>
+* Any.Array<*T*>
 * Any.Boolean
+* Any.Dictionary<TKey, TValue>
 * Any.DateTime
 * Any.Decimal
 * Any.Double
-* Any.Int
-* Any.Object
-* Any.String
-* Any.InstanceOf<*T*>
-* Any.Array<*T*>
+* Any.Func<*T*>
+* Any.Func<*T1, T2*>
+* Any.Func<*T1, T2, T3*>
+* Any.Guid
 * Any.IEnumerable<*T*>
-* Any.List<*T*>
-* Any.Dictionary<TKey, TValue>
+* Any.InstanceOf<*T*> (*Any.One<*T*> is a "synonym" for Any.InstanceOf<*T*>*)
+* Any.IList<*T*>
+* Any.Int
+* Any.IQueryable<*T*?
 * Any.KeyValuePair<TKey, TValue>
+* Any.Lazy<*T*>
+* Any.List<*T*>
+* Any.Long
+* Any.Nullable<*T*>
+* Any.Object
+* Any.Short
+* Any.Single
+* Any.String
+* Any.TimeSpan
 * Any.Tuple<T1, T2>
+* Any.Type
+* Any.UInt
+* Any.ULong
+* Any.UShort
+* 
 
 ### Alternate "Verify" syntax
 
