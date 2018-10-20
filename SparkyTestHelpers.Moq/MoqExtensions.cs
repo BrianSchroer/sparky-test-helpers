@@ -20,24 +20,24 @@ namespace SparkyTestHelpers.Moq
         /// <example>
         ///     <para>This code:</para>
         ///     <code><![CDATA[
-        ///     _mockAdapter.Setup(x => 
+        ///     _mockAdapter.Setup(x =>
         ///         x.Initialize(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>()));
-        ///     
+        ///
         ///     _logic.Initialize(_testAccountNumber, _usefulInputArray);
-        ///     
-        ///     _mockAdapter.Verify(x => 
-        ///         x.Initialize(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>())), 
+        ///
+        ///     _mockAdapter.Verify(x =>
+        ///         x.Initialize(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>())),
         ///         Times.Once);
         ///     ]]></code>
-        ///     <para>...cound be written as:</para>
+        ///     <para>...could be written as:</para>
         ///     <code><![CDATA[
-        ///     var initializeExpression = _mockAdapter.DefineExpression(x => 
+        ///     var initializeExpression = _mockAdapter.Expression(x =>
         ///         x.Initialize(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>()));
-        ///     
+        ///
         ///     _mockAdapter.Setup(initializeExpression).Returns(new UsefulData());
-        ///     
+        ///
         ///     _logic.Initialize(_testAccountNumber, _usefulInputArray);
-        ///     
+        ///
         ///     _mockAdapter.Verify(initializeExpression, Times.Once);
         ///     ]]></code>
         /// </example>
@@ -60,25 +60,25 @@ namespace SparkyTestHelpers.Moq
         /// <example>
         ///     <para>This code:</para>
         ///     <code><![CDATA[
-        ///     _mockAdapter.Setup(x => 
+        ///     _mockAdapter.Setup(x =>
         ///         x.GetUsefulData(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>()))
         ///         .Returns(new UsefulData());
-        ///     
+        ///
         ///     _logic.GetUsefulData(_testAccountNumber, _usefulInputArray);
-        ///     
-        ///     _mockAdapter.Verify(x => 
-        ///         x.GetUsefulData(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>())), 
+        ///
+        ///     _mockAdapter.Verify(x =>
+        ///         x.GetUsefulData(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>())),
         ///         Times.Once);
         ///     ]]></code>
-        ///     <para>...cound be written as:</para>
+        ///     <para>...could be written as:</para>
         ///     <code><![CDATA[
-        ///     var getUsefulDataExpression = _mockAdapter.DefineExpression(x => 
+        ///     var getUsefulDataExpression = _mockAdapter.Expression(x =>
         ///         x.GetUsefulData(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>()));
-        ///     
+        ///
         ///     _mockAdapter.Setup(getUsefulDataExpression).Returns(new UsefulData());
-        ///     
+        ///
         ///     _logic.GetUsefulData(_testAccountNumber, _usefulInputArray);
-        ///     
+        ///
         ///     _mockAdapter.Verify(getUsefulDataExpression, Times.Once);
         ///     ]]></code>
         /// </example>
@@ -233,7 +233,7 @@ namespace SparkyTestHelpers.Moq
 
         /// <summary>
         /// Verifies that a property was set on the mock exactly <paramref name="setCount"/> times.
-        /// </summary> 
+        /// </summary>
         public static void VerifySetCount<T>(
             this Mock<T> mock, int setCount, Action<T> expression) where T : class
         {
@@ -242,7 +242,7 @@ namespace SparkyTestHelpers.Moq
 
         /// <summary>
         /// Verifies that a property was set on the mock exactly 1 time.
-        /// </summary> 
+        /// </summary>
         public static void VerifyOneSet<T>(
             this Mock<T> mock, Action<T> expression) where T : class
         {
@@ -251,7 +251,7 @@ namespace SparkyTestHelpers.Moq
 
         /// <summary>
         /// Verifies that a property was set on the mock at least 1 time.
-        /// </summary> 
+        /// </summary>
         public static void VerifyAtLeastOneSet<T>(
             this Mock<T> mock, Action<T> expression) where T : class
         {
@@ -260,7 +260,7 @@ namespace SparkyTestHelpers.Moq
 
         /// <summary>
         /// Verifies that a property was set on the mock zero or one times.
-        /// </summary> 
+        /// </summary>
         public static void VerifyAtMostOneSet<T>(
             this Mock<T> mock, Action<T> expression) where T : class
         {
@@ -269,7 +269,7 @@ namespace SparkyTestHelpers.Moq
 
         /// <summary>
         /// Verifies that a property was never set on the mock.
-        /// </summary> 
+        /// </summary>
         public static void VerifyNoSets<T>(
             this Mock<T> mock, Action<T> expression) where T : class
         {
@@ -284,7 +284,7 @@ namespace SparkyTestHelpers.Moq
         ///     <code><![CDATA[
         ///     _mock.Setup(x => x.Do(It.Is<int>(i => i % 2 == 0))).Returns(1);
         ///     ]]></code>
-        ///     <para>...cound be written as:</para>
+        ///     <para>...could be written as:</para>
         ///     <code><![CDATA[
         ///     _mock.Setup(x => x.Do(Any.Int.Where(i => i % 2 == 0))).Returns(1);
         ///     ]]></code>

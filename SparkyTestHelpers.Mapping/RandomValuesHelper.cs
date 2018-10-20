@@ -468,12 +468,12 @@ namespace SparkyTestHelpers.Mapping
 
         private static object RandomDecimal(Random random, string prefix)
         {
-            return (decimal)random.NextDouble();
+            return Convert.ToDecimal(random.Next(1_000_000)) / 100;
         }
 
         private static object RandomDouble(Random random, string prefix)
         {
-            return random.NextDouble();
+            return Convert.ToDouble(random.Next(1_000_000)) / 100;
         }
 
         private static object RandomGuid(Random random, string prefix)
@@ -513,7 +513,7 @@ namespace SparkyTestHelpers.Mapping
 
         private static object RandomFloat(Random random, string prefix)
         {
-            return (float)random.NextDouble();
+            return (float)Convert.ToDouble(random.Next(10_000_000)) / 1000; ;
         }
 
         private static object RandomSByte(Random random, string prefix)
