@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 namespace SparkyTestHelpers.Moq.UnitTests
 {
     /// <summary>
-    /// <see cref="MoqExtensions"/> tests.
+    /// <see cref="MoqVerifyExtensions"/> tests.
     /// </summary>
     [TestClass]
     public partial class MoqExtensionsTests

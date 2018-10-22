@@ -1,16 +1,16 @@
 ﻿using System;
-using Moq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SparkyTestHelpers.Scenarios;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using SparkyTestHelpers.Scenarios;
 
-namespace SparkyTestHelpers.Moq.UnitTests
+namespace SparkyTestHelpers.Moq.Core.UnitTests
 {
     /// <summary>
-    /// <see cref="MoqVerifyExtensions"/> tests.
+    /// <see cref="Any"/> tests.
     /// </summary>
     [TestClass]
-    public partial class AnyTests
+    public class AnyTests
     {
         private Mock<IMockable> _mock;
         private IMockable _test;
@@ -34,7 +34,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
             {
                 _mock.Invocations.Clear();
                 _test.WithArray(scenario);
-                _mock.VerifyOneCallTo(x => x.WithArray(Any.Array<string>()));
+                _mock.Verify(x => x.WithArray(Any.Array<string>()), Times.Once);
             });
         }
 
@@ -46,7 +46,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
                 {
                     _mock.Invocations.Clear();
                     _test.WithBoolean(scenario);
-                    _mock.VerifyOneCallTo(x => x.WithBoolean(Any.Boolean));
+                    _mock.Verify(x => x.WithBoolean(Any.Boolean), Times.Once);
                 });
         }
 
@@ -58,7 +58,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
                 {
                     _mock.Invocations.Clear();
                     _test.WithDateTime(scenario);
-                    _mock.VerifyOneCallTo(x => x.WithDateTime(Any.DateTime));
+                    _mock.Verify(x => x.WithDateTime(Any.DateTime), Times.Once);
                 });
         }
         [TestMethod]
@@ -69,7 +69,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
                 {
                     _mock.Invocations.Clear();
                     _test.WithDecimal(scenario);
-                    _mock.VerifyOneCallTo(x => x.WithDecimal(Any.Decimal));
+                    _mock.Verify(x => x.WithDecimal(Any.Decimal), Times.Once);
                 });
         }
 
@@ -84,7 +84,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
             {
                 _mock.Invocations.Clear();
                 _test.WithDictionary(scenario);
-                _mock.VerifyOneCallTo(x => x.WithDictionary(Any.Dictionary<string, string>()));
+                _mock.Verify(x => x.WithDictionary(Any.Dictionary<string, string>()), Times.Once);
             });
         }
 
@@ -96,7 +96,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
                 {
                     _mock.Invocations.Clear();
                     _test.WithDouble(scenario);
-                    _mock.VerifyOneCallTo(x => x.WithDouble(Any.Double));
+                    _mock.Verify(x => x.WithDouble(Any.Double), Times.Once);
                 });
         }
 
@@ -112,7 +112,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
             {
                 _mock.Invocations.Clear();
                 _test.WithIEnumerable(scenario);
-                _mock.VerifyOneCallTo(x => x.WithIEnumerable(Any.IEnumerable<string>()));
+                _mock.Verify(x => x.WithIEnumerable(Any.IEnumerable<string>()), Times.Once);
             });
         }
 
@@ -124,7 +124,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
                 {
                     _mock.Invocations.Clear();
                     _test.WithInt(scenario);
-                    _mock.VerifyOneCallTo(x => x.WithInt(Any.Int));
+                    _mock.Verify(x => x.WithInt(Any.Int), Times.Once);
                 });
         }
 
@@ -139,7 +139,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
             {
                 _mock.Invocations.Clear();
                 _test.WithKeyValuePair(scenario);
-                _mock.VerifyOneCallTo(x => x.WithKeyValuePair(Any.KeyValuePair<string, string>()));
+                _mock.Verify(x => x.WithKeyValuePair(Any.KeyValuePair<string, string>()), Times.Once);
             });
         }
 
@@ -155,7 +155,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
             {
                 _mock.Invocations.Clear();
                 _test.WithList(scenario);
-                _mock.VerifyOneCallTo(x => x.WithList(Any.List<string>()));
+                _mock.Verify(x => x.WithList(Any.List<string>()), Times.Once);
             });
         }
 
@@ -167,7 +167,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
                 {
                     _mock.Invocations.Clear();
                     _test.WithObject(scenario);
-                    _mock.VerifyOneCallTo(x => x.WithObject(Any.Object));
+                    _mock.Verify(x => x.WithObject(Any.Object), Times.Once);
                 });
         }
 
@@ -179,7 +179,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
                 {
                     _mock.Invocations.Clear();
                     _test.WithString(scenario);
-                    _mock.VerifyOneCallTo(x => x.WithString(Any.String));
+                    _mock.Verify(x => x.WithString(Any.String), Times.Once);
                 });
         }
 
@@ -195,7 +195,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
             {
                 _mock.Invocations.Clear();
                 _test.WithTuple(scenario);
-                _mock.VerifyOneCallTo(x => x.WithTuple(Any.Tuple<string, int>()));
+                _mock.Verify(x => x.WithTuple(Any.Tuple<string, int>()), Times.Once);
             });
         }
 
@@ -211,7 +211,7 @@ namespace SparkyTestHelpers.Moq.UnitTests
             {
                 _mock.Invocations.Clear();
                 _test.WithScenarioTester(scenario);
-                _mock.VerifyOneCallTo(x => x.WithScenarioTester(Any.InstanceOf<ScenarioTester<string>>()));
+                _mock.Verify(x => x.WithScenarioTester(Any.InstanceOf<ScenarioTester<string>>()));
             });
         }
     }

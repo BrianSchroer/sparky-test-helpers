@@ -5,89 +5,10 @@ using Moq;
 namespace SparkyTestHelpers.Moq
 {
     /// <summary>
-    /// Extension methods for Moq.
+    /// "Verify" Extension methods for Moq.
     /// </summary>
-    public static class MoqExtensions
+    public static class MoqVerifyExtensions
     {
-        /// <summary>
-        /// Defines expression to be used for mock action .Setup/.Verify methods. This helper allows you to code
-        /// the lambda just once and use it for both the .Setup and .Verify methods.
-        /// </summary>
-        /// <typeparam name="T">The type being mocked.</typeparam>
-        /// <param name="mock">The mock instance.</param>
-        /// <param name="expression">The expression (callback).</param>
-        /// <returns>The expression.</returns>
-        /// <example>
-        ///     <para>This code:</para>
-        ///     <code><![CDATA[
-        ///     _mockAdapter.Setup(x =>
-        ///         x.Initialize(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>()));
-        ///
-        ///     _logic.Initialize(_testAccountNumber, _usefulInputArray);
-        ///
-        ///     _mockAdapter.Verify(x =>
-        ///         x.Initialize(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>())),
-        ///         Times.Once);
-        ///     ]]></code>
-        ///     <para>...could be written as:</para>
-        ///     <code><![CDATA[
-        ///     var initializeExpression = _mockAdapter.Expression(x =>
-        ///         x.Initialize(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>()));
-        ///
-        ///     _mockAdapter.Setup(initializeExpression).Returns(new UsefulData());
-        ///
-        ///     _logic.Initialize(_testAccountNumber, _usefulInputArray);
-        ///
-        ///     _mockAdapter.Verify(initializeExpression, Times.Once);
-        ///     ]]></code>
-        /// </example>
-
-        public static Expression<Action<T>> Expression<T>(
-            this Mock<T> mock, Expression<Action<T>> expression) where T : class
-        {
-            return expression;
-        }
-
-        /// <summary>
-        /// Defines expression to be used for mock function .Setup/.Verify methods. This helper allows you to code
-        /// the lambda just once and use it for both the .Setup and .Verify methods.
-        /// </summary>
-        /// <typeparam name="T">The type being mocked.</typeparam>
-        /// <typeparam name="TResult">The expression result type.</typeparam>
-        /// <param name="mock">The mock instance.</param>
-        /// <param name="expression">The expression (callback).</param>
-        /// <returns>The expression.</returns>
-        /// <example>
-        ///     <para>This code:</para>
-        ///     <code><![CDATA[
-        ///     _mockAdapter.Setup(x =>
-        ///         x.GetUsefulData(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>()))
-        ///         .Returns(new UsefulData());
-        ///
-        ///     _logic.GetUsefulData(_testAccountNumber, _usefulInputArray);
-        ///
-        ///     _mockAdapter.Verify(x =>
-        ///         x.GetUsefulData(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>())),
-        ///         Times.Once);
-        ///     ]]></code>
-        ///     <para>...could be written as:</para>
-        ///     <code><![CDATA[
-        ///     var getUsefulDataExpression = _mockAdapter.Expression(x =>
-        ///         x.GetUsefulData(It.IsAny<string>(), It.IsAny<IEnumerable<UsefulInput>>()));
-        ///
-        ///     _mockAdapter.Setup(getUsefulDataExpression).Returns(new UsefulData());
-        ///
-        ///     _logic.GetUsefulData(_testAccountNumber, _usefulInputArray);
-        ///
-        ///     _mockAdapter.Verify(getUsefulDataExpression, Times.Once);
-        ///     ]]></code>
-        /// </example>
-        public static Expression<Func<T, TResult>> Expression<T, TResult>(
-            this Mock<T> mock, Expression<Func<T, TResult>> expression) where T : class
-        {
-            return expression;
-        }
-
         /// <summary>
         /// Verifies that a specific invocation matching the given expression was performed on the mock
         /// exactly <paramref name="callCount"/> times.
@@ -274,28 +195,6 @@ namespace SparkyTestHelpers.Moq
             this Mock<T> mock, Action<T> expression) where T : class
         {
             mock.VerifySet(expression, Times.Never);
-        }
-
-        /// <summary>
-        /// <c>Moq</c> "It.Is" alternative - Matches any value that satisfies the given predicate.
-        /// </summary>
-        /// <example>
-        ///     <para>This code:</para>
-        ///     <code><![CDATA[
-        ///     _mock.Setup(x => x.Do(It.Is<int>(i => i % 2 == 0))).Returns(1);
-        ///     ]]></code>
-        ///     <para>...could be written as:</para>
-        ///     <code><![CDATA[
-        ///     _mock.Setup(x => x.Do(Any.Int.Where(i => i % 2 == 0))).Returns(1);
-        ///     ]]></code>
-        /// </example>
-        /// <typeparam name="T">The type being mocked.</typeparam>
-        /// <param name="mock">The mock instance.</param>
-        /// <param name="match">The predicate used to match the method argument.</param>
-        /// <returns>A <see cref="Match{T}"/> that matches any value of <typeparamref name="T"/>.</returns>
-        public static T Where<T>(this T mock, Expression<Func<T, bool>> match)
-        {
-            return It.Is(match);
         }
     }
 }

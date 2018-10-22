@@ -1,9 +1,12 @@
 ﻿## [Moq](https://github.com/moq) syntax helpers ##
 
 _see also_:
+* [SparkyTestHelpers.Moq](https://www.nuget.org/packages/SparkyTestHelpers.Moq/)
 * [SparkyTestHelpers.Moq.Fluent](https://www.nuget.org/packages/SparkyTestHelpers.Moq.Fluent/)
 * the rest of the [**"Sparky suite"** of .NET utilities and test helpers](https://www.nuget.org/profiles/BrianSchroer)
 ---
+
+This package provides core extension methods intended for use with **SparkyTestHelpers.Moq** and **SparkyTestHelpers.Moq.Fluent**, but it can be used on its own...
 
 [Moq, “the most popular and friendly mocking framework for .NET”](https://github.com/moq/moq4) is great, but some of the syntax is a bit unwieldy.
 
@@ -61,35 +64,6 @@ _mock.Setup(x => x.DoSomething(
 * Any.ULong
 * Any.UShort
 
-### Alternate "Verify" syntax
-
-```csharp
-_mock.Verify(x => x.Foo("bar", 3), Times.Once);
-```
-...can be coded as:
-```csharp
-using SparkyTestHelpers.Moq;
-. . .
-_mock.VerifyOneCallTo(x => x.Foo("bar", 3));
-```
-
-#### "Verify" extension methods:
-* VerifyCallCount(*int count, expresssion*)
-* VerifyOneCallTo(*expression*)
-* VerifyAtLeastOneCallTo(*expression*)
-* VerifyAtMostOneCallTo(*expression*)
-* VerifyNoCallsTo(*expression*)
-* VerifyGetCount(*int count, expresssion*)
-* VerifyOneGet(*expression*)
-* VerifyAtLeastOneGet(*expression*)
-* VerifyAtMostOneGet(*expression*)
-* VerifyNoGets(*expression*)
-* VerifySetCount(*int count, expresssion*)
-* VerifyOneSet(*expression*)
-* VerifyAtLeastOneSet(*expression*)
-* VerifyAtMostOneSet(*expression*)
-* VerifyNoSets(*expression*)
-
 ### *mock*.Where extension method
 ...provides an alternate syntax for "It.Is":
 ```csharp
@@ -115,7 +89,8 @@ subjectUnderTest.Foo("yo", 5, myBar);
 _mock.VerifyOneCallTo(x => x.Foo(
     Any.String, Any.Int, Any.InstanceOf<Bar>()));
 ```
-...where you have to code the same “*x => x.Foo(Any.String, Any.Int, Any.InstanceOf<*Bar*>()*” expression for both the .Setup and .Verify calls  -  can be simplified to:
+...where you have to code the same “*x => x.Foo(
+ Any.String, Any.Int, Any.InstanceOf<*Bar*>()*” expression for both the .Setup and .Verify calls  -  can be simplified to:
 ```csharp
 using SparkyTestHelpers.Moq;
 . . .

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <AssemblyName>SparkyTestHelpers.Moq.Core</AssemblyName>
+    <PackageId>SparkyTestHelpers.Moq.Core</PackageId>
+    <Version>1.4.3</Version>
+    <Authors>Brian Schroer</Authors>
+    <Product>SparkyTestHelpers.Moq.Core</Product>
+    <Description>Moq extension methods and syntax helpers used by SparkyTestHelpers.Moq and SparkyTestHelpers.Moq.Fluent</Description>
+    <Copyright>Copyright © Brian Schroer 2018</Copyright>
+    <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
+    <PackageTags>test, testing, unittest, moq</PackageTags>
+    <RootNamespace>SparkyTestHelpers.Moq</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.10.0" />
+  </ItemGroup>
+
+</Project>

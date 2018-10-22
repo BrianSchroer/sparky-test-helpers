@@ -55,6 +55,12 @@ Unit test syntax helpers for the **Moq** mocking framework:
 * [Source Code](/SparkyTestHelpers.Moq)
 * [API documentation](/SparkyTestHelpers.Moq/api.md)
 
+## SparkyTestHelpers.Moq.Fluent
+Unit test syntax helpers for using the **Moq** mocking framework with Fluent Assertions:
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Moq.Fluent/)
+* [Source Code](/SparkyTestHelpers.Moq.Fluent)
+* [API documentation](/SparkyTestHelpers.Moq.Fluent/api.md)
+
 ## SparkyTestHelpers.Xml
 Unit test helpers for XML .config files:
 * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Xml/)
