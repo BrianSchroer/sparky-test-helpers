@@ -6,40 +6,41 @@ namespace SparkyTestHelpers.Moq
 {
     public class FluentMockMethodVerifier<T> : FluentMockVerifier where T : class
     {
-        private readonly Expression<Action<T>> _expression;
+        public Expression<Action<T>> Expression { get; }
+
         private readonly Mock<T> _mock;
 
         internal FluentMockMethodVerifier(Mock<T> mock, Expression<Action<T>> methodExpression)
         {
             _mock = mock;
-            _expression = methodExpression;
+            Expression = methodExpression;
         }
 
         internal override void ShouldHaveBeenCalled()
-            => _mock.Verify(_expression);
+            => _mock.Verify(Expression);
 
         internal override void ShouldHaveBeenCalledOnce()
-            => _mock.Verify(_expression, Times.Once);
+            => _mock.Verify(Expression, Times.Once);
 
         internal override void ShouldHaveBeenCalledAtLeastOnce()
-            => _mock.Verify(_expression, Times.AtLeastOnce);
+            => _mock.Verify(Expression, Times.AtLeastOnce);
 
         internal override void ShouldHaveBeenCalledAtMostOnce()
-            => _mock.Verify(_expression, Times.AtMostOnce);
+            => _mock.Verify(Expression, Times.AtMostOnce);
 
         internal override void ShouldHaveCallCount(int callCount) =>
-            _mock.Verify(_expression, Times.Exactly(callCount));
+            _mock.Verify(Expression, Times.Exactly(callCount));
 
         internal override void ShouldHaveCallCountBetween(int callCountFrom, int callCountTo, Range rangeKind = Range.Inclusive)
-            => _mock.Verify(_expression, Times.Between(callCountFrom, callCountTo, rangeKind));
+            => _mock.Verify(Expression, Times.Between(callCountFrom, callCountTo, rangeKind));
 
         internal override void ShouldHaveCallCountOfAtLeast(int callCount)
-            => _mock.Verify(_expression, Times.AtLeast(callCount));
+            => _mock.Verify(Expression, Times.AtLeast(callCount));
 
         internal override void ShouldHaveCallCountOfAtMost(int callCount)
-            => _mock.Verify(_expression, Times.AtMost(callCount));
+            => _mock.Verify(Expression, Times.AtMost(callCount));
 
         internal override void ShouldNotHaveBeenCalled() =>
-            _mock.Verify(_expression, Times.Never);
+            _mock.Verify(Expression, Times.Never);
     }
 }

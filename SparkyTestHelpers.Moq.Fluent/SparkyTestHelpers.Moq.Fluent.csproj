@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
-    <Version>1.4.3</Version>
+    <Version>1.4.4</Version>
     <Authors>Brian Schroer</Authors>
     <Description>Unit test helpers providing "fluent" assertions for testing with Moq</Description>
     <Copyright>Copyright © Brian Schroer 2018</Copyright>
@@ -12,7 +12,7 @@
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>SparkyTestHelpers.Moq</RootNamespace>
-    <AssemblyVersion>1.4.3.0</AssemblyVersion>
+    <AssemblyVersion>1.4.4.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

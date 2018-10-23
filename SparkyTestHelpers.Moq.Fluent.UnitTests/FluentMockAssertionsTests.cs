@@ -10,6 +10,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
     {
         private Mock<IMockable> _mock;
         private IMockable _instance;
+        private string _test;
 
         [TestInitialize]
         public void TestInitialize()
@@ -25,17 +26,208 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
+        public void Mock_Should_HaveCallCount_should_return_FluentMockCountAssertions()
+        {
+            _mock.Should().HaveCallCount(3).Should().BeOfType<FluentMockCountAssertions<IMockable>>();
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveCallCount_should_return_FluentMockCountAssertions_for_range()
+        {
+            _mock.Should().HaveCallCount(3, 5).Should().BeOfType<FluentMockCountAssertions<IMockable>>();
+        }
+
+        [TestMethod]
         public void Mock_Should_HaveHadNoOtherCalls_should_work_as_expected()
         {
             Action verifyAction = () => _mock.Should().HaveHadNoOtherCalls();
 
             AssertSuccess(verifyAction);
 
-            _instance.TestProperty = "test";
+            _test = _instance.TestProperty;
 
             AssertException(verifyAction, "The following invocations on mock");
         }
 
+        [TestMethod]
+        public void Mock_Should_HaveCallsTo_should_work_as_expected_for_method()
+        {
+            Action verifyAction = () => _mock.Should().HaveCallsTo(x => x.TestMethod());
+
+            AssertException(verifyAction, "Expected invocation on the mock at least once, but was never performed: x => x.TestMethod");
+
+            _instance.TestMethod();
+            AssertSuccess(verifyAction);
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveNoCallsTo_should_work_as_expected_for_method()
+        {
+            Action verifyAction = () => _mock.Should().HaveNoCallsTo(x => x.TestMethod());
+
+            AssertSuccess(verifyAction);
+
+            _instance.TestMethod();
+
+            AssertException(verifyAction, "Expected invocation on the mock should never have been performed, but was 1 times: x => x.TestMethod");
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveOneCallTo_should_work_as_expected_for_method()
+        {
+            Action verifyAction = () => _mock.Should().HaveOneCallTo(x => x.TestMethod());
+
+            AssertException(verifyAction, "Expected invocation on the mock once, but was 0 times: x => x.TestMethod");
+
+            _instance.TestMethod();
+            AssertSuccess(verifyAction);
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveAtLeastOneCallTo_should_work_as_expected_for_method()
+        {
+            Action verifyAction = () => _mock.Should().HaveAtLeastOneCallTo(x => x.TestMethod());
+
+            AssertException(verifyAction, "Expected invocation on the mock at least once, but was never performed: x => x.TestMethod");
+
+            _instance.TestMethod();
+            AssertSuccess(verifyAction);
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveAtMostOneCallTo_should_work_as_expected_for_method()
+        {
+            Action verifyAction = () => _mock.Should().HaveAtMostOneCallTo(x => x.TestMethod());
+
+            AssertSuccess(verifyAction);
+
+            _instance.TestMethod();
+            AssertSuccess(verifyAction);
+
+            _instance.TestMethod();
+            _instance.TestMethod();
+            AssertException(verifyAction, "Expected invocation on the mock at most once, but was 2 times: x => x.TestMethod");
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveCallsTo_should_work_as_expected_for_property_get()
+        {
+            Action verifyAction = () => _mock.Should().HaveCallsTo(x => x.TestProperty);
+
+            AssertException(verifyAction, "Expected invocation on the mock at least once, but was never performed: x => x.TestProperty");
+
+            _test = _instance.TestProperty;
+            AssertSuccess(verifyAction);
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveNoCallsTo_should_work_as_expected_for_property_get()
+        {
+            Action verifyAction = () => _mock.Should().HaveNoCallsTo(x => x.TestProperty);
+
+            AssertSuccess(verifyAction);
+
+            _test = _instance.TestProperty;
+
+            AssertException(verifyAction, "Expected invocation on the mock should never have been performed, but was 1 times: x => x.TestProperty");
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveOneCallTo_should_work_as_expected_for_property_get()
+        {
+            Action verifyAction = () => _mock.Should().HaveOneCallTo(x => x.TestProperty);
+
+            AssertException(verifyAction, "Expected invocation on the mock once, but was 0 times: x => x.TestProperty");
+
+            _test = _instance.TestProperty;
+            AssertSuccess(verifyAction);
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveAtLeastOneCallTo_should_work_as_expected_for_property_get()
+        {
+            Action verifyAction = () => _mock.Should().HaveAtLeastOneCallTo(x => x.TestProperty);
+
+            AssertException(verifyAction, "Expected invocation on the mock at least once, but was never performed: x => x.TestProperty");
+
+            _test = _instance.TestProperty;
+            AssertSuccess(verifyAction);
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveAtMostOneCallTo_should_work_as_expected_for_property_get()
+        {
+            Action verifyAction = () => _mock.Should().HaveAtMostOneCallTo(x => x.TestProperty);
+
+            AssertSuccess(verifyAction);
+
+            _test = _instance.TestProperty;
+            AssertSuccess(verifyAction);
+
+            _test = _instance.TestProperty;
+            _test = _instance.TestProperty;
+            AssertException(verifyAction, "Expected invocation on the mock at most once, but was 2 times: x => x.TestProperty");
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveCallsTo_should_work_as_expected_for_property_set()
+        {
+            Action verifyAction = () => _mock.Should().HaveCallsToSet(x => x.TestProperty = Any.String);
+
+            AssertException(verifyAction, "Expected invocation on the mock at least once, but was never performed: x => x.TestProperty");
+
+            _instance.TestProperty = "test";
+            AssertSuccess(verifyAction);
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveNoCallsTo_should_work_as_expected_for_property_set()
+        {
+            Action verifyAction = () => _mock.Should().HaveNoCallsToSet(x => x.TestProperty = Any.String);
+
+            AssertSuccess(verifyAction);
+
+            _instance.TestProperty = "test";
+
+            AssertException(verifyAction, "Expected invocation on the mock should never have been performed, but was 1 times: x => x.TestProperty");
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveOneCallTo_should_work_as_expected_for_property_set()
+        {
+            Action verifyAction = () => _mock.Should().HaveOneCallToSet(x => x.TestProperty = Any.String);
+
+            AssertException(verifyAction, "Expected invocation on the mock once, but was 0 times: x => x.TestProperty");
+
+            _instance.TestProperty = "test";
+            AssertSuccess(verifyAction);
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveAtLeastOneCallTo_should_work_as_expected_for_property_set()
+        {
+            Action verifyAction = () => _mock.Should().HaveAtLeastOneCallToSet(x => x.TestProperty = Any.String);
+
+            AssertException(verifyAction, "Expected invocation on the mock at least once, but was never performed: x => x.TestProperty");
+
+            _instance.TestProperty = "test";
+            AssertSuccess(verifyAction);
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveAtMostOneCallTo_should_work_as_expected_for_property_set()
+        {
+            Action verifyAction = () => _mock.Should().HaveAtMostOneCallToSet(x => x.TestProperty = Any.String);
+
+            AssertSuccess(verifyAction);
+
+            _instance.TestProperty = "test";
+            AssertSuccess(verifyAction);
+
+            _instance.TestProperty = "test";
+            _instance.TestProperty = "test";
+            AssertException(verifyAction, "Expected invocation on the mock at most once, but was 2 times: x => x.TestProperty");
+        }
         private void AssertSuccess(Action verifyAction)
         {
             verifyAction.Should().NotThrow();

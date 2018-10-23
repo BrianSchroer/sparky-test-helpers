@@ -20,8 +20,20 @@ _mock.Verify(x => x.Foo(), Times.AtLeast(2));
 _mock.Verify(x => x.Foo(), Times.AtMost(5));
 _mock.Verify(x => x.Foo(), Times.Never);
 ```
-
 ...can be coded as:
+
+```csharp
+_mock.Should().HaveCallsTo(x => x.Foo());
+_mock.Should().HaveOneCallTo(x => x.Foo());
+_mock.Should().HaveAtLeastOneCallTo(x => x.Foo());
+_mock.Should().HaveAtMostOneCallTo(x => x.Foo());
+_mock.Should().HaveCallCount(3).To(x => x.Foo());
+_mock.Should().HaveCallCount(2, 5).To(x => x.Foo());
+_mock.Should().HaveCallCount(2).OrMore().To(x => x.Foo());
+_mock.Should().HaveCallCount(5).OrLess().To(x => x.Foo());
+_mock.Should().NoCallsTo(x => x.Foo());
+```
+...or as:
 
 ```csharp
 _mock.Method(x => x.Foo()).Should().HaveBeenCalled();
