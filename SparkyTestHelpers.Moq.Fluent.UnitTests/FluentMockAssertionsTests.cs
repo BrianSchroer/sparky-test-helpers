@@ -110,9 +110,9 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
-        public void Mock_Should_HaveCallsTo_should_work_as_expected_for_property_get()
+        public void Mock_Should_HaveCallsToGet_should_work_as_expected()
         {
-            Action verifyAction = () => _mock.Should().HaveCallsTo(x => x.TestProperty);
+            Action verifyAction = () => _mock.Should().HaveCallsToGet(x => x.TestProperty);
 
             AssertException(verifyAction, "Expected invocation on the mock at least once, but was never performed: x => x.TestProperty");
 
@@ -121,9 +121,9 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
-        public void Mock_Should_HaveNoCallsTo_should_work_as_expected_for_property_get()
+        public void Mock_Should_HaveNoCallsToGet_should_work_as_expected()
         {
-            Action verifyAction = () => _mock.Should().HaveNoCallsTo(x => x.TestProperty);
+            Action verifyAction = () => _mock.Should().HaveNoCallsToGet(x => x.TestProperty);
 
             AssertSuccess(verifyAction);
 
@@ -133,9 +133,9 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
-        public void Mock_Should_HaveOneCallTo_should_work_as_expected_for_property_get()
+        public void Mock_Should_HaveOneCallToGet_should_work_as_expected()
         {
-            Action verifyAction = () => _mock.Should().HaveOneCallTo(x => x.TestProperty);
+            Action verifyAction = () => _mock.Should().HaveOneCallToGet(x => x.TestProperty);
 
             AssertException(verifyAction, "Expected invocation on the mock once, but was 0 times: x => x.TestProperty");
 
@@ -144,9 +144,9 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
-        public void Mock_Should_HaveAtLeastOneCallTo_should_work_as_expected_for_property_get()
+        public void Mock_Should_HaveAtLeastOneCallToGet_should_work_as_expected()
         {
-            Action verifyAction = () => _mock.Should().HaveAtLeastOneCallTo(x => x.TestProperty);
+            Action verifyAction = () => _mock.Should().HaveAtLeastOneCallToGet(x => x.TestProperty);
 
             AssertException(verifyAction, "Expected invocation on the mock at least once, but was never performed: x => x.TestProperty");
 
@@ -155,9 +155,9 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
-        public void Mock_Should_HaveAtMostOneCallTo_should_work_as_expected_for_property_get()
+        public void Mock_Should_HaveAtMostOneCallToGet_should_work_as_expected()
         {
-            Action verifyAction = () => _mock.Should().HaveAtMostOneCallTo(x => x.TestProperty);
+            Action verifyAction = () => _mock.Should().HaveAtMostOneCallToGet(x => x.TestProperty);
 
             AssertSuccess(verifyAction);
 
@@ -170,7 +170,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
-        public void Mock_Should_HaveCallsTo_should_work_as_expected_for_property_set()
+        public void Mock_Should_HaveCallsToset_should_work_as_expected()
         {
             Action verifyAction = () => _mock.Should().HaveCallsToSet(x => x.TestProperty = Any.String);
 
@@ -181,7 +181,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
-        public void Mock_Should_HaveNoCallsTo_should_work_as_expected_for_property_set()
+        public void Mock_Should_HaveNoCallsToset_should_work_as_expected()
         {
             Action verifyAction = () => _mock.Should().HaveNoCallsToSet(x => x.TestProperty = Any.String);
 
@@ -193,7 +193,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
-        public void Mock_Should_HaveOneCallTo_should_work_as_expected_for_property_set()
+        public void Mock_Should_HaveOneCallToset_should_work_as_expected()
         {
             Action verifyAction = () => _mock.Should().HaveOneCallToSet(x => x.TestProperty = Any.String);
 
@@ -204,7 +204,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
-        public void Mock_Should_HaveAtLeastOneCallTo_should_work_as_expected_for_property_set()
+        public void Mock_Should_HaveAtLeastOneCallToset_should_work_as_expected()
         {
             Action verifyAction = () => _mock.Should().HaveAtLeastOneCallToSet(x => x.TestProperty = Any.String);
 
@@ -215,7 +215,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
-        public void Mock_Should_HaveAtMostOneCallTo_should_work_as_expected_for_property_set()
+        public void Mock_Should_HaveAtMostOneCallToset_should_work_as_expected()
         {
             Action verifyAction = () => _mock.Should().HaveAtMostOneCallToSet(x => x.TestProperty = Any.String);
 

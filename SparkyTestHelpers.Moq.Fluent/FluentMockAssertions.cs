@@ -41,23 +41,23 @@ namespace SparkyTestHelpers.Moq
             Expression<Action<T>> methodExpression, string because = "", params object[] becauseArgs) =>
             Verify(() => Subject.Verify(methodExpression, Times.AtMostOnce), because, becauseArgs);
 
-        public AndConstraint<FluentMockAssertions<T>> HaveNoCallsTo<TProperty>(
+        public AndConstraint<FluentMockAssertions<T>> HaveNoCallsToGet<TProperty>(
             Expression<Func<T, TProperty>> getExpression, string because = "", params object[] becauseArgs) =>
             Verify(() => Subject.VerifyGet(getExpression, Times.Never), because, becauseArgs);
 
-        public AndConstraint<FluentMockAssertions<T>> HaveCallsTo<TProperty>(
+        public AndConstraint<FluentMockAssertions<T>> HaveCallsToGet<TProperty>(
             Expression<Func<T, TProperty>> expression, string because = "", params object[] becauseArgs) =>
             Verify(() => Subject.VerifyGet(expression), because, becauseArgs);
 
-        public AndConstraint<FluentMockAssertions<T>> HaveOneCallTo<TProperty>(
+        public AndConstraint<FluentMockAssertions<T>> HaveOneCallToGet<TProperty>(
             Expression<Func<T, TProperty>> getExpression, string because = "", params object[] becauseArgs) =>
             Verify(() => Subject.VerifyGet(getExpression, Times.Once), because, becauseArgs);
 
-        public AndConstraint<FluentMockAssertions<T>> HaveAtLeastOneCallTo<TProperty>(
+        public AndConstraint<FluentMockAssertions<T>> HaveAtLeastOneCallToGet<TProperty>(
             Expression<Func<T, TProperty>> getExpression, string because = "", params object[] becauseArgs) =>
             Verify(() => Subject.VerifyGet(getExpression, Times.AtLeastOnce), because, becauseArgs);
 
-        public AndConstraint<FluentMockAssertions<T>> HaveAtMostOneCallTo<TProperty>(
+        public AndConstraint<FluentMockAssertions<T>> HaveAtMostOneCallToGet<TProperty>(
             Expression<Func<T, TProperty>> getExpression, string because = "", params object[] becauseArgs) =>
             Verify(() => Subject.VerifyGet(getExpression, Times.AtMostOnce), because, becauseArgs);
 
