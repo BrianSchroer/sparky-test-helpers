@@ -19,13 +19,13 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
-        public void Mock_Method_should_return_FluentMockMethodVerifier()
+        public void Mock_Method_with_action_expression_should_return_FluentMockMethodVerifier()
         {
             _mock.Method(x => x.TestMethod()).Should().BeOfType<FluentMockMethodVerifier<IMockable>>();
         }
 
         [TestMethod]
-        public void Mock_Method_Should_should_return_FluentMockMethodVerifierAssertions()
+        public void FluentMockMethodVerifier_Should_should_return_FluentMockVerifierAssertions()
         {
             _mock.Method(x => x.TestMethod()).Should().Should().BeOfType<FluentMockVerifierAssertions<IMockable>>();
         }

@@ -5,5 +5,7 @@
         string TestProperty { get; set; }
 
         void TestMethod();
+
+        bool TestFunction(string parm1);
     }
 }

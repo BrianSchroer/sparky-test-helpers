@@ -110,6 +110,66 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
+        public void Mock_Should_HaveCallsTo_should_work_as_expected_for_function()
+        {
+            Action verifyAction = () => _mock.Should().HaveCallsTo(x => x.TestFunction(Any.String));
+
+            AssertException(verifyAction, "Expected invocation on the mock at least once, but was never performed: x => x.TestFunction(Any.String)");
+
+            _instance.TestFunction("test");
+            AssertSuccess(verifyAction);
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveNoCallsTo_should_work_as_expected_for_function()
+        {
+            Action verifyAction = () => _mock.Should().HaveNoCallsTo(x => x.TestFunction(Any.String));
+
+            AssertSuccess(verifyAction);
+
+            _instance.TestFunction("test");
+
+            AssertException(verifyAction, "Expected invocation on the mock should never have been performed, but was 1 times: x => x.TestFunction(Any.String)");
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveOneCallTo_should_work_as_expected_for_function()
+        {
+            Action verifyAction = () => _mock.Should().HaveOneCallTo(x => x.TestFunction(Any.String));
+
+            AssertException(verifyAction, "Expected invocation on the mock once, but was 0 times: x => x.TestFunction(Any.String)");
+
+            _instance.TestFunction("test");
+            AssertSuccess(verifyAction);
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveAtLeastOneCallTo_should_work_as_expected_for_function()
+        {
+            Action verifyAction = () => _mock.Should().HaveAtLeastOneCallTo(x => x.TestFunction(Any.String));
+
+            AssertException(verifyAction, "Expected invocation on the mock at least once, but was never performed: x => x.TestFunction(Any.String)");
+
+            _instance.TestFunction("test");
+            AssertSuccess(verifyAction);
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveAtMostOneCallTo_should_work_as_expected_for_function()
+        {
+            Action verifyAction = () => _mock.Should().HaveAtMostOneCallTo(x => x.TestFunction(Any.String));
+
+            AssertSuccess(verifyAction);
+
+            _instance.TestFunction("test");
+            AssertSuccess(verifyAction);
+
+            _instance.TestFunction("test");
+            _instance.TestFunction("test");
+            AssertException(verifyAction, "Expected invocation on the mock at most once, but was 2 times: x => x.TestFunction(Any.String)");
+        }
+
+        [TestMethod]
         public void Mock_Should_HaveCallsToGet_should_work_as_expected()
         {
             Action verifyAction = () => _mock.Should().HaveCallsToGet(x => x.TestProperty);

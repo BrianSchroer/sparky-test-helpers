@@ -45,7 +45,7 @@ namespace SparkyTestHelpers.Moq
             return Verify(() => Subject.Verify(methodExpression, DetermineTimes()), because, becauseArgs);
         }
 
-        public AndConstraint<FluentMockCountAssertions<T>> To<TProperty>(
+        public AndConstraint<FluentMockCountAssertions<T>> ToGet<TProperty>(
             Expression<Func<T, TProperty>> getExpression, string because = "", params object[] becauseArgs)
         {
             return Verify(() => Subject.VerifyGet(getExpression, DetermineTimes()), because, becauseArgs);

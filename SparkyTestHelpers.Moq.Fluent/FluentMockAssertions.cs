@@ -41,6 +41,26 @@ namespace SparkyTestHelpers.Moq
             Expression<Action<T>> methodExpression, string because = "", params object[] becauseArgs) =>
             Verify(() => Subject.Verify(methodExpression, Times.AtMostOnce), because, becauseArgs);
 
+        public AndConstraint<FluentMockAssertions<T>> HaveNoCallsTo<TResult>(
+            Expression<Func<T, TResult>> functionExpression, string because = "", params object[] becauseArgs) =>
+            Verify(() => Subject.Verify(functionExpression, Times.Never), because, becauseArgs);
+
+        public AndConstraint<FluentMockAssertions<T>> HaveCallsTo<TResult>(
+            Expression<Func<T, TResult>> expression, string because = "", params object[] becauseArgs) =>
+            Verify(() => Subject.Verify(expression), because, becauseArgs);
+
+        public AndConstraint<FluentMockAssertions<T>> HaveOneCallTo<TResult>(
+            Expression<Func<T, TResult>> functionExpression, string because = "", params object[] becauseArgs) =>
+            Verify(() => Subject.Verify(functionExpression, Times.Once), because, becauseArgs);
+
+        public AndConstraint<FluentMockAssertions<T>> HaveAtLeastOneCallTo<TResult>(
+            Expression<Func<T, TResult>> functionExpression, string because = "", params object[] becauseArgs) =>
+            Verify(() => Subject.Verify(functionExpression, Times.AtLeastOnce), because, becauseArgs);
+
+        public AndConstraint<FluentMockAssertions<T>> HaveAtMostOneCallTo<TResult>(
+            Expression<Func<T, TResult>> functionExpression, string because = "", params object[] becauseArgs) =>
+            Verify(() => Subject.Verify(functionExpression, Times.AtMostOnce), because, becauseArgs);
+
         public AndConstraint<FluentMockAssertions<T>> HaveNoCallsToGet<TProperty>(
             Expression<Func<T, TProperty>> getExpression, string because = "", params object[] becauseArgs) =>
             Verify(() => Subject.VerifyGet(getExpression, Times.Never), because, becauseArgs);

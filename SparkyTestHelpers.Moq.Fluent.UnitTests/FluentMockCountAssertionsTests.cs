@@ -106,7 +106,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         [TestMethod]
         public void Mock_Should_HaveCallCount_should_work_as_expected_for_property_get()
         {
-            Action verifyAction = () => _mock.Should().HaveCallCount(2).To(x => x.TestProperty);
+            Action verifyAction = () => _mock.Should().HaveCallCount(2).ToGet(x => x.TestProperty);
 
             AssertException(verifyAction, "Expected invocation on the mock exactly 2 times, but was 0 times: x => x.TestProperty");
 
@@ -121,7 +121,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         [TestMethod]
         public void Mock_Should_HaveCallCount_OrMore_should_work_as_expected_for_property_get()
         {
-            Action verifyAction = () => _mock.Should().HaveCallCount(2).OrMore().To(x => x.TestProperty);
+            Action verifyAction = () => _mock.Should().HaveCallCount(2).OrMore().ToGet(x => x.TestProperty);
 
             AssertException(verifyAction, "Expected invocation on the mock at least 2 times, but was 0 times: x => x.TestProperty");
 
@@ -136,7 +136,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         [TestMethod]
         public void Mock_Should_HaveCallCount_OrLess_should_work_as_expected_for_property_get()
         {
-            Action verifyAction = () => _mock.Should().HaveCallCount(2).OrLess().To(x => x.TestProperty);
+            Action verifyAction = () => _mock.Should().HaveCallCount(2).OrLess().ToGet(x => x.TestProperty);
 
             AssertSuccess(verifyAction);
 
@@ -156,7 +156,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         [TestMethod]
         public void Mock_Should_HaveCallCount_with_range_should_work_as_expected_for_property_get()
         {
-            Action verifyAction = () => _mock.Should().HaveCallCount(2, 3).To(x => x.TestProperty);
+            Action verifyAction = () => _mock.Should().HaveCallCount(2, 3).ToGet(x => x.TestProperty);
 
             AssertException(verifyAction, "Expected invocation on the mock between 2 and 3 times (Inclusive), but was 0 times: x => x.TestProperty");
 
