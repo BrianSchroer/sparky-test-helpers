@@ -11,10 +11,10 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
-    <PackageReleaseNotes>v1.9 RandomValuesHelper: Updated double, decimal float randomization algorithms</PackageReleaseNotes>
-    <AssemblyVersion>1.9.0.0</AssemblyVersion>
-    <FileVersion>1.9.0.0</FileVersion>
-    <Version>1.9</Version>
+    <PackageReleaseNotes>v1.10 Added static "CreateRandom" methods.</PackageReleaseNotes>
+    <AssemblyVersion>1.10.0.0</AssemblyVersion>
+    <FileVersion>1.10.0.0</FileVersion>
+    <Version>1.10</Version>
     <Product>SparkyTestHelpers.Mapping</Product>
     <PackageId>SparkyTestHelpers.Mapping</PackageId>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>

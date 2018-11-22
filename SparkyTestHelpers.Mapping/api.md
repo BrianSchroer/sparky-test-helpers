@@ -71,8 +71,11 @@ Test helper for updating class instance properties with random values (so you
 can fill a "source" instance without writing a lot of code).
 
 **Methods**
-* *T* **CreateInstanceWithRandomValues**()  
-* *T* **UpdatePropertiesWithRandomValues**(*T instance*)  
+* *T* **CreateRandom<*T*>**()  
+* *T* **UpdatePropertiesWithRandomValues**(*T instance*) 
+* *bool* RandomBool()
+* *There are "Random... methods similar to RandomBool() for all .NET primitive types: (RandomInt, RandomDateTime, RandomString, etc.)*
+
 ---
 **Example**
 
@@ -80,8 +83,35 @@ can fill a "source" instance without writing a lot of code).
 using SparkyTestHelpers.Mapping;
 ```
 ```csharp
-    Foo foo = new RandomValuesHelper().CreateInstanceWithRandomValues<Foo>();
+    var randomValuesHelper = new RandomValuesHelper();
+
+    Foo foo = randomValuesHelper().CreateRandom<Foo>();
 
     var bar = new Bar();
-    new RandomValuesHelper().UpdatePropertiesWithRandomValues(bar);
+    randomValuesHelper().UpdatePropertiesWithRandomValues(bar);
+
+    int randomInt = randomValuesHelper.RandomInt();
+```
+
+
+---
+## CreateRandom
+*class SparkyTestHelpers.Mapping.CreateRandom*
+
+Static methods wrapping **RandomValuesHelper**:
+
+**Methods**
+* *T* **InstanceOf<*T*>**()  
+* *bool* Bool()
+* *There are methods similar to Bool() for all .NET primitive types: (Int(), DateTime(), String(), etc.)*
+
+---
+**Example**
+
+```csharp
+using SparkyTestHelpers.Mapping;
+```
+```csharp
+    Foo foo = CreateRandom.InstanceOf<Foo>();
+    int randomInt = CreateRandom.Int();
 ```

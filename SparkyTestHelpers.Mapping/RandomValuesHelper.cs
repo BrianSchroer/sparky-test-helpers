@@ -28,8 +28,8 @@ namespace SparkyTestHelpers.Mapping
                 { typeof(DateTime?), RandomDateTime },
                 { typeof(Guid), RandomGuid },
                 { typeof(Guid?), RandomGuid },
-                { typeof(bool), RandomBoolean },
-                { typeof(bool?), RandomBoolean },
+                { typeof(bool), RandomBool },
+                { typeof(bool?), RandomBool },
                 { typeof(byte), RandomByte },
                 { typeof(byte?), RandomByte },
                 { typeof(byte[]), RandomByteArray },
@@ -69,6 +69,7 @@ namespace SparkyTestHelpers.Mapping
         /// </summary>
         /// <param name="maximumIEnumerableSize">The maximum IENumerable size.</param>
         /// <returns>"This" <see cref="RandomValuesHelper"/> instance.</returns>
+        // ReSharper disable once InconsistentNaming
         public RandomValuesHelper WithMaximumIENumerableSize(int maximumIEnumerableSize)
         {
             MaximumIEnumerableSize = maximumIEnumerableSize;
@@ -256,9 +257,9 @@ namespace SparkyTestHelpers.Mapping
         /// Get random bool value.
         /// </summary>
         /// <returns>Random <see cref="bool" /> value.</returns>
-        public bool RandomBoolean()
+        public bool RandomBool()
         {
-            return (bool)RandomBoolean(new Random(), null);
+            return (bool)RandomBool(new Random(), null);
         }
 
         /// <summary>
@@ -390,10 +391,11 @@ namespace SparkyTestHelpers.Mapping
         /// <summary>
         /// Get random string value.
         /// </summary>
+        /// <param name="prefix">optional string prefix.</param>
         /// <returns>Random <see cref="string"/> value.</returns>
-        public string RandomString()
+        public string RandomString(string prefix = null)
         {
-            return RandomGuid().ToString();
+            return $"{prefix}{RandomGuid()}";
         }
 
         private object RandomEnum(Random random, Type enumType)
@@ -439,7 +441,7 @@ namespace SparkyTestHelpers.Mapping
             return list;
         }
 
-        private static object RandomBoolean(Random random, string prefix)
+        private static object RandomBool(Random random, string prefix)
         {
             return (random.Next() % 2 == 0);
         }

@@ -65,9 +65,9 @@ namespace SparkyTestHelpers.Mapping.UnitTests
         }
 
         [TestMethod]
-        public void RandomBoolean_should_work()
+        public void RandomBool_should_work()
         {
-            bool randomValue = new RandomValuesHelper().RandomBoolean();
+            bool randomValue = new RandomValuesHelper().RandomBool();
             Assert.IsNotNull(randomValue);
         }
 
@@ -167,6 +167,20 @@ namespace SparkyTestHelpers.Mapping.UnitTests
         {
             sbyte randomValue = new RandomValuesHelper().RandomSByte();
             Assert.IsNotNull(randomValue);
+        }
+
+        [TestMethod]
+        public void RandomString_should_work()
+        {
+            string randomValue = new RandomValuesHelper().RandomString();
+            Assert.IsNotNull(randomValue);
+        }
+
+        [TestMethod]
+        public void RandomString_with_prefix_should_work()
+        {
+            string randomValue = new RandomValuesHelper().RandomString("testPrefix");
+            StringAssert.StartsWith(randomValue, "testPrefix");
         }
     }
 }
