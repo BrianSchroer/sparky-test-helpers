@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.3</TargetFramework>
+    <TargetFramework>netstandard1.3;net460;net461</TargetFramework>
     <Company>Brian Schroer</Company>
     <Description>.NET Unit test helpers for asserting that exceptions were / weren't thrown, and for "scenario tests".</Description>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.0;net461</TargetFramework>
     <Authors>Brian Schroer</Authors>
     <Company>Brian Schroer</Company>
     <Description>Additional AutoMapper extension methods for SparkyTestHelpers.Mapping (Unit test helpers for asserting public properties on class instances "mapped" from one type to another have the correct values.)</Description>
