@@ -12,10 +12,11 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>xml, app.config, xml.config, test, testing, unittests</PackageTags>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SparkyTestHelpers" Version="1.5.1" />
+    <PackageReference Include="SparkyTestHelpers" Version="1.5.2" />
     <PackageReference Include="SparkyTools.DependencyProvider" Version="1.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
   </ItemGroup>

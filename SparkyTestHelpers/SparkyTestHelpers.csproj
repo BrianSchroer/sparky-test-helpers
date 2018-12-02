@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.3;net460;net461</TargetFramework>
+    <TargetFrameworks>netstandard1.3;net461</TargetFrameworks>
     <Company>Brian Schroer</Company>
     <Description>.NET Unit test helpers for asserting that exceptions were / weren't thrown, and for "scenario tests".</Description>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
@@ -12,11 +12,10 @@
     <Copyright>Copyright © Brian Schroer 2018</Copyright>
     <PackageTags>test, testing, unittest, rowtest</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.5.1.0</AssemblyVersion>
-    <FileVersion>1.5.1.0</FileVersion>
-    <Version>1.5.1</Version>
-    <PackageReleaseNotes>v1.5: Added Enumerable "BeforeEachTest" and "AfterEachText" extension methods.
-v1.5.1: Fixed Console.BufferWidth IOException bug when running tests with ReSharper
+    <AssemblyVersion>1.5.2.0</AssemblyVersion>
+    <FileVersion>1.5.2.0</FileVersion>
+    <Version>1.5.2</Version>
+    <PackageReleaseNotes>v1.5.2: Added .NET 4.6.1 target
 </PackageReleaseNotes>
   </PropertyGroup>
 
@@ -26,7 +25,6 @@ v1.5.1: Fixed Console.BufferWidth IOException bug when running tests with ReShar
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
-    <PackageReference Include="SparkyTestHelpers.Moq.Core" Version="1.4.3" />
   </ItemGroup>
 
 </Project>
