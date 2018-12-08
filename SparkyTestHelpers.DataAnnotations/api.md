@@ -68,3 +68,15 @@ There are also **ShouldReturn.** methods for standard **ValidationAttribute**s:
 * [StringLength]: ShouldReturn.**StringLengthErrorFor**(*x => x.Foo*);
 
 You don't have to specify the expected error message for **.ForValidationAttribute** method or for the methods listed above. The validation tester automatically determines the error message from the attribute.
+
+### WithValidationContext... methods
+
+* WithValidationContextItems(IDictionary<*object, object*> *items*) - sets **ValidationContext.Items** available to the **IValidatableObject.Validate** method.
+* WithValidationContextItem(object *key*, object *value*) - Adds **ValidationContextItems** entry
+* WithValidationContextServiceProvider(IServiceProvider *serviceProvider*) - sets **ValidationContext** service provider available to the **IValidatableObject.Validate** method.
+
+```csharp
+Validation.For(foo)
+    .WithValidationContextItem("key", "value")
+    .ShouldReturn...
+```

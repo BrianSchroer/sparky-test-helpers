@@ -12,6 +12,8 @@
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, dataannotations, validation</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.1.0</Version>
+    <PackageReleaseNotes>V1.1: Added "WithValidationContext..." methods</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

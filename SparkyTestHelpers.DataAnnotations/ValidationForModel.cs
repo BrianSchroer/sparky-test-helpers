@@ -15,7 +15,6 @@ namespace SparkyTestHelpers.DataAnnotations
     /// </remarks>
     /// <typeparam name="TModel">Model type.</typeparam>
     /// <seealso cref="Validation" />
-    /// <seealso cref="ExpectedValidationError{TModel}" />
     public class ValidationForModel<TModel>
     {
         private static JsonSerializerSettings _deserializeSettings = new JsonSerializerSettings
@@ -27,6 +26,8 @@ namespace SparkyTestHelpers.DataAnnotations
         private readonly TModel _originalModel;
         private List<ValidationResult> _validationResults;
         private string _formattedValidationResults = null;
+        private IDictionary<object, object> _validationContextItems;
+        private IServiceProvider _validationContextServiceProvider;
 
         /// <summary>
         /// Gets <see cref="ValidationResults"/> for the <see cref="TModel"/>.
@@ -46,7 +47,7 @@ namespace SparkyTestHelpers.DataAnnotations
 
                     Validator.TryValidateObject(
                         _model,
-                        new ValidationContext(_model, null, null),
+                        new ValidationContext(_model, _validationContextServiceProvider, _validationContextItems),
                         _validationResults,
                         validateAllProperties: true);
                 }
@@ -55,22 +56,41 @@ namespace SparkyTestHelpers.DataAnnotations
             }
         }
 
-        private string FormattedValidationResults
+        /// <summary>
+        /// Sets <see cref="ValidationContext.Items"/> to be used when validating.
+        /// </summary>
+        /// <param name="items">The items.</param>
+        /// <returns>"This" <see cref="ValidationForModel{TModel}"/> instance.</returns>
+        public ValidationForModel<TModel> WithValidationContextItems(IDictionary<object, object> items)
         {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(_formattedValidationResults))
-                {
-                    _formattedValidationResults = string.Join("\n", ValidationResults.Select(FormatValidationResult));
+            _validationContextItems = items;
+            return this;
+        }
 
-                    if (string.IsNullOrWhiteSpace(_formattedValidationResults))
-                    {
-                        _formattedValidationResults = "(no validation errors)";
-                    }
-                }
+        /// <summary>
+        /// Add <see cref="ValidationContext.Items"/> dictionary entry to be used when validating.
+        /// </summary>
+        /// <param name="key">The item key.</param>
+        /// <param name="value">The item value.</param>
+        /// <returns>"This" <see cref="ValidationForModel{TModel}"/> instance.</returns>
+        public ValidationForModel<TModel> WithValidationContextItem(object key, object value)
+        {
+            IDictionary<object, object> dict = _validationContextItems ?? (_validationContextItems = new Dictionary<object, object>());
+            dict.Add(key, value);
 
-                return _formattedValidationResults;
-            }
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="IServiceProvider"/> to be used when constructing the <see cref="ValidationContext"/>.
+        /// </summary>
+        /// <param name="serviceProvider">The <see cref="IServiceProvider"/>.</param>
+        /// <returns>"This" <see cref="ValidationForModel{TModel}"/>.</returns>
+        public ValidationForModel<TModel> WithValidationContextServiceProvider(IServiceProvider serviceProvider)
+        {
+            _validationContextServiceProvider = serviceProvider;
+
+            return this;
         }
 
         /// <summary>
@@ -79,7 +99,7 @@ namespace SparkyTestHelpers.DataAnnotations
         /// <example>
         /// <code><![CDATA[
         /// var foo = new Foo { /* valid property assignments */ };
-        /// 
+        ///
         /// Validation
         ///     .For(foo)
         ///     .ShouldReturn.NoErrors();
@@ -184,6 +204,24 @@ namespace SparkyTestHelpers.DataAnnotations
         private static string FormatMemberNames(IEnumerable<string> memberNames)
         {
             return $"Member(s): \"{string.Join("\", \"", memberNames.OrderBy(x => x))}\"";
+        }
+
+        private string FormattedValidationResults
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_formattedValidationResults))
+                {
+                    _formattedValidationResults = string.Join("\n", ValidationResults.Select(FormatValidationResult));
+
+                    if (string.IsNullOrWhiteSpace(_formattedValidationResults))
+                    {
+                        _formattedValidationResults = "(no validation errors)";
+                    }
+                }
+
+                return _formattedValidationResults;
+            }
         }
     }
 }

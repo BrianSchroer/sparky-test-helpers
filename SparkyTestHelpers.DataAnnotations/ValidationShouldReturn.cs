@@ -12,7 +12,6 @@ namespace SparkyTestHelpers.DataAnnotations
     public class ValidationShouldReturn<TModel>
     {
         private readonly ValidationForModel<TModel> _validationForModel;
-        private readonly string _typeName;
 
         /// <summary>
         /// Called by <see cref="ValidationForModel{TModel}.ShouldReturn" />
@@ -21,7 +20,6 @@ namespace SparkyTestHelpers.DataAnnotations
         internal ValidationShouldReturn(ValidationForModel<TModel> validationForModel)
         {
             _validationForModel = validationForModel;
-            _typeName = typeof(TModel).Name;
         }
 
         /// <summary>

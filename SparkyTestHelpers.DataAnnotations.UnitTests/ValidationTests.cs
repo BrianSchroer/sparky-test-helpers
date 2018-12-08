@@ -4,13 +4,16 @@ using SparkyTestHelpers.DataAnnotations;
 using System.Linq;
 using SparkyTestHelpers.Exceptions;
 using System;
+using System.Collections.Generic;
 
 namespace SparkyTestHelpers.DataAnnotations.UnitTests
 {
     [TestClass]
-    public class ValidationTests
+    public class ValidationTests : IValidatableObject
     {
         private ValidationForModel<ValidationTests> _validationForModel;
+
+        private IDictionary<object, object> _validationContextItems;
 
         [TestInitialize]
         public void TestInitialize()
@@ -36,10 +39,35 @@ namespace SparkyTestHelpers.DataAnnotations.UnitTests
         }
 
         [TestMethod]
-        public void ValidationForModel_With_should_return_self()
+        public void ValidationForModel_When_should_return_self()
         {
             ValidationForModel<ValidationTests> response = _validationForModel.When(x => x.StringProp1= null);
             Assert.AreSame(_validationForModel, response);
+        }
+
+        [TestMethod]
+        public void ValidationForModel_WithValidationContextItems_should_work()
+        {
+            var testDictionary = new Dictionary<object, object> {{"testKey", "testValue"}};
+
+            _validationForModel.WithValidationContextItems(testDictionary);
+
+            IEnumerable<ValidationResult> validationResults = _validationForModel.ValidationResults;
+
+            Assert.AreEqual("testValue", _validationContextItems["testKey"]);
+        }
+
+        [TestMethod]
+        public void ValidationForModel_WithValidationContextItem_should_work()
+        {
+            _validationForModel
+                .WithValidationContextItem("testKey", "testValue")
+                .WithValidationContextItem("testKey2", "testValue2");
+
+            IEnumerable<ValidationResult> validationResults = _validationForModel.ValidationResults;
+
+            Assert.AreEqual("testValue", _validationContextItems["testKey"]);
+            Assert.AreEqual("testValue2", _validationContextItems["testKey2"]);
         }
 
         [TestMethod]
@@ -68,7 +96,7 @@ namespace SparkyTestHelpers.DataAnnotations.UnitTests
         [TestMethod]
         public void ValidationShouldReturn_RequiredErrorFor_should_not_throw_exception_when_error_is_found()
         {
-            AssertExceptionNotThrown.WhenExecuting(() => 
+            AssertExceptionNotThrown.WhenExecuting(() =>
                 _validationForModel.When(x => x.StringProp1= null).ShouldReturn.RequiredErrorFor(x => x.StringProp1));
         }
 
@@ -78,8 +106,8 @@ namespace SparkyTestHelpers.DataAnnotations.UnitTests
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
                 .WithMessage(
-                    "Expected " 
-                    + $"\"The {nameof(StringProp3)} Display Name field is required.\". Member(s): \"{nameof(StringProp3)}\"." 
+                    "Expected "
+                    + $"\"The {nameof(StringProp3)} Display Name field is required.\". Member(s): \"{nameof(StringProp3)}\"."
                     + " Found:\nError Message: "
                     + $"\"The {nameof(StringProp1)} field is required.\". Member(s): \"{nameof(StringProp1)}\".\n")
                 .WhenExecuting(() =>
@@ -107,10 +135,10 @@ namespace SparkyTestHelpers.DataAnnotations.UnitTests
                 .OfType<ValidationTestException>()
                 .WithMessage($"Expected \"The {nameof(StringProp3)} Display Name field is required.\". Member(s): \"{nameof(StringProp3)}\". Found:"
                     + "\n(no validation errors)\n")
-                .WhenExecuting(() => 
+                .WhenExecuting(() =>
                     _validationForModel.When(x => x.StringProp3 = "x").ShouldReturn.RequiredErrorFor(x => x.StringProp3));
         }
-         
+
         [TestMethod]
         public void ValidationShouldReturn_MaxLengthErrorFor_should_not_throw_exception_when_error_is_found()
         {
@@ -126,7 +154,7 @@ namespace SparkyTestHelpers.DataAnnotations.UnitTests
             AssertExceptionThrown
                 .OfType<ValidationTestException>()
                 .WithMessage(
-                    $"Expected \"The field {nameof(StringProp1)} must be a string or array type with a maximum length of '80'.\"." 
+                    $"Expected \"The field {nameof(StringProp1)} must be a string or array type with a maximum length of '80'.\"."
                     + $" Member(s): \"{nameof(StringProp1)}\". Found:"
                     + "\n(no validation errors)\n")
                 .WhenExecuting(() => _validationForModel.ShouldReturn.MaxLengthErrorFor(x => x.StringProp1));
@@ -378,6 +406,14 @@ namespace SparkyTestHelpers.DataAnnotations.UnitTests
             }
 
             return ValidationResult.Success;
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            _validationContextItems = validationContext.Items;
+
+            return Enumerable.Empty<ValidationResult>();
         }
 
         #endregion

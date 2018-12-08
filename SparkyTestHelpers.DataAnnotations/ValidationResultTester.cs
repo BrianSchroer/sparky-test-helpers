@@ -21,8 +21,10 @@ namespace SparkyTestHelpers.DataAnnotations
         /// Called by <see cref="ValidationShouldReturn{TModel}.NoErrors"/>
         /// </summary>
         /// <param name="validationForModel"></param>
-        /// <param name="memberName"></param>
-        internal ValidationResultTester(ValidationForModel<TModel> validationForModel, MemberInfo memberInfo)
+        /// <param name="memberInfo"></param>
+        internal ValidationResultTester(
+            ValidationForModel<TModel> validationForModel,
+            MemberInfo memberInfo)
         {
             _validationForModel = validationForModel;
             _memberInfo = memberInfo;
@@ -49,7 +51,6 @@ namespace SparkyTestHelpers.DataAnnotations
         /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
         public ValidationForModel<TModel> ForValidationAttribute<TAttribute>() where TAttribute : ValidationAttribute
         {
-            string memberName = _memberInfo.Name;
             string displayName = ReflectionHelper.GetDisplayName(_memberInfo);
             var validationAttribute = ReflectionHelper.GetValidationAttribute<TAttribute>(_memberInfo);
 
@@ -66,7 +67,7 @@ namespace SparkyTestHelpers.DataAnnotations
         public ValidationForModel<TModel> WithMessage(string expectedErrorMessage)
         {
             return _validationForModel.AssertResultMatch(
-                _memberNames, 
+                _memberNames,
                 actual => actual.Equals(expectedErrorMessage, StringComparison.CurrentCulture),
                 $"\"{expectedErrorMessage}\"");
         }
@@ -103,10 +104,10 @@ namespace SparkyTestHelpers.DataAnnotations
 
         /// <summary>
         /// Asserts that <typeparamref name="TModel"/> validation results in a <see cref="ValidationResult"/>
-        /// for the specified member name(s) and an error message matching the specified 
+        /// for the specified member name(s) and an error message matching the specified
         /// <paramref name="regularExpressionPattern"/>.
         /// </summary>
-        /// <param name="expected">The regular expression pattern to match.</param>
+        /// <param name="regularExpressionPattern">The regular expression pattern to match.</param>
         /// <returns>The <see cref="ValidationForModel{TModel}"/>.</returns>
         /// <exception cref="ValidationTestException">if validation did not result in the expected error.</exception>
         public ValidationForModel<TModel> WithErrorMessageMatching(string regularExpressionPattern)
