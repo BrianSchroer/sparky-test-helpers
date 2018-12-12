@@ -25,6 +25,20 @@ namespace SparkyTestHelpers.Mapping.UnitTests
                     new StringEnumConverter()));
         }
 
+        [TestMethod]
+        public void CreateRandom_InstanceOf_with_callback_should_work()
+        {
+            var dummy = CreateRandom.InstanceOf<Dummy>(x => x.String = "test string");
+
+            Assert.AreEqual("test string", dummy.String);
+
+            Console.WriteLine(
+                JsonConvert.SerializeObject(
+                    dummy,
+                    Formatting.Indented,
+                    new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy hh:mm:ss" },
+                    new StringEnumConverter()));
+        }
 
         [TestMethod]
         public void CreateRandom_InstanceOf_with_MaximumDepth_should_work()

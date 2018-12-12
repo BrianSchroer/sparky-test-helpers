@@ -14,6 +14,18 @@ namespace SparkyTestHelpers.Mapping
         /// Create an instance of the specified type and populate its properties with random values.
         /// </summary>
         /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+        /// <param name="callback">"Callback" function to perform additional property assignments.</param>
+        /// <returns>New instance.</returns>
+        public static T InstanceOf<T>(Action<T> callback) where T : class
+        {
+            return InstanceOf(null, null, callback);
+        }
+
+
+        /// <summary>
+        /// Create an instance of the specified type and populate its properties with random values.
+        /// </summary>
+        /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
         /// <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create.</param>
         /// <param name="maximumIEnumerableSize">Optional maximum number of items to generate for arrays / lists / IEnumerables.</param>
         /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>

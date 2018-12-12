@@ -515,7 +515,7 @@ namespace SparkyTestHelpers.Mapping
 
         private static object RandomFloat(Random random, string prefix)
         {
-            return (float)Convert.ToDouble(random.Next(10_000_000)) / 1000; ;
+            return (float)Convert.ToDouble(random.Next(10_000_000)) / 1000;
         }
 
         private static object RandomSByte(Random random, string prefix)

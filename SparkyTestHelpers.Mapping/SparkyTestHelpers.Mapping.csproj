@@ -11,10 +11,10 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
-    <PackageReleaseNotes>v1.10.1 Added .NET 4.6.1 target</PackageReleaseNotes>
-    <AssemblyVersion>1.10.1.0</AssemblyVersion>
-    <FileVersion>1.10.1.0</FileVersion>
-    <Version>1.10.1</Version>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <AssemblyVersion>1.10.2.0</AssemblyVersion>
+    <FileVersion>1.10.2.0</FileVersion>
+    <Version>1.10.2</Version>
     <Product>SparkyTestHelpers.Mapping</Product>
     <PackageId>SparkyTestHelpers.Mapping</PackageId>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
