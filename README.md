@@ -61,6 +61,12 @@ Unit test syntax helpers for using the **Moq** mocking framework with Fluent Ass
 * [Source Code](/SparkyTestHelpers.Moq.Fluent)
 * [API documentation](/SparkyTestHelpers.Moq.Fluent/api.md)
 
+## SparkyTestHelpers.Populater
+Tools for populating test class instance properties:
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Populater/)
+* [Source Code](/SparkyTestHelpers.Populater)
+* [API documentation](/SparkyTestHelpers.Populater/api.md)
+* 
 ## SparkyTestHelpers.Xml
 Unit test helpers for XML .config files:
 * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Xml/)

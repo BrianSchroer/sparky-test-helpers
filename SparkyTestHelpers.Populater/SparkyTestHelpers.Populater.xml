@@ -1,0 +1,478 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SparkyTestHelpers.Populater</name>
+    </assembly>
+    <members>
+        <member name="T:SparkyTestHelpers.Populater.GetRandom">
+            <summary>
+            Test helper methods using <see cref="T:SparkyTestHelpers.Populater.RandomValueProvider"/> to generate random values.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.InstanceOf``1(System.Action{``0})">
+            <summary>
+            Create an instance of the specified type and populate its properties with random values.
+            </summary>
+            <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+            <param name="callback">"Callback" function to perform additional property assignments.</param>
+            <returns>New instance.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.InstanceOf``1(System.Nullable{System.Int32},System.Nullable{System.Int32},System.Action{``0})">
+            <summary>
+            Create an instance of the specified type and populate its properties with random values.
+            </summary>
+            <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+            <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create.</param>
+            <param name="maximumIEnumerableSize">Optional maximum number of items to generate for arrays / lists / IEnumerables.</param>
+            <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+            <returns>New instance.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.IEnumerableOf``1(System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Action{``0})">
+            <summary>
+            Create an <see cref="T:System.Collections.Generic.IEnumerable`1"/> with properties populated with random values.
+            </summary>
+            <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+            <param name="count">The desired <see cref="T:System.Collections.Generic.IEnumerable`1"/> count.</param>
+            <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create.</param>
+            <param name="maximumIEnumerableSize">Optional maximum number of items to generate for "child" arrays / lists / IEnumerables.</param>
+            <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+            <returns>New instance.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.Bool">
+            <summary>
+            Get random bool value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.Byte">
+            <summary>
+            Get random byte value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.Char">
+            <summary>
+            Get random char value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.DateTime">
+            <summary>
+            Get random DateTime value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.Decimal">
+            <summary>
+            Get random decimal value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.Double">
+            <summary>
+            Get random double value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.EnumValue``1">
+            <summary>
+            Get random Enum value.
+            </summary>
+            <typeparam name="TEnum">The enum type.</typeparam>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.Float">
+            <summary>
+            Get random float value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.Guid">
+            <summary>
+            Get random Guid value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.Int">
+            <summary>
+            Get random int value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.Long">
+            <summary>
+            Get random long value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.SByte">
+            <summary>
+            Get random sbyte value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.Short">
+            <summary>
+            Get random short value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.String(System.String)">
+            <summary>
+            Get random string value.
+            </summary>
+            <param name="prefix">optional string prefix.</param>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.UInt">
+            <summary>
+            Get random uint value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.ULong">
+            <summary>
+            Get random ulong value.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.GetRandom.UShort">
+            <summary>
+            Get random ushort value.
+            </summary>
+        </member>
+        <member name="T:SparkyTestHelpers.Populater.IPopulaterValueProvider">
+            <summary>
+            <see cref="N:SparkyTestHelpers.Populater"/> value provider.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetBool">
+            <summary>
+            Gets bool value.
+            </summary>
+            <returns>A <see cref="T:System.Boolean" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetByte">
+            <summary>
+            Gets byte value.
+            </summary>
+            <returns>A <see cref="T:System.Byte" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetByteArray">
+            <summary>
+            Gets byte array.
+            </summary>
+            <returns>A <see cref="T:System.Byte"/> array.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetChar">
+            <summary>
+            Gets char value.
+            </summary>
+            <returns>A <see cref="T:System.Char" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetDateTime">
+            <summary>
+            Gets DateTime value.
+            </summary>
+            <returns>A <see cref="T:System.DateTime" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetDecimal">
+            <summary>
+            Gets decimal value.
+            </summary>
+            <returns>A <see cref="T:System.Decimal" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetDouble">
+            <summary>
+            Gets double value.
+            </summary>
+            <returns>A <see cref="T:System.Double" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetEnum``1">
+            <summary>
+            Gets Enum value.
+            </summary>
+            <typeparam name="TEnum">The Enum type.</typeparam>
+            <returns>A <typeparamref name="TEnum"/> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetEnum(System.Type)">
+            <summary>
+            Gets Enum value.
+            </summary>
+            <param name="enumType">The Enum type.</param>
+            <returns>Enum value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetEnumerableSize">
+            <summary>
+            Gets size to be used for array / list / IEnumerable.
+            </summary>
+            <returns>Enumerable size.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetFloat">
+            <summary>
+            Gets float value.
+            </summary>
+            <returns>A <see cref="T:System.Single" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetGuid">
+            <summary>
+            Gets Guid value.
+            </summary>
+            <returns>A <see cref="T:System.Guid" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetInt">
+            <summary>
+            Gets int value.
+            </summary>
+            <returns>An <see cref="T:System.Int32" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetLong">
+            <summary>
+            Gets long value.
+            </summary>
+            <returns>A <see cref="T:System.Int64" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetSByte">
+            <summary>
+            Gets sbyte value.
+            </summary>
+            <returns>A <see cref="T:System.SByte" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetShort">
+            <summary>
+            Gets short value.
+            </summary>
+            <returns>A <see cref="T:System.Int16" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetString(System.String)">
+            <summary>
+            Gets string value.
+            </summary>
+            <param name="prefix">optional string prefix.</param>
+            <returns>A <see cref="T:System.String"/> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetUInt">
+            <summary>
+            Gets uint value.
+            </summary>
+            <returns>A <see cref="T:System.UInt32" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetULong">
+            <summary>
+            Gets ulong value.
+            </summary>
+            <returns>A <see cref="T:System.UInt64" /> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.IPopulaterValueProvider.GetUShort">
+            <summary>
+            Gets ushort value.
+            </summary>
+            <returns>A <see cref="T:System.UInt16" /> value.</returns>
+        </member>
+        <member name="T:SparkyTestHelpers.Populater.Populater">
+            <summary>
+            This class populates class instances with test data.
+            </summary>
+        </member>
+        <member name="P:SparkyTestHelpers.Populater.Populater.MaximumDepth">
+            <summary>
+            Maximum "depth" of "child" class instances to create.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.Populater.WithMaximumDepth(System.Int32)">
+            <summary>
+            Sets <see cref="P:SparkyTestHelpers.Populater.Populater.MaximumDepth"/> value.
+            </summary>
+            <param name="maximumDepth">The maximum depth.</param>
+            <returns>"This" <see cref="T:SparkyTestHelpers.Populater.Populater"/> instance.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.Populater.CreateAndPopulate``1(SparkyTestHelpers.Populater.IPopulaterValueProvider)">
+            <summary>
+            Create new instance of <typeparamref name="T"/> and populate with test data.
+            </summary>
+            <typeparam name="T">The class type.</typeparam>
+            <param name="valueProvider">The <see cref="T:SparkyTestHelpers.Populater.IPopulaterValueProvider"/>
+            (defaults to <see cref="T:SparkyTestHelpers.Populater.SequentialValueProvider"/>).</param>
+            <returns>The created and populated instance of <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.Populater.CreateIEnumerableOf``1(System.Int32,SparkyTestHelpers.Populater.IPopulaterValueProvider)">
+            <summary>
+            Create <see cref="T:System.Collections.Generic.IEnumerable`1"/> and populate with test data.
+            </summary>
+            <typeparam name="T">The class type.</typeparam>
+            <param name="count">The desired <see cref="T:System.Collections.Generic.IEnumerable`1"/> count.</param>
+            <param name="valueProvider">The <see cref="T:SparkyTestHelpers.Populater.IPopulaterValueProvider"/>
+            (defaults to <see cref="T:SparkyTestHelpers.Populater.SequentialValueProvider"/>).</param>
+            <returns>The created and populated instance of <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.Populater.CreateRandomIEnumerableOf``1(System.Int32,System.Action{``0})">
+            <summary>
+            Create <see cref="T:System.Collections.Generic.IEnumerable`1"/> and populate with test data.
+            </summary>
+            <typeparam name="T">The class type.</typeparam>
+            <param name="count">The desired <see cref="T:System.Collections.Generic.IEnumerable`1"/> count.</param>
+            <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+            <returns>The created and populated instance of <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.Populater.Populate``1(``0,SparkyTestHelpers.Populater.IPopulaterValueProvider)">
+            <summary>
+            Populate existing instance of <typeparamref name="T"/> with test data.
+            </summary>
+            <typeparam name="T">The class type.</typeparam>
+            <param name="instance">The instance of <typeparamref name="T"/>.</param>
+            <param name="valueProvider">The <see cref="T:SparkyTestHelpers.Populater.IPopulaterValueProvider"/>
+            (defaults to <see cref="T:SparkyTestHelpers.Populater.SequentialValueProvider"/>.</param>
+            <returns>The populated <typeparamref name="T"/> instance.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.Populater.CreateRandom``1(System.Action{``0})">
+            <summary>
+            Create new instance of <typeparamref name="T"/> and populate with random values.
+            </summary>
+            <typeparam name="T">The class type.</typeparam>
+            <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+            <returns>The created and populated instance of <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.Populater.PopulateWithRandomValues``1(``0)">
+            <summary>
+            Populate existing instance of <typeparamref name="T"/> with random test data.
+            </summary>
+            <typeparam name="T">The class type.</typeparam>
+            <param name="instance">The instance of <typeparamref name="T"/>.</param>
+            <returns>The populated <typeparamref name="T"/> instance.</returns>
+        </member>
+        <member name="T:SparkyTestHelpers.Populater.RandomValueProvider">
+            <summary>
+            Random value provider for <see cref="T:SparkyTestHelpers.Populater.Populater"/>.
+            </summary>
+        </member>
+        <member name="P:SparkyTestHelpers.Populater.RandomValueProvider.MaximumIEnumerableSize">
+            <summary>
+            Maximum number of items to generate for arrays / lists / IEnumerables.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.#ctor">
+            <summary>
+            Creates a new <see cref="T:SparkyTestHelpers.Populater.RandomValueProvider"/> instance.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetBool">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetByte">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetByteArray">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetChar">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetDateTime">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetDecimal">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetDouble">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetEnum``1">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetEnum(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetEnumerableSize">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetFloat">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetGuid">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetInt">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetLong">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetSByte">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetShort">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetString(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetUInt">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetULong">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.RandomValueProvider.GetUShort">
+            <inheritdoc />
+        </member>
+        <member name="T:SparkyTestHelpers.Populater.SequentialValueProvider">
+            <summary>
+            Sequential value provider for <see cref="T:SparkyTestHelpers.Populater.Populater"/>.
+            </summary>
+        </member>
+        <member name="P:SparkyTestHelpers.Populater.SequentialValueProvider.EnumerableSize">
+            <summary>
+            Number of items to generate for arrays / lists / IEnumerables.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.#ctor">
+            <summary>
+            Creates a new <see cref="T:SparkyTestHelpers.Populater.SequentialValueProvider"/> instance.
+            </summary>
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetBool">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetByte">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetByteArray">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetChar">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetDateTime">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetDecimal">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetDouble">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetEnum``1">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetEnum(System.Type)">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetEnumerableSize">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetFloat">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetGuid">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetInt">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetLong">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetSByte">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetShort">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetString(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetUInt">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetULong">
+            <inheritdoc />
+        </member>
+        <member name="M:SparkyTestHelpers.Populater.SequentialValueProvider.GetUShort">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

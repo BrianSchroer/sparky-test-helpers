@@ -43,8 +43,6 @@ namespace SparkyTestHelpers.Mapping.UnitTests
         [TestMethod]
         public void CreateRandom_InstanceOf_with_MaximumDepth_should_work()
         {
-            var helper = new RandomValuesHelper();
-
             int? maximumDepth = null;
             var result = CreateRandom.InstanceOf<Depth1>(maximumDepth: maximumDepth);
             Assert.IsNotNull(result.Depth2.Depth3.Depth4, "No maximum depth");
