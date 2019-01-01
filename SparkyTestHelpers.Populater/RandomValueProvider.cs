@@ -10,7 +10,7 @@ namespace SparkyTestHelpers.Populater
         private readonly Random _random;
 
         /// <summary>
-        /// Maximum number of items to generate for arrays / lists / IEnumerables.
+        /// Maximum number of items to generate for arrays / lists / IEnumerables (default value is 3).
         /// </summary>
         public int MaximumIEnumerableSize { get; set; } = 3;
 

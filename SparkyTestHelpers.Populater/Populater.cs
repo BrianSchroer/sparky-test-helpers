@@ -12,7 +12,7 @@ namespace SparkyTestHelpers.Populater
     public class Populater
     {
         /// <summary>
-        /// Maximum "depth" of "child" class instances to create.
+        /// Maximum "depth" of "child" class instances to create (default value is 5).
         /// </summary>
         public int MaximumDepth { get; set; } = 5;
 

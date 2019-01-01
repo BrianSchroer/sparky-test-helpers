@@ -5,7 +5,7 @@
     <LangVersion>7.3</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Tools for populating class instance properties for testing.</Description>
-    <Copyright>Copyright © Brian Schroer 2018</Copyright>
+    <Copyright>Copyright © Brian Schroer 2019</Copyright>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
@@ -16,5 +16,21 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>C:\SourceCode\sparky-test-helpers\SparkyTestHelpers.Populater\SparkyTestHelpers.Populater.xml</DocumentationFile>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\SourceCode\sparky-test-helpers\SparkyTestHelpers.Populater\SparkyTestHelpers.Populater.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="NamespaceDoc.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="NamespaceDoc.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Documentation\" />
+  </ItemGroup>
 
 </Project>

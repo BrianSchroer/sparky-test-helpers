@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HelpKI>
+  <HelpKINode Title="BaseDate property" Url="html/P_SparkyTestHelpers_Populater_SequentialValueProvider_BaseDate.htm" />
+  <HelpKINode Title="Bool method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Bool.htm" />
+  <HelpKINode Title="Byte method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Byte.htm" />
+  <HelpKINode Title="Char method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Char.htm" />
+  <HelpKINode Title="CreateAndPopulate(Of T) method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateAndPopulate__1.htm" />
+  <HelpKINode Title="CreateAndPopulate&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateAndPopulate__1.htm" />
+  <HelpKINode Title="CreateIEnumerableOf(Of T) method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateIEnumerableOf__1.htm" />
+  <HelpKINode Title="CreateIEnumerableOf&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateIEnumerableOf__1.htm" />
+  <HelpKINode Title="CreateRandom(Of T) method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateRandom__1.htm" />
+  <HelpKINode Title="CreateRandom&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateRandom__1.htm" />
+  <HelpKINode Title="CreateRandomIEnumerableOf(Of T) method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateRandomIEnumerableOf__1.htm" />
+  <HelpKINode Title="CreateRandomIEnumerableOf&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateRandomIEnumerableOf__1.htm" />
+  <HelpKINode Title="DateTime method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_DateTime.htm" />
+  <HelpKINode Title="Decimal method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Decimal.htm" />
+  <HelpKINode Title="Double method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Double.htm" />
+  <HelpKINode Title="EnumerableSize property" Url="html/P_SparkyTestHelpers_Populater_SequentialValueProvider_EnumerableSize.htm" />
+  <HelpKINode Title="EnumValue(Of TEnum) method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_EnumValue__1.htm" />
+  <HelpKINode Title="EnumValue&lt;TEnum&gt; method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_EnumValue__1.htm" />
+  <HelpKINode Title="Float method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Float.htm" />
+  <HelpKINode Title="GetBool method">
+    <HelpKINode Title="IPopulaterValueProvider.GetBool Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetBool.htm" />
+    <HelpKINode Title="RandomValueProvider.GetBool Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetBool.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetBool Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetBool.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetByte method">
+    <HelpKINode Title="IPopulaterValueProvider.GetByte Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetByte.htm" />
+    <HelpKINode Title="RandomValueProvider.GetByte Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetByte.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetByte Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetByte.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetByteArray method">
+    <HelpKINode Title="IPopulaterValueProvider.GetByteArray Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetByteArray.htm" />
+    <HelpKINode Title="RandomValueProvider.GetByteArray Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetByteArray.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetByteArray Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetByteArray.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetChar method">
+    <HelpKINode Title="IPopulaterValueProvider.GetChar Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetChar.htm" />
+    <HelpKINode Title="RandomValueProvider.GetChar Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetChar.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetChar Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetChar.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetDateTime method">
+    <HelpKINode Title="IPopulaterValueProvider.GetDateTime Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetDateTime.htm" />
+    <HelpKINode Title="RandomValueProvider.GetDateTime Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetDateTime.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetDateTime Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetDateTime.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetDecimal method">
+    <HelpKINode Title="IPopulaterValueProvider.GetDecimal Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetDecimal.htm" />
+    <HelpKINode Title="RandomValueProvider.GetDecimal Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetDecimal.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetDecimal Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetDecimal.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetDouble method">
+    <HelpKINode Title="IPopulaterValueProvider.GetDouble Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetDouble.htm" />
+    <HelpKINode Title="RandomValueProvider.GetDouble Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetDouble.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetDouble Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetDouble.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetEnum method">
+    <HelpKINode Title="IPopulaterValueProvider.GetEnum Method " Url="html/Overload_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetEnum.htm" />
+    <HelpKINode Title="RandomValueProvider.GetEnum Method " Url="html/Overload_SparkyTestHelpers_Populater_RandomValueProvider_GetEnum.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetEnum Method " Url="html/Overload_SparkyTestHelpers_Populater_SequentialValueProvider_GetEnum.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetEnumerableSize method">
+    <HelpKINode Title="IPopulaterValueProvider.GetEnumerableSize Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetEnumerableSize.htm" />
+    <HelpKINode Title="RandomValueProvider.GetEnumerableSize Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetEnumerableSize.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetEnumerableSize Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetEnumerableSize.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetFloat method">
+    <HelpKINode Title="IPopulaterValueProvider.GetFloat Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetFloat.htm" />
+    <HelpKINode Title="RandomValueProvider.GetFloat Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetFloat.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetFloat Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetFloat.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetGuid method">
+    <HelpKINode Title="IPopulaterValueProvider.GetGuid Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetGuid.htm" />
+    <HelpKINode Title="RandomValueProvider.GetGuid Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetGuid.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetGuid Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetGuid.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetInt method">
+    <HelpKINode Title="IPopulaterValueProvider.GetInt Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetInt.htm" />
+    <HelpKINode Title="RandomValueProvider.GetInt Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetInt.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetInt Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetInt.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetLong method">
+    <HelpKINode Title="IPopulaterValueProvider.GetLong Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetLong.htm" />
+    <HelpKINode Title="RandomValueProvider.GetLong Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetLong.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetLong Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetLong.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetRandom class">
+    <HelpKINode Title="GetRandom Class" Url="html/T_SparkyTestHelpers_Populater_GetRandom.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_SparkyTestHelpers_Populater_GetRandom.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetRandom.Bool method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Bool.htm" />
+  <HelpKINode Title="GetRandom.Byte method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Byte.htm" />
+  <HelpKINode Title="GetRandom.Char method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Char.htm" />
+  <HelpKINode Title="GetRandom.DateTime method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_DateTime.htm" />
+  <HelpKINode Title="GetRandom.Decimal method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Decimal.htm" />
+  <HelpKINode Title="GetRandom.Double method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Double.htm" />
+  <HelpKINode Title="GetRandom.EnumValue(Of TEnum) method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_EnumValue__1.htm" />
+  <HelpKINode Title="GetRandom.EnumValue&lt;TEnum&gt; method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_EnumValue__1.htm" />
+  <HelpKINode Title="GetRandom.Float method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Float.htm" />
+  <HelpKINode Title="GetRandom.Guid method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Guid.htm" />
+  <HelpKINode Title="GetRandom.IEnumerableOf(Of T) method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_IEnumerableOf__1.htm" />
+  <HelpKINode Title="GetRandom.IEnumerableOf&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_IEnumerableOf__1.htm" />
+  <HelpKINode Title="GetRandom.InstanceOf method" Url="html/Overload_SparkyTestHelpers_Populater_GetRandom_InstanceOf.htm" />
+  <HelpKINode Title="GetRandom.Int method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Int.htm" />
+  <HelpKINode Title="GetRandom.Long method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Long.htm" />
+  <HelpKINode Title="GetRandom.SByte method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_SByte.htm" />
+  <HelpKINode Title="GetRandom.Short method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Short.htm" />
+  <HelpKINode Title="GetRandom.String method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_String.htm" />
+  <HelpKINode Title="GetRandom.UInt method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_UInt.htm" />
+  <HelpKINode Title="GetRandom.ULong method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_ULong.htm" />
+  <HelpKINode Title="GetRandom.UShort method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_UShort.htm" />
+  <HelpKINode Title="GetSByte method">
+    <HelpKINode Title="IPopulaterValueProvider.GetSByte Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetSByte.htm" />
+    <HelpKINode Title="RandomValueProvider.GetSByte Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetSByte.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetSByte Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetSByte.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetShort method">
+    <HelpKINode Title="IPopulaterValueProvider.GetShort Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetShort.htm" />
+    <HelpKINode Title="RandomValueProvider.GetShort Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetShort.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetShort Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetShort.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetString method">
+    <HelpKINode Title="IPopulaterValueProvider.GetString Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetString.htm" />
+    <HelpKINode Title="RandomValueProvider.GetString Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetString.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetString Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetString.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetUInt method">
+    <HelpKINode Title="IPopulaterValueProvider.GetUInt Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetUInt.htm" />
+    <HelpKINode Title="RandomValueProvider.GetUInt Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetUInt.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetUInt Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetUInt.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetULong method">
+    <HelpKINode Title="IPopulaterValueProvider.GetULong Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetULong.htm" />
+    <HelpKINode Title="RandomValueProvider.GetULong Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetULong.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetULong Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetULong.htm" />
+  </HelpKINode>
+  <HelpKINode Title="GetUShort method">
+    <HelpKINode Title="IPopulaterValueProvider.GetUShort Method " Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetUShort.htm" />
+    <HelpKINode Title="RandomValueProvider.GetUShort Method " Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetUShort.htm" />
+    <HelpKINode Title="SequentialValueProvider.GetUShort Method " Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetUShort.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Guid method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Guid.htm" />
+  <HelpKINode Title="IEnumerableOf(Of T) method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_IEnumerableOf__1.htm" />
+  <HelpKINode Title="IEnumerableOf&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_IEnumerableOf__1.htm" />
+  <HelpKINode Title="InstanceOf method" Url="html/Overload_SparkyTestHelpers_Populater_GetRandom_InstanceOf.htm" />
+  <HelpKINode Title="Int method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Int.htm" />
+  <HelpKINode Title="IPopulaterValueProvider interface">
+    <HelpKINode Title="IPopulaterValueProvider Interface" Url="html/T_SparkyTestHelpers_Populater_IPopulaterValueProvider.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_SparkyTestHelpers_Populater_IPopulaterValueProvider.htm" />
+  </HelpKINode>
+  <HelpKINode Title="IPopulaterValueProvider.GetBool method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetBool.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetByte method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetByte.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetByteArray method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetByteArray.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetChar method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetChar.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetDateTime method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetDateTime.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetDecimal method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetDecimal.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetDouble method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetDouble.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetEnum method" Url="html/Overload_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetEnum.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetEnumerableSize method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetEnumerableSize.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetFloat method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetFloat.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetGuid method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetGuid.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetInt method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetInt.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetLong method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetLong.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetSByte method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetSByte.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetShort method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetShort.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetString method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetString.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetUInt method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetUInt.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetULong method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetULong.htm" />
+  <HelpKINode Title="IPopulaterValueProvider.GetUShort method" Url="html/M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetUShort.htm" />
+  <HelpKINode Title="Long method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Long.htm" />
+  <HelpKINode Title="MaximumDepth property" Url="html/P_SparkyTestHelpers_Populater_Populater_MaximumDepth.htm" />
+  <HelpKINode Title="MaximumIEnumerableSize property" Url="html/P_SparkyTestHelpers_Populater_RandomValueProvider_MaximumIEnumerableSize.htm" />
+  <HelpKINode Title="Populate(Of T) method" Url="html/M_SparkyTestHelpers_Populater_Populater_Populate__1.htm" />
+  <HelpKINode Title="Populate&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_Populater_Populate__1.htm" />
+  <HelpKINode Title="Populater class">
+    <HelpKINode Title="Populater Class" Url="html/T_SparkyTestHelpers_Populater_Populater.htm" />
+    <HelpKINode Title="constructor" Url="html/M_SparkyTestHelpers_Populater_Populater__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_SparkyTestHelpers_Populater_Populater.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_SparkyTestHelpers_Populater_Populater.htm" />
+  </HelpKINode>
+  <HelpKINode Title="Populater.CreateAndPopulate(Of T) method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateAndPopulate__1.htm" />
+  <HelpKINode Title="Populater.CreateAndPopulate&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateAndPopulate__1.htm" />
+  <HelpKINode Title="Populater.CreateIEnumerableOf(Of T) method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateIEnumerableOf__1.htm" />
+  <HelpKINode Title="Populater.CreateIEnumerableOf&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateIEnumerableOf__1.htm" />
+  <HelpKINode Title="Populater.CreateRandom(Of T) method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateRandom__1.htm" />
+  <HelpKINode Title="Populater.CreateRandom&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateRandom__1.htm" />
+  <HelpKINode Title="Populater.CreateRandomIEnumerableOf(Of T) method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateRandomIEnumerableOf__1.htm" />
+  <HelpKINode Title="Populater.CreateRandomIEnumerableOf&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_Populater_CreateRandomIEnumerableOf__1.htm" />
+  <HelpKINode Title="Populater.MaximumDepth property" Url="html/P_SparkyTestHelpers_Populater_Populater_MaximumDepth.htm" />
+  <HelpKINode Title="Populater.Populate(Of T) method" Url="html/M_SparkyTestHelpers_Populater_Populater_Populate__1.htm" />
+  <HelpKINode Title="Populater.Populate&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_Populater_Populate__1.htm" />
+  <HelpKINode Title="Populater.Populater constructor" Url="html/M_SparkyTestHelpers_Populater_Populater__ctor.htm" />
+  <HelpKINode Title="Populater.PopulateWithRandomValues(Of T) method" Url="html/M_SparkyTestHelpers_Populater_Populater_PopulateWithRandomValues__1.htm" />
+  <HelpKINode Title="Populater.PopulateWithRandomValues&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_Populater_PopulateWithRandomValues__1.htm" />
+  <HelpKINode Title="Populater.WithMaximumDepth method" Url="html/M_SparkyTestHelpers_Populater_Populater_WithMaximumDepth.htm" />
+  <HelpKINode Title="PopulateWithRandomValues(Of T) method" Url="html/M_SparkyTestHelpers_Populater_Populater_PopulateWithRandomValues__1.htm" />
+  <HelpKINode Title="PopulateWithRandomValues&lt;T&gt; method" Url="html/M_SparkyTestHelpers_Populater_Populater_PopulateWithRandomValues__1.htm" />
+  <HelpKINode Title="RandomValueProvider class">
+    <HelpKINode Title="RandomValueProvider Class" Url="html/T_SparkyTestHelpers_Populater_RandomValueProvider.htm" />
+    <HelpKINode Title="constructor" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_SparkyTestHelpers_Populater_RandomValueProvider.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_SparkyTestHelpers_Populater_RandomValueProvider.htm" />
+  </HelpKINode>
+  <HelpKINode Title="RandomValueProvider.GetBool method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetBool.htm" />
+  <HelpKINode Title="RandomValueProvider.GetByte method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetByte.htm" />
+  <HelpKINode Title="RandomValueProvider.GetByteArray method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetByteArray.htm" />
+  <HelpKINode Title="RandomValueProvider.GetChar method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetChar.htm" />
+  <HelpKINode Title="RandomValueProvider.GetDateTime method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetDateTime.htm" />
+  <HelpKINode Title="RandomValueProvider.GetDecimal method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetDecimal.htm" />
+  <HelpKINode Title="RandomValueProvider.GetDouble method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetDouble.htm" />
+  <HelpKINode Title="RandomValueProvider.GetEnum method" Url="html/Overload_SparkyTestHelpers_Populater_RandomValueProvider_GetEnum.htm" />
+  <HelpKINode Title="RandomValueProvider.GetEnumerableSize method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetEnumerableSize.htm" />
+  <HelpKINode Title="RandomValueProvider.GetFloat method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetFloat.htm" />
+  <HelpKINode Title="RandomValueProvider.GetGuid method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetGuid.htm" />
+  <HelpKINode Title="RandomValueProvider.GetInt method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetInt.htm" />
+  <HelpKINode Title="RandomValueProvider.GetLong method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetLong.htm" />
+  <HelpKINode Title="RandomValueProvider.GetSByte method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetSByte.htm" />
+  <HelpKINode Title="RandomValueProvider.GetShort method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetShort.htm" />
+  <HelpKINode Title="RandomValueProvider.GetString method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetString.htm" />
+  <HelpKINode Title="RandomValueProvider.GetUInt method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetUInt.htm" />
+  <HelpKINode Title="RandomValueProvider.GetULong method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetULong.htm" />
+  <HelpKINode Title="RandomValueProvider.GetUShort method" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider_GetUShort.htm" />
+  <HelpKINode Title="RandomValueProvider.MaximumIEnumerableSize property" Url="html/P_SparkyTestHelpers_Populater_RandomValueProvider_MaximumIEnumerableSize.htm" />
+  <HelpKINode Title="RandomValueProvider.RandomValueProvider constructor" Url="html/M_SparkyTestHelpers_Populater_RandomValueProvider__ctor.htm" />
+  <HelpKINode Title="SByte method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_SByte.htm" />
+  <HelpKINode Title="SequentialValueProvider class">
+    <HelpKINode Title="SequentialValueProvider Class" Url="html/T_SparkyTestHelpers_Populater_SequentialValueProvider.htm" />
+    <HelpKINode Title="constructor" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_SparkyTestHelpers_Populater_SequentialValueProvider.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_SparkyTestHelpers_Populater_SequentialValueProvider.htm" />
+  </HelpKINode>
+  <HelpKINode Title="SequentialValueProvider.BaseDate property" Url="html/P_SparkyTestHelpers_Populater_SequentialValueProvider_BaseDate.htm" />
+  <HelpKINode Title="SequentialValueProvider.EnumerableSize property" Url="html/P_SparkyTestHelpers_Populater_SequentialValueProvider_EnumerableSize.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetBool method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetBool.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetByte method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetByte.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetByteArray method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetByteArray.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetChar method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetChar.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetDateTime method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetDateTime.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetDecimal method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetDecimal.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetDouble method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetDouble.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetEnum method" Url="html/Overload_SparkyTestHelpers_Populater_SequentialValueProvider_GetEnum.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetEnumerableSize method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetEnumerableSize.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetFloat method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetFloat.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetGuid method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetGuid.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetInt method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetInt.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetLong method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetLong.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetSByte method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetSByte.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetShort method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetShort.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetString method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetString.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetUInt method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetUInt.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetULong method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetULong.htm" />
+  <HelpKINode Title="SequentialValueProvider.GetUShort method" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider_GetUShort.htm" />
+  <HelpKINode Title="SequentialValueProvider.SequentialValueProvider constructor" Url="html/M_SparkyTestHelpers_Populater_SequentialValueProvider__ctor.htm" />
+  <HelpKINode Title="Short method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_Short.htm" />
+  <HelpKINode Title="SparkyTestHelpers.Populater namespace" Url="html/N_SparkyTestHelpers_Populater.htm" />
+  <HelpKINode Title="SparkyTestHelpers.Populater.GetRandom class" Url="html/T_SparkyTestHelpers_Populater_GetRandom.htm" />
+  <HelpKINode Title="SparkyTestHelpers.Populater.IPopulaterValueProvider interface" Url="html/T_SparkyTestHelpers_Populater_IPopulaterValueProvider.htm" />
+  <HelpKINode Title="SparkyTestHelpers.Populater.Populater class" Url="html/T_SparkyTestHelpers_Populater_Populater.htm" />
+  <HelpKINode Title="SparkyTestHelpers.Populater.RandomValueProvider class" Url="html/T_SparkyTestHelpers_Populater_RandomValueProvider.htm" />
+  <HelpKINode Title="SparkyTestHelpers.Populater.SequentialValueProvider class" Url="html/T_SparkyTestHelpers_Populater_SequentialValueProvider.htm" />
+  <HelpKINode Title="String method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_String.htm" />
+  <HelpKINode Title="UInt method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_UInt.htm" />
+  <HelpKINode Title="ULong method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_ULong.htm" />
+  <HelpKINode Title="UShort method" Url="html/M_SparkyTestHelpers_Populater_GetRandom_UShort.htm" />
+  <HelpKINode Title="WithMaximumDepth method" Url="html/M_SparkyTestHelpers_Populater_Populater_WithMaximumDepth.htm" />
+</HelpKI>

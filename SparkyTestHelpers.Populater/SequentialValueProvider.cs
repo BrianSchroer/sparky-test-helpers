@@ -16,7 +16,7 @@ namespace SparkyTestHelpers.Populater
         public DateTime BaseDate { get; set; } = new DateTime(2019, 1, 1);
 
         /// <summary>
-        /// Number of items to generate for arrays / lists / IEnumerables.
+        /// Number of items to generate for arrays / lists / IEnumerables (default value is 3).
         /// </summary>
         public int EnumerableSize { get; set; } = 3;
 
