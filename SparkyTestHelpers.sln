@@ -85,7 +85,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkyTestHelpers.Populater
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkyTestHelpers.Populater", "SparkyTestHelpers.Populater\SparkyTestHelpers.Populater.csproj", "{39DB7342-E359-4D97-AEBD-0AC3D01361AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownFIxer", "MarkdownFIxer\MarkdownFIxer.csproj", "{0F6EC3BA-FCC2-4CF3-8F60-59F997100B80}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownFixer", "MarkdownFixer\MarkdownFixer.csproj", "{0F6EC3BA-FCC2-4CF3-8F60-59F997100B80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

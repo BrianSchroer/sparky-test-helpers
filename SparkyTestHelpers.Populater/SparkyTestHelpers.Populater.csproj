@@ -11,6 +11,7 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest</PackageTags>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -22,11 +23,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="NamespaceDoc.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="NamespaceDoc.cs" />
     <None Include="_Populater.shfbproj" />
   </ItemGroup>
 

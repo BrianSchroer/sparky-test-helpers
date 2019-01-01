@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace MarkdownFIxer
+namespace MarkdownFixer
 {
     public class Program
     {
