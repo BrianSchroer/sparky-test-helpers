@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SparkyTestHelpers.Populater
+namespace SparkyTestHelpers.Population
 {
     /// <summary>
     /// Random value provider for <see cref="Populater"/>.

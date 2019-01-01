@@ -5,6 +5,7 @@ using FluentAssertions.Execution;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using SparkyTestHelpers.Populater.UnitTests.TestClasses;
+using SparkyTestHelpers.Population;
 
 namespace SparkyTestHelpers.Populater.UnitTests
 {
@@ -14,14 +15,14 @@ namespace SparkyTestHelpers.Populater.UnitTests
     [TestClass]
     public class PopulaterTests
     {
-        private Populater _populater;
+        private Population.Populater _populater;
 
         private const string _testThingJson = "{\"String1\":\"String1-1\",\"String2\":\"String2-2\",\"Int1\":3,\"Int2\":4,\"Decimal1\":5.05,\"Decimal2\":6.06,\"DateTime1\":\"2019-01-08T00:00:00\",\"NullableDateTime\":\"2019-01-09T00:00:00\",\"ChildThing\":{\"String1\":\"String1-9\",\"String2\":\"String2-10\",\"Int1\":11,\"Int2\":12,\"Decimal1\":13.13,\"Decimal2\":14.14,\"DateTime1\":\"2019-01-16T00:00:00\",\"NullableDateTime\":\"2019-01-17T00:00:00\"},\"ChildrenThings\":[{\"String1\":\"String1-17\",\"String2\":\"String2-18\",\"Int1\":19,\"Int2\":20,\"Decimal1\":21.21,\"Decimal2\":22.22,\"DateTime1\":\"2019-01-24T00:00:00\",\"NullableDateTime\":\"2019-01-25T00:00:00\"},{\"String1\":\"String1-25\",\"String2\":\"String2-26\",\"Int1\":27,\"Int2\":28,\"Decimal1\":29.29,\"Decimal2\":30.30,\"DateTime1\":\"2019-02-01T00:00:00\",\"NullableDateTime\":\"2019-02-02T00:00:00\"},{\"String1\":\"String1-33\",\"String2\":\"String2-34\",\"Int1\":35,\"Int2\":36,\"Decimal1\":37.37,\"Decimal2\":38.38,\"DateTime1\":\"2019-02-09T00:00:00\",\"NullableDateTime\":\"2019-02-10T00:00:00\"}],\"ChildList\":[{\"String1\":\"String1-41\",\"String2\":\"String2-42\",\"Int1\":43,\"Int2\":44,\"Decimal1\":45.45,\"Decimal2\":46.46,\"DateTime1\":\"2019-02-17T00:00:00\",\"NullableDateTime\":\"2019-02-18T00:00:00\"},{\"String1\":\"String1-49\",\"String2\":\"String2-50\",\"Int1\":51,\"Int2\":52,\"Decimal1\":53.53,\"Decimal2\":54.54,\"DateTime1\":\"2019-02-25T00:00:00\",\"NullableDateTime\":\"2019-02-26T00:00:00\"},{\"String1\":\"String1-57\",\"String2\":\"String2-58\",\"Int1\":59,\"Int2\":60,\"Decimal1\":61.61,\"Decimal2\":62.62,\"DateTime1\":\"2019-03-05T00:00:00\",\"NullableDateTime\":\"2019-03-06T00:00:00\"}],\"ChildEnumerable\":[{\"String1\":\"String1-65\",\"String2\":\"String2-66\",\"Int1\":67,\"Int2\":68,\"Decimal1\":69.69,\"Decimal2\":70.70,\"DateTime1\":\"2019-03-13T00:00:00\",\"NullableDateTime\":\"2019-03-14T00:00:00\"},{\"String1\":\"String1-73\",\"String2\":\"String2-74\",\"Int1\":75,\"Int2\":76,\"Decimal1\":77.77,\"Decimal2\":78.78,\"DateTime1\":\"2019-03-21T00:00:00\",\"NullableDateTime\":\"2019-03-22T00:00:00\"},{\"String1\":\"String1-81\",\"String2\":\"String2-82\",\"Int1\":83,\"Int2\":84,\"Decimal1\":85.85,\"Decimal2\":86.86,\"DateTime1\":\"2019-03-29T00:00:00\",\"NullableDateTime\":\"2019-03-30T00:00:00\"}],\"Bool1\":false,\"Bool2\":true,\"Byte1\":49,\"Byte2\":50,\"ByteArray\":\"MDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDkz\",\"Char1\":\"9\",\"Char2\":\"9\",\"Double1\":96.96,\"Double2\":97.97,\"Float1\":98.98,\"Float2\":99.99,\"Guid1\":\"00000000-0000-0000-0000-000000000100\",\"Guid2\":\"00000000-0000-0000-0000-000000000101\",\"Long1\":102,\"Long2\":103,\"Object1\":\"Object1-104\",\"Sbyte1\":105,\"Sbyte2\":106,\"Short1\":107,\"Short2\":108,\"Uint1\":109,\"Uint2\":110,\"Ulong1\":111,\"Ulong2\":112,\"Ushort1\":113,\"Ushort2\":114}";
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _populater = new Populater();
+            _populater = new Population.Populater();
         }
 
         [TestMethod]
@@ -188,7 +189,7 @@ namespace SparkyTestHelpers.Populater.UnitTests
         {
             int maximumDepth = 3;
 
-            TestRecursiveThing recursiveThing = new Populater().WithMaximumDepth(maximumDepth).CreateAndPopulate<TestRecursiveThing>();
+            TestRecursiveThing recursiveThing = new Population.Populater().WithMaximumDepth(maximumDepth).CreateAndPopulate<TestRecursiveThing>();
 
             AssertExpectedMaximumDepth(recursiveThing, maximumDepth);
         }

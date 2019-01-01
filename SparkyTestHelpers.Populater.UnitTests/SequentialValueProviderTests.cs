@@ -3,6 +3,7 @@ using System.Text;
 using FluentAssertions;
 using FluentAssertions.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SparkyTestHelpers.Population;
 
 namespace SparkyTestHelpers.Populater.UnitTests
 {

@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using SparkyTestHelpers.Populater.UnitTests.TestClasses;
+using SparkyTestHelpers.Population;
 
 namespace SparkyTestHelpers.Populater.UnitTests
 {

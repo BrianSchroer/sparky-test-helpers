@@ -1,4 +1,5 @@
 ﻿using System;
+using SparkyTestHelpers.Population;
 
 namespace SparkyTestHelpers.Mapping
 {
@@ -6,21 +7,16 @@ namespace SparkyTestHelpers.Mapping
     /// Test helper methods using <see cref="RandomValuesHelper"/> to generate random values
     /// (usually for testing "mapping" from one type to another).
     /// </summary>
+    [Obsolete("SparkyTestHelpers.Mapping.CreateRandom has been deprecated in favor of SparkyTestHelpers.Populater.GetRandom")]
     public static class CreateRandom
     {
-        private static readonly RandomValuesHelper _randomValuesHelper = new RandomValuesHelper();
-
         /// <summary>
         /// Create an instance of the specified type and populate its properties with random values.
         /// </summary>
         /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
         /// <param name="callback">"Callback" function to perform additional property assignments.</param>
         /// <returns>New instance.</returns>
-        public static T InstanceOf<T>(Action<T> callback) where T : class
-        {
-            return InstanceOf(null, null, callback);
-        }
-
+        public static T InstanceOf<T>(Action<T> callback) where T : class => GetRandom.InstanceOf(callback);
 
         /// <summary>
         /// Create an instance of the specified type and populate its properties with random values.
@@ -33,117 +29,93 @@ namespace SparkyTestHelpers.Mapping
         public static T InstanceOf<T>(
             int? maximumDepth = null,
             int? maximumIEnumerableSize = null,
-            Action<T> callback = null) where T : class
-        {
-            int? savedMaximumDepth = _randomValuesHelper.MaximumDepth;
-            int savedMaximumIEnumerableSize = _randomValuesHelper.MaximumIEnumerableSize;
-
-            try
-            {
-                if (maximumDepth.HasValue)
-                {
-                    _randomValuesHelper.MaximumDepth = maximumDepth;
-                }
-
-                if (maximumIEnumerableSize.HasValue)
-                {
-                    _randomValuesHelper.MaximumIEnumerableSize = maximumIEnumerableSize.Value;
-                }
-
-                return _randomValuesHelper.CreateRandom(callback);
-            }
-            finally
-            {
-                _randomValuesHelper.MaximumDepth = savedMaximumDepth;
-                _randomValuesHelper.MaximumIEnumerableSize = savedMaximumIEnumerableSize;
-            }
-        }
+            Action<T> callback = null) where T : class => GetRandom.InstanceOf<T>(maximumDepth, maximumIEnumerableSize, callback);
 
         /// <summary>
         /// Get random bool value.
         /// </summary>
-        public static bool Bool() => _randomValuesHelper.RandomBool();
+        public static bool Bool() => GetRandom.Bool();
 
         /// <summary>
         /// Get random byte value.
         /// </summary>
-        public static byte Byte() => _randomValuesHelper.RandomByte();
+        public static byte Byte() => GetRandom.Byte();
 
         /// <summary>
         /// Get random char value.
         /// </summary>
-        public static char Char() => _randomValuesHelper.RandomChar();
+        public static char Char() => GetRandom.Char();
 
         /// <summary>
         /// Get random DateTime value.
         /// </summary>
-        public static DateTime DateTime() => _randomValuesHelper.RandomDateTime();
+        public static DateTime DateTime() => GetRandom.DateTime();
 
         /// <summary>
         /// Get random decimal value.
         /// </summary>
-        public static decimal Decimal() => _randomValuesHelper.RandomDecimal();
+        public static decimal Decimal() => GetRandom.Decimal();
 
         /// <summary>
         /// Get random double value.
         /// </summary>
-        public static double Double() => _randomValuesHelper.RandomDouble();
+        public static double Double() => GetRandom.Double();
 
         /// <summary>
         /// Get random Enum value.
         /// </summary>
         /// <typeparam name="TEnum">The enum type.</typeparam>
-        public static TEnum EnumValue<TEnum>() where TEnum : struct, IConvertible => _randomValuesHelper.RandomEnumValue<TEnum>();
+        public static TEnum EnumValue<TEnum>() where TEnum : Enum => GetRandom.EnumValue<TEnum>();
 
         /// <summary>
         /// Get random float value.
         /// </summary>
-        public static float Float() => _randomValuesHelper.RandomFloat();
+        public static float Float() => GetRandom.Float();
 
         /// <summary>
         /// Get random Guid value.
         /// </summary>
-        public static Guid Guid() => _randomValuesHelper.RandomGuid();
+        public static Guid Guid() => GetRandom.Guid();
 
         /// <summary>
         /// Get random int value.
         /// </summary>
-        public static int Int() => _randomValuesHelper.RandomInt();
+        public static int Int() => GetRandom.Int();
 
         /// <summary>
         /// Get random long value.
         /// </summary>
-        public static long Long() => _randomValuesHelper.RandomLong();
+        public static long Long() => GetRandom.Long();
 
         /// <summary>
         /// Get random sbyte value.
         /// </summary>
-        public static sbyte SByte() => _randomValuesHelper.RandomSByte();
+        public static sbyte SByte() => GetRandom.SByte();
 
         /// <summary>
         /// Get random short value.
         /// </summary>
-        public static short Short() => _randomValuesHelper.RandomShort();
+        public static short Short() => GetRandom.Short();
 
         /// <summary>
         /// Get random string value.
         /// </summary>
         /// <param name="prefix">optional string prefix.</param>
-        public static string String(string prefix = null) => _randomValuesHelper.RandomString(prefix);
+        public static string String(string prefix = null) => GetRandom.String(prefix);
 
         /// <summary>
         /// Get random uint value.
         /// </summary>
-        public static uint UInt() => _randomValuesHelper.RandomUInt();
+        public static uint UInt() => GetRandom.UInt();
 
         /// <summary>
         /// Get random ulong value.
         /// </summary>
-        public static ulong ULong() => _randomValuesHelper.RandomULong();
+        public static ulong ULong() => GetRandom.ULong();
 
         /// <summary>
         /// Get random ushort value.
         /// </summary>
-        public static ushort UShort() => _randomValuesHelper.RandomUShort();
+        public static ushort UShort() => GetRandom.UShort();
     }
 }

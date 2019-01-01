@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace SparkyTestHelpers.Populater
+namespace SparkyTestHelpers.Population
 {
     /// <summary>
     /// Sequential value provider for <see cref="Populater"/>.

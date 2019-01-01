@@ -1,6 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SparkyTestHelpers.Population;
 
 namespace SparkyTestHelpers.Populater.UnitTests
 {

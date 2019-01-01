@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace SparkyTestHelpers.Populater
+namespace SparkyTestHelpers.Population
 {
     /// <summary>
     /// This class populates class instances with test data.

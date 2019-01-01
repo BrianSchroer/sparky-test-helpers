@@ -18,11 +18,13 @@
     <Product>SparkyTestHelpers.Mapping</Product>
     <PackageId>SparkyTestHelpers.Mapping</PackageId>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\SparkyTestHelpers.Mapping.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SparkyTestHelpers" Version="1.5.1" />
+    <PackageReference Include="SparkyTestHelpers" Version="1.5.2" />
+    <PackageReference Include="SparkyTestHelpers.Populater" Version="1.0.1" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SparkyTestHelpers.Populater
+namespace SparkyTestHelpers.Population
 {
     /// <summary>
     /// Test helper methods using <see cref="RandomValueProvider"/> to generate random values.

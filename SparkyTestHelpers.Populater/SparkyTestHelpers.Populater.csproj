@@ -12,6 +12,7 @@
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest</PackageTags>
     <Version>1.0.1</Version>
+    <RootNamespace>SparkyTestHelpers.Population</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,10 +25,6 @@
 
   <ItemGroup>
     <None Include="_Populater.shfbproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Documentation\" />
   </ItemGroup>
 
 </Project>

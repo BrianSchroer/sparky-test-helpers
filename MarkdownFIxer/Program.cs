@@ -7,14 +7,15 @@ namespace MarkdownFixer
 {
     public class Program
     {
-        public static Regex _localLinkRegex = new Regex("href=\"(?!http)([^\"]*(?<!\\.md))\"", RegexOptions.Compiled);
+        private static readonly Regex _localLinkRegex = 
+            new Regex("href=\"(?!http)([^\"]*(?<!\\.md))\"", RegexOptions.Compiled);
 
         public static void Main(string[] args)
         {
-            if (args is null || args.Length == 0) return;
+            const string relativePath = "../../../SparkyTestHelpers.Populater/Help";
 
             string myDirectoryPath = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName;
-            string markdownDirectoryPath = ResolveRelativePath(myDirectoryPath, args[0]);
+            string markdownDirectoryPath = ResolveRelativePath(myDirectoryPath, relativePath);
 
             FixMarkdownFiles(markdownDirectoryPath);
         }

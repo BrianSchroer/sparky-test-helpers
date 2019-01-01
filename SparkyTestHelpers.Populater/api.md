@@ -1,6 +1,6 @@
 ﻿
 _see also_:
-* [**Complete API Documentation**](https://github.com/BrianSchroer/sparky-test-helpers/blob/master/SparkyTestHelpers.Populater/Documentation/Home.md)
+* [**Complete API Documentation**](https://github.com/BrianSchroer/sparky-test-helpers/blob/master/SparkyTestHelpers.Populater/Help/Home.md)
 * the rest of the [**"Sparky suite"** of .NET utilities and test helpers](https://www.nuget.org/profiles/BrianSchroer)
 ---
 This project provides tools for populating class instance properties for testing purposes, usually with random values:
