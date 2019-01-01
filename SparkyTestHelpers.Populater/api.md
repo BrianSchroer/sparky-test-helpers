@@ -6,7 +6,7 @@ _see also_:
 This project provides tools for populating class instance properties for testing purposes, usually with random values:
 
 ```csharp
-using SparkyTestHelpers.Populater;
+using SparkyTestHelpers.Population;
 ```
 ```csharp
     var populater = new Populater();
@@ -20,7 +20,7 @@ using SparkyTestHelpers.Populater;
 There's also a **GetRandom** static method that uses **Populater** "behind the scenes":
 
 ```csharp
-using SparkyTestHelpers.Populater;
+using SparkyTestHelpers.Population;
 ```
 ```csharp
     var foo = GetRandom.InstanceOf<Foo>();
@@ -29,7 +29,7 @@ using SparkyTestHelpers.Populater;
 The project also has a **SequentialValueProvider** and associated methods that populates class properties with predictable/repeatable values. I hope to use it in the future for "snapshot testing":
 
 ```csharp
-using SparkyTestHelpers.Populater;
+using SparkyTestHelpers.Population;
 ```
 ```csharp
     var populater = new Populater();
