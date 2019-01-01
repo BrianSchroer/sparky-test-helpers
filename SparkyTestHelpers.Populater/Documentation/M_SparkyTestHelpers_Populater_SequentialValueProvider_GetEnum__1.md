@@ -3,7 +3,7 @@
 
 Gets Enum value.
 
-**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Populater">SparkyTestHelpers.Populater</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.0.0
+**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Populater.md">SparkyTestHelpers.Populater</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.0.0
 
 ## Syntax
 
@@ -22,10 +22,10 @@ where TEnum : Enum
 Type: *TEnum*<br />A *TEnum* value.
 
 #### Implements
-<a href="M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetEnum__1">IPopulaterValueProvider.GetEnum(TEnum)()</a><br />
+<a href="M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetEnum__1.md">IPopulaterValueProvider.GetEnum(TEnum)()</a><br />
 
 ## See Also
 
 
 #### Reference
-<a href="T_SparkyTestHelpers_Populater_SequentialValueProvider">SequentialValueProvider Class</a><br /><a href="Overload_SparkyTestHelpers_Populater_SequentialValueProvider_GetEnum">GetEnum Overload</a><br /><a href="N_SparkyTestHelpers_Populater">SparkyTestHelpers.Populater Namespace</a><br />
+<a href="T_SparkyTestHelpers_Populater_SequentialValueProvider.md">SequentialValueProvider Class</a><br /><a href="Overload_SparkyTestHelpers_Populater_SequentialValueProvider_GetEnum.md">GetEnum Overload</a><br /><a href="N_SparkyTestHelpers_Populater.md">SparkyTestHelpers.Populater Namespace</a><br />

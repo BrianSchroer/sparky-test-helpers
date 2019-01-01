@@ -3,7 +3,7 @@
 
 Gets char value.
 
-**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Populater">SparkyTestHelpers.Populater</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.0.0
+**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Populater.md">SparkyTestHelpers.Populater</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.0.0
 
 ## Syntax
 
@@ -17,10 +17,10 @@ public virtual char GetChar()
 Type: <a href="http://msdn2.microsoft.com/en-us/library/k493b04s" target="_blank">Char</a><br />A <a href="http://msdn2.microsoft.com/en-us/library/k493b04s" target="_blank">Char</a> value.
 
 #### Implements
-<a href="M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetChar">IPopulaterValueProvider.GetChar()</a><br />
+<a href="M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetChar.md">IPopulaterValueProvider.GetChar()</a><br />
 
 ## See Also
 
 
 #### Reference
-<a href="T_SparkyTestHelpers_Populater_RandomValueProvider">RandomValueProvider Class</a><br /><a href="N_SparkyTestHelpers_Populater">SparkyTestHelpers.Populater Namespace</a><br />
+<a href="T_SparkyTestHelpers_Populater_RandomValueProvider.md">RandomValueProvider Class</a><br /><a href="N_SparkyTestHelpers_Populater.md">SparkyTestHelpers.Populater Namespace</a><br />

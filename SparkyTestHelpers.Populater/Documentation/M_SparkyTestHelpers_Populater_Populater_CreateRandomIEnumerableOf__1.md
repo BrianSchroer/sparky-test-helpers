@@ -3,7 +3,7 @@
 
 Create <a href="http://msdn2.microsoft.com/en-us/library/9eekhta0" target="_blank">IEnumerable(T)</a> and populate with test data.
 
-**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Populater">SparkyTestHelpers.Populater</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.0.0
+**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Populater.md">SparkyTestHelpers.Populater</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.0.0
 
 ## Syntax
 
@@ -30,4 +30,4 @@ Type: <a href="http://msdn2.microsoft.com/en-us/library/9eekhta0" target="_blank
 
 
 #### Reference
-<a href="T_SparkyTestHelpers_Populater_Populater">Populater Class</a><br /><a href="N_SparkyTestHelpers_Populater">SparkyTestHelpers.Populater Namespace</a><br />
+<a href="T_SparkyTestHelpers_Populater_Populater.md">Populater Class</a><br /><a href="N_SparkyTestHelpers_Populater.md">SparkyTestHelpers.Populater Namespace</a><br />

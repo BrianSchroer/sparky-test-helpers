@@ -66,7 +66,7 @@ Tools for populating test class instance properties:
 * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Populater/)
 * [Source Code](/SparkyTestHelpers.Populater)
 * [API documentation](/SparkyTestHelpers.Populater/api.md)
-* 
+
 ## SparkyTestHelpers.Xml
 Unit test helpers for XML .config files:
 * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Xml/)

@@ -3,7 +3,7 @@
 
 Create <a href="http://msdn2.microsoft.com/en-us/library/9eekhta0" target="_blank">IEnumerable(T)</a> and populate with test data.
 
-**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Populater">SparkyTestHelpers.Populater</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.0.0
+**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Populater.md">SparkyTestHelpers.Populater</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.0.0
 
 ## Syntax
 
@@ -18,7 +18,7 @@ public IEnumerable<T> CreateIEnumerableOf<T>(
 
 
 #### Parameters
-&nbsp;<dl><dt>count</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">System.Int32</a><br />The desired <a href="http://msdn2.microsoft.com/en-us/library/9eekhta0" target="_blank">IEnumerable(T)</a> count.</dd><dt>valueProvider (Optional)</dt><dd>Type: <a href="T_SparkyTestHelpers_Populater_IPopulaterValueProvider">SparkyTestHelpers.Populater.IPopulaterValueProvider</a><br />The <a href="T_SparkyTestHelpers_Populater_IPopulaterValueProvider">IPopulaterValueProvider</a> (defaults to <a href="T_SparkyTestHelpers_Populater_SequentialValueProvider">SequentialValueProvider</a>).</dd></dl>
+&nbsp;<dl><dt>count</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">System.Int32</a><br />The desired <a href="http://msdn2.microsoft.com/en-us/library/9eekhta0" target="_blank">IEnumerable(T)</a> count.</dd><dt>valueProvider (Optional)</dt><dd>Type: <a href="T_SparkyTestHelpers_Populater_IPopulaterValueProvider.md">SparkyTestHelpers.Populater.IPopulaterValueProvider</a><br />The <a href="T_SparkyTestHelpers_Populater_IPopulaterValueProvider.md">IPopulaterValueProvider</a> (defaults to <a href="T_SparkyTestHelpers_Populater_SequentialValueProvider.md">SequentialValueProvider</a>).</dd></dl>
 
 #### Type Parameters
 &nbsp;<dl><dt>T</dt><dd>The class type.</dd></dl>
@@ -30,4 +30,4 @@ Type: <a href="http://msdn2.microsoft.com/en-us/library/9eekhta0" target="_blank
 
 
 #### Reference
-<a href="T_SparkyTestHelpers_Populater_Populater">Populater Class</a><br /><a href="N_SparkyTestHelpers_Populater">SparkyTestHelpers.Populater Namespace</a><br />
+<a href="T_SparkyTestHelpers_Populater_Populater.md">Populater Class</a><br /><a href="N_SparkyTestHelpers_Populater.md">SparkyTestHelpers.Populater Namespace</a><br />

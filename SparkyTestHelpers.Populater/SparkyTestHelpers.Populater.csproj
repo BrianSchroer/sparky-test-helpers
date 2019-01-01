@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <None Include="NamespaceDoc.cs" />
+    <None Include="_Populater.shfbproj" />
   </ItemGroup>
 
   <ItemGroup>

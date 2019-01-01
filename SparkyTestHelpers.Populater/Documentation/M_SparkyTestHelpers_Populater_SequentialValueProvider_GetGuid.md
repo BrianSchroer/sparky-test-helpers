@@ -3,7 +3,7 @@
 
 Gets Guid value.
 
-**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Populater">SparkyTestHelpers.Populater</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.0.0
+**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Populater.md">SparkyTestHelpers.Populater</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.0.0
 
 ## Syntax
 
@@ -17,10 +17,10 @@ public virtual Guid GetGuid()
 Type: <a href="http://msdn2.microsoft.com/en-us/library/cey1zx63" target="_blank">Guid</a><br />A <a href="http://msdn2.microsoft.com/en-us/library/cey1zx63" target="_blank">Guid</a> value.
 
 #### Implements
-<a href="M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetGuid">IPopulaterValueProvider.GetGuid()</a><br />
+<a href="M_SparkyTestHelpers_Populater_IPopulaterValueProvider_GetGuid.md">IPopulaterValueProvider.GetGuid()</a><br />
 
 ## See Also
 
 
 #### Reference
-<a href="T_SparkyTestHelpers_Populater_SequentialValueProvider">SequentialValueProvider Class</a><br /><a href="N_SparkyTestHelpers_Populater">SparkyTestHelpers.Populater Namespace</a><br />
+<a href="T_SparkyTestHelpers_Populater_SequentialValueProvider.md">SequentialValueProvider Class</a><br /><a href="N_SparkyTestHelpers_Populater.md">SparkyTestHelpers.Populater Namespace</a><br />
