@@ -1,0 +1,20 @@
+# Populater Constructor 
+ 
+
+Initializes a new instance of the <a href="T_SparkyTestHelpers_Populater_Populater">Populater</a> class
+
+**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Populater">SparkyTestHelpers.Populater</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.0.0
+
+## Syntax
+
+**C#**<br />
+``` C#
+public Populater()
+```
+
+
+## See Also
+
+
+#### Reference
+<a href="T_SparkyTestHelpers_Populater_Populater">Populater Class</a><br /><a href="N_SparkyTestHelpers_Populater">SparkyTestHelpers.Populater Namespace</a><br />
