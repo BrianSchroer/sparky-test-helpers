@@ -1,0 +1,11 @@
+# SparkyTestHelpers.Mapping Namespace
+
+## Classes
+&nbsp;<table><tr><th></th><th>Class</th><th>Description</th></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href="T_SparkyTestHelpers_Mapping_CreateRandom.md">CreateRandom</a></td><td> **Obsolete. **
+Test helper methods using <a href="T_SparkyTestHelpers_Mapping_RandomValuesHelper.md">RandomValuesHelper</a> to generate random values (usually for testing "mapping" from one type to another).</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href="T_SparkyTestHelpers_Mapping_MapMemberTester_2.md">MapMemberTester(TSource, TDestination)</a></td><td>
+This class is for testing that a property was successfully "mapped" from one type to another.</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href="T_SparkyTestHelpers_Mapping_MapTester.md">MapTester</a></td><td>
+This class is for testing that properties were successfully "mapped" from one type to another.</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href="T_SparkyTestHelpers_Mapping_MapTester_2.md">MapTester(TSource, TDestination)</a></td><td>
+This class is for testing that properties were successfully "mapped" from one type to another.</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href="T_SparkyTestHelpers_Mapping_MapTesterException.md">MapTesterException</a></td><td>
+Exception thrown when an mapping test fails.</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href="T_SparkyTestHelpers_Mapping_PropertyInfoResolver.md">PropertyInfoResolver</a></td><td>
+This class is used to get the <a href="http://msdn2.microsoft.com/en-us/library/8z852kf5" target="_blank">PropertyInfo</a> for a <a href="http://msdn2.microsoft.com/en-us/library/hh194516" target="_blank">TypeInfo</a> / property name combination.</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href="T_SparkyTestHelpers_Mapping_RandomValuesHelper.md">RandomValuesHelper</a></td><td> **Obsolete. **
+Test helper for updating class instance properties with random values (usually for testing "mapping" from one type to another).</td></tr></table>&nbsp;

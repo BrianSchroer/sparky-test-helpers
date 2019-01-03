@@ -18,8 +18,9 @@
     <HtmlHelpName>Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\..\..\SourceCode\sparky-test-helpers\SparkyTestHelpers.Mapping\SparkyTestHelpers.Mapping.xml" />
-<DocumentationSource sourceFile="..\..\..\SourceCode\sparky-test-helpers\SparkyTestHelpers.Mapping\bin\Release\netstandard1.5\SparkyTestHelpers.Mapping.dll" /></DocumentationSources>
+      <DocumentationSource sourceFile="bin\Release\netstandard1.5\SparkyTestHelpers.Mapping.dll" />
+      <DocumentationSource sourceFile="bin\Release\netstandard1.5\SparkyTestHelpers.Mapping.xml" />
+    </DocumentationSources>
     <HelpFileFormat>Markdown</HelpFileFormat>
     <SyntaxFilters>C#</SyntaxFilters>
     <PresentationStyle>Markdown</PresentationStyle>
@@ -32,8 +33,9 @@
     <ProjectSummary>
     </ProjectSummary>
     <NamespaceSummaries>
-      <NamespaceSummaryItem name="(global)" isDocumented="False">Tools for populating class instance properties for testing.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="SparkyTestHelpers.Mapping" isDocumented="True" /></NamespaceSummaries>
+      <NamespaceSummaryItem name="(global)" isDocumented="False">Unit test helpers for asserting public properties on class instances "mapped" from one type to another (via AutoMapper, another tool, or hand-written code) have the correct values.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="SparkyTestHelpers.Mapping" isDocumented="True" />
+    </NamespaceSummaries>
     <HelpTitle>SparkyTestHelpers.Mapping</HelpTitle>
     <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <NamingMethod>MemberName</NamingMethod>
@@ -76,8 +78,12 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <PostBuildEvent>$(ProjectDir)../../MarkdownFixer\bin\release\MarkdownFixer.exe $(OutDir)</PostBuildEvent>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SparkyTestHelpers.Populater">
+      <HintPath>bin\Release\net461\SparkyTestHelpers.Populater.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

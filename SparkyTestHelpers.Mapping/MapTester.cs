@@ -57,7 +57,7 @@ namespace SparkyTestHelpers.Mapping
 
                 PropertyInfo srcProperty = PropertyInfoResolver.Resolve(sourceTypeInfo, sourcePropertyName);
                 PropertyInfo destProperty = PropertyInfoResolver.Resolve(destTypeInfo, propertyName);
-              
+
                 SetTesterForProperty(propertyName,
                     new MapMemberTester<TSource, TDestination>(
                         this,
@@ -69,7 +69,7 @@ namespace SparkyTestHelpers.Mapping
         /// <summary>
         /// Log destination property values when <see cref="AssertMappedValues(TSource, TDestination)"/> is called.
         /// </summary>
-        /// <param name="action">"Callback" function to receive/log messages. 
+        /// <param name="action">"Callback" function to receive/log messages.
         /// (If null, <see cref="Console.WriteLine()"/> is used.</param>
         /// <returns>"This" <see cref="MapTester{TSource, TDestination}"/></returns>
         public MapTester<TSource, TDestination> WithLogging(Action<string> action = null)
@@ -190,7 +190,7 @@ namespace SparkyTestHelpers.Mapping
 
                 try
                 {
-                    message = 
+                    message =
                         ExceptionHelper.ConvertToMapTesterExceptionMessage(ex)
                         + ExceptionHelper.FormatUnmappedPropertiesHelperMessage(_untestedProperties);
                 }
@@ -202,6 +202,10 @@ namespace SparkyTestHelpers.Mapping
             }
         }
 
+        /// <summary>
+        /// Returns a String which represents the MapTester instance.
+        /// </summary>
+        /// <returns>a String which represents the MapTester instance.</returns>
         public override string ToString()
         {
             try
@@ -311,7 +315,7 @@ namespace SparkyTestHelpers.Mapping
         private bool MemberShouldBeIgnored(string propertyName, MapMemberTester<TSource, TDestination> memberTester)
         {
             return (memberTester?.ShouldBeIgnored ?? false)
-                || _ignoringAllOtherMembers 
+                || _ignoringAllOtherMembers
                 || _ignoringMemberNamesStartingWith.Any(x => propertyName.StartsWith(x));
         }
 

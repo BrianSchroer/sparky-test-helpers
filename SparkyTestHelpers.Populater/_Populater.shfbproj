@@ -18,8 +18,8 @@
     <HtmlHelpName>Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\..\..\SourceCode\sparky-test-helpers\SparkyTestHelpers.Populater\SparkyTestHelpers.Populater.xml" />
-<DocumentationSource sourceFile="..\..\..\SourceCode\sparky-test-helpers\SparkyTestHelpers.Populater\bin\Release\netstandard1.5\SparkyTestHelpers.Populater.dll" /></DocumentationSources>
+      <DocumentationSource sourceFile="bin\Release\netstandard1.5\SparkyTestHelpers.Populater.dll" />
+<DocumentationSource sourceFile="bin\Release\netstandard1.5\SparkyTestHelpers.Populater.xml" /></DocumentationSources>
     <HelpFileFormat>Markdown</HelpFileFormat>
     <SyntaxFilters>C#</SyntaxFilters>
     <PresentationStyle>Markdown</PresentationStyle>
@@ -33,7 +33,8 @@
     </ProjectSummary>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False">Tools for populating class instance properties for testing.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="SparkyTestHelpers.Populater" isDocumented="True" /></NamespaceSummaries>
+      <NamespaceSummaryItem name="SparkyTestHelpers.Populater" isDocumented="True" />
+    </NamespaceSummaries>
     <HelpTitle>SparkyTestHelpers.Populater</HelpTitle>
     <HelpFileVersion>1.0.0.0</HelpFileVersion>
     <NamingMethod>MemberName</NamingMethod>

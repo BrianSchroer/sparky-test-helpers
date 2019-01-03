@@ -1,5 +1,6 @@
 
 _see also_:
+* [**Complete API Documentation**](https://github.com/BrianSchroer/sparky-test-helpers/blob/master/SparkyTestHelpers.Mapping/Help/Home.md)
 * the rest of the [**"Sparky suite"** of .NET utilities and test helpers](https://www.nuget.org/profiles/BrianSchroer)
 ---
 ## MapTester<TSource, TDestination>

@@ -15,10 +15,18 @@ namespace SparkyTestHelpers.Mapping
         {
         }
 
+        /// <summary>
+        /// Creates new <see cref="MapTesterException"/> instance.
+        /// </summary>
         public MapTesterException() : base()
         {
         }
 
+        /// <summary>
+        /// Creates new <see cref="MapTesterException"/> instance.
+        /// </summary>
+        /// <param name="message">The exception message.</param>
+        /// <param name="innerException">Inner <see cref="Exception"/>.</param>
         public MapTesterException(string message, Exception innerException) : base(message, innerException)
         {
         }

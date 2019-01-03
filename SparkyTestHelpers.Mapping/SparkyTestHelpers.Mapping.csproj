@@ -5,29 +5,29 @@
     <Authors>Brian Schroer</Authors>
     <Company>Brian Schroer</Company>
     <Description>Unit test helpers for asserting public properties on class instances "mapped" from one type to another (via AutoMapper, another tool, or hand-written code) have the correct values.</Description>
-    <Copyright>Copyright © Brian Schroer 2018</Copyright>
+    <Copyright>Copyright © Brian Schroer 2019</Copyright>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <AssemblyVersion>1.10.2.0</AssemblyVersion>
-    <FileVersion>1.10.2.0</FileVersion>
-    <Version>1.10.2</Version>
+    <PackageReleaseNotes>v1.11: Added SparkyTestHelpers.Populater dependency for random values logic</PackageReleaseNotes>
+    <AssemblyVersion>1.11.0.0</AssemblyVersion>
+    <FileVersion>1.11.0.0</FileVersion>
+    <Version>1.11.0</Version>
     <Product>SparkyTestHelpers.Mapping</Product>
     <PackageId>SparkyTestHelpers.Mapping</PackageId>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\SparkyTestHelpers.Mapping.xml</DocumentationFile>
+    <DocumentationFile>bin\SparkyTestHelpers.Mapping.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="_Mapping.shfbproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SparkyTestHelpers" Version="1.5.2" />
-    <PackageReference Include="SparkyTestHelpers.Populater" Version="1.0.2" />
+    <PackageReference Include="SparkyTestHelpers.Populater" Version="1.1.0" />
   </ItemGroup>
 </Project>
