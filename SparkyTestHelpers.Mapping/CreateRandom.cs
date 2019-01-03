@@ -7,7 +7,7 @@ namespace SparkyTestHelpers.Mapping
     /// Test helper methods using <see cref="RandomValuesHelper"/> to generate random values
     /// (usually for testing "mapping" from one type to another).
     /// </summary>
-    [Obsolete("SparkyTestHelpers.Mapping.CreateRandom has been deprecated in favor of SparkyTestHelpers.Populater.GetRandom")]
+    [Obsolete("SparkyTestHelpers.Mapping.CreateRandom has been deprecated in favor of SparkyTestHelpers.Population.Populater.GetRandom")]
     public static class CreateRandom
     {
         /// <summary>

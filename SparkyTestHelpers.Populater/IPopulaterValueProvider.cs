@@ -3,7 +3,7 @@
 namespace SparkyTestHelpers.Population
 {
     /// <summary>
-    /// <see cref="SparkyTestHelpers.Populater"/> value provider.
+    /// <see cref="Populater"/> value provider.
     /// </summary>
     public interface IPopulaterValueProvider
     {

@@ -7,6 +7,7 @@ namespace SparkyTestHelpers.Mapping
     /// Test helper for updating class instance properties with random values
     /// (usually for testing "mapping" from one type to another).
     /// </summary>
+    [Obsolete("SparkyTestHelpers.Mapping.RandomValuesHelper has been deprecated in favor of SparkyTestHelpers.Population Populater/RandomValueProvider")]
     public class RandomValuesHelper
     {
         private readonly Populater _populater = new Populater();

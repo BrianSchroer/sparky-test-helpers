@@ -1,20 +1,25 @@
 # GetRandom.Guid Method 
  
 
-Get random Guid() value.
+Get random Guid(RandomValueProvider) value.
 
-**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Population.md">SparkyTestHelpers.Population</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.0.2
+**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Population.md">SparkyTestHelpers.Population</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.1.0
 
 ## Syntax
 
 **C#**<br />
 ``` C#
-public static Guid Guid()
+public static Guid Guid(
+	RandomValueProvider randomValueProvider = null
+)
 ```
 
 
+#### Parameters
+&nbsp;<dl><dt>randomValueProvider (Optional)</dt><dd>Type: <a href="T_SparkyTestHelpers_Population_RandomValueProvider.md">SparkyTestHelpers.Population.RandomValueProvider</a><br />(Optional) <a href="T_SparkyTestHelpers_Population_RandomValueProvider.md">RandomValueProvider</a> override.</dd></dl>
+
 #### Return Value
-Type: <a href="http://msdn2.microsoft.com/en-us/library/cey1zx63" target="_blank">Guid</a><br />Random Guid() value.
+Type: <a href="http://msdn2.microsoft.com/en-us/library/cey1zx63" target="_blank">Guid</a><br />Random Guid(RandomValueProvider) value.
 
 ## See Also
 

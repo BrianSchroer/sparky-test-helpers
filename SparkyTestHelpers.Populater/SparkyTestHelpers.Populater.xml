@@ -9,11 +9,22 @@
             Test helper methods using <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> to generate random values.
             </summary>
         </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.InstanceOf``1(System.Action{``0})">
+        <member name="M:SparkyTestHelpers.Population.GetRandom.InstanceOf``1(SparkyTestHelpers.Population.RandomValueProvider,System.Nullable{System.Int32},System.Action{``0})">
             <summary>
             Create an instance of the specified type and populate its properties with random values.
             </summary>
             <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+            <param name="randomValueProvider">The <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/>.</param>
+            <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create (default value is 5).</param>
+            <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+            <returns>New instance.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Population.GetRandom.InstanceOf``1(SparkyTestHelpers.Population.RandomValueProvider,System.Action{``0})">
+            <summary>
+            Create an instance of the specified type and populate its properties with random values.
+            </summary>
+            <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+            <param name="randomValueProvider">The <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/>.</param>
             <param name="callback">"Callback" function to perform additional property assignments.</param>
             <returns>New instance.</returns>
         </member>
@@ -27,6 +38,25 @@
             <param name="callback">Optional "callback" function to perform additional property assignments.</param>
             <returns>New instance.</returns>
         </member>
+        <member name="M:SparkyTestHelpers.Population.GetRandom.InstanceOf``1(System.Action{``0})">
+            <summary>
+            Create an instance of the specified type and populate its properties with random values.
+            </summary>
+            <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+            <param name="callback">"Callback" function to perform additional property assignments.</param>
+            <returns>New instance.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Population.GetRandom.IEnumerableOf``1(SparkyTestHelpers.Population.RandomValueProvider,System.Int32,System.Nullable{System.Int32},System.Action{``0})">
+            <summary>
+            Create an <see cref="T:System.Collections.Generic.IEnumerable`1"/> with properties populated with random values.
+            </summary>
+            <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+            <param name="randomValueProvider">The <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/>.</param>
+            <param name="count">The desired <see cref="T:System.Collections.Generic.IEnumerable`1"/> count.</param>
+            <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create.</param>
+            <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+            <returns>New <see cref="T:System.Collections.Generic.IEnumerable`1"/>.</returns>
+        </member>
         <member name="M:SparkyTestHelpers.Population.GetRandom.IEnumerableOf``1(System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Action{``0})">
             <summary>
             Create an <see cref="T:System.Collections.Generic.IEnumerable`1"/> with properties populated with random values.
@@ -38,113 +68,130 @@
             <param name="callback">Optional "callback" function to perform additional property assignments.</param>
             <returns>New <see cref="T:System.Collections.Generic.IEnumerable`1"/>.</returns>
         </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.Bool">
+        <member name="M:SparkyTestHelpers.Population.GetRandom.Bool(SparkyTestHelpers.Population.RandomValueProvider)">
             <summary>
             Get random <see cref="T:System.Boolean"/> value.
             </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
             <returns>Random <see cref="T:System.Boolean"/> value.</returns>
         </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.Byte">
+        <member name="M:SparkyTestHelpers.Population.GetRandom.Byte(SparkyTestHelpers.Population.RandomValueProvider)">
             <summary>
             Get random <see cref="T:System.Byte"/> value.
             </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
             <returns>Random <see cref="T:System.Byte"/> value.</returns>
         </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.Char">
+        <member name="M:SparkyTestHelpers.Population.GetRandom.Char(SparkyTestHelpers.Population.RandomValueProvider)">
             <summary>
             Get random <see cref="T:System.Char"/> value.
             </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
             <returns>Random <see cref="T:System.Char"/> value.</returns>
         </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.DateTime">
+        <member name="M:SparkyTestHelpers.Population.GetRandom.DateTime(SparkyTestHelpers.Population.RandomValueProvider)">
             <summary>
-            Get random <see cref="M:SparkyTestHelpers.Population.GetRandom.DateTime"/> value.
+            Get random <see cref="M:SparkyTestHelpers.Population.GetRandom.DateTime(SparkyTestHelpers.Population.RandomValueProvider)"/> value.
             </summary>
-            <returns>Random <see cref="M:SparkyTestHelpers.Population.GetRandom.DateTime"/> value.</returns>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
+            <returns>Random <see cref="M:SparkyTestHelpers.Population.GetRandom.DateTime(SparkyTestHelpers.Population.RandomValueProvider)"/> value.</returns>
         </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.Decimal">
+        <member name="M:SparkyTestHelpers.Population.GetRandom.Decimal(SparkyTestHelpers.Population.RandomValueProvider)">
             <summary>
             Get random <see cref="T:System.Decimal"/> value.
             </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
             <returns>Random <see cref="T:System.Decimal"/> value.</returns>
         </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.Double">
+        <member name="M:SparkyTestHelpers.Population.GetRandom.Double(SparkyTestHelpers.Population.RandomValueProvider)">
             <summary>
             Get random <see cref="T:System.Double"/> value.
             </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
             <returns>Random <see cref="T:System.Double"/> value.</returns>
         </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.EnumValue``1">
+        <member name="M:SparkyTestHelpers.Population.GetRandom.Float(SparkyTestHelpers.Population.RandomValueProvider)">
+            <summary>
+            Get random <see cref="T:System.Single"/> value.
+            </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
+            <returns>Random <see cref="T:System.Single"/> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Population.GetRandom.Guid(SparkyTestHelpers.Population.RandomValueProvider)">
+            <summary>
+            Get random <see cref="M:SparkyTestHelpers.Population.GetRandom.Guid(SparkyTestHelpers.Population.RandomValueProvider)"/> value.
+            </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
+            <returns>Random <see cref="M:SparkyTestHelpers.Population.GetRandom.Guid(SparkyTestHelpers.Population.RandomValueProvider)"/> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Population.GetRandom.Int(SparkyTestHelpers.Population.RandomValueProvider)">
+            <summary>
+            Get random <see cref="T:System.Int32"/> value.
+            </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
+            <returns>Random <see cref="T:System.Int32"/> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Population.GetRandom.Long(SparkyTestHelpers.Population.RandomValueProvider)">
+            <summary>
+            Get random <see cref="T:System.Int64"/> value.
+            </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
+            <returns>Random <see cref="T:System.Int64"/> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Population.GetRandom.SByte(SparkyTestHelpers.Population.RandomValueProvider)">
+            <summary>
+            Get random <see cref="T:System.SByte"/> value.
+            </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
+            <returns>Random <see cref="T:System.SByte"/> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Population.GetRandom.Short(SparkyTestHelpers.Population.RandomValueProvider)">
+            <summary>
+            Get random <see cref="T:System.Int16"/> value.
+            </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
+            <returns>Random <see cref="T:System.Int16"/> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Population.GetRandom.UInt(SparkyTestHelpers.Population.RandomValueProvider)">
+            <summary>
+            Get random <see cref="T:System.UInt32"/> value.
+            </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
+            <returns>Random <see cref="T:System.UInt32"/> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Population.GetRandom.ULong(SparkyTestHelpers.Population.RandomValueProvider)">
+            <summary>
+            Get random <see cref="T:System.UInt64"/> value.
+            </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
+            <returns>Random <see cref="T:System.UInt64"/> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Population.GetRandom.UShort(SparkyTestHelpers.Population.RandomValueProvider)">
+            <summary>
+            Get random <see cref="T:System.UInt16"/> value.
+            </summary>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
+            <returns>Random <see cref="T:System.UInt16"/> value.</returns>
+        </member>
+        <member name="M:SparkyTestHelpers.Population.GetRandom.EnumValue``1(SparkyTestHelpers.Population.RandomValueProvider)">
             <summary>
             Get random <see cref="T:System.Enum"/> value.
             </summary>
             <typeparam name="TEnum">The <see cref="T:System.Enum"/> type.</typeparam>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
             <returns>Random <typeparamref name="TEnum"/> value.</returns>
         </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.Float">
-            <summary>
-            Get random <see cref="T:System.Single"/> value.
-            </summary>
-            <returns>Random <see cref="T:System.Single"/> value.</returns>
-        </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.Guid">
-            <summary>
-            Get random <see cref="M:SparkyTestHelpers.Population.GetRandom.Guid"/> value.
-            </summary>
-            <returns>Random <see cref="M:SparkyTestHelpers.Population.GetRandom.Guid"/> value.</returns>
-        </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.Int">
-            <summary>
-            Get random <see cref="T:System.Int32"/> value.
-            </summary>
-            <returns>Random <see cref="T:System.Int32"/> value.</returns>
-        </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.Long">
-            <summary>
-            Get random <see cref="T:System.Int64"/> value.
-            </summary>
-            <returns>Random <see cref="T:System.Int64"/> value.</returns>
-        </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.SByte">
-            <summary>
-            Get random <see cref="T:System.SByte"/> value.
-            </summary>
-            <returns>Random <see cref="T:System.SByte"/> value.</returns>
-        </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.Short">
-            <summary>
-            Get random <see cref="T:System.Int16"/> value.
-            </summary>
-            <returns>Randm <see cref="T:System.Int16"/> value.</returns>
-        </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.String(System.String)">
+        <member name="M:SparkyTestHelpers.Population.GetRandom.String(System.String,SparkyTestHelpers.Population.RandomValueProvider)">
             <summary>
             Get random <see cref="T:System.String"/> value.
             </summary>
             <param name="prefix">optional string prefix.</param>
+            <param name="randomValueProvider">(Optional) <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/> override.</param>
             <returns>Random <see cref="T:System.String"/> value.</returns>
-        </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.UInt">
-            <summary>
-            Get random <see cref="T:System.UInt32"/> value.
-            </summary>
-            <returns>Random <see cref="T:System.UInt32"/> value.</returns>
-        </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.ULong">
-            <summary>
-            Get random <see cref="T:System.UInt64"/> value.
-            </summary>
-            <returns>Random <see cref="T:System.UInt64"/> value.</returns>
-        </member>
-        <member name="M:SparkyTestHelpers.Population.GetRandom.UShort">
-            <summary>
-            Get random <see cref="T:System.UInt16"/> value.
-            </summary>
-            <returns>Random <see cref="T:System.UInt16"/> value.</returns>
         </member>
         <member name="T:SparkyTestHelpers.Population.IPopulaterValueProvider">
             <summary>
-            <see cref="!:SparkyTestHelpers.Populater"/> value provider.
+            <see cref="T:SparkyTestHelpers.Population.Populater"/> value provider.
             </summary>
         </member>
         <member name="M:SparkyTestHelpers.Population.IPopulaterValueProvider.GetBool">

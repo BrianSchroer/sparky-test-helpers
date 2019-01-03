@@ -1,4 +1,4 @@
-# GetRandom.InstanceOf(*T*) Method (RandomValueProvider, Action(*T*))
+# GetRandom.InstanceOf(*T*) Method (Action(*T*))
  
 
 Create an instance of the specified type and populate its properties with random values.
@@ -10,7 +10,6 @@ Create an instance of the specified type and populate its properties with random
 **C#**<br />
 ``` C#
 public static T InstanceOf<T>(
-	RandomValueProvider randomValueProvider,
 	Action<T> callback
 )
 where T : class
@@ -19,7 +18,7 @@ where T : class
 
 
 #### Parameters
-&nbsp;<dl><dt>randomValueProvider</dt><dd>Type: <a href="T_SparkyTestHelpers_Population_RandomValueProvider.md">SparkyTestHelpers.Population.RandomValueProvider</a><br />The <a href="T_SparkyTestHelpers_Population_RandomValueProvider.md">RandomValueProvider</a>.</dd><dt>callback</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/018hxwa8" target="_blank">System.Action</a>(*T*)<br />"Callback" function to perform additional property assignments.</dd></dl>
+&nbsp;<dl><dt>callback</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/018hxwa8" target="_blank">System.Action</a>(*T*)<br />"Callback" function to perform additional property assignments.</dd></dl>
 
 #### Type Parameters
 &nbsp;<dl><dt>T</dt><dd>The type of the instance for which properties are to be updated.</dd></dl>

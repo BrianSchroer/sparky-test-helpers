@@ -13,8 +13,12 @@ namespace SparkyTestHelpers.Populater.UnitTests
     /// <see cref="GetRandom"/> tests.
     /// </summary>
     [TestClass]
-    public class GetRandomTests
+    public class GetRandomTests : RandomValueProvider
     {
+        private readonly Guid _testGuid = Guid.NewGuid();
+
+        public override Guid GetGuid() => _testGuid;
+
         [TestMethod]
         public void GetRandom_InstanceOf_should_work()
         {
@@ -26,6 +30,15 @@ namespace SparkyTestHelpers.Populater.UnitTests
                     Formatting.Indented,
                     new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy hh:mm:ss" },
                     new StringEnumConverter()));
+        }
+
+        [TestMethod]
+        public void GetRandom_InstanceOf_with_RandomValueProvider_should_work()
+        {
+            var testThing = GetRandom.InstanceOf<TestThing>(this);
+
+            testThing.Guid1.Should().Be(_testGuid);
+            testThing.Guid2.Should().Be(_testGuid);
         }
 
         [TestMethod]
@@ -49,6 +62,20 @@ namespace SparkyTestHelpers.Populater.UnitTests
             TestThing[] testThings = GetRandom.IEnumerableOf<TestThing>(7).ToArray();
 
             testThings.Length.Should().Be(7);
+        }
+
+        [TestMethod]
+        public void GetRandom_IEnumerableOf_with_RandomValueProvider_should_work()
+        {
+            TestThing[] testThings = GetRandom.IEnumerableOf<TestThing>(this, 7).ToArray();
+
+            testThings.Length.Should().Be(7);
+
+            foreach (TestThing testThing in testThings)
+            {
+                testThing.Guid1.Should().Be(_testGuid);
+                testThing.Guid2.Should().Be(_testGuid);
+            }
         }
 
         [TestMethod]

@@ -33,9 +33,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AutoMapper", "AutoMapper", "{CAA64C06-1C33-4DCE-8A2D-8D8441647E6A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mapping", "Mapping", "{A5FDDBDB-F0C1-4CCE-8395-ABDBF6AC0F11}"
-	ProjectSection(SolutionItems) = preProject
-		SparkyTestHelpers.Mapping\ExceptionHelper.cs = SparkyTestHelpers.Mapping\ExceptionHelper.cs
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Moq", "Moq", "{60BC3242-2738-4382-A7C6-E07FFBE6C6E9}"
 EndProject

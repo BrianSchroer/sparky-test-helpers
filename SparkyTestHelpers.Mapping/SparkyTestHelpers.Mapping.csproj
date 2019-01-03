@@ -24,7 +24,10 @@
     <DocumentationFile>bin\Release\netstandard2.0\SparkyTestHelpers.Mapping.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="_Mapping.shfbproj" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="SparkyTestHelpers" Version="1.5.2" />
-    <PackageReference Include="SparkyTestHelpers.Populater" Version="1.0.1" />
+    <PackageReference Include="SparkyTestHelpers.Populater" Version="1.0.2" />
   </ItemGroup>
 </Project>
