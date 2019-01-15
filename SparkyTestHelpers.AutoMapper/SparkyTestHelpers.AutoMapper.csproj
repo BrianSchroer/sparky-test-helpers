@@ -4,23 +4,38 @@
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <Authors>Brian Schroer</Authors>
     <Company>Brian Schroer</Company>
-    <Description>Additional AutoMapper extension methods for SparkyTestHelpers.Mapping (Unit test helpers for asserting public properties on class instances "mapped" from one type to another have the correct values.)</Description>
-    <Copyright>Copyright © Brian Schroer 2018</Copyright>
+    <Description>Additional AutoMapper extension methods for SparkyTestHelpers.Mapping (Unit test helpers for asserting public properties on class instances "mapped" from one type to another have the correct values.)
+
+Version 1.x supports .NET Standard 1.5 and .NET Framework 4.5</Description>
+    <Copyright>Copyright © Brian Schroer 2019</Copyright>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
-    <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
+    <PackageTags>https://github.com/BrianSchroer/sparky-test-helpers</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.1</Version>
-    <PackageReleaseNotes>v2.0.1 - Added .NET 4.6.1 target</PackageReleaseNotes>
-    <AssemblyVersion>2.0.1.0</AssemblyVersion>
-    <FileVersion>2.0.1.0</FileVersion>
+    <Version>2.1.0</Version>
+    <PackageReleaseNotes>v2.1 - Updated to use SparkyTools.Populater</PackageReleaseNotes>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+    <FileVersion>2.1.0.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DocumentationFile>bin\SparkyTestHelpers.AutoMapper.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="_AutoMapper.shfbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
-    <PackageReference Include="SparkyTestHelpers.Mapping" Version="1.10.1" />
+    <PackageReference Include="SparkyTestHelpers.Mapping" Version="1.12.0" />
+    <PackageReference Include="SparkyTestHelpers.Populater" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SparkyTestHelpers.Populater\SparkyTestHelpers.Populater.csproj" />
   </ItemGroup>
 
 </Project>

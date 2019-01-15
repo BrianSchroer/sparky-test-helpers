@@ -179,7 +179,15 @@ namespace SparkyTestHelpers.Population
             }
         }
 
-        private object GetValue(IPopulaterValueProvider valueProvider, Type type, string prefix, int depth)
+        /// <summary>
+        /// Get value.
+        /// </summary>
+        /// <param name="valueProvider">The <see cref="IPopulaterValueProvider"/>.</param>
+        /// <param name="type">The value type.</param>
+        /// <param name="prefix">Prefix for string values.</param>
+        /// <param name="depth">Depth of value within object hierarchy.</param>
+        /// <returns>The value.</returns>
+        protected object GetValue(IPopulaterValueProvider valueProvider, Type type, string prefix, int depth)
         {
             object value = null;
             TypeInfo typeInfo = type.GetTypeInfo();

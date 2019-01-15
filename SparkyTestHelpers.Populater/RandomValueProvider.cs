@@ -56,7 +56,7 @@ namespace SparkyTestHelpers.Population
         {
             Array values = Enum.GetValues(enumType);
 
-            int index = _random.Next(0, values.Length - 1);
+            int index = _random.Next(values.Length);
 
             return values.GetValue(index);
         }

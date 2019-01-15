@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <AssemblyName>SparkyTestHelpers.AutoMapper</AssemblyName>
+    <Version>1.8.0</Version>
+    <Authors>Brian Schroer</Authors>
+    <Description>Additional AutoMapper extension methods for SparkyTestHelpers.Mapping (Unit test helpers for asserting public properties on class instances "mapped" from one type to another have the correct values.)</Description>
+    <Copyright>Copyright © Brian Schroer 2019</Copyright>
+    <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
+    <PackageTags>https://github.com/BrianSchroer/sparky-test-helpers</PackageTags>
+    <PackageReleaseNotes>v1.8 - Added SparkyTools.Populater dependency for random values logic</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="SparkyTestHelpers.Mapping" Version="1.12.0" />
+  </ItemGroup>
+
+</Project>

@@ -4,7 +4,9 @@ using Newtonsoft.Json;
 using SparkyTestHelpers.AutoMapper.UnitTests.TestClasses;
 using SparkyTestHelpers.Exceptions;
 using SparkyTestHelpers.Mapping;
+using SparkyTestHelpers.Population;
 using System;
+using FluentAssertions;
 
 namespace SparkyTestHelpers.AutoMapper.UnitTests
 {
@@ -12,9 +14,14 @@ namespace SparkyTestHelpers.AutoMapper.UnitTests
     /// <see cref="MapTesterExtensions"/> tests.
     /// </summary>
     [TestClass]
-    public class MapTesterExtensionsTests
+    public class MapTesterExtensionsTests : RandomValueProvider
     {
         private IMapper _mapper;
+
+        private const int _testInt = 666;
+
+        /// <inheritdoc />
+        public override int GetInt() => _testInt;
 
         /// <summary>
         /// <see cref="MapTesterExtensions"/> tests.
@@ -39,26 +46,26 @@ namespace SparkyTestHelpers.AutoMapper.UnitTests
         [TestMethod]
         public void AssertAutoMappedValues_should_work()
         {
-            Source source = new RandomValuesHelper().CreateInstanceWithRandomValues<Source>();
+            Source source = GetRandom.InstanceOf<Source>();
             Dest dest = null;
 
             AssertExceptionNotThrown.WhenExecuting(() =>
                 dest = MapTester.ForMap<Source, Dest>().AssertAutoMappedValues(source));
 
-            Assert.IsInstanceOfType(dest, typeof(Dest));
+            dest.Should().BeOfType<Dest>();
             Console.WriteLine(JsonConvert.SerializeObject(dest));
         }
 
         [TestMethod]
         public void AssertAutoMappedValues_with_IMapper_should_work()
         {
-            Source source = new RandomValuesHelper().CreateInstanceWithRandomValues<Source>();
+            Source source = GetRandom.InstanceOf<Source>();
             Dest dest = null;
 
             AssertExceptionNotThrown.WhenExecuting(() =>
                 dest = MapTester.ForMap<Source, Dest>().AssertAutoMappedValues(_mapper, source));
 
-            Assert.IsInstanceOfType(dest, typeof(Dest));
+            dest.Should().BeOfType<Dest>();
             Console.WriteLine(JsonConvert.SerializeObject(dest));
         }
 
@@ -70,7 +77,21 @@ namespace SparkyTestHelpers.AutoMapper.UnitTests
             AssertExceptionNotThrown.WhenExecuting(() =>
                 dest = MapTester.ForMap<Source, Dest>().AssertAutoMappedRandomValues());
 
-            Assert.IsInstanceOfType(dest, typeof(Dest));
+            dest.Should().BeOfType<Dest>();
+            Console.WriteLine(JsonConvert.SerializeObject(dest));
+        }
+
+        [TestMethod]
+        public void AssertAutoMappedRandomValues_with_RandomValueProvider_should_work()
+        {
+            Dest dest = null;
+
+            AssertExceptionNotThrown.WhenExecuting(() =>
+                dest = MapTester.ForMap<Source, Dest>().AssertAutoMappedRandomValues(this));
+
+            dest.Should().BeOfType<Dest>();
+            dest.Id.Should().Be(_testInt);
+
             Console.WriteLine(JsonConvert.SerializeObject(dest));
         }
 
@@ -82,25 +103,23 @@ namespace SparkyTestHelpers.AutoMapper.UnitTests
             AssertExceptionNotThrown.WhenExecuting(() =>
                 dest = MapTester.ForMap<Source, Dest>().AssertAutoMappedRandomValues(_mapper));
 
-            Assert.IsInstanceOfType(dest, typeof(Dest));
+            dest.Should().BeOfType<Dest>();
             Console.WriteLine(JsonConvert.SerializeObject(dest));
         }
 
-        //[TestMethod]
-        //public void ExceptionHelper_should_add_helpful_info_to_exception_message()
-        //{
-        //    var mapperConfiguration = new MapperConfiguration(cfg => { });
-        //    var mapper = mapperConfiguration.CreateMapper();
 
-        //    AssertExceptionThrown
-        //        .OfType<AutoMapperConfigurationException>()
-        //        .WithMessageContaining("The following code snippet might be useful for making your map match the test:")
-        //        .WhenExecuting(() =>
-        //            MapTester.ForMap<Dest, Source>()
-        //                .WhereMember(dest => dest.FirstName).ShouldEqual(src => src.Name)
-        //                .WhereMember(dest => dest.LastName).ShouldEqualValue(null)
-        //                .IgnoringMember(dest => dest.Id)
-        //                .AssertAutoMappedRandomValues(mapper));
-        //}
+        [TestMethod]
+        public void AssertAutoMappedRandomValues_with_IMapper_and_RandomValueProvider_should_work()
+        {
+            Dest dest = null;
+
+            AssertExceptionNotThrown.WhenExecuting(() =>
+                dest = MapTester.ForMap<Source, Dest>().AssertAutoMappedRandomValues(_mapper, this));
+
+            dest.Should().BeOfType<Dest>();
+            dest.Id.Should().Be(_testInt);
+
+            Console.WriteLine(JsonConvert.SerializeObject(dest));
+        }
     }
 }

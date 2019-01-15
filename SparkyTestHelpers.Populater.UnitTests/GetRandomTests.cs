@@ -6,6 +6,7 @@ using System.Linq;
 using FluentAssertions;
 using SparkyTestHelpers.Populater.UnitTests.TestClasses;
 using SparkyTestHelpers.Population;
+using SparkyTestHelpers.Scenarios;
 
 namespace SparkyTestHelpers.Populater.UnitTests
 {
@@ -235,6 +236,59 @@ namespace SparkyTestHelpers.Populater.UnitTests
         {
             ushort randomValue = GetRandom.UShort();
             Assert.IsNotNull(randomValue);
+        }
+
+        [TestMethod]
+        public void GetRandom_ValuesFor_should_work()
+        {
+            var testThing = GetRandom.ValuesFor(new TestThing());
+
+            Console.WriteLine(
+                JsonConvert.SerializeObject(
+                    testThing,
+                    Formatting.Indented,
+                    new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy hh:mm:ss" },
+                    new StringEnumConverter()));
+        }
+
+        [TestMethod]
+        public void GetRandom_ValuesFor_with_RandomValueProvider_should_work()
+        {
+            var testThing = GetRandom.ValuesFor<TestThing>(new TestThing(), this);
+
+            testThing.Guid1.Should().Be(_testGuid);
+            testThing.Guid2.Should().Be(_testGuid);
+        }
+
+        [TestMethod]
+        public void GetRandom_ValuesFor_with_MaximumDepth_should_work()
+        {
+            int? maximumDepth = null;
+            var result = GetRandom.ValuesFor(new TestRecursiveThing(), maximumDepth: maximumDepth);
+            Assert.IsNotNull(result.ChildRecursiveThing.ChildRecursiveThing.ChildRecursiveThing.ChildRecursiveThing, "No maximum depth");
+
+            maximumDepth = 3;
+            result = GetRandom.ValuesFor(new TestRecursiveThing(), maximumDepth: maximumDepth);
+            Assert.IsNull(result.ChildRecursiveThing.ChildRecursiveThing.ChildRecursiveThing, $"Maximum depth {maximumDepth}");
+
+            maximumDepth = 2;
+            result = GetRandom.ValuesFor(new TestRecursiveThing(), maximumDepth: maximumDepth);
+            Assert.IsNull(result.ChildRecursiveThing.ChildRecursiveThing, $"Maximum depth {maximumDepth}");
+
+            maximumDepth = 1;
+            result = GetRandom.ValuesFor(new TestRecursiveThing(), maximumDepth: maximumDepth);
+            Assert.IsNull(result.ChildRecursiveThing, $"Maximum depth {maximumDepth}");
+        }
+
+        [TestMethod]
+        public void GetRandom_IntegerInRange_should_work()
+        {
+            Enumerable.Range(1, 100).TestEach(_ =>
+            {
+                int value = GetRandom.IntegerInRange(1, 10);
+                Console.WriteLine(value);
+                value.Should().BeInRange(1, 10);
+            });
         }
     }
 }

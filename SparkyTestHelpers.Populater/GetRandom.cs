@@ -10,6 +10,7 @@ namespace SparkyTestHelpers.Population
     public static class GetRandom
     {
         private static readonly RandomValueProvider _randomValueProvider = new RandomValueProvider();
+        private static Random _random = new Random();
 
         /// <summary>
         /// Create an instance of the specified type and populate its properties with random values.
@@ -26,12 +27,9 @@ namespace SparkyTestHelpers.Population
         {
             var populater = new Populater();
 
-            if (maximumDepth.HasValue)
-            {
-                populater.MaximumDepth = maximumDepth.Value;
-            }
+            if (maximumDepth.HasValue) populater.MaximumDepth = maximumDepth.Value;
 
-            T instance = populater.CreateAndPopulate<T>(randomValueProvider);
+            var instance = populater.CreateAndPopulate<T>(randomValueProvider);
 
             callback?.Invoke(instance);
 
@@ -67,10 +65,7 @@ namespace SparkyTestHelpers.Population
 
             try
             {
-                if (maximumIEnumerableSize.HasValue)
-                {
-                    _randomValueProvider.MaximumIEnumerableSize = maximumIEnumerableSize.Value;
-                }
+                if (maximumIEnumerableSize.HasValue) _randomValueProvider.MaximumIEnumerableSize = maximumIEnumerableSize.Value;
 
                 return InstanceOf(_randomValueProvider, maximumDepth, callback);
             }
@@ -110,20 +105,12 @@ namespace SparkyTestHelpers.Population
         {
             var populater = new Populater();
 
-            if (maximumDepth.HasValue)
-            {
-                populater.MaximumDepth = maximumDepth.Value;
-            }
+            if (maximumDepth.HasValue) populater.MaximumDepth = maximumDepth.Value;
 
             T[] items = populater.CreateIEnumerableOf<T>(count, randomValueProvider).ToArray();
 
             if (callback != null)
-            {
-                foreach (T item in items)
-                {
-                    callback(item);
-                }
-            }
+                foreach (T item in items) callback(item);
 
             return items;
         }
@@ -149,12 +136,52 @@ namespace SparkyTestHelpers.Population
 
             try
             {
-                if (maximumIEnumerableSize.HasValue)
-                {
-                    _randomValueProvider.MaximumIEnumerableSize = maximumIEnumerableSize.Value;
-                }
+                if (maximumIEnumerableSize.HasValue) _randomValueProvider.MaximumIEnumerableSize = maximumIEnumerableSize.Value;
 
                 return IEnumerableOf(_randomValueProvider, count, maximumDepth, callback);
+            }
+            finally
+            {
+                _randomValueProvider.MaximumIEnumerableSize = savedMaximumIEnumerableSize;
+            }
+        }
+
+        /// <summary>
+        /// Populate existing instance of <typeparamref name="T"/> with random values.
+        /// </summary>
+        /// <typeparam name="T">The instance type.</typeparam>
+        /// <param name="instance">The instance.</param>
+        /// <param name="randomValueProvider">The <see cref="RandomValueProvider"/> instance.</param>
+        /// <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create (default value is 5).</param>
+        /// <returns>Populated instance of <typeparamref name="T"/>.</returns>
+        public static T ValuesFor<T>(T instance, RandomValueProvider randomValueProvider, int? maximumDepth = null) where T : class
+        {
+            var populater = new Populater();
+
+            if (maximumDepth.HasValue) populater.MaximumDepth = maximumDepth.Value;
+
+            return populater.Populate(instance, randomValueProvider);
+        }
+
+        /// <summary>
+        /// Populate existing instance of <typeparamref name="T"/> with random values.
+        /// </summary>
+        /// <typeparam name="T">The instance type.</typeparam>
+        /// <param name="instance">The instance.</param>
+        /// <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create (default value is 5).</param>
+        /// <param name="maximumIEnumerableSize">Optional maximum number of items to generate for arrays / lists / IEnumerables (default value is 3).</param>
+        /// <returns>Populated instance of <typeparamref name="T"/>.</returns>
+        public static T ValuesFor<T>(T instance,
+            int? maximumDepth = null,
+            int? maximumIEnumerableSize = null) where T : class
+        {
+            int savedMaximumIEnumerableSize = _randomValueProvider.MaximumIEnumerableSize;
+
+            try
+            {
+                if (maximumIEnumerableSize.HasValue) _randomValueProvider.MaximumIEnumerableSize = maximumIEnumerableSize.Value;
+
+                return ValuesFor(instance, _randomValueProvider, maximumDepth);
             }
             finally
             {
@@ -167,84 +194,131 @@ namespace SparkyTestHelpers.Population
         /// </summary>
         /// <param name="randomValueProvider">(Optional) <see cref="RandomValueProvider"/> override.</param>
         /// <returns>Random <see cref="bool"/> value.</returns>
-        public static bool Bool(RandomValueProvider randomValueProvider = null) => (randomValueProvider ?? _randomValueProvider).GetBool();
+        public static bool Bool(RandomValueProvider randomValueProvider = null)
+        {
+            return (randomValueProvider ?? _randomValueProvider).GetBool();
+        }
 
         /// <summary>
         /// Get random <see cref="byte"/> value.
         /// </summary>
         /// <param name="randomValueProvider">(Optional) <see cref="RandomValueProvider"/> override.</param>
         /// <returns>Random <see cref="byte"/> value.</returns>
-        public static byte Byte(RandomValueProvider randomValueProvider = null) => (randomValueProvider ?? _randomValueProvider).GetByte();
+        public static byte Byte(RandomValueProvider randomValueProvider = null)
+        {
+            return (randomValueProvider ?? _randomValueProvider).GetByte();
+        }
 
         /// <summary>
         /// Get random <see cref="char"/> value.
         /// </summary>
         /// <param name="randomValueProvider">(Optional) <see cref="RandomValueProvider"/> override.</param>
         /// <returns>Random <see cref="char"/> value.</returns>
-        public static char Char(RandomValueProvider randomValueProvider = null) => (randomValueProvider ?? _randomValueProvider).GetChar();
+        public static char Char(RandomValueProvider randomValueProvider = null)
+        {
+            return (randomValueProvider ?? _randomValueProvider).GetChar();
+        }
 
         /// <summary>
         /// Get random <see cref="DateTime"/> value.
         /// </summary>
         /// <param name="randomValueProvider">(Optional) <see cref="RandomValueProvider"/> override.</param>
         /// <returns>Random <see cref="DateTime"/> value.</returns>
-        public static DateTime DateTime(RandomValueProvider randomValueProvider = null) => (randomValueProvider ?? _randomValueProvider).GetDateTime();
+        public static DateTime DateTime(RandomValueProvider randomValueProvider = null)
+        {
+            return (randomValueProvider ?? _randomValueProvider).GetDateTime();
+        }
 
         /// <summary>
         /// Get random <see cref="decimal"/> value.
         /// </summary>
         /// <param name="randomValueProvider">(Optional) <see cref="RandomValueProvider"/> override.</param>
         /// <returns>Random <see cref="decimal"/> value.</returns>
-        public static decimal Decimal(RandomValueProvider randomValueProvider = null) => (randomValueProvider ?? _randomValueProvider).GetDecimal();
+        public static decimal Decimal(RandomValueProvider randomValueProvider = null)
+        {
+            return (randomValueProvider ?? _randomValueProvider).GetDecimal();
+        }
 
         /// <summary>
         /// Get random <see cref="double"/> value.
         /// </summary>
         /// <param name="randomValueProvider">(Optional) <see cref="RandomValueProvider"/> override.</param>
         /// <returns>Random <see cref="double"/> value.</returns>
-        public static double Double(RandomValueProvider randomValueProvider = null) => (randomValueProvider ?? _randomValueProvider).GetDouble();
+        public static double Double(RandomValueProvider randomValueProvider = null)
+        {
+            return (randomValueProvider ?? _randomValueProvider).GetDouble();
+        }
 
         /// <summary>
         /// Get random <see cref="float"/> value.
         /// </summary>
         /// <param name="randomValueProvider">(Optional) <see cref="RandomValueProvider"/> override.</param>
         /// <returns>Random <see cref="float"/> value.</returns>
-        public static float Float(RandomValueProvider randomValueProvider = null) => (randomValueProvider ?? _randomValueProvider).GetFloat();
+        public static float Float(RandomValueProvider randomValueProvider = null)
+        {
+            return (randomValueProvider ?? _randomValueProvider).GetFloat();
+        }
 
         /// <summary>
         /// Get random <see cref="Guid"/> value.
         /// </summary>
         /// <param name="randomValueProvider">(Optional) <see cref="RandomValueProvider"/> override.</param>
         /// <returns>Random <see cref="Guid"/> value.</returns>
-        public static Guid Guid(RandomValueProvider randomValueProvider = null) => (randomValueProvider ?? _randomValueProvider).GetGuid();
+        public static Guid Guid(RandomValueProvider randomValueProvider = null)
+        {
+            return (randomValueProvider ?? _randomValueProvider).GetGuid();
+        }
 
         /// <summary>
         /// Get random <see cref="int"/> value.
         /// </summary>
         /// <param name="randomValueProvider">(Optional) <see cref="RandomValueProvider"/> override.</param>
         /// <returns>Random <see cref="int"/> value.</returns>
-        public static int Int(RandomValueProvider randomValueProvider = null) => (randomValueProvider ?? _randomValueProvider).GetInt();
+        public static int Int(RandomValueProvider randomValueProvider = null)
+        {
+            return (randomValueProvider ?? _randomValueProvider).GetInt();
+        }
+
+        /// <summary>
+        /// Get random integer with the specified range.
+        /// </summary>
+        /// <param name="minValue">Minimum value.</param>
+        /// <param name="maxValue">Maximum value.</param>
+        /// <returns></returns>
+        public static int IntegerInRange(int minValue, int maxValue)
+        {
+            return _random.Next(minValue, maxValue + 1);
+        }
 
         /// <summary>
         /// Get random <see cref="long"/> value.
         /// </summary>
         /// <param name="randomValueProvider">(Optional) <see cref="RandomValueProvider"/> override.</param>
         /// <returns>Random <see cref="long"/> value.</returns>
-        public static long Long(RandomValueProvider randomValueProvider = null) => (randomValueProvider ?? _randomValueProvider).GetLong();
+        public static long Long(RandomValueProvider randomValueProvider = null)
+        {
+            return (randomValueProvider ?? _randomValueProvider).GetLong();
+        }
 
         /// <summary>
         /// Get random <see cref="sbyte"/> value.
         /// </summary>
         /// <param name="randomValueProvider">(Optional) <see cref="RandomValueProvider"/> override.</param>
         /// <returns>Random <see cref="sbyte"/> value.</returns>
-        public static sbyte SByte(RandomValueProvider randomValueProvider = null) => (randomValueProvider ?? _randomValueProvider).GetSByte();
+        public static sbyte SByte(RandomValueProvider randomValueProvider = null)
+        {
+            return (randomValueProvider ?? _randomValueProvider).GetSByte();
+        }
 
         /// <summary>
         /// Get random <see cref="short"/> value.
         /// </summary>
         /// <param name="randomValueProvider">(Optional) <see cref="RandomValueProvider"/> override.</param>
         /// <returns>Random <see cref="short"/> value.</returns>
-        public static short Short(RandomValueProvider randomValueProvider = null) => (randomValueProvider ?? _randomValueProvider).GetShort();
+        public static short Short(RandomValueProvider randomValueProvider = null)
+        {
+            return (randomValueProvider ?? _randomValueProvider).GetShort();
+        }
 
         /// <summary>
         /// Get random <see cref="uint"/> value.

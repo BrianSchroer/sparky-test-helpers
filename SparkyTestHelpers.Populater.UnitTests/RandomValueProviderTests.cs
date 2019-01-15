@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SparkyTestHelpers.Population;
+using SparkyTestHelpers.Scenarios;
 
 namespace SparkyTestHelpers.Populater.UnitTests
 {
@@ -112,7 +114,12 @@ namespace SparkyTestHelpers.Populater.UnitTests
         [TestMethod]
         public void RandomValueProvider_GetEnum_should_return_TEnum()
         {
-            Assert.IsInstanceOfType(_provider.GetEnum<StringComparison>(), typeof(StringComparison));
+            Enumerable.Range(1, 100).TestEach(_ =>
+            {
+                StringComparison value = _provider.GetEnum<StringComparison>();
+                Console.WriteLine(value);
+                Assert.IsInstanceOfType(value, typeof(StringComparison));
+            });
         }
 
         [TestMethod]

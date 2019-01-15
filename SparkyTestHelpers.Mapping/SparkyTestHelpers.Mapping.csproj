@@ -11,10 +11,11 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest, mapping, automapper</PackageTags>
-    <PackageReleaseNotes>v1.11: Added SparkyTestHelpers.Populater dependency for random values logic</PackageReleaseNotes>
-    <AssemblyVersion>1.11.0.0</AssemblyVersion>
-    <FileVersion>1.11.0.0</FileVersion>
-    <Version>1.11.0</Version>
+    <PackageReleaseNotes>v1.11: Added SparkyTestHelpers.Populater dependency for random values logic
+v1.12: Updated SparkyTestHelpers.Populater dependency to v1.2</PackageReleaseNotes>
+    <AssemblyVersion>1.12.0.0</AssemblyVersion>
+    <FileVersion>1.12.0.0</FileVersion>
+    <Version>1.12.0</Version>
     <Product>SparkyTestHelpers.Mapping</Product>
     <PackageId>SparkyTestHelpers.Mapping</PackageId>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
@@ -28,6 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SparkyTestHelpers" Version="1.5.2" />
-    <PackageReference Include="SparkyTestHelpers.Populater" Version="1.1.0" />
+    <PackageReference Include="SparkyTestHelpers.Populater" Version="1.2.0" />
   </ItemGroup>
 </Project>

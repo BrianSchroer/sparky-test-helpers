@@ -16,6 +16,7 @@ namespace MarkdownFixer
 
             FixMarkdownFiles(ResolveRelativePath(myDirectoryPath, "../../../SparkyTestHelpers.Populater/Help"));
             FixMarkdownFiles(ResolveRelativePath(myDirectoryPath, "../../../SparkyTestHelpers.Mapping/Help"));
+            FixMarkdownFiles(ResolveRelativePath(myDirectoryPath, "../../../SparkyTestHelpers.AutoMapper/Help"));
         }
 
         private static string ResolveRelativePath(string basePath, string relativePath)
