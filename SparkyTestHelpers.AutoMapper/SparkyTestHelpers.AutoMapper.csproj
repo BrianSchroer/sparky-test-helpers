@@ -6,7 +6,8 @@
     <Company>Brian Schroer</Company>
     <Description>Additional AutoMapper extension methods for SparkyTestHelpers.Mapping (Unit test helpers for asserting public properties on class instances "mapped" from one type to another have the correct values.)
 
-Version 1.x supports .NET Standard 1.5 and .NET Framework 4.5</Description>
+Version 1.x supports .NET Standard 1.5 and .NET Framework 4.5
+Version 2.x supports .NET Standard 2.0 and .NET Framework 4.6</Description>
     <Copyright>Copyright © Brian Schroer 2019</Copyright>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
@@ -14,10 +15,10 @@ Version 1.x supports .NET Standard 1.5 and .NET Framework 4.5</Description>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>https://github.com/BrianSchroer/sparky-test-helpers</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.1.0</Version>
+    <Version>2.1.1</Version>
     <PackageReleaseNotes>v2.1 - Updated to use SparkyTools.Populater</PackageReleaseNotes>
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
-    <FileVersion>2.1.0.0</FileVersion>
+    <AssemblyVersion>2.1.1.0</AssemblyVersion>
+    <FileVersion>2.1.1.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
