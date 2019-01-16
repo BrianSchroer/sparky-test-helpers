@@ -11,10 +11,10 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <PackageTags>test, testing, unittest</PackageTags>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <RootNamespace>SparkyTestHelpers.Population</RootNamespace>
-    <AssemblyVersion>1.2.0.0</AssemblyVersion>
-    <PackageReleaseNotes>v1.2: Added GetRandom.ValuesFor, GetRandom.IntegerInRange, ability to override Populater.GetValue.</PackageReleaseNotes>
+    <AssemblyVersion>1.2.1.0</AssemblyVersion>
+    <PackageReleaseNotes>v1.2: Added GetRandom.ValuesFor, GetRandom.IntegerInRange, ability to override Populater methods</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

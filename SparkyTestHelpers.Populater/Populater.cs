@@ -62,7 +62,7 @@ namespace SparkyTestHelpers.Population
         /// </summary>
         /// <param name="maximumDepth">The maximum depth.</param>
         /// <returns>"This" <see cref="Populater"/> instance.</returns>
-        public Populater WithMaximumDepth(int maximumDepth)
+        public virtual Populater WithMaximumDepth(int maximumDepth)
         {
             MaximumDepth = maximumDepth;
             return this;
@@ -75,7 +75,7 @@ namespace SparkyTestHelpers.Population
         /// <param name="valueProvider">The <see cref="IPopulaterValueProvider"/>
         /// (defaults to <see cref="SequentialValueProvider"/>).</param>
         /// <returns>The created and populated instance of <typeparamref name="T"/>.</returns>
-        public T CreateAndPopulate<T>(IPopulaterValueProvider valueProvider = null)
+        public virtual T CreateAndPopulate<T>(IPopulaterValueProvider valueProvider = null)
         {
             return Populate((T)Activator.CreateInstance(typeof(T)), valueProvider);
         }
@@ -88,7 +88,7 @@ namespace SparkyTestHelpers.Population
         /// <param name="valueProvider">The <see cref="IPopulaterValueProvider"/>
         /// (defaults to <see cref="SequentialValueProvider"/>).</param>
         /// <returns>The created and populated instance of <typeparamref name="T"/>.</returns>
-        public IEnumerable<T> CreateIEnumerableOf<T>(int count, IPopulaterValueProvider valueProvider = null)
+        public virtual IEnumerable<T> CreateIEnumerableOf<T>(int count, IPopulaterValueProvider valueProvider = null)
         {
             valueProvider = valueProvider ?? new SequentialValueProvider();
 
@@ -102,7 +102,7 @@ namespace SparkyTestHelpers.Population
         /// <param name="count">The desired <see cref="IEnumerable{T}"/> count.</param>
         /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
         /// <returns>The created and populated instance of <typeparamref name="T"/>.</returns>
-        public IEnumerable<T> CreateRandomIEnumerableOf<T>(int count, Action<T> callback = null)
+        public virtual IEnumerable<T> CreateRandomIEnumerableOf<T>(int count, Action<T> callback = null)
         {
             var valueProvider = new RandomValueProvider();
 
@@ -127,7 +127,7 @@ namespace SparkyTestHelpers.Population
         /// <param name="valueProvider">The <see cref="IPopulaterValueProvider"/>
         /// (defaults to <see cref="SequentialValueProvider"/>.</param>
         /// <returns>The populated <typeparamref name="T"/> instance.</returns>
-        public T Populate<T>(T instance, IPopulaterValueProvider valueProvider = null)
+        public virtual T Populate<T>(T instance, IPopulaterValueProvider valueProvider = null)
         {
             valueProvider = valueProvider ?? new SequentialValueProvider();
 
@@ -144,7 +144,7 @@ namespace SparkyTestHelpers.Population
         /// <typeparam name="T">The class type.</typeparam>
         /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
         /// <returns>The created and populated instance of <typeparamref name="T"/>.</returns>
-        public T CreateRandom<T>(Action<T> callback = null)
+        public virtual T CreateRandom<T>(Action<T> callback = null)
         {
             T instance = CreateAndPopulate<T>(new RandomValueProvider());
 
@@ -159,7 +159,7 @@ namespace SparkyTestHelpers.Population
         /// <typeparam name="T">The class type.</typeparam>
         /// <param name="instance">The instance of <typeparamref name="T"/>.</param>
         /// <returns>The populated <typeparamref name="T"/> instance.</returns>
-        public T PopulateWithRandomValues<T>(T instance) => Populate(instance, new RandomValueProvider());
+        public virtual T PopulateWithRandomValues<T>(T instance) => Populate(instance, new RandomValueProvider());
 
         private void Populate(object instance, IPopulaterValueProvider valueProvider, TypeInfo typeInfo, int depth)
         {
