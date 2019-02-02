@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using SparkyTestHelpers.Populater.UnitTests.TestClasses;
@@ -83,6 +84,111 @@ namespace SparkyTestHelpers.Populater.UnitTests
         public void GetRandom_IEnumerableOf_with_callback_should_work()
         {
             TestThing[] testThings = GetRandom.IEnumerableOf<TestThing>(7, callback: thing => thing.String1 = "xyz").ToArray();
+
+            testThings.Length.Should().Be(7);
+
+            foreach (TestThing testThing in testThings)
+            {
+                testThing.String1.Should().Be("xyz");
+            }
+        }
+
+        [TestMethod]
+        public void GetRandom_ListOf_should_work()
+        {
+            List<TestThing> testThings = GetRandom.ListOf<TestThing>(7);
+
+            testThings.Count.Should().Be(7);
+        }
+
+        [TestMethod]
+        public void GetRandom_ListOf_with_RandomValueProvider_should_work()
+        {
+            List<TestThing> testThings = GetRandom.ListOf<TestThing>(this, 7);
+
+            testThings.Count.Should().Be(7);
+
+            foreach (TestThing testThing in testThings)
+            {
+                testThing.Guid1.Should().Be(_testGuid);
+                testThing.Guid2.Should().Be(_testGuid);
+            }
+        }
+
+        [TestMethod]
+        public void GetRandom_ListOf_with_callback_should_work()
+        {
+            List<TestThing> testThings = GetRandom.ListOf<TestThing>(7, callback: thing => thing.String1 = "xyz");
+
+            testThings.Count.Should().Be(7);
+
+            foreach (TestThing testThing in testThings)
+            {
+                testThing.String1.Should().Be("xyz");
+            }
+        }
+
+        [TestMethod]
+        public void GetRandom_IListOf_should_work()
+        {
+            IList<TestThing> testThings = GetRandom.IListOf<TestThing>(7);
+
+            testThings.Count.Should().Be(7);
+        }
+
+        [TestMethod]
+        public void GetRandom_IListOf_with_RandomValueProvider_should_work()
+        {
+            IList<TestThing> testThings = GetRandom.IListOf<TestThing>(this, 7);
+
+            testThings.Count.Should().Be(7);
+
+            foreach (TestThing testThing in testThings)
+            {
+                testThing.Guid1.Should().Be(_testGuid);
+                testThing.Guid2.Should().Be(_testGuid);
+            }
+        }
+
+        [TestMethod]
+        public void GetRandom_IListOf_with_callback_should_work()
+        {
+            IList<TestThing> testThings = GetRandom.IListOf<TestThing>(7, callback: thing => thing.String1 = "xyz");
+
+            testThings.Count.Should().Be(7);
+
+            foreach (TestThing testThing in testThings)
+            {
+                testThing.String1.Should().Be("xyz");
+            }
+        }
+
+        [TestMethod]
+        public void GetRandom_ArrayOf_should_work()
+        {
+            TestThing[] testThings = GetRandom.ArrayOf<TestThing>(7);
+
+            testThings.Length.Should().Be(7);
+        }
+
+        [TestMethod]
+        public void GetRandom_ArrayOf_with_RandomValueProvider_should_work()
+        {
+            TestThing[] testThings = GetRandom.ArrayOf<TestThing>(this, 7);
+
+            testThings.Length.Should().Be(7);
+
+            foreach (TestThing testThing in testThings)
+            {
+                testThing.Guid1.Should().Be(_testGuid);
+                testThing.Guid2.Should().Be(_testGuid);
+            }
+        }
+
+        [TestMethod]
+        public void GetRandom_ArrayOf_with_callback_should_work()
+        {
+            TestThing[] testThings = GetRandom.ArrayOf<TestThing>(7, callback: thing => thing.String1 = "xyz");
 
             testThings.Length.Should().Be(7);
 

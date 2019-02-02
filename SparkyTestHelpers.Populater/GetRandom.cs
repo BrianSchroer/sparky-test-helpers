@@ -87,6 +87,68 @@ namespace SparkyTestHelpers.Population
         }
 
         /// <summary>
+        /// Create an array of <typeparamref name="T"/> with properties populated with random values.
+        /// </summary>
+        /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+        /// <param name="randomValueProvider">The <see cref="RandomValueProvider"/>.</param>
+        /// <param name="count">The desired array count.</param>
+        /// <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create.</param>
+        /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+        /// <returns>New array of <typeparamref name="T"/>.</returns>
+        // ReSharper disable once UnusedMember.Global
+        // ReSharper disable once InconsistentNaming
+        public static T[] ArrayOf<T>(
+            RandomValueProvider randomValueProvider,
+            int count,
+            int? maximumDepth = null,
+            Action<T> callback = null) where T : class
+        {
+            var populater = new Populater();
+
+            if (maximumDepth.HasValue) populater.MaximumDepth = maximumDepth.Value;
+
+            T[] items = populater.CreateIEnumerableOf<T>(count, randomValueProvider).ToArray();
+
+            if (callback != null)
+            {
+                foreach (T item in items) callback(item);
+            }
+
+            return items;
+        }
+
+        /// <summary>
+        /// Create an array of <typeparamref name="T"/> with properties populated with random values.
+        /// </summary>
+        /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+        /// <param name="count">The desired array count.</param>
+        /// <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create.</param>
+        /// <param name="maximumIEnumerableSize">Optional maximum number of items to generate for "child" arrays / lists / IEnumerables.</param>
+        /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+        /// <returns>New <see cref="IEnumerable{T}"/>.</returns>
+        // ReSharper disable once UnusedMember.Global
+        // ReSharper disable once InconsistentNaming
+        public static T[] ArrayOf<T>(
+            int count,
+            int? maximumDepth = null,
+            int? maximumIEnumerableSize = null,
+            Action<T> callback = null) where T : class
+        {
+            int savedMaximumIEnumerableSize = _randomValueProvider.MaximumIEnumerableSize;
+
+            try
+            {
+                if (maximumIEnumerableSize.HasValue) _randomValueProvider.MaximumIEnumerableSize = maximumIEnumerableSize.Value;
+
+                return ArrayOf(_randomValueProvider, count, maximumDepth, callback);
+            }
+            finally
+            {
+                _randomValueProvider.MaximumIEnumerableSize = savedMaximumIEnumerableSize;
+            }
+        }
+
+        /// <summary>
         /// Create an <see cref="IEnumerable{T}"/> with properties populated with random values.
         /// </summary>
         /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
@@ -103,16 +165,7 @@ namespace SparkyTestHelpers.Population
             int? maximumDepth = null,
             Action<T> callback = null) where T : class
         {
-            var populater = new Populater();
-
-            if (maximumDepth.HasValue) populater.MaximumDepth = maximumDepth.Value;
-
-            T[] items = populater.CreateIEnumerableOf<T>(count, randomValueProvider).ToArray();
-
-            if (callback != null)
-                foreach (T item in items) callback(item);
-
-            return items;
+            return ArrayOf(randomValueProvider, count, maximumDepth, callback);
         }
 
         /// <summary>
@@ -132,17 +185,130 @@ namespace SparkyTestHelpers.Population
             int? maximumIEnumerableSize = null,
             Action<T> callback = null) where T : class
         {
+            return ArrayOf(count, maximumDepth, maximumIEnumerableSize, callback);
+        }
+
+        /// <summary>
+        /// Create a <see cref="List{T}"/> with properties populated with random values.
+        /// </summary>
+        /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+        /// <param name="randomValueProvider">The <see cref="RandomValueProvider"/>.</param>
+        /// <param name="count">The desired <see cref="List{T}"/> count.</param>
+        /// <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create.</param>
+        /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+        /// <returns>New <see cref="List{T}"/>.</returns>
+        // ReSharper disable once UnusedMember.Global
+        // ReSharper disable once InconsistentNaming
+        public static List<T> ListOf<T>(
+            RandomValueProvider randomValueProvider,
+            int count,
+            int? maximumDepth = null,
+            Action<T> callback = null) where T : class
+        {
+            var populater = new Populater();
+
+            if (maximumDepth.HasValue) populater.MaximumDepth = maximumDepth.Value;
+
+            List<T> items = populater.CreateIEnumerableOf<T>(count, randomValueProvider).ToList();
+
+            if (callback != null)
+            {
+                foreach (T item in items) callback(item);
+            }
+
+            return items;
+        }
+
+        /// <summary>
+        /// Create a <see cref="List{T}"/> with properties populated with random values.
+        /// </summary>
+        /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+        /// <param name="count">The desired <see cref="List{T}"/> count.</param>
+        /// <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create.</param>
+        /// <param name="maximumIEnumerableSize">Optional maximum number of items to generate for "child" arrays / lists / IEnumerables.</param>
+        /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+        /// <returns>New <see cref="IEnumerable{T}"/>.</returns>
+        // ReSharper disable once UnusedMember.Global
+        // ReSharper disable once InconsistentNaming
+        public static List<T> ListOf<T>(
+            int count,
+            int? maximumDepth = null,
+            int? maximumIEnumerableSize = null,
+            Action<T> callback = null) where T : class
+        {
             int savedMaximumIEnumerableSize = _randomValueProvider.MaximumIEnumerableSize;
 
             try
             {
                 if (maximumIEnumerableSize.HasValue) _randomValueProvider.MaximumIEnumerableSize = maximumIEnumerableSize.Value;
 
-                return IEnumerableOf(_randomValueProvider, count, maximumDepth, callback);
+                return ListOf(_randomValueProvider, count, maximumDepth, callback);
             }
             finally
             {
                 _randomValueProvider.MaximumIEnumerableSize = savedMaximumIEnumerableSize;
+            }
+        }
+
+        /// <summary>
+        /// Create an <see cref="IList{T}"/> with properties populated with random values.
+        /// </summary>
+        /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+        /// <param name="randomValueProvider">The <see cref="RandomValueProvider"/>.</param>
+        /// <param name="count">The desired <see cref="IList{T}"/> count.</param>
+        /// <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create.</param>
+        /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+        /// <returns>New <see cref="IList{T}"/>.</returns>
+        // ReSharper disable once UnusedMember.Global
+        // ReSharper disable once InconsistentNaming
+        public static IList<T> IListOf<T>(
+            RandomValueProvider randomValueProvider,
+            int count,
+            int? maximumDepth = null,
+            Action<T> callback = null) where T : class
+        {
+            var populater = new Populater();
+
+            if (maximumDepth.HasValue) populater.MaximumDepth = maximumDepth.Value;
+
+            List<T> items = populater.CreateIEnumerableOf<T>(count, randomValueProvider).ToList();
+
+            if (callback != null)
+            {
+                foreach (T item in items) callback(item);
+            }
+
+            return items;
+        }
+
+        /// <summary>
+        /// Create an <see cref="IList{T}"/> with properties populated with random values.
+        /// </summary>
+        /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
+        /// <param name="count">The desired <see cref="IList{T}"/> count.</param>
+        /// <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create.</param>
+        /// <param name="maximumIListSize">Optional maximum number of items to generate for "child" arrays / lists / ILists.</param>
+        /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+        /// <returns>New <see cref="IList{T}"/>.</returns>
+        // ReSharper disable once UnusedMember.Global
+        // ReSharper disable once InconsistentNaming
+        public static IList<T> IListOf<T>(
+            int count,
+            int? maximumDepth = null,
+            int? maximumIListSize = null,
+            Action<T> callback = null) where T : class
+        {
+            int savedMaximumIListSize = _randomValueProvider.MaximumIEnumerableSize;
+
+            try
+            {
+                if (maximumIListSize.HasValue) _randomValueProvider.MaximumIEnumerableSize = maximumIListSize.Value;
+
+                return IListOf(_randomValueProvider, count, maximumDepth, callback);
+            }
+            finally
+            {
+                _randomValueProvider.MaximumIEnumerableSize = savedMaximumIListSize;
             }
         }
 

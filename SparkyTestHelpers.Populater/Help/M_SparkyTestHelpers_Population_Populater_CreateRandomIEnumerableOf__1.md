@@ -3,13 +3,13 @@
 
 Create <a href="http://msdn2.microsoft.com/en-us/library/9eekhta0" target="_blank">IEnumerable(T)</a> and populate with test data.
 
-**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Population.md">SparkyTestHelpers.Population</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.1.0
+**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Population.md">SparkyTestHelpers.Population</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.2.1
 
 ## Syntax
 
 **C#**<br />
 ``` C#
-public IEnumerable<T> CreateRandomIEnumerableOf<T>(
+public virtual IEnumerable<T> CreateRandomIEnumerableOf<T>(
 	int count,
 	Action<T> callback = null
 )
