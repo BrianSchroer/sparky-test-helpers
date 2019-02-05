@@ -96,17 +96,65 @@ namespace SparkyTestHelpers.Population
         }
 
         /// <summary>
-        /// Create <see cref="IEnumerable{T}"/> and populate with test data.
+        /// Create array of <typeparamref name="T"/> and populate with random test data.
         /// </summary>
         /// <typeparam name="T">The class type.</typeparam>
-        /// <param name="count">The desired <see cref="IEnumerable{T}"/> count.</param>
+        /// <param name="count">The desired array count.</param>
         /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
-        /// <returns>The created and populated instance of <typeparamref name="T"/>.</returns>
-        public virtual IEnumerable<T> CreateRandomIEnumerableOf<T>(int count, Action<T> callback = null)
+        /// <returns>The created and populated array of <typeparamref name="T"/>.</returns>
+        public virtual T[] CreateRandomArrayOf<T>(int count, Action<T> callback = null)
         {
             var valueProvider = new RandomValueProvider();
 
             T[] items = Enumerable.Range(1, count).Select(_ => CreateAndPopulate<T>(valueProvider)).ToArray();
+
+            if (callback != null)
+            {
+                foreach (T item in items)
+                {
+                    callback(item);
+                }
+            }
+
+            return items;
+        }
+
+        /// <summary>
+        /// Create <see cref="IEnumerable{T}"/> and populate with random test data.
+        /// </summary>
+        /// <typeparam name="T">The class type.</typeparam>
+        /// <param name="count">The desired <see cref="IEnumerable{T}"/> count.</param>
+        /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+        /// <returns>The created and populated <see cref="IEnumerable{T}"/>.</returns>
+        public virtual IEnumerable<T> CreateRandomIEnumerableOf<T>(int count, Action<T> callback = null)
+        {
+            return CreateRandomArrayOf(count, callback);
+        }
+
+        /// <summary>
+        /// Create <see cref="IList{T}"/> and populate with random test data.
+        /// </summary>
+        /// <typeparam name="T">The class type.</typeparam>
+        /// <param name="count">The desired list count.</param>
+        /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+        /// <returns>The created and populated <see cref="List{T}"/>.</returns>
+        public virtual IList<T> CreateRandomIListOf<T>(int count, Action<T> callback = null)
+        {
+            return CreateRandomListOf(count, callback);
+        }
+
+        /// <summary>
+        /// Create <see cref="List{T}"/> and populate with test data.
+        /// </summary>
+        /// <typeparam name="T">The class type.</typeparam>
+        /// <param name="count">The desired list count.</param>
+        /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
+        /// <returns>The created and populated <see cref="List{T}"/>.</returns>
+        public virtual List<T> CreateRandomListOf<T>(int count, Action<T> callback = null)
+        {
+            var valueProvider = new RandomValueProvider();
+
+           List<T> items = Enumerable.Range(1, count).Select(_ => CreateAndPopulate<T>(valueProvider)).ToList();
 
             if (callback != null)
             {

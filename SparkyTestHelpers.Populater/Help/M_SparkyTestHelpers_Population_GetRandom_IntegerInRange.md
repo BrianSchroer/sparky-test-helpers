@@ -3,7 +3,7 @@
 
 Get random integer with the specified range.
 
-**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Population.md">SparkyTestHelpers.Population</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.2.1
+**Namespace:**&nbsp;<a href="N_SparkyTestHelpers_Population.md">SparkyTestHelpers.Population</a><br />**Assembly:**&nbsp;SparkyTestHelpers.Populater (in SparkyTestHelpers.Populater.dll) Version: 1.3
 
 ## Syntax
 
@@ -20,7 +20,7 @@ public static int IntegerInRange(
 &nbsp;<dl><dt>minValue</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">System.Int32</a><br />Minimum value.</dd><dt>maxValue</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">System.Int32</a><br />Maximum value.</dd></dl>
 
 #### Return Value
-Type: <a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">Int32</a><br />\[Missing <returns> documentation for "M:SparkyTestHelpers.Population.GetRandom.IntegerInRange(System.Int32,System.Int32)"\]
+Type: <a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">Int32</a><br />Random integer.
 
 ## See Also
 

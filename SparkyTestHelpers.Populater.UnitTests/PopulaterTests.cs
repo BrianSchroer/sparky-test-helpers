@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -130,6 +132,39 @@ namespace SparkyTestHelpers.Populater.UnitTests
         }
 
         [TestMethod]
+        public void Populater_CreateRandomArrayOf_should_create_array()
+        {
+            TestThing[] testThings = _populater.CreateRandomArrayOf<TestThing>(4);
+
+            using (new AssertionScope())
+            {
+                testThings.Length.Should().Be(4);
+
+                foreach (TestThing testThing in testThings)
+                {
+                    AssertPopulatedTestThingProperties(testThing);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Populater_CreateRandomArrayOf_with_callback_should_work()
+        {
+            TestThing[] testThings = _populater.CreateRandomArrayOf<TestThing>(4, x => x.String1 = "abc");
+
+            using (new AssertionScope())
+            {
+                testThings.Length.Should().Be(4);
+
+                foreach (TestThing testThing in testThings)
+                {
+                    AssertPopulatedTestThingProperties(testThing);
+                    testThing.String1.Should().Be("abc");
+                }
+            }
+        }
+
+        [TestMethod]
         public void Populater_CreateRandomIEnumerableOf_should_create_IEnumerable()
         {
             TestThing[] testThings = _populater.CreateRandomIEnumerableOf<TestThing>(4).ToArray();
@@ -153,6 +188,72 @@ namespace SparkyTestHelpers.Populater.UnitTests
             using (new AssertionScope())
             {
                 testThings.Length.Should().Be(4);
+
+                foreach (TestThing testThing in testThings)
+                {
+                    AssertPopulatedTestThingProperties(testThing);
+                    testThing.String1.Should().Be("abc");
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Populater_CreateRandomIListOf_should_create_IEnumerable()
+        {
+            IList<TestThing> testThings = _populater.CreateRandomIListOf<TestThing>(4);
+
+            using (new AssertionScope())
+            {
+                testThings.Count.Should().Be(4);
+
+                foreach (TestThing testThing in testThings)
+                {
+                    AssertPopulatedTestThingProperties(testThing);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Populater_CreateRandomIListOf_with_callback_should_work()
+        {
+            IList<TestThing> testThings = _populater.CreateRandomIListOf<TestThing>(4, x => x.String1 = "abc");
+
+            using (new AssertionScope())
+            {
+                testThings.Count.Should().Be(4);
+
+                foreach (TestThing testThing in testThings)
+                {
+                    AssertPopulatedTestThingProperties(testThing);
+                    testThing.String1.Should().Be("abc");
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Populater_CreateRandomListOf_should_create_IEnumerable()
+        {
+            List<TestThing> testThings = _populater.CreateRandomListOf<TestThing>(4);
+
+            using (new AssertionScope())
+            {
+                testThings.Count.Should().Be(4);
+
+                foreach (TestThing testThing in testThings)
+                {
+                    AssertPopulatedTestThingProperties(testThing);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Populater_CreateRandomListOf_with_callback_should_work()
+        {
+            List<TestThing> testThings = _populater.CreateRandomListOf<TestThing>(4, x => x.String1 = "abc");
+
+            using (new AssertionScope())
+            {
+                testThings.Count.Should().Be(4);
 
                 foreach (TestThing testThing in testThings)
                 {

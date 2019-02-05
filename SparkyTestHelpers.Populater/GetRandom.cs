@@ -188,8 +188,9 @@ namespace SparkyTestHelpers.Population
             return ArrayOf(count, maximumDepth, maximumIEnumerableSize, callback);
         }
 
+
         /// <summary>
-        /// Create a <see cref="List{T}"/> with properties populated with random values.
+        /// Create an <see cref="List{T}"/> with properties populated with random values.
         /// </summary>
         /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
         /// <param name="randomValueProvider">The <see cref="RandomValueProvider"/>.</param>
@@ -220,14 +221,14 @@ namespace SparkyTestHelpers.Population
         }
 
         /// <summary>
-        /// Create a <see cref="List{T}"/> with properties populated with random values.
+        /// Create an <see cref="List{T}"/> with properties populated with random values.
         /// </summary>
         /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
         /// <param name="count">The desired <see cref="List{T}"/> count.</param>
         /// <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create.</param>
-        /// <param name="maximumIEnumerableSize">Optional maximum number of items to generate for "child" arrays / lists / IEnumerables.</param>
+        /// <param name="maximumIEnumerableSize">Optional maximum number of items to generate for "child" arrays / lists / ILists.</param>
         /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
-        /// <returns>New <see cref="IEnumerable{T}"/>.</returns>
+        /// <returns>New <see cref="List{T}"/>.</returns>
         // ReSharper disable once UnusedMember.Global
         // ReSharper disable once InconsistentNaming
         public static List<T> ListOf<T>(
@@ -287,7 +288,7 @@ namespace SparkyTestHelpers.Population
         /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
         /// <param name="count">The desired <see cref="IList{T}"/> count.</param>
         /// <param name="maximumDepth">Optional maximum "depth" of "child" class instances to create.</param>
-        /// <param name="maximumIListSize">Optional maximum number of items to generate for "child" arrays / lists / ILists.</param>
+        /// <param name="maximumIEnumerableSize">Optional maximum number of items to generate for "child" arrays / lists / ILists.</param>
         /// <param name="callback">Optional "callback" function to perform additional property assignments.</param>
         /// <returns>New <see cref="IList{T}"/>.</returns>
         // ReSharper disable once UnusedMember.Global
@@ -295,20 +296,20 @@ namespace SparkyTestHelpers.Population
         public static IList<T> IListOf<T>(
             int count,
             int? maximumDepth = null,
-            int? maximumIListSize = null,
+            int? maximumIEnumerableSize = null,
             Action<T> callback = null) where T : class
         {
-            int savedMaximumIListSize = _randomValueProvider.MaximumIEnumerableSize;
+            int savedMaximumIEnumerableSize = _randomValueProvider.MaximumIEnumerableSize;
 
             try
             {
-                if (maximumIListSize.HasValue) _randomValueProvider.MaximumIEnumerableSize = maximumIListSize.Value;
+                if (maximumIEnumerableSize.HasValue) _randomValueProvider.MaximumIEnumerableSize = maximumIEnumerableSize.Value;
 
                 return IListOf(_randomValueProvider, count, maximumDepth, callback);
             }
             finally
             {
-                _randomValueProvider.MaximumIEnumerableSize = savedMaximumIListSize;
+                _randomValueProvider.MaximumIEnumerableSize = savedMaximumIEnumerableSize;
             }
         }
 
@@ -450,7 +451,7 @@ namespace SparkyTestHelpers.Population
         /// </summary>
         /// <param name="minValue">Minimum value.</param>
         /// <param name="maxValue">Maximum value.</param>
-        /// <returns></returns>
+        /// <returns>Random integer.</returns>
         public static int IntegerInRange(int minValue, int maxValue)
         {
             return _random.Next(minValue, maxValue + 1);
