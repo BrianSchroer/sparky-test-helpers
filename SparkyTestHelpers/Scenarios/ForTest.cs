@@ -19,24 +19,70 @@ namespace SparkyTestHelpers.Scenarios
         ///     <code><![CDATA[
         ///  ForTest.Scenarios
         /// (
-        ///     new { DateString = "1/31/2023", ShouldBeValid = true },  
-        ///     new { DateString = "2/31/2023", ShouldBeValid = false },  
-        ///     new { DateString = "3/31/2023", ShouldBeValid = true },  
-        ///     new { DateString = "4/31/2023", ShouldBeValid = false },  
-        ///     new { DateString = "5/31/2023", ShouldBeValid = true },  
-        ///     new { DateString = "6/31/2023", ShouldBeValid = false } 
+        ///     new { DateString = "1/31/2023", ShouldBeValid = true },
+        ///     new { DateString = "2/31/2023", ShouldBeValid = false },
+        ///     new { DateString = "3/31/2023", ShouldBeValid = true },
+        ///     new { DateString = "4/31/2023", ShouldBeValid = false },
+        ///     new { DateString = "5/31/2023", ShouldBeValid = true },
+        ///     new { DateString = "6/31/2023", ShouldBeValid = false }
         /// )
         /// .TestEach(scenario =>
         /// {
         ///     DateTime dt;
-        ///     Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));  
-        /// });  
+        ///     Assert.AreEqual(scenario.ShouldBeValid, DateTime.TryParse(scenario.DateString, out dt));
+        /// });
         ///     ]]></code>
         /// </example>
         public static TScenario[] Scenarios<TScenario>(params TScenario[] scenarios)
         {
             return scenarios;
         }
+
+        /// <summary>
+        /// Creates a list of <see cref="Scenario{TArrangeObject,TAssertObject}"/> items.
+        /// </summary>
+        /// <typeparam name="TArrangeObject">The "arrange" object type.</typeparam>
+        /// <typeparam name="TAssertObject">The "assert" object type.</typeparam>
+        /// <returns>List of <see cref="Scenario{TArrangeObject,TAssertObject}"/> items.</returns>
+        /// <example>
+        ///     <code><![CDATA[
+        ///  ForTest.Scenarios<TFoo, TBar>()
+        ///     Arrange(foo => { /* arrange foo */ }).Assert(bar => { /* assert */ }),
+        ///     Arrange(foo => { /* arrange foo */ }).Assert(bar => { /* assert */ })
+        /// .TestEach(scenario =>
+        /// {
+        ///     var foo = new Foo();
+        ///     scenario.Arrange(foo);
+        ///     var bar = fooBarConverter.Convert(foo);
+        ///     scenario.Assert(bar);
+        /// });
+        ///     ]]></code>
+        /// </example>
+        public static IList<Scenario<TArrangeObject, TAssertObject>> Scenarios<TArrangeObject, TAssertObject>()
+            => new List<Scenario<TArrangeObject, TAssertObject>>();
+
+        /// <summary>
+        /// Creates a list of <see cref="Scenario{TArrangeObject,TAssertObject}"/> items
+        /// where only the "Arrange" part is used.
+        /// </summary>
+        /// <typeparam name="TArrangeObject">The "arrange" object type.</typeparam>
+        /// <returns>List of <see cref="Scenario{TArrangeObject,TAssertObject}"/> items.</returns>
+        /// <example>
+        ///     <code><![CDATA[
+        ///  ForTest.Scenarios<TFoo, TBar>()
+        ///     Arrange(foo => { /* arrange foo */ }),
+        ///     Arrange(foo => { /* arrange foo */ })
+        /// .TestEach(scenario =>
+        /// {
+        ///     var foo = new Foo();
+        ///     scenario.Arrange(foo);
+        ///     var bar = fooBarConverter.Convert(foo);
+        ///     /* assert something about bar */
+        /// });
+        ///     ]]></code>
+        /// </example>
+        public static IList<Scenario<TArrangeObject, object>> Scenarios<TArrangeObject>()
+            => new List<Scenario<TArrangeObject, object>>();
 
         /// <summary>
         /// Creates an IEnumerable of values for the specified enum typeparamref name="TEnum",
