@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using SparkyTestHelpers.Exceptions;
 using SparkyTestHelpers.Scenarios;
 
 namespace SparkyTestHelpers.Moq.Core.UnitTests
@@ -61,6 +62,7 @@ namespace SparkyTestHelpers.Moq.Core.UnitTests
                     _mock.Verify(x => x.WithDateTime(Any.DateTime), Times.Once);
                 });
         }
+
         [TestMethod]
         public void Any_Decimal_should_work()
         {
@@ -169,6 +171,25 @@ namespace SparkyTestHelpers.Moq.Core.UnitTests
                     _test.WithObject(scenario);
                     _mock.Verify(x => x.WithObject(Any.Object), Times.Once);
                 });
+        }
+
+        [TestMethod]
+        public void Any_Out_should_work()
+        {
+            _mock.Setup(x => x.WithOut(Any.Int, out Any.Out.Int)).Returns(true);
+
+            bool response = _mock.Object.WithOut(3, out int outValue);
+
+            Assert.AreEqual(true, response);
+        }
+
+        [TestMethod]
+        public void Any_Ref_should_work()
+        {
+            _mock.Setup(x => x.WithRef(Any.String, ref Any.Ref.Int));
+
+            int refValue = 7;
+            AssertExceptionNotThrown.WhenExecuting(() => _mock.Object.WithRef("yo", ref refValue));
         }
 
         [TestMethod]

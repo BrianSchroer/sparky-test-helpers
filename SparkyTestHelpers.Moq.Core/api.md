@@ -64,6 +64,10 @@ _mock.Setup(x => x.DoSomething(
 * Any.ULong
 * Any.UShort
 
+#### It.Ref<*T*>.IsAny alternate syntax *(for primitive types, e.g. Bool, Int, Decimal)*:
+* Any.Ref.Int
+* Any.Out.Int
+
 ### *mock*.Where extension method
 ...provides an alternate syntax for "It.Is":
 ```csharp

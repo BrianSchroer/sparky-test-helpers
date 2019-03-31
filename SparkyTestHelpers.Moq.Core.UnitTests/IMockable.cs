@@ -36,6 +36,12 @@ namespace SparkyTestHelpers.Moq.Core.UnitTests
 
         void WithObject(object input);
 
+        bool WithOut(int value, out int count);
+
+        bool WithOutObject(string value, out TestClass testInstance);
+
+        void WithRef(string value, ref int count);
+
         void WithString(string input);
 
         void WithScenarioTester<TScenario>(ScenarioTester<TScenario> input);

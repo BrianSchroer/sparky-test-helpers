@@ -84,9 +84,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkyTestHelpers.Populater
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownFixer", "MarkdownFixer\MarkdownFixer.csproj", "{0F6EC3BA-FCC2-4CF3-8F60-59F997100B80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkyTestHelpers.AutoMapperV1", "SparkyTestHelpers.AutoMapperV1\SparkyTestHelpers.AutoMapperV1.csproj", "{B5E79446-92B8-4A57-8DD7-B310B33C7E8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkyTestHelpers.AutoMapperV1", "SparkyTestHelpers.AutoMapperV1\SparkyTestHelpers.AutoMapperV1.csproj", "{B5E79446-92B8-4A57-8DD7-B310B33C7E8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkyTestHelpers.AutoMapperV1.UnitTests", "SparkyTestHelpers.AutoMapperV1.UnitTests\SparkyTestHelpers.AutoMapperV1.UnitTests.csproj", "{FF700319-C58C-4335-B2F4-8D016283B494}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SparkyTestHelpers.AutoMapperV1.UnitTests", "SparkyTestHelpers.AutoMapperV1.UnitTests\SparkyTestHelpers.AutoMapperV1.UnitTests.csproj", "{FF700319-C58C-4335-B2F4-8D016283B494}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

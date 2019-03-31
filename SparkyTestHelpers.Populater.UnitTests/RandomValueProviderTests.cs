@@ -66,7 +66,8 @@ namespace SparkyTestHelpers.Populater.UnitTests
         [TestMethod]
         public void RandomValueProvider_GetGuid_should_return_Guid()
         {
-            Assert.IsInstanceOfType(_provider.GetGuid(), typeof(Guid));
+            var randomValue = _provider.GetGuid();
+            randomValue.Should().NotBeEmpty();
         }
 
         [TestMethod]

@@ -205,5 +205,55 @@ namespace SparkyTestHelpers.Moq
         /// <see cref="It.IsAny{UINt16}()"/> wrapper.
         /// </summary>
         public static ushort UShort => It.IsAny<ushort>();
+
+        /// <summary>
+        /// Alernative syntax for <c>Moq</c> It.Ref methods.
+        /// </summary>
+        public static class Out
+        {
+            public static Action Action;
+            public static bool Boolean;
+            public static DateTime DateTime;
+            public static decimal Decimal;
+            public static double Double;
+            public static Exception Exception;
+            public static Guid Guid;
+            public static int Int;
+            public static long Long;
+            public static object Object;
+            public static short Short;
+            public static Single Single;
+            public static string String;
+            public static TimeSpan TimeSpan;
+            public static Type Type;
+            public static uint UInt;
+            public static ulong ULong;
+            public static ushort UShort;
+        }
+
+        /// <summary>
+        /// Alernative syntax for <c>Moq</c> It.Ref methods.
+        /// </summary>
+        public static class Ref
+        {
+            public static Action Action;
+            public static bool Boolean;
+            public static DateTime DateTime;
+            public static decimal Decimal;
+            public static double Double;
+            public static Exception Exception;
+            public static Guid Guid;
+            public static int Int;
+            public static long Long;
+            public static object Object;
+            public static short Short;
+            public static Single Single;
+            public static string String;
+            public static TimeSpan TimeSpan;
+            public static Type Type;
+            public static uint UInt;
+            public static ulong ULong;
+            public static ushort UShort;
+        }
     }
 }

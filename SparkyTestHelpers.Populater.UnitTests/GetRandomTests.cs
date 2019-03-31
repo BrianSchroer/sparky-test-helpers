@@ -279,6 +279,7 @@ namespace SparkyTestHelpers.Populater.UnitTests
         {
             Guid randomValue = GetRandom.Guid();
             Assert.IsNotNull(randomValue);
+            randomValue.Should().NotBeEmpty();
         }
 
         [TestMethod]

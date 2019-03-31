@@ -4,11 +4,11 @@
     <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>SparkyTestHelpers.Moq.Core</AssemblyName>
     <PackageId>SparkyTestHelpers.Moq.Core</PackageId>
-    <Version>1.4.3</Version>
+    <Version>1.5.0</Version>
     <Authors>Brian Schroer</Authors>
     <Product>SparkyTestHelpers.Moq.Core</Product>
     <Description>Moq extension methods and syntax helpers used by SparkyTestHelpers.Moq and SparkyTestHelpers.Moq.Fluent</Description>
-    <Copyright>Copyright © Brian Schroer 2018</Copyright>
+    <Copyright>Copyright © Brian Schroer 2019</Copyright>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
@@ -16,6 +16,7 @@
     <PackageTags>test, testing, unittest, moq</PackageTags>
     <RootNamespace>SparkyTestHelpers.Moq</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>v1.5: Added It.Out, It.Ref, Where extension with Action&lt;T&gt; callback</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
