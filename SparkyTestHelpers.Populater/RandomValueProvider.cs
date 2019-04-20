@@ -19,7 +19,7 @@ namespace SparkyTestHelpers.Population
         /// </summary>
         public RandomValueProvider()
         {
-            _random = new Random();
+            _random = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
         }
 
         /// <inheritdoc />

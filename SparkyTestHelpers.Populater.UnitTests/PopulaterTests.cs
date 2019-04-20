@@ -87,6 +87,15 @@ namespace SparkyTestHelpers.Populater.UnitTests
         }
 
         [TestMethod]
+        public void Populater_CreateRandom_should_not_return_the_same_values_each_time()
+        {
+            var testThing = _populater.CreateRandom<TestThing>();
+            var testThing2 = _populater.CreateRandom<TestThing>();
+
+            testThing2.Int1.Should().NotBe(testThing.Int1);
+        }
+
+        [TestMethod]
         public void Populater_CreateAndPopulate_with_RandomValueProvider_should_create_instance_with_random_values()
         {
             var testThing = _populater.CreateAndPopulate<TestThing>(new RandomValueProvider());

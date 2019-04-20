@@ -10,7 +10,7 @@ namespace SparkyTestHelpers.Population
     public static class GetRandom
     {
         private static readonly RandomValueProvider _randomValueProvider = new RandomValueProvider();
-        private static Random _random = new Random();
+        private static readonly Random _random = new Random((int)System.DateTime.Now.Ticks & 0x0000FFFF);
 
         /// <summary>
         /// Create an instance of the specified type and populate its properties with random values.
