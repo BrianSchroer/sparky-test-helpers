@@ -9,7 +9,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
     /// ASP.NET Core MVC Controller tester.
     /// </summary>
     /// <typeparam name="TController">The controller type.</typeparam>
-    public class ControllerTester<TController> where TController : Controller
+    public class ControllerTester<TController> where TController : ControllerBase
     {
         private readonly TController _controller;
 

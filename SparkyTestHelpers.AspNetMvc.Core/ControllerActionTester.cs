@@ -10,20 +10,24 @@ namespace SparkyTestHelpers.AspNetMvc.Core
     /// </summary>
     public class ControllerActionTester
     {
-        private readonly Controller _controller;
+        private readonly ControllerBase _controller;
         private readonly Func<IActionResult> _controllerAction;
-        private IModelTester _modelTester;
         private string _expectedViewName = null;
         private bool _expectedViewNameSpecified;
 
         /// <summary>
-        /// Called by the 
+        /// <see cref="IModelTester"/>.
+        /// </summary>
+        public IModelTester ModelTester { get; private set; }
+
+        /// <summary>
+        /// Called by the
         /// <see cref="ControllerTester{TController}.Action(System.Linq.Expressions.Expression{Func{TController, Func{IActionResult}}})"/>
         /// method.
         /// </summary>
-        /// <param name="controller">The "parent" <see cref="Controller"/>.</param>
+        /// <param name="controller">The "parent" <see cref="ControllerBase"/>.</param>
         /// <param name="controllerAction">"Callback" function that privides the controller action to be tested.</param>
-        internal ControllerActionTester(Controller controller, Func<IActionResult> controllerAction)
+        internal ControllerActionTester(ControllerBase controller, Func<IActionResult> controllerAction)
         {
             _controller = controller;
             _controllerAction = controllerAction;
@@ -65,7 +69,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         /// <returns>"This" <see cref="ControllerActionTester"/>.</returns>
         public ControllerActionTester ExpectingModel<TModelType>(Action<TModelType> validate = null)
         {
-            _modelTester = new ModelTester<TModelType>(validate);
+            ModelTester = new ModelTester<TModelType>(validate);
             return this;
         }
 
@@ -117,7 +121,21 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         {
             return TestResult<JsonResult>(result =>
             {
-                _modelTester?.Test(result.Value);
+                ModelTester?.Test(result.Value);
+                validate?.Invoke(result);
+            });
+        }
+
+        /// <summary>
+        /// Test that controller action returns a <see cref="OkObjectResult"/>.
+        /// </summary>
+        /// <param name="validate">(Optional) callback validation function.</param>
+        /// <returns>The <see cref="OkObjectResult"/> returned from the controller action.</returns>
+        public OkObjectResult TestOkObject(Action<OkObjectResult> validate = null)
+        {
+            return TestResult<OkObjectResult>(result =>
+            {
+                ModelTester?.Test(result.Value);
                 validate?.Invoke(result);
             });
         }
@@ -132,7 +150,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
             return TestResult<PartialViewResult>(result =>
             {
                 AssertViewName(_expectedViewName, result.ViewName);
-                _modelTester?.Test(result.Model);
+                ModelTester?.Test(result.Model);
                 validate?.Invoke(result);
             });
         }
@@ -141,7 +159,9 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         /// Tests that controller action redirects to the specified action name.
         /// </summary>
         /// <param name="expectedActionName">The expected action name.</param>
+        /// <param name="expectedRouteValues">Expected route values.</param>
         /// <param name="validate">(Optional) callback validation action.</param>
+        /// <param name="expectedControllerName">Expected controller name.</param>
         /// <returns>The <see cref="RedirectToActionResult"/> returned from the controller action.</returns>
         public RedirectToActionResult TestRedirectToAction(
             string expectedActionName,
@@ -209,7 +229,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         /// <summary>
         /// Test the result of the controller action.
         /// </summary>
-        /// <typeparam name="TActionResultType">The expected <see cref="IActionResult"/> 
+        /// <typeparam name="TActionResultType">The expected <see cref="IActionResult"/>
         /// type that should be returned from the action.</typeparam>
         /// <param name="validate">(Optional) callback validation action.</param>
         /// <returns>The <typeparamref name="TActionResultType"/> returned from the controller action.</returns>
@@ -234,7 +254,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
             return TestResult<ViewResult>(result =>
             {
                 AssertViewName(_expectedViewName, result.ViewName);
-                _modelTester?.Test(result.Model);
+                ModelTester?.Test(result.Model);
                 validate?.Invoke(result);
             });
         }

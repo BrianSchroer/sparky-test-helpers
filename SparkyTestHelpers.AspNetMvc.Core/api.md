@@ -31,6 +31,7 @@ ControllerActionTester has several **.Test**... methods used to assert that the 
 * **.TestEmpty**(*Action<*EmptyResult*> validate*)
 * **.TestFile**(*Action<*FileResult*> validate*)
 * **.TestJson**(*Action<*JsonResult*> validate*)
+* **.TestOkObject**(*Action<*OkObjectResult*> validate*)
 * **.TestPartialView**(*Action<*PartialViewResult*> validate*)
 * **.TestRedirectToAction**(*string expecteActionName, string expectedControllerName, object expectedRouteValues, Action<*RedirectToRouteResult*> validate*)
 * **.TestRedirectToPage**(*string expectedPageName, Action<*RedirectToPageResult*> validate*)

@@ -31,6 +31,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                 new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestEmpty(), typeof(EmptyResult), typeof(ViewResult)),
                 new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestFile(), typeof(FileResult), typeof(ViewResult)),
                 new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestJson(), typeof(JsonResult), typeof(ViewResult)),
+                new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestOkObject(), typeof(OkObjectResult), typeof(ViewResult)),
                 new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestPartialView(), typeof(PartialViewResult), typeof(ViewResult)),
                 new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestRedirectToAction("x"), typeof(RedirectToActionResult), typeof(ViewResult)),
                 new ActionTypeScenario(() => _controllerTester.Action(x => x.Index).TestRedirectToPage("testPageName"), typeof(RedirectToPageResult), typeof(ViewResult)),
@@ -84,7 +85,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                 .OfType<InvalidOperationException>()
                 .WithMessage(testException.Message)
                 .WhenExecuting(() =>
-                    _controllerTester.Action(x => x.FileAction).TestFile(r => 
+                    _controllerTester.Action(x => x.FileAction).TestFile(r =>
                     {
                         Assert.AreEqual("testFileName", r.FileDownloadName);
                         throw testException;
@@ -243,7 +244,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         {
             AssertExceptionThrown
                 .OfType<ActionTestException>()
-                .WithMessage("Expected <{\"ActionName\":\"WrongName\",\"ControllerName\":null,\"RouteValues\":null}>." 
+                .WithMessage("Expected <{\"ActionName\":\"WrongName\",\"ControllerName\":null,\"RouteValues\":null}>."
                     + " Actual: <{\"ActionName\":\"ActionName\",\"ControllerName\":null,\"RouteValues\":null}>.")
                 .WhenExecuting(() => _controllerTester.Action(x => x.RedirectToActionAction).TestRedirectToAction("WrongName"));
         }
@@ -251,9 +252,9 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         [TestMethod]
         public void ControllerActionTester_TestRedirectToAction_should_not_throw_exception_for_expected_ActionName()
         {
-            AssertExceptionNotThrown.WhenExecuting(() => 
+            AssertExceptionNotThrown.WhenExecuting(() =>
             {
-                RedirectToActionResult result = 
+                RedirectToActionResult result =
                     _controllerTester.Action(x => x.RedirectToActionAction).TestRedirectToAction("ActionName");
                 Assert.IsNotNull(result);
             });
@@ -316,7 +317,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void ControllerPageTester_TestRedirectToPage_should_throw_exception_for_unexpected_PageName()
+        public void ControllerActionTester_TestRedirectToPage_should_throw_exception_for_unexpected_PageName()
         {
             AssertExceptionThrown
                 .OfType<ActionTestException>()
@@ -325,7 +326,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
         }
 
         [TestMethod]
-        public void ControllerPageTester_TestRedirectToPage_should_not_throw_exception_for_expected_PageName()
+        public void ControllerActionTester_TestRedirectToPage_should_not_throw_exception_for_expected_PageName()
         {
             AssertExceptionNotThrown.WhenExecuting(() =>
             {
@@ -391,7 +392,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
             AssertExceptionThrown
                 .OfType<ActionTestException>()
                 .WithMessage("Expected ViewName <expected>. Actual: <>.")
-                .WhenExecuting(() => 
+                .WhenExecuting(() =>
                     _controllerTester.Action(x => x.Index).ExpectingViewName("expected").TestView());
         }
 
@@ -401,7 +402,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
             AssertExceptionThrown
                 .OfType<ActionTestException>()
                 .WithMessage($"Expected model type: {typeof(TestModel).FullName}. Actual: null.")
-                .WhenExecuting(() => 
+                .WhenExecuting(() =>
                     _controllerTester.Action(x => x.Index).ExpectingModel<TestModel>().TestView());
         }
 
@@ -411,7 +412,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
             AssertExceptionThrown
                 .OfType<ActionTestException>()
                 .WithMessage($"Expected model type: {typeof(TestModel2).FullName}. Actual: {typeof(TestModel).FullName}.")
-                .WhenExecuting(() => 
+                .WhenExecuting(() =>
                     _controllerTester.Action(x => x.DisplayTestModel).ExpectingModel<TestModel2>().TestView());
         }
 
@@ -426,7 +427,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                 .WhenExecuting(() =>
                     _controllerTester
                         .Action(x => x.DisplayTestModel)
-                        .ExpectingModel<TestModel>(m => 
+                        .ExpectingModel<TestModel>(m =>
                         {
                             Assert.IsInstanceOfType(m, typeof(TestModel));
                             throw testException;
@@ -445,7 +446,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                 .WhenExecuting(() =>
                     _controllerTester
                         .Action(x => x.DisplayTestModel)
-                        .TestView(r => 
+                        .TestView(r =>
                         {
                             Assert.IsInstanceOfType(r, typeof(ViewResult));
                             throw testException;
@@ -477,7 +478,71 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
                 .TestView());
         }
 
- #region Controller actions
+        [TestMethod]
+        public void ControllerActionTester_TestOkObject_should_return_OkObjectResult()
+        {
+            OkObjectResult OkObjectResult = _controllerTester.Action(x => x.OkObject).TestOkObject();
+            Assert.IsNotNull(OkObjectResult);
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestOkObject_should_throw_exception_when_ExpectingModel_but_model_is_null()
+        {
+            AssertExceptionThrown
+                .OfType<ActionTestException>()
+                .WithMessage($"Expected model type: {typeof(TestModel).FullName}. Actual: null.")
+                .WhenExecuting(() =>
+                    _controllerTester.Action(x => x.OkObjectNull).ExpectingModel<TestModel>().TestOkObject());
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestOkObject_should_throw_exception_when_ExpectingModel_and_model_is_different_type()
+        {
+            AssertExceptionThrown
+                .OfType<ActionTestException>()
+                .WithMessage($"Expected model type: {typeof(TestModel2).FullName}. Actual: {typeof(TestModel).FullName}.")
+                .WhenExecuting(() =>
+                    _controllerTester.Action(x => x.OkObject).ExpectingModel<TestModel2>().TestOkObject());
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestOkObject_should_call_model_validate_method()
+        {
+            var testException = new InvalidOperationException("test exception");
+
+            AssertExceptionThrown
+                .OfType<InvalidOperationException>()
+                .WithMessage(testException.Message)
+                .WhenExecuting(() =>
+                    _controllerTester
+                        .Action(x => x.OkObject)
+                        .ExpectingModel<TestModel>(m =>
+                        {
+                            Assert.IsInstanceOfType(m, typeof(TestModel));
+                            throw testException;
+                        })
+                        .TestOkObject());
+        }
+
+        [TestMethod]
+        public void ControllerActionTester_TestOkObject_should_call_result_validate_method()
+        {
+            var testException = new InvalidOperationException("test exception");
+
+            AssertExceptionThrown
+                .OfType<InvalidOperationException>()
+                .WithMessage(testException.Message)
+                .WhenExecuting(() =>
+                    _controllerTester
+                        .Action(x => x.OkObject)
+                        .TestOkObject(r =>
+                        {
+                            Assert.IsInstanceOfType(r, typeof(OkObjectResult));
+                            throw testException;
+                        }));
+        }
+
+        #region Controller actions
         public IActionResult Index()
         {
             return View();
@@ -533,6 +598,16 @@ namespace SparkyTestHelpers.AspNetMvc.Core.UnitTests
             return (ModelState.IsValid)
                 ? RedirectToAction("ValidAction")
                 : RedirectToAction("InvalidAction");
+        }
+
+        public IActionResult OkObjectNull()
+        {
+            return Ok(null);
+        }
+
+        public IActionResult OkObject()
+        {
+            return Ok(new TestModel());
         }
 
         public IActionResult PartialViewAction()
