@@ -10,11 +10,12 @@
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <PackageTags>test, testing, unittest, aspnet, mvc, aspnetmvc, aspnetcore, mvccore, aspnetmvccore</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.2.0</Version>
-    <AssemblyVersion>2.2.0.0</AssemblyVersion>
+    <Version>2.2.1</Version>
+    <AssemblyVersion>2.2.1.0</AssemblyVersion>
     <PackageReleaseNotes>v2.1: Added support for async actions
 v2.2: Added OkObjectResult tester, changed TController constraint from Controller to ControllerBase</PackageReleaseNotes>
     <RepositoryUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
+    <FileVersion>2.2.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -25,6 +25,13 @@ namespace SparkyTestHelpers.AspNetMvc
         /// <summary>
         /// Creates a new <see cref="ControllerActionTester"/> instance.
         /// </summary>
+        /// <param name="actionResultProvider">Function that returns an <see cref="ActionResult"/>.</param>
+        /// <returns>New <see cref="ControllerActionTester"/> instance.</returns>
+        public ControllerActionTester Action(Func<ActionResult> actionResultProvider) => Action(_ => actionResultProvider);
+
+        /// <summary>
+        /// Creates a new <see cref="ControllerActionTester"/> instance.
+        /// </summary>
         /// <param name="expression">Expression to specify the controller action to be tested.</param>
         /// <returns>New <see cref="ControllerActionTester"/> instance.</returns>
         public ControllerActionTester Action(Expression<Func<TController, Func<ActionResult>>> expression)
