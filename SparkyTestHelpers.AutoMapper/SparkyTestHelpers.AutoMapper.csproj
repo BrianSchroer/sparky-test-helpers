@@ -31,8 +31,8 @@ Version 2.x supports .NET Standard 2.0 and .NET Framework 4.6</Description>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
-    <PackageReference Include="SparkyTestHelpers.Mapping" Version="1.12.0" />
-    <PackageReference Include="SparkyTestHelpers.Populater" Version="1.2.0" />
+    <PackageReference Include="SparkyTestHelpers.Mapping" Version="1.12.1" />
+    <PackageReference Include="SparkyTestHelpers.Populater" Version="1.3.3" />
   </ItemGroup>
 
   <ItemGroup>

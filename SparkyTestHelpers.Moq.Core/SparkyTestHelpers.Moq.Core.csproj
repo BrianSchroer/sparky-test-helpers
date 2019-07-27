@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.3</TargetFramework>
+    <TargetFrameworks>netstandard1.3;net461</TargetFrameworks>
     <AssemblyName>SparkyTestHelpers.Moq.Core</AssemblyName>
     <PackageId>SparkyTestHelpers.Moq.Core</PackageId>
-    <Version>1.5.0</Version>
+    <Version>1.5.1</Version>
     <Authors>Brian Schroer</Authors>
     <Product>SparkyTestHelpers.Moq.Core</Product>
     <Description>Moq extension methods and syntax helpers used by SparkyTestHelpers.Moq and SparkyTestHelpers.Moq.Fluent</Description>
