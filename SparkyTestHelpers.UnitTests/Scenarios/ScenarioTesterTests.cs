@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SparkyTestHelpers.Scenarios;
 using System.Linq;
 using System.Collections.Generic;
+using FluentAssertions;
 
 namespace SparkyTestHelpers.UnitTests.Scenarios
 {
@@ -84,7 +85,6 @@ namespace SparkyTestHelpers.UnitTests.Scenarios
             {
                 new ScenarioTester<string>(scenarios).TestEach(scenario =>
                 {
-
                     if (scenario != "b")
                     {
                         Assert.Fail($"Test {scenario} failed!");
@@ -115,7 +115,6 @@ namespace SparkyTestHelpers.UnitTests.Scenarios
             {
                 new ScenarioTester<string>(scenarios).TestEach(scenario =>
                 {
-
                     if (scenario != "b")
                     {
                         Assert.Fail($"Test {scenario} failed!");
@@ -129,6 +128,22 @@ namespace SparkyTestHelpers.UnitTests.Scenarios
                 string expected = $"3 scenarios tested. 1 passed. 2 failed.:\n\n{new string('_', ConsoleHelper.GetWidth())}";
 
                 StringAssert.StartsWith(ex.Message, expected);
+            }
+        }
+
+        [TestMethod]
+        public void TestEach_should_something_something_InnerException()
+        {
+            var innerException = new Exception("inner exception message");
+            var exception = new Exception("outer exception message", innerException);
+
+            try
+            {
+                new[] { "test" }.TestEach(scenario => throw exception);
+            }
+            catch (ScenarioTestFailureException ex)
+            {
+                ex.Message.Should().Contain("outer exception message\ninner exception message");
             }
         }
 

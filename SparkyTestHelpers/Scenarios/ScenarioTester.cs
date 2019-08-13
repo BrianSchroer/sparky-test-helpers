@@ -175,7 +175,22 @@ namespace SparkyTestHelpers.Scenarios
             caughtException.Add(
               new ScenarioException(
                 ex.GetType(),
-                $"{BuildScenarioDescription(scenarioIndex)} - {ex.Message}{BuildScenarioJson(scenarioIndex)}"));
+                $"{BuildScenarioDescription(scenarioIndex)} - {FormatExceptionMessage(ex)}{BuildScenarioJson(scenarioIndex)}"));
+        }
+
+        private string FormatExceptionMessage(Exception ex)
+        {
+            string message = ex.Message;
+
+            Exception inner = ex.InnerException;
+
+            while (inner != null)
+            {
+                message += $"\n{inner.Message}";
+                inner = inner.InnerException;
+            }
+
+            return message;
         }
 
         private string BuildScenarioDescription(int scenarioIndex)
