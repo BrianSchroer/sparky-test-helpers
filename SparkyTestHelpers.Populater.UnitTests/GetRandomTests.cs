@@ -172,6 +172,174 @@ namespace SparkyTestHelpers.Populater.UnitTests
         }
 
         [TestMethod]
+        public void GetRandom_ArrayOf_primitive_type_should_work()
+        {
+            ForTest.Scenarios
+            (
+                GetRandom.ArrayOf<bool>(3) as Array,
+                GetRandom.ArrayOf<bool?>(3) as Array,
+                GetRandom.ArrayOf<byte>(3) as Array,
+                GetRandom.ArrayOf<byte?>(3) as Array,
+                GetRandom.ArrayOf<byte[]>(3) as Array,
+                GetRandom.ArrayOf<char>(3) as Array,
+                GetRandom.ArrayOf<char?>(3) as Array,
+                GetRandom.ArrayOf<DateTime>(3) as Array,
+                GetRandom.ArrayOf<DateTime?>(3) as Array,
+                GetRandom.ArrayOf<decimal>(3) as Array,
+                GetRandom.ArrayOf<decimal?>(3) as Array,
+                GetRandom.ArrayOf<double>(3) as Array,
+                GetRandom.ArrayOf<double?>(3) as Array,
+                GetRandom.ArrayOf<float>(3) as Array,
+                GetRandom.ArrayOf<float?>(3) as Array,
+                GetRandom.ArrayOf<Guid>(3) as Array,
+                GetRandom.ArrayOf<Guid?>(3) as Array,
+                GetRandom.ArrayOf<int>(3) as Array,
+                GetRandom.ArrayOf<int?>(3) as Array,
+                GetRandom.ArrayOf<long>(3) as Array,
+                GetRandom.ArrayOf<long?>(3) as Array,
+                GetRandom.ArrayOf<object>(3) as Array,
+                GetRandom.ArrayOf<sbyte>(3) as Array,
+                GetRandom.ArrayOf<sbyte?>(3) as Array,
+                GetRandom.ArrayOf<short>(3) as Array,
+                GetRandom.ArrayOf<short?>(3) as Array,
+                GetRandom.ArrayOf<string>(3) as Array,
+                GetRandom.ArrayOf<uint>(3) as Array,
+                GetRandom.ArrayOf<uint?>(3) as Array,
+                GetRandom.ArrayOf<ulong>(3) as Array,
+                GetRandom.ArrayOf<ulong?>(3) as Array,
+                GetRandom.ArrayOf<ushort>(3) as Array,
+                GetRandom.ArrayOf<ushort?>(3) as Array
+            )
+            .TestEach(array => array.Length.Should().Be(3));
+        }
+
+        [TestMethod]
+        public void GetRandom_IEnumerableOf_primitive_type_should_work()
+        {
+            ForTest.Scenarios
+            (
+                GetRandom.IEnumerableOf<bool>(3).ToArray() as Array,
+                GetRandom.IEnumerableOf<bool?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<byte>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<byte?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<byte[]>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<char>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<char?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<DateTime>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<DateTime?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<decimal>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<decimal?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<double>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<double?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<float>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<float?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<Guid>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<Guid?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<int>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<int?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<long>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<long?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<object>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<sbyte>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<sbyte?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<short>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<short?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<string>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<uint>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<uint?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<ulong>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<ulong?>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<ushort>(3) .ToArray() as Array,
+                GetRandom.IEnumerableOf<ushort?>(3) .ToArray() as Array
+            )
+            .TestEach(array => array.Length.Should().Be(3));
+        }
+
+        [TestMethod]
+        public void GetRandom_ListOf_primitive_type_should_work()
+        {
+            ForTest.Scenarios
+            (
+                GetRandom.ListOf<bool>(3).ToArray() as Array,
+                GetRandom.ListOf<bool?>(3).ToArray() as Array,
+                GetRandom.ListOf<byte>(3).ToArray() as Array,
+                GetRandom.ListOf<byte?>(3).ToArray() as Array,
+                GetRandom.ListOf<byte[]>(3).ToArray() as Array,
+                GetRandom.ListOf<char>(3).ToArray() as Array,
+                GetRandom.ListOf<char?>(3).ToArray() as Array,
+                GetRandom.ListOf<DateTime>(3).ToArray() as Array,
+                GetRandom.ListOf<DateTime?>(3).ToArray() as Array,
+                GetRandom.ListOf<decimal>(3).ToArray() as Array,
+                GetRandom.ListOf<decimal?>(3).ToArray() as Array,
+                GetRandom.ListOf<double>(3).ToArray() as Array,
+                GetRandom.ListOf<double?>(3).ToArray() as Array,
+                GetRandom.ListOf<float>(3).ToArray() as Array,
+                GetRandom.ListOf<float?>(3).ToArray() as Array,
+                GetRandom.ListOf<Guid>(3).ToArray() as Array,
+                GetRandom.ListOf<Guid?>(3).ToArray() as Array,
+                GetRandom.ListOf<int>(3).ToArray() as Array,
+                GetRandom.ListOf<int?>(3).ToArray() as Array,
+                GetRandom.ListOf<long>(3).ToArray() as Array,
+                GetRandom.ListOf<long?>(3).ToArray() as Array,
+                GetRandom.ListOf<object>(3).ToArray() as Array,
+                GetRandom.ListOf<sbyte>(3).ToArray() as Array,
+                GetRandom.ListOf<sbyte?>(3).ToArray() as Array,
+                GetRandom.ListOf<short>(3).ToArray() as Array,
+                GetRandom.ListOf<short?>(3).ToArray() as Array,
+                GetRandom.ListOf<string>(3).ToArray() as Array,
+                GetRandom.ListOf<uint>(3).ToArray() as Array,
+                GetRandom.ListOf<uint?>(3).ToArray() as Array,
+                GetRandom.ListOf<ulong>(3).ToArray() as Array,
+                GetRandom.ListOf<ulong?>(3).ToArray() as Array,
+                GetRandom.ListOf<ushort>(3).ToArray() as Array,
+                GetRandom.ListOf<ushort?>(3).ToArray() as Array
+            )
+            .TestEach(array => array.Length.Should().Be(3));
+        }
+
+        [TestMethod]
+        public void GetRandom_IIListOf_primitive_type_should_work()
+        {
+            ForTest.Scenarios
+            (
+                GetRandom.IListOf<bool>(3).ToArray() as Array,
+                GetRandom.IListOf<bool?>(3).ToArray() as Array,
+                GetRandom.IListOf<byte>(3).ToArray() as Array,
+                GetRandom.IListOf<byte?>(3).ToArray() as Array,
+                GetRandom.IListOf<byte[]>(3).ToArray() as Array,
+                GetRandom.IListOf<char>(3).ToArray() as Array,
+                GetRandom.IListOf<char?>(3).ToArray() as Array,
+                GetRandom.IListOf<DateTime>(3).ToArray() as Array,
+                GetRandom.IListOf<DateTime?>(3).ToArray() as Array,
+                GetRandom.IListOf<decimal>(3).ToArray() as Array,
+                GetRandom.IListOf<decimal?>(3).ToArray() as Array,
+                GetRandom.IListOf<double>(3).ToArray() as Array,
+                GetRandom.IListOf<double?>(3).ToArray() as Array,
+                GetRandom.IListOf<float>(3).ToArray() as Array,
+                GetRandom.IListOf<float?>(3).ToArray() as Array,
+                GetRandom.IListOf<Guid>(3).ToArray() as Array,
+                GetRandom.IListOf<Guid?>(3).ToArray() as Array,
+                GetRandom.IListOf<int>(3).ToArray() as Array,
+                GetRandom.IListOf<int?>(3).ToArray() as Array,
+                GetRandom.IListOf<long>(3).ToArray() as Array,
+                GetRandom.IListOf<long?>(3).ToArray() as Array,
+                GetRandom.IListOf<object>(3).ToArray() as Array,
+                GetRandom.IListOf<sbyte>(3).ToArray() as Array,
+                GetRandom.IListOf<sbyte?>(3).ToArray() as Array,
+                GetRandom.IListOf<short>(3).ToArray() as Array,
+                GetRandom.IListOf<short?>(3).ToArray() as Array,
+                GetRandom.IListOf<string>(3).ToArray() as Array,
+                GetRandom.IListOf<uint>(3).ToArray() as Array,
+                GetRandom.IListOf<uint?>(3).ToArray() as Array,
+                GetRandom.IListOf<ulong>(3).ToArray() as Array,
+                GetRandom.IListOf<ulong?>(3).ToArray() as Array,
+                GetRandom.IListOf<ushort>(3).ToArray() as Array,
+                GetRandom.IListOf<ushort?>(3).ToArray() as Array
+            )
+            .TestEach(array => array.Length.Should().Be(3));
+        }
+
+        [TestMethod]
         public void GetRandom_ArrayOf_with_RandomValueProvider_should_work()
         {
             TestThing[] testThings = GetRandom.ArrayOf<TestThing>(this, 7);

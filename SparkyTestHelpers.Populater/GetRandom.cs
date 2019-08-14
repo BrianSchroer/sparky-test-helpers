@@ -101,7 +101,7 @@ namespace SparkyTestHelpers.Population
             RandomValueProvider randomValueProvider,
             int count,
             int? maximumDepth = null,
-            Action<T> callback = null) where T : class
+            Action<T> callback = null)
         {
             var populater = new Populater();
 
@@ -132,7 +132,7 @@ namespace SparkyTestHelpers.Population
             int count,
             int? maximumDepth = null,
             int? maximumIEnumerableSize = null,
-            Action<T> callback = null) where T : class
+            Action<T> callback = null)
         {
             int savedMaximumIEnumerableSize = _randomValueProvider.MaximumIEnumerableSize;
 
@@ -183,11 +183,10 @@ namespace SparkyTestHelpers.Population
             int count,
             int? maximumDepth = null,
             int? maximumIEnumerableSize = null,
-            Action<T> callback = null) where T : class
+            Action<T> callback = null)
         {
             return ArrayOf(count, maximumDepth, maximumIEnumerableSize, callback);
         }
-
 
         /// <summary>
         /// Create an <see cref="List{T}"/> with properties populated with random values.
@@ -204,7 +203,7 @@ namespace SparkyTestHelpers.Population
             RandomValueProvider randomValueProvider,
             int count,
             int? maximumDepth = null,
-            Action<T> callback = null) where T : class
+            Action<T> callback = null)
         {
             var populater = new Populater();
 
@@ -235,7 +234,7 @@ namespace SparkyTestHelpers.Population
             int count,
             int? maximumDepth = null,
             int? maximumIEnumerableSize = null,
-            Action<T> callback = null) where T : class
+            Action<T> callback = null)
         {
             int savedMaximumIEnumerableSize = _randomValueProvider.MaximumIEnumerableSize;
 
@@ -266,7 +265,7 @@ namespace SparkyTestHelpers.Population
             RandomValueProvider randomValueProvider,
             int count,
             int? maximumDepth = null,
-            Action<T> callback = null) where T : class
+            Action<T> callback = null)
         {
             var populater = new Populater();
 
@@ -297,7 +296,7 @@ namespace SparkyTestHelpers.Population
             int count,
             int? maximumDepth = null,
             int? maximumIEnumerableSize = null,
-            Action<T> callback = null) where T : class
+            Action<T> callback = null)
         {
             int savedMaximumIEnumerableSize = _randomValueProvider.MaximumIEnumerableSize;
 

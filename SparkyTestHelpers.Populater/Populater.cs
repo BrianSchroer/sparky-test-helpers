@@ -77,6 +77,14 @@ namespace SparkyTestHelpers.Population
         /// <returns>The created and populated instance of <typeparamref name="T"/>.</returns>
         public virtual T CreateAndPopulate<T>(IPopulaterValueProvider valueProvider = null)
         {
+            Type type = typeof(T);
+
+            if (_generatorDictionary.ContainsKey(type))
+            {
+                valueProvider = valueProvider ?? new SequentialValueProvider();
+                return (T) _generatorDictionary[type].Invoke(valueProvider, "");
+            };
+
             return Populate((T)Activator.CreateInstance(typeof(T)), valueProvider);
         }
 
