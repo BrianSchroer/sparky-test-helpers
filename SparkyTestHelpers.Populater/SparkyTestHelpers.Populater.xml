@@ -92,7 +92,7 @@
         </member>
         <member name="M:SparkyTestHelpers.Population.GetRandom.ListOf``1(SparkyTestHelpers.Population.RandomValueProvider,System.Int32,System.Nullable{System.Int32},System.Action{``0})">
             <summary>
-            Create an <see cref="T:System.Collections.Generic.List`1"/> with properties populated with random values.
+            Create a <see cref="T:System.Collections.Generic.List`1"/> with properties populated with random values.
             </summary>
             <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
             <param name="randomValueProvider">The <see cref="T:SparkyTestHelpers.Population.RandomValueProvider"/>.</param>
@@ -103,7 +103,7 @@
         </member>
         <member name="M:SparkyTestHelpers.Population.GetRandom.ListOf``1(System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Action{``0})">
             <summary>
-            Create an <see cref="T:System.Collections.Generic.List`1"/> with properties populated with random values.
+            Create a <see cref="T:System.Collections.Generic.List`1"/> with properties populated with random values.
             </summary>
             <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
             <param name="count">The desired <see cref="T:System.Collections.Generic.List`1"/> count.</param>

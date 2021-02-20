@@ -19,7 +19,7 @@
     <Language>en-US</Language>
     <DocumentationSources>
       <DocumentationSource sourceFile="bin\Release\netstandard1.5\SparkyTestHelpers.Populater.dll" />
-<DocumentationSource sourceFile="bin\Release\netstandard1.5\SparkyTestHelpers.Populater.xml" /></DocumentationSources>
+<DocumentationSource sourceFile="SparkyTestHelpers.Populater.xml" /></DocumentationSources>
     <HelpFileFormat>Markdown</HelpFileFormat>
     <SyntaxFilters>C#</SyntaxFilters>
     <PresentationStyle>Markdown</PresentationStyle>

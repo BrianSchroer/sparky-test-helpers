@@ -189,7 +189,7 @@ namespace SparkyTestHelpers.Population
         }
 
         /// <summary>
-        /// Create an <see cref="List{T}"/> with properties populated with random values.
+        /// Create a <see cref="List{T}"/> with properties populated with random values.
         /// </summary>
         /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
         /// <param name="randomValueProvider">The <see cref="RandomValueProvider"/>.</param>
@@ -220,7 +220,7 @@ namespace SparkyTestHelpers.Population
         }
 
         /// <summary>
-        /// Create an <see cref="List{T}"/> with properties populated with random values.
+        /// Create a <see cref="List{T}"/> with properties populated with random values.
         /// </summary>
         /// <typeparam name="T">The type of the instance for which properties are to be updated.</typeparam>
         /// <param name="count">The desired <see cref="List{T}"/> count.</param>
