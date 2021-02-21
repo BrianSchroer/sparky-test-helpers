@@ -127,6 +127,29 @@ All *validate* "callback" actions are optional.
 * **ExpectingHttpStatusCode**(*HttpStatusCode expectedStatusCode*) - used with HttpResponseMessage action **.Test** method
 * **WhenModelStateIsValidEquals**(*bool isValid*) - used to test conditional logic based on ModelState.IsValid
 
+### Examples
+
+```csharp
+    var fooController = new FooController(/* with test dependencies */);
+    var controllerTester = new ApiControllerTester<FooController>(fooController);
+
+    controllerTester
+        .Action(x => x.Get)
+        .TestContentJsonDeserialization<Foo>(foo => 
+        {
+            Assert.IsTrue(foo.Success);
+        });
+
+    controllerTester
+        .Action(x => () => x.Update(updateModel))
+        .WhenModelStateIsValidEquals(false)
+        .TestBadRequestResult();
+
+    controllerTester
+        .Action(x => () => x.Update(updateModel))
+        .WhenModelStateIsValidEquals(true)
+        .TestOkResult();
+```
 
 ## RouteTester
 **RouteTester** and **RoutingAsserter** provide methods to assert that a given relative URL maps to the expected [RouteData.Values](https://docs.microsoft.com/en-us/dotnet/api/system.web.routing.routedata.values?view=netframework-4.7#System_Web_Routing_RouteData_Values). The **RoutingAsserter.AssertMapTo** overloads provide multiple ways to specify the expected values...
