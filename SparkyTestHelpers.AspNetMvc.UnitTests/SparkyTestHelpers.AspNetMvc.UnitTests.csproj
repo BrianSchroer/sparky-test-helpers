@@ -161,6 +161,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllerActionTesterTests.cs" />
     <Compile Include="ApiControllerHttpActionResultActionTesterTests.cs" />
     <Compile Include="ApiControllerHttpResponseMessageActionTesterTests.cs" />
     <Compile Include="Controllers\OrderController.cs" />

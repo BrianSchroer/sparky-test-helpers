@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SparkyTestHelpers.AspNetMvc.UnitTests.Models;
 using SparkyTestHelpers.Exceptions;
 using SparkyTestHelpers.Scenarios;
@@ -476,6 +477,38 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
                 .TestView());
         }
 
+        [TestMethod]
+        public void GenericControllerActionTester_WhenModelStateIsValidEquals_method_should_work_as_expected()
+        {
+            ForTest.Scenarios(true, false)
+            .TestEach(isValid =>
+            {
+                bool result = _controllerTester.Action<bool>(x => x.BoolResultActionThatChecksModelState)
+                    .WhenModelStateIsValidEquals(isValid)
+                    .Test(response => response.Should().Be(isValid));
+
+                result.Should().Be(isValid);
+            });
+        }
+
+        [TestMethod]
+        public void GenericControllerActionTester_Test_action_without_parameters_should_work_as_expected()
+        {
+            var result = _controllerTester.Action<string>(x => x.StringResultActionWithoutArguments)
+                .Test(response => response.Should().Be("test"));
+
+            result.Should().Be("test");
+        }
+
+        [TestMethod]
+        public void GenericControllerActionTester_Test_action_with_parameters_should_work_as_expected()
+        {
+            var result = _controllerTester.Action<string>(x => () => x.StringResultActionWithArgument("yo"))
+                .Test(response => response.Should().Be("yo"));
+
+            result.Should().Be("yo");
+        }
+
         #region Controller actions
         public ActionResult Index()
         {
@@ -558,6 +591,17 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         {
             return RedirectToRoute(new { controller = "Foo", action = "Details", id = 3 });
         }
+        public string StringResultActionWithoutArguments()
+        {
+            return "test";
+        }
+
+        public string StringResultActionWithArgument(string input)
+        {
+            return input;
+        }
+
+        public bool BoolResultActionThatChecksModelState() => ModelState.IsValid;
 
         #endregion
 

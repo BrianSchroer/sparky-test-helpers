@@ -29,17 +29,17 @@ namespace SparkyTestHelpers.AspNetMvc
         }
 
         /// <summary>
-        /// Creates a new <see cref="ApiControllerTester{TController}"/> instance.
+        /// Creates a new <see cref="ApiControllerHttpActionResultActionTester"/> instance.
         /// </summary>
         /// <param name="actionResultProvider">Function that returns an <see cref="IHttpActionResult"/>.</param>
-        /// <returns>New <see cref="ApiControllerTester{TController}"/> instance.</returns>
+        /// <returns>New <see cref="ApiControllerHttpActionResultActionTester"/> instance.</returns>
         public ApiControllerHttpActionResultActionTester Action(Func<IHttpActionResult> actionResultProvider) => Action(_ => actionResultProvider);
 
         /// <summary>
-        /// Creates a new <see cref="ApiControllerTester{TController}"/> instance.
+        /// Creates a new <see cref="ApiControllerHttpActionResultActionTester"/> instance.
         /// </summary>
         /// <param name="expression">Expression to specify the controller action to be tested.</param>
-        /// <returns>New <see cref="ApiControllerTester{TController}"/> instance.</returns>
+        /// <returns>New <see cref="ApiControllerHttpActionResultActionTester"/> instance.</returns>
         public ApiControllerHttpActionResultActionTester Action(Expression<Func<TController, Func<IHttpActionResult>>> expression)
         {
             var func = expression.Compile();
@@ -48,10 +48,10 @@ namespace SparkyTestHelpers.AspNetMvc
         }
 
         /// <summary>
-        /// Creates new <see cref="ApiControllerTester{TController}"/> instance for an async action.
+        /// Creates new <see cref="ApiControllerHttpActionResultActionTester"/> instance for an async action.
         /// </summary>
         /// <param name="expression">Expression to specify the async controller action to be tested.</param>
-        /// <returns>New <see cref="ApiControllerTester{TController}"/> instance.</returns>
+        /// <returns>New <see cref="ApiControllerHttpActionResultActionTester"/> instance.</returns>
         public ApiControllerHttpActionResultActionTester Action(Expression<Func<TController, Func<Task<IHttpActionResult>>>> expression)
         {
             Func<TController, Func<Task<IHttpActionResult>>> funcWithTask = expression.Compile();
@@ -67,17 +67,17 @@ namespace SparkyTestHelpers.AspNetMvc
         }
 
         /// <summary>
-        /// Creates a new <see cref="ApiControllerTester{TController}"/> instance.
+        /// Creates a new <see cref="ApiControllerHttpResponseMessageActionTester"/> instance.
         /// </summary>
         /// <param name="actionResultProvider">Function that returns an <see cref="HttpResponseMessage"/>.</param>
-        /// <returns>New <see cref="ApiControllerTester{TController}"/> instance.</returns>
+        /// <returns>New <see cref="ApiControllerHttpResponseMessageActionTester"/> instance.</returns>
         public ApiControllerHttpResponseMessageActionTester Action(Func<HttpResponseMessage> actionResultProvider) => Action(_ => actionResultProvider);
 
         /// <summary>
-        /// Creates a new <see cref="ApiControllerTester{TController}"/> instance.
+        /// Creates a new <see cref="ApiControllerHttpResponseMessageActionTester"/> instance.
         /// </summary>
         /// <param name="expression">Expression to specify the controller action to be tested.</param>
-        /// <returns>New <see cref="ApiControllerTester{TController}"/> instance.</returns>
+        /// <returns>New <see cref="ApiControllerHttpResponseMessageActionTester"/> instance.</returns>
         public ApiControllerHttpResponseMessageActionTester Action(Expression<Func<TController, Func<HttpResponseMessage>>> expression)
         {
             var func = expression.Compile();
@@ -86,10 +86,10 @@ namespace SparkyTestHelpers.AspNetMvc
         }
 
         /// <summary>
-        /// Creates new <see cref="ApiControllerTester{TController}"/> instance for an async action.
+        /// Creates new <see cref="ApiControllerHttpResponseMessageActionTester"/> instance for an async action.
         /// </summary>
         /// <param name="expression">Expression to specify the async controller action to be tested.</param>
-        /// <returns>New <see cref="ApiControllerTester{TController}"/> instance.</returns>
+        /// <returns>New <see cref="ApiControllerHttpResponseMessageActionTester"/> instance.</returns>
         public ApiControllerHttpResponseMessageActionTester Action(Expression<Func<TController, Func<Task<HttpResponseMessage>>>> expression)
         {
             Func<TController, Func<Task<HttpResponseMessage>>> funcWithTask = expression.Compile();
@@ -102,6 +102,47 @@ namespace SparkyTestHelpers.AspNetMvc
             };
 
             return new ApiControllerHttpResponseMessageActionTester(_controller, func);
+        }
+        
+        /// <summary>
+        /// Creates a new <see cref="ApiControllerActionTester{TResponse}"/> instance.
+        /// </summary>
+        /// <typeparam name="TResponse">The action response type.</typeparam>
+        /// <param name="actionResultProvider">Function that returns an istance of type <see cref="TResponse"/>.</param>
+        /// <returns>New <see cref="ApiControllerActionTester{TController}"/> instance.</returns>
+        public ApiControllerActionTester<TResponse> Action<TResponse>(Func<TResponse> actionResultProvider) => Action(_ => actionResultProvider);
+
+        /// <summary>
+        /// Creates a new <see cref="ApiControllerActionTester{TResponse}"/> instance.
+        /// </summary>
+        /// <typeparam name="TResponse">The action response type.</typeparam>
+        /// <param name="expression">Expression to specify the controller action to be tested.</param>
+        /// <returns>New <see cref="ApiControllerActionTester{TResponse}"/> instance.</returns>
+        public ApiControllerActionTester<TResponse> Action<TResponse>(Expression<Func<TController, Func<TResponse>>> expression)
+        {
+            var func = expression.Compile();
+
+            return new ApiControllerActionTester<TResponse>(_controller, func(_controller));
+        }
+
+        /// <summary>
+        /// Creates new <see cref="ApiControllerActionTester{TResponse}"/> instance for an async action.
+        /// </summary>
+        /// <typeparam name="TResponse">The action response type.</typeparam>
+        /// <param name="expression">Expression to specify the async controller action to be tested.</param>
+        /// <returns>New <see cref="ApiControllerActionTester{TResponse}"/> instance.</returns>
+        public ApiControllerActionTester<TResponse> Action<TResponse>(Expression<Func<TController, Func<Task<TResponse>>>> expression)
+        {
+            Func<TController, Func<Task<TResponse>>> funcWithTask = expression.Compile();
+
+            Func<TResponse> func = () =>
+            {
+                Task<TResponse> task = funcWithTask(_controller)();
+                task.Wait();
+                return task.Result;
+            };
+
+            return new ApiControllerActionTester<TResponse>(_controller, func);
         }
     }
 }

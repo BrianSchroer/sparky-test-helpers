@@ -59,5 +59,46 @@ namespace SparkyTestHelpers.AspNetMvc
 
             return new ControllerActionTester(_controller, func);
         }
+
+        /// <summary>
+        /// Creates a new <see cref="ControllerActionTester{TResponse}"/> instance.
+        /// </summary>
+        /// <typeparam name="TResponse">The action response type.</typeparam>
+        /// <param name="actionResultProvider">Function that returns an istance of type <see cref="TResponse"/>.</param>
+        /// <returns>New <see cref="ControllerActionTester{TController}"/> instance.</returns>
+        public ControllerActionTester<TResponse> Action<TResponse>(Func<TResponse> actionResultProvider) => Action(_ => actionResultProvider);
+
+        /// <summary>
+        /// Creates a new <see cref="ControllerActionTester{TResponse}"/> instance.
+        /// </summary>
+        /// <typeparam name="TResponse">The action response type.</typeparam>
+        /// <param name="expression">Expression to specify the controller action to be tested.</param>
+        /// <returns>New <see cref="ControllerActionTester{TResponse}"/> instance.</returns>
+        public ControllerActionTester<TResponse> Action<TResponse>(Expression<Func<TController, Func<TResponse>>> expression)
+        {
+            var func = expression.Compile();
+
+            return new ControllerActionTester<TResponse>(_controller, func(_controller));
+        }
+
+        /// <summary>
+        /// Creates new <see cref="ControllerActionTester{TResponse}"/> instance for an async action.
+        /// </summary>
+        /// <typeparam name="TResponse">The action response type.</typeparam>
+        /// <param name="expression">Expression to specify the async controller action to be tested.</param>
+        /// <returns>New <see cref="ControllerActionTester{TResponse}"/> instance.</returns>
+        public ControllerActionTester<TResponse> Action<TResponse>(Expression<Func<TController, Func<Task<TResponse>>>> expression)
+        {
+            Func<TController, Func<Task<TResponse>>> funcWithTask = expression.Compile();
+
+            Func<TResponse> func = () =>
+            {
+                Task<TResponse> task = funcWithTask(_controller)();
+                task.Wait();
+                return task.Result;
+            };
+
+            return new ControllerActionTester<TResponse>(_controller, func);
+        }
     }
 }

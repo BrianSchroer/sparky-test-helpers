@@ -41,5 +41,17 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests.Controllers
 
             return BadRequest();
         }
+
+        public string StringResultActionWithoutArguments()
+        {
+            return "test";
+        }
+
+        public string StringResultActionWithArgument(string input)
+        {
+            return input;
+        }
+
+        public bool BoolResultActionThatChecksModelState() => ModelState.IsValid;
     }
 }
