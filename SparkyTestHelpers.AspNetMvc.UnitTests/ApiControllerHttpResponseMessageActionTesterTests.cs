@@ -26,8 +26,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         {
             _controller = new TestApiController();
             _controller.HttpActionResult = _okResult = new OkResult(_controller);
-
-            _controllerTester = new ApiControllerTester<TestApiController>(_controller);
+            _controllerTester = _controller.CreateTester();
         }
 
         [DataTestMethod]

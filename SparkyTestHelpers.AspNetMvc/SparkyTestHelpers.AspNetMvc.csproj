@@ -71,6 +71,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerExtensionMethods.cs" />
+    <Compile Include="ApiControllerExtensionMethods.cs" />
     <Compile Include="ControllerActionTesterGeneric.cs" />
     <Compile Include="ApiControllerActionTester.cs" />
     <Compile Include="ApiControllerHttpActionResultActionTester.cs" />

@@ -11,6 +11,7 @@ namespace SparkyTestHelpers.AspNetMvc
     {
         private readonly ApiController _controller;
         private readonly Func<TResponse> _controllerAction;
+        private object controller;
 
         /// <summary>
         /// Creates a new <see cref="ApiControllerActionTester{TResponse}" instance.
@@ -21,6 +22,11 @@ namespace SparkyTestHelpers.AspNetMvc
         {
             _controller = controller;
             _controllerAction = controllerAction;
+        }
+
+        public ApiControllerActionTester(object controller)
+        {
+            this.controller = controller;
         }
 
         /// <summary>

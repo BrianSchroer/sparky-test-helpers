@@ -22,7 +22,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
                 ActionResponseMessage = new HttpResponseMessage { StatusCode = HttpStatusCode.OK }
             };
 
-            _controllerTester = new ApiControllerTester<TestApiController>(_controller);
+            _controllerTester = _controller.CreateTester();
         }
 
         [DataTestMethod]

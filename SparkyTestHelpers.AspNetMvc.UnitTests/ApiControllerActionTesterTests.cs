@@ -15,7 +15,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         public void TestInitialize()
         {
             _controller = new TestApiController();
-            _controllerTester = new ApiControllerTester<TestApiController>(_controller);
+            _controllerTester = _controller.CreateTester();
         }
 
         [TestMethod]

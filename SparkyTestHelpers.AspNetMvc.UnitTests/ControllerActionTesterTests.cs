@@ -20,7 +20,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         [TestInitialize]
         public void TestInitialize()
         {
-            _controllerTester = new ControllerTester<ControllerActionTesterTests>(this);
+            _controllerTester = this.CreateTester();
         }
 
         [TestMethod]

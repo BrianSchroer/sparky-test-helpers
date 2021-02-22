@@ -14,6 +14,17 @@ namespace SparkyTestHelpers.AspNetMvc
         private readonly TController _controller;
 
         /// <summary>
+        /// Creates a new <see cref="ControllerTester{T}" /> instance.
+        /// </summary>
+        /// <typeparam name="T">The <see cref="Controller" /> type.</typeparam>
+        /// <param name="controller">THe <see cref="Controller"/> to be tested.</param>
+        /// <returns>New <see cref="Controller{T}" /> instance.</returns>
+        public static ControllerTester<T> CreateTester<T>(T controller) where T : Controller
+        {
+            return new ControllerTester<T>(controller);
+        }
+
+        /// <summary>
         /// Creates new <see cref="ControllerTester{TController}"/> instance.
         /// </summary>
         /// <param name="controller">The controller.</param>
