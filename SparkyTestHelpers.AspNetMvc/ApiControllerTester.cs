@@ -12,7 +12,10 @@ namespace SparkyTestHelpers.AspNetMvc
     /// <typeparam name="TController">The <see cref="ApiController"/> type.</typeparam>
     public class ApiControllerTester<TController> where TController : ApiController
     {
-        private readonly TController _controller;
+        /// <summary>
+        /// The <typeparamref name="TController"/> instance being tested.
+        /// </summary>
+        public TController Controller { get; private set; }
 
         /// <summary>
         /// Creates new <see cref="ApiControllerTester{TController}"/> instance.
@@ -20,11 +23,11 @@ namespace SparkyTestHelpers.AspNetMvc
         /// <param name="controller">The <typeparamref name="TController"/> to be tested.</param>
         public ApiControllerTester(TController controller)
         {
-            _controller = controller;
+            Controller = controller;
 
-            if (_controller.Request is null)
+            if (Controller.Request is null)
             {
-                _controller.Request = new HttpRequestMessage();
+                Controller.Request = new HttpRequestMessage();
             }
         }
 
@@ -44,7 +47,7 @@ namespace SparkyTestHelpers.AspNetMvc
         {
             var func = expression.Compile();
 
-            return new ApiControllerHttpActionResultActionTester(_controller, func(_controller));
+            return new ApiControllerHttpActionResultActionTester(Controller, func(Controller));
         }
 
         /// <summary>
@@ -58,12 +61,12 @@ namespace SparkyTestHelpers.AspNetMvc
 
             Func<IHttpActionResult> func = () =>
             {
-                Task<IHttpActionResult> task = funcWithTask(_controller)();
+                Task<IHttpActionResult> task = funcWithTask(Controller)();
                 task.Wait();
                 return task.Result;
             };
 
-            return new ApiControllerHttpActionResultActionTester(_controller, func);
+            return new ApiControllerHttpActionResultActionTester(Controller, func);
         }
 
         /// <summary>
@@ -82,7 +85,7 @@ namespace SparkyTestHelpers.AspNetMvc
         {
             var func = expression.Compile();
 
-            return new ApiControllerHttpResponseMessageActionTester(_controller, func(_controller));
+            return new ApiControllerHttpResponseMessageActionTester(Controller, func(Controller));
         }
 
         /// <summary>
@@ -96,12 +99,12 @@ namespace SparkyTestHelpers.AspNetMvc
 
             Func<HttpResponseMessage> func = () =>
             {
-                Task<HttpResponseMessage> task = funcWithTask(_controller)();
+                Task<HttpResponseMessage> task = funcWithTask(Controller)();
                 task.Wait();
                 return task.Result;
             };
 
-            return new ApiControllerHttpResponseMessageActionTester(_controller, func);
+            return new ApiControllerHttpResponseMessageActionTester(Controller, func);
         }
         
         /// <summary>
@@ -122,7 +125,7 @@ namespace SparkyTestHelpers.AspNetMvc
         {
             var func = expression.Compile();
 
-            return new ApiControllerActionTester<TResponse>(_controller, func(_controller));
+            return new ApiControllerActionTester<TResponse>(Controller, func(Controller));
         }
 
         /// <summary>
@@ -137,12 +140,12 @@ namespace SparkyTestHelpers.AspNetMvc
 
             Func<TResponse> func = () =>
             {
-                Task<TResponse> task = funcWithTask(_controller)();
+                Task<TResponse> task = funcWithTask(Controller)();
                 task.Wait();
                 return task.Result;
             };
 
-            return new ApiControllerActionTester<TResponse>(_controller, func);
+            return new ApiControllerActionTester<TResponse>(Controller, func);
         }
     }
 }

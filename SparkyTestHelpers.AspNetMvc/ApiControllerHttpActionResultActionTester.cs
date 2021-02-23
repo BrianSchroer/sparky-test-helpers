@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Specialized;
+using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
 
@@ -9,8 +11,12 @@ namespace SparkyTestHelpers.AspNetMvc
     /// </summary>
     public class ApiControllerHttpActionResultActionTester
     {
-        private readonly ApiController _controller;
         private readonly Func<IHttpActionResult> _controllerAction;
+
+        /// <summary>
+        /// The <see cref="ApiController"/> instance being tested.
+        /// </summary>
+        public ApiController Controller { get; private set; }
 
         /// <summary>
         /// Called by the
@@ -21,7 +27,7 @@ namespace SparkyTestHelpers.AspNetMvc
         /// <param name="controllerAction">"Callback" function that provides the controller action to be tested.</param>
         internal ApiControllerHttpActionResultActionTester(ApiController controller, Func<IHttpActionResult> controllerAction)
         {
-            _controller = controller;
+            Controller = controller;
             _controllerAction = controllerAction;
         }
 
@@ -32,6 +38,84 @@ namespace SparkyTestHelpers.AspNetMvc
         public ApiControllerHttpActionResultActionTester WhenModelStateIsValidEquals(bool isValid)
         {
             SetModelStateIsValid(isValid);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Controller.Request" /> to a new <see cref="HttpRequestMessage" /> with a
+        /// <see cref="HttpRequestMessage.RequestUri" /> with specified <paramref name="siteUrlPrefix"/> and
+        /// <paramref name="queryStringParameters"/>.
+        /// </summary>
+        /// <param name="siteUrlPrefix">site URL prefix, e.g. "http://mySite.com", "http://localhost".</param>
+        /// <param name="queryStringParameters">The <see cref="QueryStringParameter"/>s.</param>
+        /// <returns>"This" <see cref="ApiControllerHttpActionResultActionTester"/>.</returns>
+        public ApiControllerHttpActionResultActionTester WithRequestQueryStringValues(string siteUrlPrefix, params QueryStringParameter[] queryStringParameters)
+        {
+            if (Controller.Request is null)
+            {
+                Controller.Request = new HttpRequestMessage();
+            }
+
+            Controller.Request.RequestUri = UriBuilder.Build(siteUrlPrefix, queryStringParameters);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Controller.Request" /> to a new <see cref="HttpRequestMessage" /> with a
+        /// <see cref="HttpRequestMessage.RequestUri" /> with the site URL prefix "http://localhost" and the
+        /// specified <paramref name="queryStringParameters"/>.
+        /// </summary>
+        /// <param name="queryStringParameters">The <see cref="QueryStringParameter"/>s.</param>
+        /// <returns>"This" <see cref="ApiControllerHttpActionResultActionTester"/>.</returns>
+        public ApiControllerHttpActionResultActionTester WithRequestQueryStringValues(params QueryStringParameter[] queryStringParameters)
+        {
+            if (Controller.Request is null)
+            {
+                Controller.Request = new HttpRequestMessage();
+            }
+
+            Controller.Request.RequestUri = UriBuilder.Build(queryStringParameters);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Controller.Request" /> to a new <see cref="HttpRequestMessage" /> with a
+        /// <see cref="HttpRequestMessage.RequestUri" /> with specified <paramref name="siteUrlPrefix"/> and
+        /// <paramref name="queryStringParameters"/>.
+        /// </summary>
+        /// <param name="siteUrlPrefix">site URL prefix, e.g. "http://mySite.com", "http://localhost".</param>
+        /// <param name="queryStringParameters">The <see cref="QueryStringParameter"/>s.</param>
+        /// <returns>"This" <see cref="ApiControllerHttpActionResultActionTester"/>.</returns>
+        public ApiControllerHttpActionResultActionTester WithRequestQueryStringValues(string siteUrlPrefix, NameValueCollection queryStringParameters)
+        {
+            if (Controller.Request is null)
+            {
+                Controller.Request = new HttpRequestMessage();
+            }
+
+            Controller.Request.RequestUri = UriBuilder.Build(siteUrlPrefix, queryStringParameters);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Controller.Request" /> to a new <see cref="HttpRequestMessage" /> with a
+        /// <see cref="HttpRequestMessage.RequestUri" /> with the site URL prefix "http://localhost" and the
+        /// specified <paramref name="queryStringParameters"/>.
+        /// </summary>
+        /// <param name="queryStringParameters">The <see cref="QueryStringParameter"/>s.</param>
+        /// <returns>"This" <see cref="ApiControllerHttpActionResultActionTester"/>.</returns>
+        public ApiControllerHttpActionResultActionTester WithRequestQueryStringValues(NameValueCollection queryStringParameters)
+        {
+            if (Controller.Request is null)
+            {
+                Controller.Request = new HttpRequestMessage();
+            }
+
+            Controller.Request.RequestUri = UriBuilder.Build(queryStringParameters);
+
             return this;
         }
 
@@ -314,11 +398,11 @@ namespace SparkyTestHelpers.AspNetMvc
 
         private void SetModelStateIsValid(bool isValid = true)
         {
-            _controller.ModelState.Clear();
+            Controller.ModelState.Clear();
 
             if (!isValid)
             {
-                _controller.ModelState.AddModelError("key", "message");
+                Controller.ModelState.AddModelError("key", "message");
             }
         }
     }

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Specialized;
+using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace SparkyTestHelpers.AspNetMvc
 {
@@ -9,9 +12,12 @@ namespace SparkyTestHelpers.AspNetMvc
     /// <typeparam name="TResponse">The action response type.</typeparam>
     public class ApiControllerActionTester<TResponse>
     {
-        private readonly ApiController _controller;
         private readonly Func<TResponse> _controllerAction;
-        private object controller;
+
+        /// <summary>
+        /// The <see cref="ApiController"/> instance being tested.
+        /// </summary>
+        public ApiController Controller { get; private set; }
 
         /// <summary>
         /// Creates a new <see cref="ApiControllerActionTester{TResponse}" instance.
@@ -20,25 +26,98 @@ namespace SparkyTestHelpers.AspNetMvc
         /// <param name="controllerAction">"Callback" function that provides the controller action to be tested.</param>
         public ApiControllerActionTester(ApiController controller, Func<TResponse> controllerAction)
         {
-            _controller = controller;
+            Controller = controller;
             _controllerAction = controllerAction;
-        }
-
-        public ApiControllerActionTester(object controller)
-        {
-            this.controller = controller;
         }
 
         /// <summary>
         /// Sets up ModelState.IsValid value.
         /// </summary>
-        /// <returns>"This" <see cref="ApiControllerHttpResponseMessageActionTester"/>.</returns>
+        /// <returns>"This" <see cref="ApiControllerActionTester{TResponse}"/>.</returns>
         public ApiControllerActionTester<TResponse> WhenModelStateIsValidEquals(bool isValid)
         {
             SetModelStateIsValid(isValid);
             return this;
         }
-        
+
+        /// <summary>
+        /// Sets <see cref="Controller.Request" /> to a new <see cref="HttpRequestMessage" /> with a
+        /// <see cref="HttpRequestMessage.RequestUri" /> with specified <paramref name="siteUrlPrefix"/> and
+        /// <paramref name="queryStringParameters"/>.
+        /// </summary>
+        /// <param name="siteUrlPrefix">site URL prefix, e.g. "http://mySite.com", "http://localhost".</param>
+        /// <param name="queryStringParameters">The <see cref="QueryStringParameter"/>s.</param>
+        /// <returns>"This" <see cref="ApiControllerActionTester{TResponse}"/>.</returns>
+        public ApiControllerActionTester<TResponse> WithRequestQueryStringValues(string siteUrlPrefix, params QueryStringParameter[] queryStringParameters)
+        {
+            if (Controller.Request is null)
+            {
+                Controller.Request = new HttpRequestMessage();
+            }
+
+            Controller.Request.RequestUri = UriBuilder.Build(siteUrlPrefix, queryStringParameters);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Controller.Request" /> to a new <see cref="HttpRequestMessage" /> with a
+        /// <see cref="HttpRequestMessage.RequestUri" /> with the site URL prefix "http://localhost" and the
+        /// specified <paramref name="queryStringParameters"/>.
+        /// </summary>
+        /// <param name="queryStringParameters">The <see cref="QueryStringParameter"/>s.</param>
+        /// <returns>"This" <see cref="ApiControllerActionTester{TResponse}"/>.</returns>
+        public ApiControllerActionTester<TResponse> WithRequestQueryStringValues(params QueryStringParameter[] queryStringParameters)
+        {
+            if (Controller.Request is null)
+            {
+                Controller.Request = new HttpRequestMessage();
+            }
+
+            Controller.Request.RequestUri = UriBuilder.Build(queryStringParameters);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Controller.Request" /> to a new <see cref="HttpRequestMessage" /> with a
+        /// <see cref="HttpRequestMessage.RequestUri" /> with specified <paramref name="siteUrlPrefix"/> and
+        /// <paramref name="queryStringParameters"/>.
+        /// </summary>
+        /// <param name="siteUrlPrefix">site URL prefix, e.g. "http://mySite.com", "http://localhost".</param>
+        /// <param name="queryStringParameters">The <see cref="QueryStringParameter"/>s.</param>
+        /// <returns>"This" <see cref="ApiControllerActionTester{TResponse}"/>.</returns>
+        public ApiControllerActionTester<TResponse> WithRequestQueryStringValues(string siteUrlPrefix, NameValueCollection queryStringParameters)
+        {
+            if (Controller.Request is null)
+            {
+                Controller.Request = new HttpRequestMessage();
+            }
+
+            Controller.Request.RequestUri = UriBuilder.Build(siteUrlPrefix, queryStringParameters);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Controller.Request" /> to a new <see cref="HttpRequestMessage" /> with a
+        /// <see cref="HttpRequestMessage.RequestUri" /> with the site URL prefix "http://localhost" and the
+        /// specified <paramref name="queryStringParameters"/>.
+        /// </summary>
+        /// <param name="queryStringParameters">The <see cref="QueryStringParameter"/>s.</param>
+        /// <returns>"This" <see cref="ApiControllerActionTester{TResponse}"/>.</returns>
+        public ApiControllerActionTester<TResponse> WithRequestQueryStringValues(NameValueCollection queryStringParameters)
+        {
+            if (Controller.Request is null)
+            {
+                Controller.Request = new HttpRequestMessage();
+            }
+
+            Controller.Request.RequestUri = UriBuilder.Build(queryStringParameters);
+
+            return this;
+        }
+
         /// <summary>
         /// Calls controller action, validates <see cref="HttpResponseMessage.StatusCode"/>
         /// (if <see cref="ExpectingHttpStatusCode(HttpStatusCode)" has been called)
@@ -57,11 +136,11 @@ namespace SparkyTestHelpers.AspNetMvc
 
         private void SetModelStateIsValid(bool isValid = true)
         {
-            _controller.ModelState.Clear();
+            Controller.ModelState.Clear();
 
             if (!isValid)
             {
-                _controller.ModelState.AddModelError("key", "message");
+                Controller.ModelState.AddModelError("key", "message");
             }
         }
     }

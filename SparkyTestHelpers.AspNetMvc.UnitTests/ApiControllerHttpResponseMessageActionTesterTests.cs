@@ -2,9 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using SparkyTestHelpers.AspNetMvc.UnitTests.Controllers;
-using SparkyTestHelpers.Scenarios;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -39,6 +39,47 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
             _controllerTester.Action(x => x.HttpActionResultActionThatChecksModelState)
                 .WhenModelStateIsValidEquals(false)
                 .TestBadRequestResult();
+        }
+
+        [TestMethod]
+        public void WithRequestQueryStringValues_should_build_expected_uri_with_siteUrlPrefix_and_with_QueryStringParameters()
+        {
+            _controllerTester
+                .Action(x => x.HttpActionResultActionWithoutArguments)
+                .WithRequestQueryStringValues("http://fake.com", new QueryStringParameter("parm1", "value1"), new QueryStringParameter("parm2", 2));
+
+            _controller.Request.RequestUri.ToString().Should().Be("http://fake.com/?parm1=value1&parm2=2");
+        }
+
+        [TestMethod]
+        public void WithRequestQueryStringValues_should_build_expected_uri_without_siteUrlPrefix_and_with_QueryStringParameters()
+        {
+            _controllerTester
+                .Action(x => x.HttpActionResultActionWithoutArguments)
+                .WithRequestQueryStringValues(new QueryStringParameter("parm1", "value1"), new QueryStringParameter("parm2", 2));
+
+            _controller.Request.RequestUri.ToString().Should().Be("http://localhost/?parm1=value1&parm2=2");
+        }
+
+        [TestMethod]
+        public void WithRequestQueryStringValues_should_build_expected_uri_with_siteUrlPrefix_and_with_NameValueCollection()
+        {
+            _controllerTester
+                .Action(x => x.HttpActionResultActionWithoutArguments)
+                .WithRequestQueryStringValues(
+                    "http://fake.com", new NameValueCollection { { "parm1", "value1" }, { "parm2", "2" } });
+
+            _controller.Request.RequestUri.ToString().Should().Be("http://fake.com/?parm1=value1&parm2=2");
+        }
+
+        [TestMethod]
+        public void WithRequestQueryStringValues_should_build_expected_uri_without_siteUrlPrefix_and_with_NameValueCollection()
+        {
+            _controllerTester
+                .Action(x => x.HttpActionResultActionWithoutArguments)
+                .WithRequestQueryStringValues(new NameValueCollection { { "parm1", "value1" }, { "parm2", "2" } });
+
+            _controller.Request.RequestUri.ToString().Should().Be("http://localhost/?parm1=value1&parm2=2");
         }
 
         [TestMethod]

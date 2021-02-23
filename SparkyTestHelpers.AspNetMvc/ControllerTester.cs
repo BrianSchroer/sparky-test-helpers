@@ -11,13 +11,16 @@ namespace SparkyTestHelpers.AspNetMvc
     /// <typeparam name="TController">The controller type.</typeparam>
     public class ControllerTester<TController> where TController : Controller
     {
-        private readonly TController _controller;
+        /// <summary>
+        /// The <typeparamref name="TController"/> instance being tested.
+        /// </summary>
+        public TController Controller { get; private set; }
 
         /// <summary>
         /// Creates a new <see cref="ControllerTester{T}" /> instance.
         /// </summary>
-        /// <typeparam name="T">The <see cref="Controller" /> type.</typeparam>
-        /// <param name="controller">THe <see cref="Controller"/> to be tested.</param>
+        /// <typeparam name="T">The <see cref="System.Web.Mvc.Controller" /> type.</typeparam>
+        /// <param name="controller">THe <see cref="System.Web.Mvc.Controller"/> to be tested.</param>
         /// <returns>New <see cref="Controller{T}" /> instance.</returns>
         public static ControllerTester<T> CreateTester<T>(T controller) where T : Controller
         {
@@ -30,7 +33,7 @@ namespace SparkyTestHelpers.AspNetMvc
         /// <param name="controller">The controller.</param>
         public ControllerTester(TController controller)
         {
-            _controller = controller;
+            Controller = controller;
         }
 
         /// <summary>
@@ -49,7 +52,7 @@ namespace SparkyTestHelpers.AspNetMvc
         {
             var func = expression.Compile();
 
-            return new ControllerActionTester(_controller, func(_controller));
+            return new ControllerActionTester(Controller, func(Controller));
         }
 
         /// <summary>
@@ -63,12 +66,12 @@ namespace SparkyTestHelpers.AspNetMvc
 
             Func<ActionResult> func = () =>
             {
-                Task<ActionResult> task = funcWithTask(_controller)();
+                Task<ActionResult> task = funcWithTask(Controller)();
                 task.Wait();
                 return task.Result;
             };
 
-            return new ControllerActionTester(_controller, func);
+            return new ControllerActionTester(Controller, func);
         }
 
         /// <summary>
@@ -89,7 +92,7 @@ namespace SparkyTestHelpers.AspNetMvc
         {
             var func = expression.Compile();
 
-            return new ControllerActionTester<TResponse>(_controller, func(_controller));
+            return new ControllerActionTester<TResponse>(Controller, func(Controller));
         }
 
         /// <summary>
@@ -104,12 +107,12 @@ namespace SparkyTestHelpers.AspNetMvc
 
             Func<TResponse> func = () =>
             {
-                Task<TResponse> task = funcWithTask(_controller)();
+                Task<TResponse> task = funcWithTask(Controller)();
                 task.Wait();
                 return task.Result;
             };
 
-            return new ControllerActionTester<TResponse>(_controller, func);
+            return new ControllerActionTester<TResponse>(Controller, func);
         }
     }
 }

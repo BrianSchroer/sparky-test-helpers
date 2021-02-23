@@ -4,22 +4,26 @@ using System.Web.Mvc;
 namespace SparkyTestHelpers.AspNetMvc
 {
     /// <summary>
-    /// Helper for testing <see cref="Controller"/> actions that return a response of type <typeparamref name="TResponse"/>.
+    /// Helper for testing <see cref="System.Web.Mvc.Controller"/> actions that return a response of type <typeparamref name="TResponse"/>.
     /// </summary>
     /// <typeparam name="TResponse">The action response type.</typeparam>
     public class ControllerActionTester<TResponse>
     {
-        private readonly Controller _controller;
         private readonly Func<TResponse> _controllerAction;
+
+        /// <summary>
+        /// The <see cref="Controller"/> instance being tested.
+        /// </summary>
+        public Controller Controller { get; private set; }
 
         /// <summary>
         /// Creates a new <see cref="ControllerActionTester{TResponse}" instance.
         /// </summary>
-        /// <param name="controller">The "parent" <see cref="Controller"/>.</param>
+        /// <param name="controller">The "parent" <see cref="System.Web.Mvc.Controller"/>.</param>
         /// <param name="controllerAction">"Callback" function that provides the controller action to be tested.</param>
         public ControllerActionTester(Controller controller, Func<TResponse> controllerAction)
         {
-            _controller = controller;
+            Controller = controller;
             _controllerAction = controllerAction;
         }
 
@@ -51,11 +55,11 @@ namespace SparkyTestHelpers.AspNetMvc
 
         private void SetModelStateIsValid(bool isValid = true)
         {
-            _controller.ModelState.Clear();
+            Controller.ModelState.Clear();
 
             if (!isValid)
             {
-                _controller.ModelState.AddModelError("key", "message");
+                Controller.ModelState.AddModelError("key", "message");
             }
         }
     }

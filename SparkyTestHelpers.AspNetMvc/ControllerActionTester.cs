@@ -5,26 +5,30 @@ using System.Web.Mvc;
 namespace SparkyTestHelpers.AspNetMvc
 {
     /// <summary>
-    /// Helper for testing ASP.NET Core MVC controller actions.
+    /// Helper for testing ASP.NET MVC controller actions.
     /// </summary>
     public class ControllerActionTester
     {
-        private readonly Controller _controller;
         private readonly Func<ActionResult> _controllerAction;
         private IModelTester _modelTester;
         private string _expectedViewName = null;
         private bool _expectedViewNameSpecified;
 
         /// <summary>
+        /// The <see cref="Controller" /> instance being tested.
+        /// </summary>
+        public Controller Controller { get; private set; }
+
+        /// <summary>
         /// Called by the 
         /// <see cref="ControllerTester{TController}.Action(System.Linq.Expressions.Expression{Func{TController, Func{ActionResult}}})"/>
         /// method.
         /// </summary>
-        /// <param name="controller">The "parent" <see cref="Controller"/>.</param>
+        /// <param name="controller">The "parent" <see cref="System.Web.Mvc.Controller"/>.</param>
         /// <param name="controllerAction">"Callback" function that privides the controller action to be tested.</param>
         internal ControllerActionTester(Controller controller, Func<ActionResult> controllerAction)
         {
-            _controller = controller;
+            Controller = controller;
             _controllerAction = controllerAction;
         }
 
@@ -272,11 +276,11 @@ namespace SparkyTestHelpers.AspNetMvc
 
         private void SetModelStateIsValid(bool isValid = true)
         {
-            _controller.ModelState.Clear();
+            Controller.ModelState.Clear();
 
             if (!isValid)
             {
-                _controller.ModelState.AddModelError("key", "message");
+                Controller.ModelState.AddModelError("key", "message");
             }
         }
     }
