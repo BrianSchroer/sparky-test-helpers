@@ -31,6 +31,16 @@ namespace SparkyTestHelpers.AspNetMvc
         }
 
         /// <summary>
+        /// "Callback" action to "arrange" the test.
+        /// </summary>
+        /// <returns>"This" <see cref="ApiControllerActionTester{TResponse}"/>.</returns>
+        public ApiControllerActionTester<TResponse> When(Action action)
+        {
+            action?.Invoke();
+            return this;
+        }
+
+        /// <summary>
         /// Sets up ModelState.IsValid value.
         /// </summary>
         /// <returns>"This" <see cref="ApiControllerActionTester{TResponse}"/>.</returns>
@@ -48,7 +58,7 @@ namespace SparkyTestHelpers.AspNetMvc
         /// <param name="siteUrlPrefix">site URL prefix, e.g. "http://mySite.com", "http://localhost".</param>
         /// <param name="queryStringParameters">The <see cref="QueryStringParameter"/>s.</param>
         /// <returns>"This" <see cref="ApiControllerActionTester{TResponse}"/>.</returns>
-        public ApiControllerActionTester<TResponse> WithRequestQueryStringValues(string siteUrlPrefix, params QueryStringParameter[] queryStringParameters)
+        public ApiControllerActionTester<TResponse> WhenRequestHasQueryStringParameters(string siteUrlPrefix, params QueryStringParameter[] queryStringParameters)
         {
             if (Controller.Request is null)
             {
@@ -67,7 +77,7 @@ namespace SparkyTestHelpers.AspNetMvc
         /// </summary>
         /// <param name="queryStringParameters">The <see cref="QueryStringParameter"/>s.</param>
         /// <returns>"This" <see cref="ApiControllerActionTester{TResponse}"/>.</returns>
-        public ApiControllerActionTester<TResponse> WithRequestQueryStringValues(params QueryStringParameter[] queryStringParameters)
+        public ApiControllerActionTester<TResponse> WhenRequestHasQueryStringParameters(params QueryStringParameter[] queryStringParameters)
         {
             if (Controller.Request is null)
             {
@@ -87,7 +97,7 @@ namespace SparkyTestHelpers.AspNetMvc
         /// <param name="siteUrlPrefix">site URL prefix, e.g. "http://mySite.com", "http://localhost".</param>
         /// <param name="queryStringParameters">The <see cref="QueryStringParameter"/>s.</param>
         /// <returns>"This" <see cref="ApiControllerActionTester{TResponse}"/>.</returns>
-        public ApiControllerActionTester<TResponse> WithRequestQueryStringValues(string siteUrlPrefix, NameValueCollection queryStringParameters)
+        public ApiControllerActionTester<TResponse> WhenRequestHasQueryStringParameters(string siteUrlPrefix, NameValueCollection queryStringParameters)
         {
             if (Controller.Request is null)
             {
@@ -106,7 +116,7 @@ namespace SparkyTestHelpers.AspNetMvc
         /// </summary>
         /// <param name="queryStringParameters">The <see cref="QueryStringParameter"/>s.</param>
         /// <returns>"This" <see cref="ApiControllerActionTester{TResponse}"/>.</returns>
-        public ApiControllerActionTester<TResponse> WithRequestQueryStringValues(NameValueCollection queryStringParameters)
+        public ApiControllerActionTester<TResponse> WhenRequestHasQueryStringParameters(NameValueCollection queryStringParameters)
         {
             if (Controller.Request is null)
             {

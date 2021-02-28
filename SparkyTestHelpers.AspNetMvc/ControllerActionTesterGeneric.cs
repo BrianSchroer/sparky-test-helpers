@@ -28,6 +28,16 @@ namespace SparkyTestHelpers.AspNetMvc
         }
 
         /// <summary>
+        /// "Callback" action to "arrange" the test.
+        /// </summary>
+        /// <returns>"This" <see cref="ControllerHttpResponseMessageActionTester"/>.</returns>
+        public ControllerActionTester<TResponse> When(Action action)
+        {
+            action?.Invoke();
+            return this;
+        }
+
+        /// <summary>
         /// Sets up ModelState.IsValid value.
         /// </summary>
         /// <returns>"This" <see cref="ControllerHttpResponseMessageActionTester"/>.</returns>

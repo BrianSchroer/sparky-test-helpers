@@ -46,7 +46,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         {
             _controllerTester
                 .Action(x => x.HttpActionResultActionWithoutArguments)
-                .WithRequestQueryStringValues("http://fake.com", new QueryStringParameter("parm1", "value1"), new QueryStringParameter("parm2", 2));
+                .WhenRequestHasQueryStringParameters("http://fake.com", new QueryStringParameter("parm1", "value1"), new QueryStringParameter("parm2", 2));
 
             _controller.Request.RequestUri.ToString().Should().Be("http://fake.com/?parm1=value1&parm2=2");
         }
@@ -56,7 +56,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         {
             _controllerTester
                 .Action(x => x.HttpActionResultActionWithoutArguments)
-                .WithRequestQueryStringValues(new QueryStringParameter("parm1", "value1"), new QueryStringParameter("parm2", 2));
+                .WhenRequestHasQueryStringParameters(new QueryStringParameter("parm1", "value1"), new QueryStringParameter("parm2", 2));
 
             _controller.Request.RequestUri.ToString().Should().Be("http://localhost/?parm1=value1&parm2=2");
         }
@@ -66,7 +66,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         {
             _controllerTester
                 .Action(x => x.HttpActionResultActionWithoutArguments)
-                .WithRequestQueryStringValues(
+                .WhenRequestHasQueryStringParameters(
                     "http://fake.com", new NameValueCollection { { "parm1", "value1" }, { "parm2", "2" } });
 
             _controller.Request.RequestUri.ToString().Should().Be("http://fake.com/?parm1=value1&parm2=2");
@@ -77,7 +77,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         {
             _controllerTester
                 .Action(x => x.HttpActionResultActionWithoutArguments)
-                .WithRequestQueryStringValues(new NameValueCollection { { "parm1", "value1" }, { "parm2", "2" } });
+                .WhenRequestHasQueryStringParameters(new NameValueCollection { { "parm1", "value1" }, { "parm2", "2" } });
 
             _controller.Request.RequestUri.ToString().Should().Be("http://localhost/?parm1=value1&parm2=2");
         }
@@ -503,6 +503,17 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         }
 
         [TestMethod]
+        public void TestOkNegotiatedContentResult_should_work_as_expected()
+        {
+            _controllerTester
+                .Action(x => x.HttpActionResultThatReturnsOkResultWithTestClass)
+                .TestOkNegotiatedContentResult<TestClass>(result => 
+                {
+                    result.Content.StringProp.Should().Be("testStringProp");
+                });
+        }
+
+        [TestMethod]
         public void TestOkResult_should_work_as_expected_with_method_with_arguments()
         {
             ApiControllerHttpActionResultActionTester actionTester =
@@ -894,13 +905,6 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
             _controller.HttpActionResult = _okResult;
             action.Should().Throw<ControllerTestException>().WithMessage(
                 $"Expected IHttpActionResult type {result.GetType().FullName}. Actual: System.Web.Http.Results.OkResult.");
-        }
-
-        private class TestClass
-        {
-            public string StringProp { get; set; } = "test";
-            public int IntProp { get; set; } = 3;
-            public DateTime DateTimeProp { get; set; } = DateTime.Now;
         }
     }
 }

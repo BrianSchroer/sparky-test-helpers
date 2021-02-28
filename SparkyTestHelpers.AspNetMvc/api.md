@@ -2,31 +2,115 @@ _see also_:
 * **[SparkyTestHelpers.AspNetMvc.Core](https://www.nuget.org/packages/SparkyTestHelpers.AspNetMvc.Core)** - the .NET Core version of this package
 * the rest of the [**"Sparky suite"** of .NET utilities and test helpers](https://www.nuget.org/profiles/BrianSchroer)
 ---
-## ControllerTester<*TController*>
-...tests action methods of controllers that inherit from System.Web.Mvc.**Controller**:
 
-Instantiation:
+## Controller Testers
+**ControllerTester**<*T*> and **ApiControllerTester**<*T*> test action methods of controllers that inherit from System.Web.Mvc.**Controller** and System.Web.Http.**ApiController** respectively.
+
+The general syntax is:
+
+*tester*<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;.**Action**(*action selection expression*)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;.**When**(*optional code to "arrange" test conditions*)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;.**Expecting**...(*optional code to set up assert expectations*)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;.**Test**...()
+
+### Examples
+
 ```csharp
-using SparkyTestHelpers.AspNetMvc;
+//ControllerTester:
+
+    moviesControllerTester
+        .Action(x => x.Index)
+        .TestView();
+
+    moviesControllerTester
+        .Action(x => () => x.Details(3))
+        .ExpectingViewName("Details")
+        .ExpectingModel<Movle>(movie => Assert.AreEqual("Office Space", movie.Title))
+        .TestView();
+
+    moviesControllerTester
+        .Action(x => x.Edit(testInvalidModel))
+        .WhenModelStateIsValidEquals(false)
+        .TestRedirectToAction("Errors");
+
+    moviesControllerTester
+        .Action(x => () => x.Edit(testValidModel))
+        .WhenModelStateIsValidEquals(true)
+        .ExpectingViewName("UpdateSuccessful")
+        .TestRedirectToRoute("Home/UpdateSuccessful");
+
+//ApiControllerTester:
+
+   moviesApiControllerTester 
+        .Action<IEnumerable<Movie>>(x => x.GetAllMovies)
+        .Test(movies => Assert.AreEqual(100, movies.Count());
+
+   moviesApiControllerTester 
+        .Action(x => () => x.Get)
+        .WhenRequestHasQueryStringParameters(new QueryStringParameter("id", 3))
+        .TestOkNegotiatedContentResult<Movie>(movie => Assert.AreEqual("Office Space", movie.Title));
+
+    moviesApiControllerTester
+        .Action(x => () => x.Update(updateModel))
+        .WhenModelStateIsValidEquals(false)
+        .TestBadRequestResult();
+
+    moviesApiControllerTester
+        .Action(x => () => x.Update(updateModel))
+        .WhenModelStateIsValidEquals(true)
+        .TestOkResult();
 ```
 
+### Instantiation
+**ControllerTester**<*T*> and **ApiControllerTester**<*T*> can be created either via their constructors:
 ```csharp
-    var homeController = new HomeController(/* with test dependencies */);
-    var controllerTester = new ControllerTester<HomeController>(homeController);
+var homeControllerTester = new ControllerTester<HomeController>(testHomeController);
+var moviesApiControllerTester = new ApiControllerTester<MoviesApiController>(testMoviesController);
 ```
-
-It doesn't do anything on its own - just provides an **Action**(*actionDefinitionExpression*) method that's used to create a... 
-
-## ControllerActionTester
+...or via **CreateTester** extension methods:
 ```csharp
-    var controllerActionTester = 
-        new ControllerTester<HomeController>(homeController).Action(x => x.Index);
+var homeControllerTester = testHomeController.CreateTester();
+var moviesApiControllerTester = testMoviesController.CreateTester();
 ```
-The *.Action* method argument is an expression for either a synchronous or async controller action method.
+### "Action" Methods
 
-Use the syntax `.Action(x => x.ActionName)` for parameterless methods, or `.Action(x => () x.ActionName(param))` for methods with parameters.  
+*tester*.**Action** methods use lambda expressions to specify the controller action to be tested. The expressions enable Intellisense completion when you "dot on" to the controller argument.
 
-ControllerActionTester has several **.Test**... methods used to assert that the controller action returns the expected **ActionResult** implementation. There are methods for all of the standard result types, plus the generic **TestResult<*TActionResultType*>** method:
+The syntax for parameterless actions is "*.Action(controller => controller*.**actionName**)", e.g. ```.Action(x => x.Index)```.
+
+For actions with parameters, the syntax is "*.Action(controller => () => controller*.**actionName**(*arguments*))", e.g. ```.Action(x => () => x.Get(3))```.
+
+### "When" methods
+* **WhenRequestHasQueryStringParameters**(*string siteUrlPrefix, NameValueCollection queryStringParameters*)
+* **WhenRequestHasQueryStringParameters**(*NameValueCollection queryStringParameters*)
+* **WhenRequestHasQueryStringParameters**(*string siteUrlPrefix, params QueryStringParameter[] queryStringParameters*)
+* **WhenRequestHasQueryStringParameters**(*params QueryStringParameter[] queryStringParameters*)
+
+The **WhenRequestHasQueryStringParameters** methods set up the controller's **Request** property with a **RequestUri** containing the specified parameters. If the **siteUrlPrefix** isn't specified (it usually won't matter in unit tests), the value "http://localhost" is used.
+ 
+* **WhenModelStateIsValidEquals**(*bool isValid*)
+
+This method sets up the controller's **ModelState** for testing.
+
+* **When**(*Action action*)
+
+This method can be used to "arrange" any conditions necessary for the test, e.g. setting up a mocked interface method.
+
+### "Expecting" methods (**ControllerTester** only):
+* **ExpectingViewName**(string expectedViewName)
+
+**ExpectingViewName** sets up automatic validation when followed by **TestView** or **TestPartialView**
+
+* **ExpectingModel<*TModel*>**(*Action<*TModel*> validate*) 
+
+**ExpectingModel** sets up automatic model type and possibly content (the **validate** callback action is optional) validation when followed by **TestView** or **TestJson**.
+
+### "Test" methods - ControllerTester:
+
+**ControllerTester**<*TController*> has several .Test... methods used to assert that the controller action returns the expected ActionResult implementation (The method name suffixes correspond to ...Result types (e.g. **TestView** tests **ViewResult**). There are methods for all of the standard result types, plus the generic TestResult<*TActionResultType*> method.
+
+The *validate* "callback" actions, which can be used to validate the result contents, are optional:
 
 * **TestContent**(*Action<*ContentResult*> validate*)
 * **TestEmpty**(*Action<*EmptyResult*> validate*)
@@ -34,63 +118,16 @@ ControllerActionTester has several **.Test**... methods used to assert that the 
 * **TestJson**(*Action<*JsonResult*> validate*)
 * **TestPartialView**(*Action<*PartialViewResult*> validate*)
 * **TestRedirect**(*string expectedUrl, Action<*RedirectResult*> validate*)
-* **TestRedirectToAction**(*string expecteActionName, Action<*RedirectToRouteResult*> validate*)
+* **TestRedirectToAction**(*string expectedActionName, Action<*RedirectToRouteResult*> validate*)
 * **TestRedirectToRoute**(*string expectedRoute, Action<*RedirectToRouteResult*> validate*)
 * **TestView**(*Action<*ViewResult*> validate*)
 * **TestResult<*TActionResultType*>**(*Action<*TActionResultType*> validate*)
 
-**Additional methods:**
-* **ExpectingViewName**(*string expectedViewName*) - used with **.TestView** and **.TestPartialView**
-* **ExpectingModel<*TModelType*>**(*Action<*TModelType*> validate*) - using with **.TestView** and **.TestJson**
-* **WhenModelStateIsValidEquals**(*bool isValid*) - used to test conditional logic based on ModelState.IsValid
+#### "Test" methods - ApiControllerTester - for actions that return an IHttpActionResult:
 
-All *validate* "callback" actions shown above are optional.
+There several **.Test**... methods used to assert that API controller actions return the expected **IHttpActionResult** implementation. There are methods for all of the standard result types, plus the generic **TestResult<*THttpActionResultType*>** method:
 
-### Examples
-
-```csharp
-    var homeController = new HomeController(/* with test dependencies */);
-    var controllerTester = new ControllerTester<HomeController>(homeController);
-
-    controllerTester.Action(x => x.Index).TestView();
-
-    controllerTester
-        .Action(x => () => x.Details(3))
-        .ExpectingViewName("Details")
-        .ExpectingModel<Foo>(foo => Assert.IsTrue(foo.IsValid))
-        .TestView();
-
-    controllerTester
-        .Action(x => () => x.Edit(updateModel))
-        .WhenModelStateIsValidEquals(false)
-        .TestRedirectToAction("Errors");
-
-    controllerTester
-        .Action(x => () => x.Edit(updateModel))
-        .WhenModelStateIsValidEquals(true)
-        .ExpectingViewName("UpdateSuccessful")
-        .TestRedirectToRoute("Home/UpdateSuccessful");
-```
-## ApiControllerTester<*TController*>
-...tests action methods of controllers that inherit from System.Web.Http.**ApiController**:
-
-Instantiation:
-```csharp
-using SparkyTestHelpers.AspNetMvc;
-```
-
-```csharp
-    var thingController = new ThingController(/* with test dependencies */);
-    var controllerTester = new ApiControllerTester<ThingController>(thingController);
-```
-
-It doesn't do anything on its own - just provides **Action**(*actionDefinitionExpression*) methods used to create action testers:
-
-Use the syntax `.Action(x => x.ActionName)` for parameterless methods, or `.Action(x => () x.ActionName(param))` for methods with parameters.  
- 
-**Methods for testing actions that return an **IHttpActionResult**:**
-
-There several **.Test**... methods used to assert that the API controller action returns the expected **IHttpActionResult** implementation. There are methods for all of the standard result types, plus the generic **TestResult<*THttpActionResultType*>** method:
+The *validate* "callback" actions, which can be used to validate the result contents, are optional:
 
 * **TestBadRequestErrorMessageResult**(*Action<*BadRequestErrorMessageResult*> validate*)
 * **TestBadRequestResult**(*Action<*BadRequestResult*> validate*)
@@ -113,43 +150,22 @@ There several **.Test**... methods used to assert that the API controller action
 * **TestUnauthorizedResult**(*Action<*UnauthorizedResult*> validate*)
 * **TestResult<*THttpActionResultType*>**(*Action<*THttpActionResultType*> validate*)
 
-All *validate* "callback" actions are optional.
+#### "Test" methods - ApiControllerTester - for actions that return an **HttpResponseMessage**:
 
-**Methods for testing actions that return an **HttpResponseMessage**:**
+The *validate* "callback" actions, which can be used to validate the result contents, are optional:
 
-* **Test**(*Action<*HttpResponseMessage*> validate*) - Calls controller action, validates *HttpResponseMessage.StatusCode* (if **ExpectingHttpStatusCode(*HttpStatusCode*)** has been called) and returns the **HttpResponseMessage** returned from the action.
+* **Test**(*Action<*HttpResponseMessage*> validate*)
 
-* **TestContentString**(*Action<*string*> validate*) - Calls controller action, validates *HttpResponseMessage.StatusCode* (if **ExpectingHttpStatusCode(*HttpStatusCode*)** has been called) and returns the **HttpResponseMessage.Content** string.
+...calls controller action, validates *HttpResponseMessage.StatusCode* (if **ExpectingHttpStatusCode(*HttpStatusCode*)** has been called) and returns the **HttpResponseMessage** returned from the action.
 
-* **TestContentJsonDeserialization<*TContent*>**(*Action<*TContent*> validate*)  - Calls controller action, validates *HttpResponseMessage.StatusCode* (if **ExpectingHttpStatusCode(*HttpStatusCode*)** has been called) and returns the **HttpResponseMessage.Content**'s JSON string deserialized to a *TContent* instance.
+* **TestContentString**(*Action<*string*> validate*)
 
-**Additional methods:**
-* **ExpectingHttpStatusCode**(*HttpStatusCode expectedStatusCode*) - used with HttpResponseMessage action **.Test** method
-* **WhenModelStateIsValidEquals**(*bool isValid*) - used to test conditional logic based on ModelState.IsValid
+...calls controller action, validates *HttpResponseMessage.StatusCode* (if **ExpectingHttpStatusCode(*HttpStatusCode*)** has been called) and returns the **HttpResponseMessage.Content** string.
 
-### Examples
+* **TestContentJsonDeserialization<*TContent*>**(*Action<*TContent*> validate*)
 
-```csharp
-    var fooController = new FooController(/* with test dependencies */);
-    var controllerTester = new ApiControllerTester<FooController>(fooController);
+...calls controller action, validates *HttpResponseMessage.StatusCode* (if **ExpectingHttpStatusCode(*HttpStatusCode*)** has been called) and returns the **HttpResponseMessage.Content**'s JSON string deserialized to a *TContent* instance.
 
-    controllerTester
-        .Action(x => x.Get)
-        .TestContentJsonDeserialization<Foo>(foo => 
-        {
-            Assert.IsTrue(foo.Success);
-        });
-
-    controllerTester
-        .Action(x => () => x.Update(updateModel))
-        .WhenModelStateIsValidEquals(false)
-        .TestBadRequestResult();
-
-    controllerTester
-        .Action(x => () => x.Update(updateModel))
-        .WhenModelStateIsValidEquals(true)
-        .TestOkResult();
-```
 
 ## RouteTester
 **RouteTester** and **RoutingAsserter** provide methods to assert that a given relative URL maps to the expected [RouteData.Values](https://docs.microsoft.com/en-us/dotnet/api/system.web.routing.routedata.values?view=netframework-4.7#System_Web_Routing_RouteData_Values). The **RoutingAsserter.AssertMapTo** overloads provide multiple ways to specify the expected values...
@@ -174,11 +190,11 @@ using SparkyTestHelpers.AspNetMvc.Routing;
 
 ### methods
 
-* .**AssertMapTo**(IDictionary<string, object> *expectedValues*)
-* .**AssertMapTo**(object *routeValues*)
-* .**AssertMapTo**(string *controller*, string *action*, (object *id*)) - id defaults to null
-* .**AssertMapTo<*TController*>**(Expression<Func<TController, Func<*ActionResult*>>> *actionExpression*)
-* .**AssertRedirectTo**(string **expectedUrl**, (HttpStatusCode *expectedStatusCode)) - expectedStatusCode defaults to HttpStatusCode.Redirect (302)
+* **AssertMapTo**(IDictionary<string, object> *expectedValues*)
+* **AssertMapTo**(object *routeValues*)
+* **AssertMapTo**(string *controller*, string *action*, (object *id*)) - id defaults to null
+* **AssertMapTo<*TController*>**(Expression<Func<TController, Func<*ActionResult*>>> *actionExpression*)
+* **AssertRedirectTo**(string **expectedUrl**, (HttpStatusCode *expectedStatusCode)) - expectedStatusCode defaults to HttpStatusCode.Redirect (302)
 
 ### examples
 

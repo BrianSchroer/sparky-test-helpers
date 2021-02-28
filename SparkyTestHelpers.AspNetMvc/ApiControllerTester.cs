@@ -28,6 +28,7 @@ namespace SparkyTestHelpers.AspNetMvc
             if (Controller.Request is null)
             {
                 Controller.Request = new HttpRequestMessage();
+                Controller.Request.SetConfiguration(new HttpConfiguration());
             }
         }
 

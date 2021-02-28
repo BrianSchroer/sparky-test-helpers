@@ -38,7 +38,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         {
             _controllerTester
                 .Action<string>(x => x.StringResultActionWithoutArguments)
-                .WithRequestQueryStringValues("http://fake.com", new QueryStringParameter("parm1", "value1"), new QueryStringParameter("parm2", 2));
+                .WhenRequestHasQueryStringParameters("http://fake.com", new QueryStringParameter("parm1", "value1"), new QueryStringParameter("parm2", 2));
 
             _controller.Request.RequestUri.ToString().Should().Be("http://fake.com/?parm1=value1&parm2=2");
         }
@@ -48,7 +48,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         {
             _controllerTester
                 .Action<string>(x => x.StringResultActionWithoutArguments)
-                .WithRequestQueryStringValues(new QueryStringParameter("parm1", "value1"), new QueryStringParameter("parm2", 2));
+                .WhenRequestHasQueryStringParameters(new QueryStringParameter("parm1", "value1"), new QueryStringParameter("parm2", 2));
 
             _controller.Request.RequestUri.ToString().Should().Be("http://localhost/?parm1=value1&parm2=2");
         }
@@ -58,7 +58,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         {
             _controllerTester
                 .Action<string>(x => x.StringResultActionWithoutArguments)
-                .WithRequestQueryStringValues(
+                .WhenRequestHasQueryStringParameters(
                     "http://fake.com", new NameValueCollection { { "parm1", "value1" }, { "parm2", "2" } });
 
             _controller.Request.RequestUri.ToString().Should().Be("http://fake.com/?parm1=value1&parm2=2");
@@ -69,7 +69,7 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests
         {
             _controllerTester
                 .Action<string>(x => x.StringResultActionWithoutArguments)
-                .WithRequestQueryStringValues(new NameValueCollection { { "parm1", "value1" }, { "parm2", "2" } });
+                .WhenRequestHasQueryStringParameters(new NameValueCollection { { "parm1", "value1" }, { "parm2", "2" } });
 
             _controller.Request.RequestUri.ToString().Should().Be("http://localhost/?parm1=value1&parm2=2");
         }

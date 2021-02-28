@@ -42,6 +42,11 @@ namespace SparkyTestHelpers.AspNetMvc.UnitTests.Controllers
             return BadRequest();
         }
 
+        public IHttpActionResult HttpActionResultThatReturnsOkResultWithTestClass()
+        {
+            return Ok(new TestClass { StringProp = "testStringProp" });
+        }
+
         public string StringResultActionWithoutArguments()
         {
             return "test";
