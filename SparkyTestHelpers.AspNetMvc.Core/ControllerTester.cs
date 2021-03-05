@@ -11,16 +11,19 @@ namespace SparkyTestHelpers.AspNetMvc.Core
     /// <typeparam name="TController">The controller type.</typeparam>
     public class ControllerTester<TController> where TController : ControllerBase
     {
-        private readonly TController _controller;
-
         /// <summary>
         /// Creates new <see cref="ControllerTester{TController}"/> instance.
         /// </summary>
         /// <param name="controller">The controller.</param>
         public ControllerTester(TController controller)
         {
-            _controller = controller;
+            Controller = controller;
         }
+
+        /// <summary>
+        /// The <typeparamref name="TController"/> instance being tested.
+        /// </summary>
+        public TController Controller { get; private set; }
 
         /// <summary>
         /// Creates a new <see cref="ControllerActionTester"/> instance.
@@ -38,7 +41,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         {
             var func = expression.Compile();
 
-            return new ControllerActionTester(_controller, func(_controller));
+            return new ControllerActionTester(Controller, func(Controller));
         }
 
         /// <summary>
@@ -52,12 +55,12 @@ namespace SparkyTestHelpers.AspNetMvc.Core
 
             Func<IActionResult> func = () =>
             {
-                Task<IActionResult> task = funcWithTask(_controller)();
+                Task<IActionResult> task = funcWithTask(Controller)();
                 task.Wait();
                 return task.Result;
             };
 
-            return new ControllerActionTester(_controller, func);
+            return new ControllerActionTester(Controller, func);
         }
     }
 }

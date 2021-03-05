@@ -4,18 +4,19 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Brian Schroer</Authors>
     <Description>.NET Unit test helpers for asserting that ASP.NET MVC Core controller / Razor Page actions return expected results</Description>
-    <Copyright>Copyright © Brian Schroer 2019</Copyright>
+    <Copyright>Copyright © Brian Schroer 2021</Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <PackageTags>test, testing, unittest, aspnet, mvc, aspnetmvc, aspnetcore, mvccore, aspnetmvccore</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.2.2</Version>
-    <AssemblyVersion>2.2.2</AssemblyVersion>
+    <Version>2.2.3</Version>
+    <AssemblyVersion>2.2.3</AssemblyVersion>
     <PackageReleaseNotes>v2.1: Added support for async actions
-v2.2: Added OkObjectResult tester, changed TController constraint from Controller to ControllerBase</PackageReleaseNotes>
+v2.2: Added OkObjectResult tester, changed TController constraint from Controller to ControllerBase
+</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
-    <FileVersion>2.2.2</FileVersion>
+    <FileVersion>2.2.3</FileVersion>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>

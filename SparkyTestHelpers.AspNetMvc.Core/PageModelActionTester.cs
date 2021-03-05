@@ -39,6 +39,16 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         }
 
         /// <summary>
+        /// "Callback" action to "arrange" the test.
+        /// </summary>
+        /// <returns>"This" <see cref="PageModelActionTester{TPageModel}"/>.</returns>
+        public PageModelActionTester<TPageModel> When(Action action)
+        {
+            action?.Invoke();
+            return this;
+        }
+
+        /// <summary>
         /// Specifies that the
         /// <see cref="TestPage(Action{PageResult})"/> or
         /// <see cref="TestJsonResult(Action{JsonResult})"/> method should throw an exception

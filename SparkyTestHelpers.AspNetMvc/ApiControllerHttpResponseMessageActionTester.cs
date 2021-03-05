@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SparkyTestHelpers.AspNetMvc
 {
@@ -178,6 +179,43 @@ namespace SparkyTestHelpers.AspNetMvc
             validate?.Invoke(responseMessage);
 
             return responseMessage;
+        }
+
+        /// <summary>
+        /// Calls controller action, validates <see cref="HttpResponseMessage.StatusCode"/>
+        /// (if <see cref="ExpectingHttpStatusCode(HttpStatusCode)" has been called), and
+        /// deserializes the <see cref="HttpResponseMessage.Content"/>'s JSON string to a
+        /// <see cref="JObject" /> instance.
+        /// </summary>
+        /// <param name="validate">Optional "callback" method to validate the <see cref="JObject" />.</param>
+        /// <returns><see cref="JObject />" instance.</returns>
+        public JObject TestContentJObject(Action<JObject> validate = null)
+        {
+            JObject jObject = JObject.Parse(TestContentString() ?? "");
+
+            validate?.Invoke(jObject);
+
+            return jObject;
+        }
+
+        /// <summary>
+        /// Calls controller action, validates <see cref="HttpResponseMessage.StatusCode"/>
+        /// (if <see cref="ExpectingHttpStatusCode(HttpStatusCode)" has been called), and
+        /// deserializes the <see cref="HttpResponseMessage.Content"/>'s JSON string to a
+        /// <see cref="JObject" /> instance and a <typeparamref name="TContent"/> instance.
+        /// </summary>
+        /// <typeparam name="TContent">The JSON-serialized content type.</typeparam>
+        /// <param name="validate">Optional "callback" method to validate the content.</param>
+        /// <returns>Deserialized <typeparamref name="TContent"/> instance.</returns>
+        public TContent TestContentJObject<TContent>(Action<JObject, TContent> validate = null)
+        {
+            JObject jObject = JObject.Parse(TestContentString() ?? "");
+
+            TContent content = JsonConvert.DeserializeObject<TContent>(TestContentString());
+
+            validate?.Invoke(jObject, content);
+
+            return content;
         }
 
         /// <summary>

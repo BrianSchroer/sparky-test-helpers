@@ -10,7 +10,11 @@ namespace SparkyTestHelpers.AspNetMvc.Core
     /// </summary>
     public class ControllerActionTester
     {
-        private readonly ControllerBase _controller;
+        /// <summary>
+        /// The <see cref="ControllerBase" /> being tested.
+        /// </summary>
+        public ControllerBase Controller { get; set; }
+
         private readonly Func<IActionResult> _controllerAction;
         private string _expectedViewName = null;
         private bool _expectedViewNameSpecified;
@@ -29,7 +33,7 @@ namespace SparkyTestHelpers.AspNetMvc.Core
         /// <param name="controllerAction">"Callback" function that privides the controller action to be tested.</param>
         internal ControllerActionTester(ControllerBase controller, Func<IActionResult> controllerAction)
         {
-            _controller = controller;
+            Controller = controller;
             _controllerAction = controllerAction;
         }
 
@@ -300,11 +304,11 @@ namespace SparkyTestHelpers.AspNetMvc.Core
 
         private void SetModelStateIsValid(bool isValid = true)
         {
-            _controller.ModelState.Clear();
+            Controller.ModelState.Clear();
 
             if (!isValid)
             {
-                _controller.ModelState.AddModelError("key", "message");
+                Controller.ModelState.AddModelError("key", "message");
             }
         }
 
