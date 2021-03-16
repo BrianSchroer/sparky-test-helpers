@@ -13,6 +13,11 @@ namespace SparkyTestHelpers.Xml.Transformation
         public bool Successful { get; set; }
 
         /// <summary>
+        /// Transformed file path.
+        /// </summary>
+        public string FilePath { get; set; }
+
+        /// <summary>
         /// The transformed <see cref="XDocument"/> (if <see cref="Successful"/>)
         /// </summary>
         public XDocument XDocument { get; set; }

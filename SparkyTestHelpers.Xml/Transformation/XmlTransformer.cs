@@ -159,6 +159,7 @@ namespace SparkyTestHelpers.Xml.Transformation
                     }
                     else
                     {
+                        results.FilePath = transformFilePath;
                         transformFilePaths.Add(transformFilePath);
                     }
                 }
