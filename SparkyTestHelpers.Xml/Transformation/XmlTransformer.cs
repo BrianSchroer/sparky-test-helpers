@@ -95,7 +95,9 @@ namespace SparkyTestHelpers.Xml.Transformation
 
         internal static string GetBaseFolder()
         {
-            string filePath = new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath.Replace("/", @"\");
+            string filePath = Uri.UnescapeDataString( 
+                new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath.Replace("/", @"\"));
+
             return new FileInfo(filePath).DirectoryName;
         }
 
