@@ -72,3 +72,10 @@ Unit test helpers for XML .config files:
 * [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.Xml/)
 * [Source Code](/SparkyTestHelpers.Xml)
 * [API documentation](/SparkyTestHelpers.Xml/api.md)
+
+## SparkyTestHelpers.NonPublic
+Provides simple "fluent" syntax for accessing non-public methods, properties and fields from unit tests:
+* [nuget.org link](https://www.nuget.org/packages/SparkyTestHelpers.NonPublic/)
+* [Source Code](/SparkyTestHelpers.NonPublic)
+* [API documentation](/SparkyTestHelpers.NonPublic/api.md)
+
