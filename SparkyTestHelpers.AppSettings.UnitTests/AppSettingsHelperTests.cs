@@ -58,6 +58,14 @@ namespace SparkyTestHelpers.AppSettings.UnitTests
         }
 
         [TestMethod]
+        public void Test_with_func_should_work()
+        {
+            string response = AppSettingsHelper.WithAppSetting("test1", "changed value").Test(() => "success");
+
+            Assert.AreEqual("success", response);
+        }
+
+        [TestMethod]
         public void TestDependencyProvider_should_work()
         {
             Func<string, string> getAppSetting = 

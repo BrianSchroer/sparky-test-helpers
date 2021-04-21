@@ -12,7 +12,7 @@
     <iconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</iconUrl>
     <repository url="https://github.com/BrianSchroer/sparky-test-helpers" />
     <description>$description$</description>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>v1.3 - Updated Microsoft.Web.Xdt dependency to v3.1</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>xml, app.config, web.config, xml.config, test, testing, unittests</tags>
   </metadata>

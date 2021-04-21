@@ -71,6 +71,30 @@ namespace SparkyTestHelpers.AppSettings
         }
 
         /// <summary>
+        /// Test using an <see cref="AppSettingsHelper"/> with a callback function.
+        /// </summary>
+        /// <typeparam name="T">Type to be returned.</typeparam>
+        /// <param name="func">"Callback" test function.</param>
+        /// <returns>The <typeparamref name="T"/> instance returned by <paramref name="func"/>.</returns>
+        public T Test<T>(Func<T> func)
+        {
+            lock (_lockObject)
+            {
+                Dictionary<string, string> savedAppSettings = BackUpAppSettings();
+
+                try
+                {
+                    ApplyOverrides(_overrides);
+                    return func();
+                }
+                finally
+                {
+                    RestoreAppSettings(savedAppSettings);
+                }
+            }
+        }
+
+        /// <summary>
         /// Creates a new <see cref="AppSettingsHelper"/> instance with an overridden AppSettings value.
         /// </summary>
         /// <param name="key">The AppSettings key to override.</param>
