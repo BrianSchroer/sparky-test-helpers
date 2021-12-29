@@ -22,19 +22,19 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         [TestMethod]
         public void Mock_Should_should_return_FluentMockAssertions()
         {
-            _mock.Should().Should().BeOfType<FluentMockAssertions<IMockable>>();
+            Assert.IsInstanceOfType(_mock.Should(), typeof(FluentMockAssertions<IMockable>));
         }
 
         [TestMethod]
         public void Mock_Should_HaveCallCount_should_return_FluentMockCountAssertions()
         {
-            _mock.Should().HaveCallCount(3).Should().BeOfType<FluentMockCountAssertions<IMockable>>();
+            Assert.IsInstanceOfType(_mock.Should().HaveCallCount(3), typeof(FluentMockCountAssertions<IMockable>));
         }
 
         [TestMethod]
         public void Mock_Should_HaveCallCount_should_return_FluentMockCountAssertions_for_range()
         {
-            _mock.Should().HaveCallCount(3, 5).Should().BeOfType<FluentMockCountAssertions<IMockable>>();
+            Assert.IsInstanceOfType(_mock.Should().HaveCallCount(3, 5), typeof(FluentMockCountAssertions<IMockable>));
         }
 
         [TestMethod]

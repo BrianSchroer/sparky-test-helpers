@@ -12,9 +12,8 @@ namespace SparkyTestHelpers.Moq
     {
         protected override string Identifier => $"Mock<{typeof(T).FullName}>";
 
-        public FluentMockAssertions(Mock<T> mock)
+        public FluentMockAssertions(Mock<T> mock) : base(mock)
         {
-            Subject = mock;
         }
 
         public AndConstraint<FluentMockAssertions<T>> HaveHadNoOtherCalls(

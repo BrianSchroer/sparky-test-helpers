@@ -40,7 +40,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         [TestMethod]
         public void FluentMockFunctionVerifier_Should_should_return_FluentMockVerifierAssertions()
         {
-            _mock.Method(x => x.TestFunction(Any.String)).Should().Should().BeOfType<FluentMockVerifierAssertions<IMockable>>();
+            Assert.IsInstanceOfType(_mock.Method(x => x.TestFunction(Any.String)).Should(), typeof(FluentMockVerifierAssertions<IMockable>));
         }
 
         [TestMethod]

@@ -10,9 +10,8 @@ namespace SparkyTestHelpers.Moq
     {
         protected override string Identifier => nameof(FluentMockVerifier);
 
-        public FluentMockVerifierAssertions(FluentMockVerifier verifier)
+        public FluentMockVerifierAssertions(FluentMockVerifier verifier) : base(verifier)
         {
-            Subject = verifier;
         }
 
         public AndConstraint<FluentMockVerifierAssertions<T>> HaveBeenCalled(

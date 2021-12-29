@@ -343,7 +343,7 @@ namespace SparkyTestHelpers.Populater.UnitTests
             testThing.Decimal2.Should().NotBe(0);
             testThing.Int1.Should().NotBe(0);
             testThing.Int2.Should().NotBe(0);
-            testThing.NullableDateTime.Should().NotBeNull().And.Should().NotBe(DateTime.MinValue);
+            testThing.NullableDateTime.Should().NotBeNull().And.NotBe(DateTime.MinValue);
             testThing.String1.Should().NotBeNullOrWhiteSpace();
             testThing.String2.Should().NotBeNullOrWhiteSpace();
 
@@ -364,7 +364,7 @@ namespace SparkyTestHelpers.Populater.UnitTests
             testChildThing.Decimal2.Should().NotBe(0);
             testChildThing.Int1.Should().NotBe(0);
             testChildThing.Int2.Should().NotBe(0);
-            testChildThing.NullableDateTime.Should().NotBeNull().And.Should().NotBe(DateTime.MinValue);
+            testChildThing.NullableDateTime.Should().NotBeNull().And.NotBe(DateTime.MinValue);
         }
     }
 }

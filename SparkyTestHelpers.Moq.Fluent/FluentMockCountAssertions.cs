@@ -20,8 +20,8 @@ namespace SparkyTestHelpers.Moq
         private bool _orLess;
 
         public FluentMockCountAssertions(Mock<T> mock, int callCountFrom, int? callCountTo = null, Range rangeKind = Range.Inclusive)
+            : base(mock)
         {
-            Subject = mock;
             _callCountFrom = callCountFrom;
             _callCountTo = callCountTo;
             _rangeKind = rangeKind;

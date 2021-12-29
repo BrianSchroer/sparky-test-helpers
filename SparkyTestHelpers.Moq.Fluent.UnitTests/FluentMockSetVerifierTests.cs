@@ -27,7 +27,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         [TestMethod]
         public void Mock_Set_Should_should_return_FluentMockMethodVerifierAssertions()
         {
-            _mock.Set(x => x.TestProperty = "test").Should().Should().BeOfType<FluentMockVerifierAssertions<IMockable>>();
+            Assert.IsInstanceOfType(_mock.Set(x => x.TestProperty = "test").Should(), typeof(FluentMockVerifierAssertions<IMockable>));
         }
 
         [TestMethod]
