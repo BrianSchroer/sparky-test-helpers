@@ -2,18 +2,19 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Version>1.5.0</Version>
+    <Version>1.6.0</Version>
     <Authors>Brian Schroer</Authors>
     <Description>Unit test helpers providing "fluent" assertions for testing with Moq</Description>
-    <Copyright>Copyright © Brian Schroer 2021</Copyright>
+    <Copyright>Copyright © Brian Schroer 2022</Copyright>
     <PackageLicenseUrl>https://github.com/BrianSchroer/sparky-test-helpers/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/BrianSchroer/sparky-test-helpers</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/BrianSchroer/sparky-test-helpers/master/SparkyTestHelpers/Sparky.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/BrianSchroer/sparky-test-helpers</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>SparkyTestHelpers.Moq</RootNamespace>
-    <AssemblyVersion>1.5.0.0</AssemblyVersion>
-    <PackageReleaseNotes>v1.5 - Upgraded to .NET Standard 2.0, FluentAssertions 6.2</PackageReleaseNotes>
+    <AssemblyVersion>1.6.0.0</AssemblyVersion>
+    <PackageReleaseNotes>v1.5 - Upgraded to .NET Standard 2.0, FluentAssertions 6.2
+v1.6 - Added "HaveCalledOnly"</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
