@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using Moq;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace SparkyTestHelpers.Moq
 {
@@ -26,6 +26,8 @@ namespace SparkyTestHelpers.Moq
             _callCountTo = callCountTo;
             _rangeKind = rangeKind;
         }
+
+        public FluentMockAssertions<T> Mock => new FluentMockAssertions<T>(Subject);
 
         public FluentMockCountAssertions<T> OrMore()
         {
@@ -59,7 +61,7 @@ namespace SparkyTestHelpers.Moq
 
         private Times DetermineTimes()
         {
-            if (new[] {_orMore, _orLess, _callCountTo.HasValue}.Count(b => b) > 1)
+            if (new[] { _orMore, _orLess, _callCountTo.HasValue }.Count(b => b) > 1)
             {
                 throw new InvalidOperationException($"Invalid {nameof(OrMore)} / {nameof(OrLess)} / CallCountTo combination.");
             }

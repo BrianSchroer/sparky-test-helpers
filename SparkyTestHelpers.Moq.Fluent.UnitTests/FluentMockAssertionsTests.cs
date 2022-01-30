@@ -1,7 +1,7 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
 
 namespace SparkyTestHelpers.Moq.Fluent.UnitTests
 {
@@ -35,6 +35,24 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         public void Mock_Should_HaveCallCount_should_return_FluentMockCountAssertions_for_range()
         {
             Assert.IsInstanceOfType(_mock.Should().HaveCallCount(3, 5), typeof(FluentMockCountAssertions<IMockable>));
+        }
+
+        [TestMethod]
+        public void Mock_Should_HaveCalledOnly_should_work_as_expected()
+        {
+            Action verifyAction = () => _mock.Should().HaveCalledOnly(x => x.TestMethod());
+
+            AssertException(verifyAction, "Expected invocation on the mock once, but was 0 times: x => x.TestMethod");
+
+            _instance.TestMethod();
+            AssertSuccess(verifyAction);
+
+            _instance.TestMethod();
+            _instance.TestFunction("test");
+
+            _test = _instance.TestProperty;
+
+            AssertException(verifyAction, "The following invocations on mock");
         }
 
         [TestMethod]
@@ -288,6 +306,7 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
             _instance.TestProperty = "test";
             AssertException(verifyAction, "Expected invocation on the mock at most once, but was 2 times: x => x.TestProperty");
         }
+
         private void AssertSuccess(Action verifyAction)
         {
             verifyAction.Should().NotThrow();

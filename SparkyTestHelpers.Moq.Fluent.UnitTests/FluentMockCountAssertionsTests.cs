@@ -1,7 +1,7 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
 
 namespace SparkyTestHelpers.Moq.Fluent.UnitTests
 {
@@ -17,6 +17,14 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         {
             _mock = new Mock<IMockable>();
             _instance = _mock.Object;
+        }
+
+        [TestMethod]
+        public void Mock_Should_Return_mock_assertion_for_futher_assertions()
+        {
+            var mockAssertion = _mock.Should().HaveCallCount(2).OrLess().To(x => x.TestMethod()).And.Mock;
+
+            mockAssertion.Should().BeOfType<FluentMockAssertions<IMockable>>();
         }
 
         [TestMethod]

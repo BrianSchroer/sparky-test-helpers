@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq.Expressions;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using Moq;
+using System;
+using System.Linq.Expressions;
 
 namespace SparkyTestHelpers.Moq
 {
@@ -15,6 +15,11 @@ namespace SparkyTestHelpers.Moq
         public FluentMockAssertions(Mock<T> mock) : base(mock)
         {
         }
+
+        public AndConstraint<FluentMockAssertions<T>> HaveCalledOnly(
+            Expression<Action<T>> methodExpression, string because = "", params object[] becauseArgs) =>
+            HaveOneCallTo(methodExpression, because, becauseArgs).And
+            .HaveHadNoOtherCalls(because, becauseArgs);
 
         public AndConstraint<FluentMockAssertions<T>> HaveHadNoOtherCalls(
             string because = "", params object[] becauseArgs) =>
