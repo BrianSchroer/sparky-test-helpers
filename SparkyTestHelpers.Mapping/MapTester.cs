@@ -387,7 +387,7 @@ namespace SparkyTestHelpers.Mapping
                 }
                 string[] items = list.ToArray();
 
-                string formattedItems = items.Length == 0
+                string formattedItems = (items.Length == 0)
                     ? string.Empty
                     : $"\n\t\t\t{string.Join("\n\t\t\t", items)}";
 

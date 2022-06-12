@@ -20,14 +20,6 @@ namespace SparkyTestHelpers.Moq.Fluent.UnitTests
         }
 
         [TestMethod]
-        public void Mock_Should_Return_mock_assertion_for_futher_assertions()
-        {
-            var mockAssertion = _mock.Should().HaveCallCount(2).OrLess().To(x => x.TestMethod()).And.Mock;
-
-            mockAssertion.Should().BeOfType<FluentMockAssertions<IMockable>>();
-        }
-
-        [TestMethod]
         public void Mock_Should_HaveCallCount_should_throw_exception_for_invalid_combination()
         {
             Action verifyAction = () => _mock.Should().HaveCallCount(2).OrMore().OrLess().To(x => x.TestMethod());
